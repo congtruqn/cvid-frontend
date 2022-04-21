@@ -5,17 +5,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Axios from 'axios'
-
-import './assets/css/style.css';
-import './assets/css/aos.css';
-import './assets/css/bootstrap-icons.css';
 import './assets/css/bootstrap.min.css';
-import './assets/css/glightbox.min.css';
-
-import './assets/js/bootstrap.bundle.min.js';
-import './assets/js/glightbox.min.js';
-import './assets/js/validate.js';
-import './assets/js/main.js';
+import './assets/css/style.css';
+import './assets/css/owl.carousel.min.css';
+import './assets/css/animate.min.css';
 
 import VueConfirmDialog from 'vue-confirm-dialog'
 Vue.use(VueConfirmDialog)
