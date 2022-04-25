@@ -23,6 +23,15 @@ let router = new Router({
           layout: 'Auth'
       }
     },
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import('@/components/Register'),
+        meta: {
+            guest: true,
+            layout: 'Auth'
+        }
+    }
   ]
 })
 router.beforeEach((to, from, next) => {
