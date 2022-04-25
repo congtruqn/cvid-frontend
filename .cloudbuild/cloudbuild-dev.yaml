@@ -1,4 +1,6 @@
 steps:
+- name: 'bash'
+  args: ["mv", "-f", ".cloudbuild/config/dev/config.js", "src/utils/"]
 # build
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', 

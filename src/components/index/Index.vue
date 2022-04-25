@@ -459,5 +459,7 @@
         <!-- Jobs End -->
     </div>
 </template>
-
-
+<script>
+  const {BASE_URL} =  require('../../utils/config')
+  console.log(BASE_URL)
+</script>
