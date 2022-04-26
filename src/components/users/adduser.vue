@@ -138,6 +138,8 @@
     mounted () {
       this.$http.get('api/projects/getallprojectnotpage',{headers: {'Authorization': `Basic ${localStorage.getItem('token')}` }})
         .then(response => (this.listprojects = response.data));
-    },
+        console.log('test')
+    }
+    
   };
 </script>
