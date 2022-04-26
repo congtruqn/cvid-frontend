@@ -9,8 +9,8 @@
     </div>
 </template>
 <script>
+    const {BASE_URL} =  require('../utils/config')
     export default {
-        
         data(){
             return {
                 email : "",
@@ -21,7 +21,7 @@
             handleSubmit(e){
                 e.preventDefault()
                 if (this.password.length > 0) {
-                    this.$http.post('api/user/login', {
+                    this.$http.post(`${BASE_URL}/user/login`, {
                         username: this.email,
                         password: this.password
                     })
