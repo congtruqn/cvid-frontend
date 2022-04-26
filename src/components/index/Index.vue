@@ -461,5 +461,5 @@
 </template>
 <script>
   const {BASE_URL} =  require('../../utils/config')
-  console.log(BASE_URL)
+  console.log(`${BASE_URL}/login`)
 </script>
