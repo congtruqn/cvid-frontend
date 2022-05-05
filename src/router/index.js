@@ -29,7 +29,7 @@ let router = new Router({
         component: () => import('@/components/Register'),
         meta: {
             guest: true,
-            layout: 'Auth'
+            layout: 'Default'
         }
     }
   ]
