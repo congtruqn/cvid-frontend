@@ -4,18 +4,18 @@
             <h1>Register</h1>
             
                 <p v-if="errors.length > 0">{{errors[0].msg}}</p>
-                <input type="text" v-model="firstname" placeholder="First Name" /><br/>
-                <input type="text" v-model="lastname" placeholder="Last Name" /><br/>
-                <input type="email" v-model="email" placeholder="Email"><br/>
-                <input type="password"  v-model="password" placeholder="Password"><br/>
-                <input type="password"  v-model="password2" placeholder="Confirm Password"><br/>
+                <input type="text" v-model="firstname" placeholder="First Name" /><br/><br/>
+                <input type="text" v-model="lastname" placeholder="Last Name" /><br/><br/>
+                <input type="email" v-model="email" placeholder="Email"><br/><br/>
+                <input type="password"  v-model="password" placeholder="Password"><br/><br/>
+                <input type="password"  v-model="password2" placeholder="Confirm Password"><br/><br/>
 	        <button type="submit" class="btn btn-default" @click="handleSubmit">Register</button>
         </form>
     </div>
 </template>
 <script>
-    export default {
-        
+    const {BASE_URL} =  require('../utils/config')
+    export default {  
         data(){
             return {
                 firstname: "",
@@ -29,7 +29,7 @@
         methods : {
             handleSubmit(e){
                 e.preventDefault()
-                this.$http.post('api/employee/register', {
+                this.$http.post(`${BASE_URL}/employee/register`, {
                     firstname: this.firstname,
                     lastname: this.lastname,
                     email: this.email,
