@@ -24,9 +24,18 @@ let router = new Router({
       }
     },
     {
-        path: '/register',
+        path: '/employee/register',
         name: 'register',
-        component: () => import('@/components/Register'),
+        component: () => import('@/components/EmployeeRegister'),
+        meta: {
+            guest: true,
+            layout: 'Default'
+        }
+    },
+    {
+        path: '/business/register',
+        name: 'register',
+        component: () => import('@/components/BusinessRegister'),
         meta: {
             guest: true,
             layout: 'Default'
