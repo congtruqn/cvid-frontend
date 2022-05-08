@@ -1,47 +1,56 @@
 <template>
     <div id="register">
-        <form class="">
-            <h1>Đăng kí tài khoản nhà tuyển dụng</h1>
-                <h3>Thông tin đăng nhập</h3>
-               
-                <label class="form-label">Email</label>
-                <input type="email" v-model="email" placeholder="Email"><br/>
-                <label class="form-label">Mật khẩu</label>
-                <input type="password"  v-model="password" placeholder="Mật khẩu"><br/>
-                <label class="form-label">Nhập lại mật khẩu</label>
-                <input type="password"  v-model="password2" placeholder="Nhập lại mật khẩu"><br/><br/>
-                <h3>Thông tin doanh nghiệp</h3>
-                <label>Tên doanh nghiệp</label>
-                <input type="text" v-model="name" placeholder="Tên doanh nghiệp" /><br/>
-                <label>Mã số thuế</label>
-                <input type="text" v-model="MST" placeholder="Mã số thuế" /><br/>
-                <label>Địa điểm</label>
-                <select v-model="province">
-                    <option disabled value="">Chọn tỉnh/thành phố</option>
-                    <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
-                </select>
-                <select v-model="district">
-                    <option disabled value="">Chọn quận/huyện</option>
-                    <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
-                </select> 
-                <br/> 
-                <div class="dropdown">
-                    <label>Nghành nghề kinh doanh</label>
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Chọn nghành nghề
+        <form class="register-form__employee col-11	col-sm-9 col-md-7 col-lg-6 col-xl-5 col-xxl-4">
+            <h2 class="text-center mb-4">Đăng kí tài khoản</h2>
+                <h4 class="mb-3">Thông tin đăng nhập</h4>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Email</span>
+                    <input type="email" v-model="email" class="form-control" placeholder="Email">
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Mật khẩu</span>
+                    <input type="password" v-model="password" class="form-control" placeholder="Mật khẩu">
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Nhập lại mật khẩu</span>
+                    <input type="password" v-model="password2" class="form-control" placeholder="Nhập lại mật khẩu">
+                </div>
+                
+                <h4 class="mb-3">Thông tin doanh nghiệp</h4>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Tên doanh nghiệp</span>
+                    <input type="text" v-model="name" class="form-control" placeholder="Tên doanh nghiệp">
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Mã số thuế</span>
+                    <input type="text" v-model="MST" class="form-control" placeholder="Mã số thuế">
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Địa chỉ</span>
+                    <select class="form-select" v-model="province">
+                        <option disabled value="">Chọn tỉnh/thành phố</option>
+                        <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
+                    </select>
+                    <select class="form-select" v-model="district">
+                        <option disabled value="">Chọn quận/huyện</option>
+                        <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
+                    </select>
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Nghành nghề</span>
+                    <button class="btn btn-light dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="input-group__major">Đã chọn {{majors.length}} nghành nghề</span>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <ul class="dropdown-menu dropdown-menu__major">
                         <li v-for="major in list_major" :key="major.name">
-                            {{major.name}}
+                            <span class="input-group-text">{{major.name}}</span>
                             <div v-for="skill in major.skills" :key="skill.name">
-                                <input type="checkbox" v-model="majors" :value=[major.name,skill.name]>
-                                <label>{{skill.name}}</label>
+                                <input type="checkbox" :id="skill.name" class="form-check-input" v-model="majors" :value=[major.name,skill.name]>
+                                <label class="form-check-label" :for="skill.name">{{skill.name}}</label>
                             </div>
                         </li>
                     </ul>
                 </div>
-                
-                <br><br>
                 
 	        <button type="submit" class="btn btn-primary" @click="handleSubmit">Đăng kí</button>
         </form>

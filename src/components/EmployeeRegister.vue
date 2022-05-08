@@ -1,7 +1,7 @@
 <template>
-    <div id="register" class="">
+    <div id="register">
         <form class="register-form__employee col-11	col-sm-9 col-md-7 col-lg-6	col-xl-5 col-xxl-4">
-            <h3 class="mb-4">Đăng kí</h3>
+            <h3 class="mb-4">Đăng kí tài khoản</h3>
                 <div class="input-group mb-4">
                     <span class="input-group-text">Họ và Tên</span>
                     <input type="text" v-model="lastname" class="form-control" placeholder="Họ">
