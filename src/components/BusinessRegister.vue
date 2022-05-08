@@ -1,6 +1,6 @@
 <template>
     <div id="register">
-        <form class="register-form__employee col-11	col-sm-9 col-md-7 col-lg-6 col-xl-5 col-xxl-4">
+        <form class="register-form__employee col-11	col-sm-9 col-md-7 col-lg-6 col-xl-5 col-xxl-5">
             <h2 class="text-center mb-4">Đăng kí tài khoản</h2>
                 <h4 class="mb-3">Thông tin đăng nhập</h4>
                 <div class="input-group mb-4">

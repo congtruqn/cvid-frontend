@@ -2,7 +2,7 @@
     <div id="login">
         <form>
             <h1>Sign In</h1>
-            <input type="text" v-model="email" placeholder="Username">
+            <input type="text" v-model="email" placeholder="Email">
 	        <input type="password"  v-model="password" placeholder="Password">
 	        <button type="submit" class="btn btn-default" @click="handleSubmit">Sign in</button>
         </form>
