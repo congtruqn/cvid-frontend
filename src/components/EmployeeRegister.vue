@@ -1,13 +1,25 @@
 <template>
-    <div id="register">
-        <form>
-            <h1>Đăng kí</h1>
-                <input type="text" v-model="firstname" placeholder="Họ" /><br/><br/>
-                <input type="text" v-model="lastname" placeholder="Tên" /><br/><br/>
-                <input type="email" v-model="email" placeholder="Email"><br/><br/>
-                <input type="password"  v-model="password" placeholder="Mật khẩu"><br/><br/>
-                <input type="password"  v-model="password2" placeholder="Xác nhận mật khẩu"><br/><br/>
-	        <button type="submit" class="btn btn-default" @click="handleSubmit">Đăng kí</button>
+    <div id="register" class="">
+        <form class="register-form__employee col-11	col-sm-9 col-md-7 col-lg-6	col-xl-5 col-xxl-4">
+            <h3 class="mb-4">Đăng kí</h3>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Họ và Tên</span>
+                    <input type="text" v-model="lastname" class="form-control" placeholder="Họ">
+                    <input type="text" v-model="firstname" class="form-control" placeholder="Tên">
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Email</span>
+                    <input type="email" v-model="email" class="form-control" placeholder="Email">
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Mật khẩu</span>
+                    <input type="password" v-model="password" class="form-control" placeholder="Mật khẩu">
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Nhập lại mật khẩu</span>
+                    <input type="password" v-model="password2" class="form-control" placeholder="Nhập lại mật khẩu">
+                </div>
+	        <button type="submit" class="btn btn-primary float-right" @click="handleSubmit">Đăng kí</button>
         </form>
     </div>
 </template>
