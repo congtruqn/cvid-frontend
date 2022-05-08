@@ -43,7 +43,13 @@
                         }
                     })
                     .catch(function (error) {
-                        console.error(error.response);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Đăng nhập thất bại',
+                            text: 'Vui lòng kiểm tra lại thông tin đăng nhập',
+                            confirmButtonColor: 'var(--primary)',
+                            confirmButtonText: 'Nhập lại',
+                        });
                     });
                 }
             }

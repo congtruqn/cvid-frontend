@@ -1,39 +1,43 @@
 <template>
     <div id="register">
         <form>
-            <h1>Register</h1>
-            
-                <p v-if="errors.length > 0">{{errors[0].msg}}</p>
-                <input type="text" v-model="name" placeholder="Tên doanh nghiệp" /><br/><br/>
-                <input type="text" v-model="MST" placeholder="Mã số thuế" /><br/><br/>
+            <h1>Đăng kí tài khoản nhà tuyển dụng</h1>
+                <h3>Thông tin đăng nhập</h3>
+                <label>Email</label>
                 <input type="email" v-model="email" placeholder="Email"><br/><br/>
+                <label>Mật khẩu</label>
+                <input type="password"  v-model="password" placeholder="Mật khẩu"><br/><br/>
+                <label>Xác nhận mật khẩu</label>
+                <input type="password"  v-model="password2" placeholder="Xác nhận mật khẩu"><br/><br/>
+                <h3>Thông tin doanh nghiệp</h3>
+                <label>Tên doanh nghiệp</label>
+                <input type="text" v-model="name" placeholder="Tên doanh nghiệp" /><br/><br/>
+                <label>Mã số thuế</label>
+                <input type="text" v-model="MST" placeholder="Mã số thuế" /><br/><br/>
+                <label>Địa điểm</label>
                 <select v-model="province">
                     <option disabled value="">Chọn Tỉnh/Thành Phố</option>
-                    <option v-for="province in provinces" :value=[province.Id,province.Name]>{{province.Name}}</option>
+                    <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
                 </select>
-                <br/><br/>
-                
                 <select v-model="district">
                     <option disabled value="">Chọn Quận/Huyện</option>
-                    <option v-for="district in districts" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
+                    <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
                 </select> 
                 <br/><br/>  
                 
                 <label>Nghành nghề kinh doanh</label>
-                <div v-for="major in list_major">
-                    <input  type="checkbox" :value=major.name v-model="majors">
+                
+                <div v-for="major in list_major" :key="major.name">
                     <label>{{major.name}}</label>
-                    
-                    <!-- <div v-for="skill in major.skills">
-                        <input  type="checkbox" :value=skill.name v-model="skills">
+                    <div v-for="skill in major.skills" :key="skill.name">
+                        <input type="checkbox" v-model="majors" :value=[major.name,skill.name]>
                         <label>{{skill.name}}</label>
-                    </div> -->
+                    </div>
                 </div> 
                 
                 <br><br>
-                <input type="password"  v-model="password" placeholder="Password"><br/><br/>
-                <input type="password"  v-model="password2" placeholder="Confirm Password"><br/><br/>
-	        <button type="submit" class="btn btn-default" @click="handleSubmit">Register</button>
+                
+	        <button type="submit" class="btn btn-default" @click="handleSubmit">Đăng kí</button>
         </form>
     </div>
 </template>
@@ -51,7 +55,6 @@
                 email : "",
                 password : "",
                 password2 : "",
-                errors : [],
                 provinces: [],
                 districts: [],
                 list_major: [],
@@ -72,10 +75,27 @@
                 })
                 .then(response => {
                     if (response.data == 'ok'){
-                        this.$router.push('/login')
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Đăng kí thành công',
+                            text: 'Bạn có thể đăng nhập ngay bây giờ',
+                            confirmButtonColor: 'var(--primary)',
+                            confirmButtonText: 'Đăng nhập',
+                        }).then((result) => {
+                            if (result.value) {
+                                this.$router.push('/login')
+                            }
+                        })
                     }
                     else {
-                        this.errors = response.data;
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Đăng kí thất bại',
+                            text: `${response.data[0].msg}`,
+                            confirmButtonColor: 'var(--primary)',
+                            confirmButtonText: 'Nhập lại',
+                            confirmButtonClass: 'btn btn-primary',
+                        });
                     }
                 })
                 .catch(function (error) {
@@ -87,6 +107,7 @@
             this.$http.get(`${BASE_URL}/province/list`)
             .then(response => {
                 this.provinces = response.data;
+                console.log(this.provinces)
             })
             .catch(function (error) {
                 console.error(error.response);
@@ -105,6 +126,9 @@
                 this.district = "";
                 this.districts = this.provinces.find(province => province.Id === newVal[0]).Districts;
                 
+            },
+            majors(newVal){
+                console.log(newVal);
             }
        
         }
