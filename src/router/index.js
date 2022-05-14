@@ -40,6 +40,15 @@ let router = new Router({
             guest: true,
             layout: 'Default'
         }
+    },
+    {
+        path: '/create-cv',
+        name: 'createcv',
+        component: () => import('@/components/CreateCV'),
+        meta: {
+            guest: true,
+            layout: 'Default'
+        }
     }
   ]
 })

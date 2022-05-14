@@ -37,7 +37,15 @@
                                     this.$router.push(this.$route.params.nextUrl)
                                 }
                                 else {
-                                    this.$router.push('listproject');
+                                    var user = JSON.parse(localStorage.getItem('user'))
+                                    if(user.type == 4){
+                                        this.$router.push('/create-cv')
+                                    }
+                                    else {
+                                        this.$router.push('/listproject')
+                                    }
+
+                                    //this.$router.push('listproject');
                                 }
                             }                 
                         }

@@ -1,8 +1,7 @@
 <template>
     <div id="register" class="container ">
-        <h3>Đăng ký tài khoản</h3>
+        <h3 class="text-center mb-4">Đăng ký tài khoản</h3>
         <form class="row g-3 needs-validation">
-            <!-- <h3 class="mb-4">Đăng kí tài khoản</h3> -->
                 <div class="col-md-6">
                     <label class="form-label">Họ và tên</label>
                     <input type="text" class="form-control" v-model="name" required>
