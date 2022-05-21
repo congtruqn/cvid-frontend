@@ -54,7 +54,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Đăng nhập thất bại',
-                            text: 'Vui lòng kiểm tra lại thông tin đăng nhập',
+                            text: error.response.data.massage,
                             confirmButtonColor: 'var(--primary)',
                             confirmButtonText: 'Nhập lại',
                         });
