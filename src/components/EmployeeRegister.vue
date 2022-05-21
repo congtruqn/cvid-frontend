@@ -148,7 +148,7 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Đăng kí thành công',
-                            text: 'Bạn có thể đăng nhập ngay bây giờ',
+                            text: 'Xác minh email để kích hoạt tài khoản',
                             confirmButtonColor: 'var(--primary)',
                             confirmButtonText: 'Đăng nhập',
                         }).then((result) => {
