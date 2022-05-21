@@ -137,7 +137,7 @@
         data(){
             return {
                 name: '',
-
+                address: '',
             }
         },
         methods : {
