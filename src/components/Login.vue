@@ -1,10 +1,39 @@
 <template>
     <div id="login">
-        <form>
-            <h1>Sign In</h1>
-            <input type="text" v-model="email" placeholder="Email">
-	        <input type="password"  v-model="password" placeholder="Password">
-	        <button type="submit" class="btn btn-default" @click="handleSubmit">Sign in</button>
+        <h3 class="text-center mb-4">Đăng nhập</h3>
+        <form class="row g-3 needs-validation">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <label class="form-label">Tên đăng nhập</label>
+                <input @focus="focus" type="text" class="form-control" v-model="username" required placeholder="Tên đăng nhập" minlength="9">
+                <div class="invalid-feedback">
+                    CMND/CCCD đối với người lao động.<br/>
+                    Mã số thuế đối với doanh nghiệp.
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <label class="form-label">Mật khẩu</label>
+                <input @focus="focus" type="password" class="form-control" v-model="password" required placeholder="Mật khẩu">
+            </div>
+
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary w-100" @click="handleSubmit">Đăng nhập</button>
+                <div class="float-right">
+                    Chưa có tài khoản? <br>
+                    <a href="employee/register">Đăng kí cho người lao động</a><br>
+                    <a href="business/register">Đăng kí cho doanh nghiệp</a>
+                </div>
+            </div>
+
+            
+            
+                
+            
+	        
         </form>
     </div>
 </template>
@@ -13,7 +42,7 @@
     export default {
         data(){
             return {
-                email : "",
+                username : "",
                 password : ""
             }
         },
@@ -22,7 +51,7 @@
                 e.preventDefault()
                 if (this.password.length > 0) {
                     this.$http.post(`${BASE_URL}/user/login`, {
-                        username: this.email,
+                        username: this.username,
                         password: this.password
                     })
                     .then(response => {
@@ -60,7 +89,11 @@
                         });
                     });
                 }
+            },
+            focus(){
+                document.querySelectorAll('.needs-validation')[0].classList.add('was-validated')
             }
         }
+        
     }
 </script>
