@@ -1,55 +1,60 @@
 <template>
-    <div id="register">
-        <form class="register-form__employee col-11	col-sm-9 col-md-7 col-lg-6 col-xl-5 col-xxl-5">
-            <h2 class="text-center mb-4">Đăng kí tài khoản</h2>
-                <h4 class="mb-3">Thông tin đăng nhập</h4>
-                <div class="input-group mb-4">
-                    <span class="input-group-text">Email</span>
-                    <input type="email" v-model="email" class="form-control" placeholder="Email">
+    <div id="register" class="container">
+        <form class="row g-3 needs-validation">
+            <h2 class="text-center mb-4">Đăng kí tài khoản cho doanh nghiệp</h2>
+                <div class="col-md-4">
+                    <label class="form-label">Tên doanh nghiệp</label>
+                    <input @click="focus" type="text" class="form-control" v-model="name" required>
+                    <div class="invalid-feedback">
+                        Vui lòng nhập tên doanh nghiệp.
+                    </div>
                 </div>
-                <div class="input-group mb-4">
-                    <span class="input-group-text">Mật khẩu</span>
-                    <input type="password" v-model="password" class="form-control" placeholder="Mật khẩu">
+
+                <div class="col-md-3">
+                    <label class="form-label">Mã số thuế</label>
+                    <input @click="focus" type="text" class="form-control" v-model="MST" required>
+                    <div class="invalid-feedback">
+                        Mã này sẽ được sử dụng để đăng nhập. Không thể thay đổi vui lòng nhập chính xác!
+                    </div>
                 </div>
-                <div class="input-group mb-4">
-                    <span class="input-group-text">Nhập lại mật khẩu</span>
-                    <input type="password" v-model="password2" class="form-control" placeholder="Nhập lại mật khẩu">
+                <div class="col-md-5">
+                    <label class="form-label">Email</label>
+                    <input @click="focus" type="email" class="form-control" v-model="email" required>
+                    <div class="invalid-feedback">
+                        Vui lòng nhập email.
+                    </div>
                 </div>
-                
-                <h4 class="mb-3">Thông tin doanh nghiệp</h4>
-                <div class="input-group mb-4">
-                    <span class="input-group-text">Tên doanh nghiệp</span>
-                    <input type="text" v-model="name" class="form-control" placeholder="Tên doanh nghiệp">
+
+                <div class="col-md-6">
+                    <label class="form-label">Địa chỉ</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                        <select @click="focus" class="form-control" v-model="province" required>
+                            <option value="" disabled>Chọn tỉnh/thành phố</option>
+                            <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
+                        </select>
+                        </div>
+                        <div class="col-md-6">
+                            <select @click="focus" class="form-control" v-model="district" required>
+                                <option value="" disabled>Chọn quận/huyện</option>
+                                <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group mb-4">
-                    <span class="input-group-text">Mã số thuế</span>
-                    <input type="text" v-model="MST" class="form-control" placeholder="Mã số thuế">
+                <div class="col-md-6">
+                    <label class="form-label">Nghành nghề kinh doanh</label>
+                    <input @click="focus" type="text" class="form-control" v-model="major" required placeholder="Số nhà, tên đường">
                 </div>
-                <div class="input-group mb-4">
-                    <span class="input-group-text">Địa chỉ</span>
-                    <select class="form-select" v-model="province">
-                        <option disabled value="">Chọn tỉnh/thành phố</option>
-                        <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
-                    </select>
-                    <select class="form-select" v-model="district">
-                        <option disabled value="">Chọn quận/huyện</option>
-                        <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
-                    </select>
+
+                <div class="col-md-4">
+                    <label class="form-label">Mật khẩu</label>
+                    <input @click="focus" type="password" class="form-control" v-model="password" required>
                 </div>
-                <div class="input-group mb-4">
-                    <span class="input-group-text">Nghành nghề</span>
-                    <button class="btn btn-light dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="input-group__major">Đã chọn {{majors.length}} nghành nghề</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu__major">
-                        <li v-for="major in list_major" :key="major.name">
-                            <span class="input-group-text">{{major.name}}</span>
-                            <div v-for="skill in major.skills" :key="skill.name">
-                                <input type="checkbox" :id="skill.name" class="form-check-input" v-model="majors" :value=[major.name,skill.name]>
-                                <label class="form-check-label" :for="skill.name">{{skill.name}}</label>
-                            </div>
-                        </li>
-                    </ul>
+
+                <div class="col-md-4">
+                    <label class="form-label">Nhập lại mật khẩu</label>
+                    <input @click="focus" type="password" class="form-control" v-model="password2" required>
                 </div>
                 
 	        <button type="submit" class="btn btn-primary" @click="handleSubmit">Đăng kí</button>
@@ -66,13 +71,13 @@
                 MST: "",
                 province: "",
                 district: "",
-                majors: [],
+                major: "",
                 email : "",
                 password : "",
                 password2 : "",
                 provinces: [],
                 districts: [],
-                list_major: [],
+               
             }
         },
         methods : {
@@ -83,7 +88,7 @@
                     MST: this.MST,
                     province: this.province,
                     district: this.district,
-                    majors: this.majors,
+                    major: this.major,
                     email: this.email,
                     password: this.password,
                     password2: this.password2
@@ -115,6 +120,9 @@
                 .catch(function (error) {
                     console.error(error.response);
                 });
+            },
+            focus(){
+                document.querySelectorAll('.needs-validation')[0].classList.add('was-validated')
             }
         },
         created(){
@@ -126,13 +134,7 @@
                 console.error(error.response);
             });
 
-            this.$http.get(`${BASE_URL}/major/list`)
-            .then(response => {
-                this.list_major = response.data;
-            })
-            .catch(function (error) {
-                console.error(error.response);
-            });
+            
         },
         watch : {
             province(newVal){
@@ -140,10 +142,7 @@
                 this.districts = this.provinces.find(province => province.Id === newVal[0]).Districts;
                 
             },
-            majors(newVal){
-                console.log(newVal);
-            }
-       
+
         }
     }
 </script>

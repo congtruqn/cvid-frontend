@@ -1,6 +1,6 @@
 <template>
-    <div id="register" class="container ">
-        <h3 class="text-center mb-4">Đăng ký tài khoản</h3>
+    <div id="register" class="container">
+        <h3 class="text-center mb-4">Đăng ký tài khoản CVID</h3>
         <form class="row g-3 needs-validation">
                 <div class="col-md-6">
                     <label class="form-label">Họ và tên</label>
@@ -10,10 +10,10 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Số CMND/CCCD</label>
-                    <input @click="focus" type="text" class="form-control" pattern="[0-9]{9}|[0-9]{12}" v-model="username" required >
+                    <label class="form-label">Số CCCD/Hộ chiếu/SĐT</label>
+                    <input @click="focus" type="text" class="form-control" minlength="9" v-model="username" required >
                     <div class="invalid-feedback">
-                    Số CMND/CCCD phải có 9 hoặc 12 số.
+                        Số này sẽ được sử dụng để đăng nhập. Vui lòng nhập chính xác!
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -45,45 +45,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label class="form-label">Cấp bậc</label>
                     <select @click="focus" class="form-control" v-model="level" required>
                         <option value="" disabled>Chọn cấp bậc</option>
-                        <option value="Cử nhân">Cử nhân</option>
+                        <option value="Sơ cấp">Sơ cấp</option>
                         <option value="Trung cấp">Trung cấp</option>
                         <option value="Cao đẳng">Cao đẳng</option>
                         <option value="Đại học">Đại học</option>
-                        <option value="Thạc sĩ">Thạc sĩ</option>
-                        <option value="Tiến sĩ">Tiến sĩ</option>
+                        <option value="Trên đại học">Trên đại học</option>
+                       
                     </select>
                     <div class="invalid-feedback">
                         Vui lòng chọn cấp bậc.
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label">Chuyên môn</label>
-                    <input @click="focus" type="text" class="form-control" v-model="specialty" required>
+                <div class="col-md-5">
+                    <label class="form-label">Ngành nghề</label>
+                    <select @click="focus" class="form-control" v-model="major" required>
+                        <option value="" disabled>Chọn ngành nghề</option>
+                        <option v-for="major in majors" :key="major.code" :value="major.name">{{major.name}}</option>     
+                    </select>
                     <div class="invalid-feedback">
-                    Chuyên môn không được để trống.
+                        Vui lòng chọn nghành nghề.
                     </div>
-                </div>
-
-                <div class="col-12">
-                    <label class="form-label">Kinh nghiệm <span v-if="total_experience != 0">{{total_experience}} tháng</span></label>
-                    <div class="mb-6 row">
-                        <label class="col-md-2 col-form-label">Tháng bắt đầu</label>
-                        <div class="col-md-3">
-                        <input @click="focus" type="month" class="form-control" v-model="experience[0]" :max="experience[1]" required>
-                        </div>
-                        <div class="col-md-1"></div>
-                        <label class="col-md-2 col-form-label">Tháng kết thúc</label>
-                        <div class="col-md-3">
-                        <input @click="focus" type="month" class="form-control" v-model="experience[1]" :min="experience[0]" :max="new Date().toISOString().substr(0, 7)" required>
-                        </div>
+                </div>         
+                <div class="col-md-4">
+                    <label class="form-label">Chuyên nghành</label>
+                    <select @click="focus" class="form-control" v-model="skill" required>
+                        <option value="" disabled>Chọn ngành nghề</option>
+                        <option v-for="skill in skills" :key="skill.code" :value='skill.name'>{{skill.name}}</option>
+                        
+                    </select>
+                    <div class="invalid-feedback">
+                        Vui lòng chọn chuyên nghành.
                     </div>
-                </div>
-                
-
+                </div>       
                 <div class="col-md-5">
                     <label class="form-label">Mật khẩu</label>
                     <input @click="focus" type="password" class="form-control" v-model="password" required minlength="6">
@@ -117,12 +114,15 @@
                 province : "",
                 district : "",
                 address : "",
-                specialty : "",
-                experience : ["",""],
-                total_experience : 0,
+                major : "",
+                skill : "",
                 password : "",
                 password2 : "",
                 provinces: [],
+                districts: [],
+                listMajor: [],
+                majors: [],
+                skills: [],
             }
         },
         methods : {
@@ -137,8 +137,8 @@
                     province : this.province,
                     district : this.district,
                     address : this.address,
-                    specialty : this.specialty,
-                    experience : this.experience,
+                    major : this.major,
+                    skill : this.skill,
                     password : this.password,
                     password2 : this.password2,
 
@@ -185,19 +185,33 @@
                 console.error(error.response);
             });
 
+            this.$http.get(`${BASE_URL}/major/list`)
+            .then(response => {
+                this.listMajor = response.data;
+                console.log(this.listMajor)
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
+            
         },
         watch : {
             province(newValue){
                 this.district = "";
                 this.districts = this.provinces.find(province => province.Id === newValue[0]).Districts;
+                console.log(this.major)
             },
-            experience(newValue){
-                if (newValue !== ""){
-                    if (this.experience[1] !== "" && this.experience[0] !== ""){
-                        this.total_experience = Math.round(new Date(this.experience[1]).getTime()/1000/60/60/24/30) - Math.round(new Date(this.experience[0]).getTime()/1000/60/60/24/30)
-                    }
-                }
+            level(newValue){
+                this.major = "";
+                this.skill = "";
+                this.majors = this.listMajor.find(major => major.level === newValue).majors;
+                this.skills = [];
+            },
+            major(newValue){
+                this.skill = "";
+                this.skills = this.majors.find(major => major.name === newValue).skills;
             }
+            
         }
     }
 </script>

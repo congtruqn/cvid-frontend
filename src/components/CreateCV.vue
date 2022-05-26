@@ -1,9 +1,25 @@
 <template>
     <div id="create-cv" class="container">
+        <h2 class="text-center mb-4">CVID</h2>
         <form class="row g-3 needs-validation">
-            <h2 class="text-center mb-4">Sơ yếu lý lịch</h2>
-            <h3 class="mb-3">{{name}}</h3>
-            <hr>
+            <div class="box-infor row col-md-11">
+                <h4>{{infor.name}}</h4>
+                <div class="col-md-5">
+                    <p><i class="bi bi-geo-alt"></i> {{infor.address + ', ' + infor.district.Name + ', ' + infor.province.Name}}</p>
+                    <p><i class="bi bi-envelope"></i> {{infor.email}}</p>
+                    <p><i class="bi bi-calendar"></i> {{infor.birthdate}}</p>
+                </div>
+                <div class="col-md-6">
+                    <p>Cấp bậc: {{infor.level}}</p>
+                    <p>Ngành: {{infor.major}}</p>
+                    <p>Chuyên nghành: {{infor.skill}}</p>
+                </div>
+            </div>
+                
+            
+            <div class="col-md-8">
+
+            </div>
             <h4>Năng lực</h4>
             <div class="col-md-5">
                     <label class="form-label">Chuyên nghành</label>
@@ -154,6 +170,19 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td colspan="4">
+                                Tiêu chí đánh giá
+                                </td>
+                            </tr>
+                            <tr v-for="index in 10" :key="index" >
+                                <td colspan="3">
+                                    {{index}}. Tính trung thực của nhân viên
+                                </td>
+                                <td>
+                                    <input/>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="5">
                                     <button @click="addJob" type="button" class="btn btn-primary w-auto">Thêm hàng</button>
                                     <button @click="delJob" type="button" class="btn btn-primary w-auto">Xóa hàng</button>
@@ -185,6 +214,7 @@
     export default {  
         data(){
             return {
+                infor: '',
                 name: user.name,
                 address: '',
                 degree: {
@@ -230,22 +260,36 @@
             
       
         },
-        // created(){
-        //     // this.$http.post(`${BASE_URL}/employee/get-resume`, {
-        //     //     id: JSON.parse(localStorage.getItem('user')).username
-        //     // })
-        //     // .then(response => {
-        //     //     if(response.data.resume){
-        //     //         this.$router.push('/listproject')
-        //     //     }
-        //     // })
-        //     // .catch(function (error) {
-        //     //     console.log(error)
-        //     // });
+        created(){
+            this.infor = JSON.parse(localStorage.getItem('user'))
+            this.infor.birthdate = this.infor.birthdate.split('T')[0]
+            // this.$http.post(`${BASE_URL}/employee/get-resume`, {
+            //     id: JSON.parse(localStorage.getItem('user')).username
+            // })
+            // .then(response => {
+            //     if(response.data.resume){
+            //         this.$router.push('/listproject')
+            //     }
+            // })
+            // .catch(function (error) {
+            //     console.log(error)
+            // });
             
-        // },
+        },
         watch : {
             
         }
     }
 </script>
+<style scoped>
+    .box-infor{
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        position: relative;
+        
+        transform: translateX(5%);
+        margin-bottom: 10px;
+        padding: 10px;
+        box-shadow: 2px 4px 8px #ccc;
+    }
+</style>
