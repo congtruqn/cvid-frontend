@@ -49,7 +49,8 @@ let router = new Router({
             guest: true,
             layout: 'Default'
         }
-    }
+    },
+
   ]
 })
 router.beforeEach((to, from, next) => {

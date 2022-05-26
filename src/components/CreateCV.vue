@@ -1,8 +1,8 @@
 <template>
     <div id="create-cv" class="container">
         <h2 class="text-center mb-4">CVID</h2>
-        <form class="row g-3 needs-validation">
-            <div class="box-infor row col-md-11">
+        <form class="row g-3 needs-validation box-infor">
+            <div class="row col-md-11">
                 <h4>{{infor.name}}</h4>
                 <div class="col-md-5">
                     <p><i class="bi bi-geo-alt"></i> {{infor.address + ', ' + infor.district.Name + ', ' + infor.province.Name}}</p>
@@ -23,19 +23,19 @@
             <h4>Năng lực</h4>
             <div class="col-md-5">
                     <label class="form-label">Chuyên nghành</label>
-                    <input type="text" class="form-control" v-model="address">
+                    <input type="text" class="form-control" v-model="profession">
                 </div>
             <div class="col-md-6">
                 <label class="form-label">Chứng chỉ hành nghề </label>
-                <input type="text" class="form-control" v-model="address" >     
+                <input type="text" class="form-control" v-model="peRegistration" >     
             </div>
             <div class="col-md-3">
                     <label class="form-label">Mã số chứng chỉ</label>
-                    <input type="text" class="form-control" v-model="address" >
+                    <input type="text" class="form-control" v-model="peNumber" >
                 </div>
             <div class="col-md-2">
                 <label class="form-label">Số năm làm nghề</label>
-                <input type="text" class="form-control" v-model="address" >
+                <input type="text" class="form-control" v-model="lengthOfEmployment" >
             </div>
 
             <h4>Bằng cấp, chứng chỉ</h4>
@@ -63,21 +63,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="index in parseInt(numberDegree)" :key='index'>
+                            <tr v-for="degree in degrees">
                                 <td>
-                                    <input type="text" v-model='degree.name' class="form-control"   />
+                                    <input type="text" v-model='degree.name' class="form-control"/>
                                 </td>
                                 <td>
                                 <input type="text" v-model='degree.major'  class="form-control"/>
                                 </td>
                                 <td>
-                                <input type="text" v-model='degree.university'  class="form-control"/>
+                                <input type="text" v-model='degree.school' class="form-control"/>
                                 </td>
                                 <td>
                                 <input type="number" v-model='degree.year' class="form-control"/>
                                 </td>
                                 <td>
-                                <input type="text" v-model='degree.certificate' class="form-control" />
+                                <input type="text" v-model='degree.ref' class="form-control" />
                                 </td>
                             </tr>
                             <tr>
@@ -110,7 +110,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="index in parseInt(numberSkill)" :key='index'>
+                            <tr v-for="skill in skills">
                                 <td>
                                     <input type="text" v-model='skill.name' class="form-control"   />
                                 </td>
@@ -118,7 +118,7 @@
                                 <input type="text" v-model='skill.school'  class="form-control"/>
                                 </td>
                                 <td>
-                                <input type="number" v-model='degree.year' class="form-control"/>
+                                <input type="number" v-model='skill.year' class="form-control"/>
                                 </td>
                             </tr>
                             <tr>
@@ -138,70 +138,90 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center" :style="{ minWidth: '50px' }">
-                                    Từ
-                                </th>
-                                <th class="text-center" :style="{ minWidth: '50px' }">
-                                    Đến
-                                </th>
                                 <th class="text-center" :style="{ minWidth: '400px' }">
                                     Cơ quan công tác
                                 </th>
                                 <th class="text-center" :style="{ minWidth: '600px' }">
                                     Vị trí và Nhiệm vụ 
                                 </th>
+                                <th class="text-center" :style="{ minWidth: '100px' }">
+                                    Từ
+                                </th>
+                                <th class="text-center" :style="{ minWidth: '100px' }">
+                                    Đến
+                                </th>
                                 
                                 
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr v-for="index in parseInt(numberJob)" :key='index'>
+                        <tbody v-for="job in jobs">
+                            <tr >
                                 <td>
-                                    <input type="text" v-model='skill.name' class="form-control"   />
+                                    <input type="text" v-model='job.name' class="form-control"   />
                                 </td>
                                 <td>
-                                <input type="text" v-model='skill.school'  class="form-control"/>
+                                <input type="text" v-model='job.position'  class="form-control"/>
                                 </td>
                                 <td>
-                                <input type="number" v-model='degree.year' class="form-control"/>
+                                <input type="number" v-model='job.from' class="form-control"/>
                                 </td>
                                 <td>
-                                <input type="number" v-model='degree.year' class="form-control"/>
+                                <input type="number" v-model='job.to' class="form-control"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                Tiêu chí đánh giá
+                                </td>
+                                <td colspan="2">
+                                Điểm đánh giá
+                                </td>
+                            </tr>
+                            <tr v-for="(item, index1) in criteria" :key="index1" >
+                                <td colspan="2">
+                                    {{index1+1}}. {{item.name}}
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" v-model='job.point[index1]' class="form-control"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    Chỉ số KPI đạt được
+                                </td>
+                                <td colspan="4" class="">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Quý 1</span>
+                                        <input type="text" v-model="job.KPI[0]" class="form-control">
+                                        <span class="input-group-text">Quý 2</span>
+                                        <input type="text" v-model="job.KPI[1]" class="form-control">
+                                        <span class="input-group-text">Quý 3</span>
+                                        <input type="text" v-model="job.KPI[2]" class="form-control">
+                                        <span class="input-group-text">Quý 4</span>
+                                        <input type="text" v-model="job.KPI[3]" class="form-control">
+                                        <span class="input-group-text">Năm</span>
+                                        <input type="text" v-model="job.KPI[4]" class="form-control">
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="4">
-                                Tiêu chí đánh giá
+                                    <input class="form-check-input" type="checkbox" id="invalidCheck" >
+                                    <label class="form-check-label" for="invalidCheck">
+                                        Bạn đã hoàn thành nhiệm vụ đúng theo luật lao động quy định không?
+                                    </label>
                                 </td>
                             </tr>
-                            <tr v-for="index in 10" :key="index" >
-                                <td colspan="3">
-                                    {{index}}. Tính trung thực của nhân viên
-                                </td>
-                                <td>
-                                    <input/>
-                                </td>
-                            </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td colspan="5">
-                                    <button @click="addJob" type="button" class="btn btn-primary w-auto">Thêm hàng</button>
-                                    <button @click="delJob" type="button" class="btn btn-primary w-auto">Xóa hàng</button>
+                                    
                                 </td>
                                 
-                            </tr>
+                            </tr> -->
                         </tbody>
+                        <button @click="addJob" type="button" class="btn btn-primary w-auto me-4 m-3">Thêm hàng</button>
+                        <button @click="delJob" type="button" class="btn btn-primary w-auto m-3">Xóa hàng</button>
                     </table>
-                </div>
-            </div>
-            <div class="col-12">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" >
-                <label class="form-check-label" for="invalidCheck">
-                    Bạn đã hoàn thành nhiệm vụ đúng theo luật lao động quy định không?
-                </label>
-                <div class="invalid-feedback">
-                    You must agree before submitting.
-                </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary" @click="handleSubmit">Submit</button>
@@ -215,47 +235,74 @@
         data(){
             return {
                 infor: '',
-                name: user.name,
-                address: '',
-                degree: {
+                profession: '',
+                peRegistration: '',
+                peNumber: '',
+                lengthOfEmployment: '',
+                degrees: [{
                     name: '',
                     major: '',
-                    university: '',
+                    school: '',
                     year: '',
-                    certificate: '',
-                },
-                skill: {
+                    ref: ''
+                }],
+                skills: [{
                     name: '',
                     school: '',
                     year: '',
-                },
-                numberSkill: 1,
-                numberDegree: 1,
-                numberJob: 1,
+                }],
+                jobs: [{
+                    name: '',
+                    position: '',
+                    from: '',
+                    to: '',
+                    point: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    KPI: ['','','','','']
+                }],
+                
+                criteria: '',
             }
         },
         methods : {
             handleSubmit(e){
                 e.preventDefault()
-                console.log(this.degree)
+                console.log(this.jobs)
             },
             addDegree(){
-                this.numberDegree++;
+                this.degrees.push({
+                    name: '',
+                    major: '',
+                    school: '',
+                    year: '',
+                    ref: '',
+                });
             },
             delDegree(){
-                this.numberDegree > 1 ? this.numberDegree-- : this.numberDegree = 1;
+                this.degrees.pop();
             },
             addSkill(){
-                this.numberSkill++;
+                this.skills.push({
+                    name: '',
+                    school: '',
+                    year: '',
+                });
+                console.log(this.skills)
             },
             delSkill(){
-                this.numberSkill > 1 ? this.numberSkill-- : this.numberSkill = 1;
+                this.skills.pop();
             },
             addJob(){
-                this.numberJob++;
+                this.jobs.push({
+                    name: '',
+                    position: '',
+                    from: '',
+                    to: '',
+                    point: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    KPI: ['','','','','']
+                });
             },
             delJob(){
-                this.numberJob > 1 ? this.numberJob-- : this.numberJob = 1;
+                this.jobs.pop();
             }
             
       
@@ -263,6 +310,10 @@
         created(){
             this.infor = JSON.parse(localStorage.getItem('user'))
             this.infor.birthdate = this.infor.birthdate.split('T')[0]
+            this.$http.get(`${BASE_URL}/criteria/getall`).then(res => {
+                this.criteria = res.data;
+            })
+            
             // this.$http.post(`${BASE_URL}/employee/get-resume`, {
             //     id: JSON.parse(localStorage.getItem('user')).username
             // })
@@ -277,6 +328,8 @@
             
         },
         watch : {
+           
+            
             
         }
     }
@@ -287,8 +340,8 @@
         border-radius: 5px;
         position: relative;
         
-        transform: translateX(5%);
-        margin-bottom: 10px;
+        
+        margin: 10px;
         padding: 10px;
         box-shadow: 2px 4px 8px #ccc;
     }

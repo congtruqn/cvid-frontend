@@ -10,10 +10,10 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Số CCCD/Hộ chiếu/SĐT</label>
+                    <label class="form-label">Số CVID</label>
                     <input @click="focus" type="text" class="form-control" minlength="9" v-model="username" required >
                     <div class="invalid-feedback">
-                        Số này sẽ được sử dụng để đăng nhập. Vui lòng nhập chính xác!
+                        Nhập số CVID là số CMND/CCCD/Hộ chiếu/Số điện thoại
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -41,7 +41,7 @@
                         </div>
                             
                         <div class="col-md-6">
-                            <input @click="focus" type="text" class="form-control" v-model="address" required placeholder="Số nhà, tên đường">
+                            <input @click="focus" type="text" class="form-control" v-model="address" required placeholder="Số nhà, tên đường, Quận/Xã">
                         </div>
                     </div>
                 </div>
