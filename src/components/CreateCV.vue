@@ -4,7 +4,7 @@
         <form class="row g-3 needs-validation box-infor">
             <div class="row col-md-11">
                 <h4>{{infor.name}}</h4>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <p><i class="bi bi-geo-alt"></i> {{infor.address + ', ' + infor.district.Name + ', ' + infor.province.Name}}</p>
                     <p><i class="bi bi-envelope"></i> {{infor.email}}</p>
                     <p><i class="bi bi-calendar"></i> {{infor.birthdate}}</p>
@@ -20,24 +20,6 @@
             <div class="col-md-8">
 
             </div>
-            <h4>Năng lực</h4>
-            <div class="col-md-5">
-                    <label class="form-label">Chuyên nghành</label>
-                    <input type="text" class="form-control" v-model="profession">
-                </div>
-            <div class="col-md-6">
-                <label class="form-label">Chứng chỉ hành nghề </label>
-                <input type="text" class="form-control" v-model="peRegistration" >     
-            </div>
-            <div class="col-md-3">
-                    <label class="form-label">Mã số chứng chỉ</label>
-                    <input type="text" class="form-control" v-model="peNumber" >
-                </div>
-            <div class="col-md-2">
-                <label class="form-label">Số năm làm nghề</label>
-                <input type="text" class="form-control" v-model="lengthOfEmployment" >
-            </div>
-
             <h4>Bằng cấp, chứng chỉ</h4>
 
             <div class="row clearfix">
@@ -63,7 +45,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="degree in degrees">
+                            <tr v-for="degree in degrees" >
                                 <td>
                                     <input type="text" v-model='degree.name' class="form-control"/>
                                 </td>
@@ -139,10 +121,10 @@
                         <thead>
                             <tr>
                                 <th class="text-center" :style="{ minWidth: '400px' }">
-                                    Cơ quan công tác
+                                    Tên công ty
                                 </th>
                                 <th class="text-center" :style="{ minWidth: '600px' }">
-                                    Vị trí và Nhiệm vụ 
+                                    Chức vụ 
                                 </th>
                                 <th class="text-center" :style="{ minWidth: '100px' }">
                                     Từ
@@ -154,8 +136,8 @@
                                 
                             </tr>
                         </thead>
-                        <tbody v-for="job in jobs">
-                            <tr >
+                        <tbody >
+                            <tr v-for="job in jobs">
                                 <td>
                                     <input type="text" v-model='job.name' class="form-control"   />
                                 </td>
@@ -169,12 +151,14 @@
                                 <input type="number" v-model='job.to' class="form-control"/>
                                 </td>
                             </tr>
+                                <button @click="addJob" type="button" class="btn btn-primary w-auto me-4 m-3">Thêm hàng</button>
+                                <button @click="delJob" type="button" class="btn btn-primary w-auto m-3">Xóa hàng</button>
                             <tr>
                                 <td colspan="2">
                                 Tiêu chí đánh giá
                                 </td>
                                 <td colspan="2">
-                                Điểm đánh giá
+                                Điểm đánh giá (1-10)
                                 </td>
                             </tr>
                             <tr v-for="(item, index1) in criteria" :key="index1" >
@@ -182,7 +166,7 @@
                                     {{index1+1}}. {{item.name}}
                                 </td>
                                 <td colspan="2">
-                                    <input type="number" v-model='job.point[index1]' class="form-control"/>
+                                    <input type="number" v-model='point[index1]' class="form-control"/>
                                 </td>
                             </tr>
                             <tr>
@@ -192,15 +176,15 @@
                                 <td colspan="4" class="">
                                     <div class="input-group">
                                         <span class="input-group-text">Quý 1</span>
-                                        <input type="text" v-model="job.KPI[0]" class="form-control">
+                                        <input type="text" v-model="KPI[0]" class="form-control">
                                         <span class="input-group-text">Quý 2</span>
-                                        <input type="text" v-model="job.KPI[1]" class="form-control">
+                                        <input type="text" v-model="KPI[1]" class="form-control">
                                         <span class="input-group-text">Quý 3</span>
-                                        <input type="text" v-model="job.KPI[2]" class="form-control">
+                                        <input type="text" v-model="KPI[2]" class="form-control">
                                         <span class="input-group-text">Quý 4</span>
-                                        <input type="text" v-model="job.KPI[3]" class="form-control">
+                                        <input type="text" v-model="KPI[3]" class="form-control">
                                         <span class="input-group-text">Năm</span>
-                                        <input type="text" v-model="job.KPI[4]" class="form-control">
+                                        <input type="text" v-model="KPI[4]" class="form-control">
                                     </div>
                                 </td>
                             </tr>
@@ -219,8 +203,7 @@
                                 
                             </tr> -->
                         </tbody>
-                        <button @click="addJob" type="button" class="btn btn-primary w-auto me-4 m-3">Thêm hàng</button>
-                        <button @click="delJob" type="button" class="btn btn-primary w-auto m-3">Xóa hàng</button>
+                        
                     </table>
                 </div>
             </div>
@@ -256,10 +239,10 @@
                     position: '',
                     from: '',
                     to: '',
-                    point: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    KPI: ['','','','','']
+                    
                 }],
-                
+                point: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                KPI: ['','','','',''],
                 criteria: '',
             }
         },

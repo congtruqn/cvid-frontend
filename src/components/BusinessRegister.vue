@@ -25,33 +25,35 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="form-label">Địa chỉ</label>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                         <select @click="focus" class="form-control" v-model="province" required>
                             <option value="" disabled>Chọn tỉnh/thành phố</option>
                             <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
                         </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <select @click="focus" class="form-control" v-model="district" required>
                                 <option value="" disabled>Chọn quận/huyện</option>
                                 <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
                             </select>
                         </div>
+                        <div class="col-md-4">
+                            <input @click="focus" type="text" class="form-control" v-model="address" required placeholder="Số nhà, tên đường, phường/xã">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label">Nghành nghề kinh doanh</label>
-                    <input @click="focus" type="text" class="form-control" v-model="major" required placeholder="Số nhà, tên đường">
+                <div class="col-md-12">
+                    <label class="form-label">Lĩnh vực kinh doanh</label>
+                    <input @click="focus" type="text" class="form-control" v-model="major" required placeholder="">
                 </div>
 
                 <div class="col-md-4">
                     <label class="form-label">Mật khẩu</label>
                     <input @click="focus" type="password" class="form-control" v-model="password" required>
                 </div>
-
                 <div class="col-md-4">
                     <label class="form-label">Nhập lại mật khẩu</label>
                     <input @click="focus" type="password" class="form-control" v-model="password2" required>
@@ -71,6 +73,7 @@
                 MST: "",
                 province: "",
                 district: "",
+                address: "",
                 major: "",
                 email : "",
                 password : "",
@@ -88,6 +91,7 @@
                     MST: this.MST,
                     province: this.province,
                     district: this.district,
+                    address: this.address,
                     major: this.major,
                     email: this.email,
                     password: this.password,
@@ -140,7 +144,6 @@
             province(newVal){
                 this.district = "";
                 this.districts = this.provinces.find(province => province.Id === newVal[0]).Districts;
-                
             },
 
         }

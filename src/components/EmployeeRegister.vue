@@ -41,7 +41,7 @@
                         </div>
                             
                         <div class="col-md-6">
-                            <input @click="focus" type="text" class="form-control" v-model="address" required placeholder="Số nhà, tên đường, Quận/Xã">
+                            <input @click="focus" type="text" class="form-control" v-model="address" required placeholder="Số nhà, tên đường, phường/xã">
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 <div class="col-md-4">
                     <label class="form-label">Chuyên nghành</label>
                     <select @click="focus" class="form-control" v-model="skill" required>
-                        <option value="" disabled>Chọn ngành nghề</option>
+                        <option value="" disabled>Chọn chuyên nghành</option>
                         <option v-for="skill in skills" :key="skill.code" :value='skill.name'>{{skill.name}}</option>
                         
                     </select>
