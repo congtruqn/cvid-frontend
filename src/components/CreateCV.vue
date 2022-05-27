@@ -27,19 +27,19 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center" :style="{minWidth: '350px' }">
+                                <th class="text-center" :style="{minWidth: '200px' }">
                                     Bằng cấp
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '350px' }">
+                                <th class="text-center" :style="{ minWidth: '200px' }">
                                     Nghành học
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '350px' }">
+                                <th class="text-center" :style="{ minWidth: '200px' }">
                                     Trường
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '100px' }">
+                                <th class="text-center" :style="{ minWidth: '150px', width: '150px' }">
                                     Năm cấp bằng
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '150px' }">
+                                <th class="text-center" :style="{ minWidth: '150px', width: '150px'}">
                                     Mã số chứng chỉ
                                 </th>
                             </tr>
@@ -47,19 +47,19 @@
                         <tbody>
                             <tr v-for="degree in degrees" >
                                 <td>
-                                    <input type="text" v-model='degree.name' class="form-control"/>
+                                <input type="text" v-model='degree.name'  class="form-control form-control-sm"/>
                                 </td>
                                 <td>
-                                <input type="text" v-model='degree.major'  class="form-control"/>
+                                <input type="text" v-model='degree.major'  class="form-control form-control-sm"/>
                                 </td>
                                 <td>
-                                <input type="text" v-model='degree.school' class="form-control"/>
+                                <input type="text" v-model='degree.school' class="form-control form-control-sm"/>
                                 </td>
                                 <td>
-                                <input type="number" v-model='degree.year' class="form-control"/>
+                                <input type="number" v-model='degree.year' class="form-control form-control-sm"/>
                                 </td>
                                 <td>
-                                <input type="text" v-model='degree.ref' class="form-control" />
+                                <input type="text" v-model='degree.ref' class="form-control form-control-sm" />
                                 </td>
                             </tr>
                             <tr>
@@ -79,13 +79,13 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center" :style="{ minWidth: '400px' }">
+                                <th class="text-center" :style="{ minWidth: '200px' }">
                                     Kĩ năng
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '400px' }">
+                                <th class="text-center" :style="{ minWidth: '200px' }">
                                     Trường
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '100px' }">
+                                <th class="text-center" :style="{ minWidth: '100px', width: '100px' }">
                                     Năm cấp
                                 </th>
                                 
@@ -94,13 +94,13 @@
                         <tbody>
                             <tr v-for="skill in skills">
                                 <td>
-                                    <input type="text" v-model='skill.name' class="form-control"   />
+                                    <input type="text" v-model='skill.name' class="form-control form-control-sm"   />
                                 </td>
                                 <td>
-                                <input type="text" v-model='skill.school'  class="form-control"/>
+                                <input type="text" v-model='skill.school'  class="form-control form-control-sm"/>
                                 </td>
                                 <td>
-                                <input type="number" v-model='skill.year' class="form-control"/>
+                                <input type="number" v-model='skill.year' class="form-control form-control-sm"/>
                                 </td>
                             </tr>
                             <tr>
@@ -120,16 +120,16 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center" :style="{ minWidth: '400px' }">
+                                <th class="text-center" :style="{ minWidth: '300px', width: '400px'}">
                                     Tên công ty
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '600px' }">
+                                <th class="text-center" :style="{ minWidth: '300px'}">
                                     Chức vụ 
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '100px' }">
+                                <th class="text-center" :style="{ minWidth: '100px', width: '100px'}">
                                     Từ
                                 </th>
-                                <th class="text-center" :style="{ minWidth: '100px' }">
+                                <th class="text-center" :style="{ width: '100px', minWidth: '100px'}">
                                     Đến
                                 </th>
                                 
@@ -139,18 +139,18 @@
                         <tbody >
                             <tr v-for="job in jobs">
                                 <td>
-                                    <input type="text" v-model='job.name' class="form-control"   />
+                                    <input type="text" v-model='job.name' class="form-control form-control-sm" />
                                 </td>
                                 <td>
-                                <input type="text" v-model='job.position'  class="form-control"/>
+                                <input type="text" v-model='job.position'  class="form-control form-control-sm"/>
                                 </td>
                                 <td>
-                                <input type="number" v-model='job.from' class="form-control"/>
+                                <input type="number" v-model='job.from' class="form-control form-control-sm"/>
                                 </td>
                                 <td>
-                                <input type="number" v-model='job.to' class="form-control"/>
+                                <input type="number" v-model='job.to' class="form-control form-control-sm"/>
                                 </td>
-                            </tr>
+                            </tr >
                                 <button @click="addJob" type="button" class="btn btn-primary w-auto me-4 m-3">Thêm hàng</button>
                                 <button @click="delJob" type="button" class="btn btn-primary w-auto m-3">Xóa hàng</button>
                             <tr>
@@ -166,7 +166,7 @@
                                     {{index1+1}}. {{item.name}}
                                 </td>
                                 <td colspan="2">
-                                    <input type="number" v-model='point[index1]' class="form-control"/>
+                                    <input type="number" v-model='point[index1]' class="form-control form-control-sm"/>
                                 </td>
                             </tr>
                             <tr>
@@ -174,17 +174,17 @@
                                     Chỉ số KPI đạt được
                                 </td>
                                 <td colspan="4" class="">
-                                    <div class="input-group">
+                                    <div class="input-group input-group-sm">
                                         <span class="input-group-text">Quý 1</span>
-                                        <input type="text" v-model="KPI[0]" class="form-control">
+                                        <input type="text" v-model="KPI[0]" class="form-control form-control-sm">
                                         <span class="input-group-text">Quý 2</span>
-                                        <input type="text" v-model="KPI[1]" class="form-control">
+                                        <input type="text" v-model="KPI[1]" class="form-control form-control-sm">
                                         <span class="input-group-text">Quý 3</span>
-                                        <input type="text" v-model="KPI[2]" class="form-control">
+                                        <input type="text" v-model="KPI[2]" class="form-control form-control-sm">
                                         <span class="input-group-text">Quý 4</span>
-                                        <input type="text" v-model="KPI[3]" class="form-control">
+                                        <input type="text" v-model="KPI[3]" class="form-control form-control-sm">
                                         <span class="input-group-text">Năm</span>
-                                        <input type="text" v-model="KPI[4]" class="form-control">
+                                        <input type="text" v-model="KPI[4]" class="form-control form-control-sm">
                                     </div>
                                 </td>
                             </tr>
