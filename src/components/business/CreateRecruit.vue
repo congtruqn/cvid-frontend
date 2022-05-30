@@ -27,22 +27,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Ngành nghề</label>
-                                    <!-- <select name="category_id" id="category_id" class="form-control" v-model="category_id">
+                                    <select name="category_id" id="category_id" class="form-control" v-model="category_id">
                                         <option value="">Chọn ngành nghề</option>
                                         <option v-for="(item, index) in categories" :value="item.id">{{item.name}}</option>
-                                    </select> -->
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Địa điểm làm việc</label>
-                                    <!-- <select name="location_id" id="location_id" class="form-control" v-model="location_id">
+                                    <select name="location_id" id="location_id" class="form-control" v-model="location_id">
                                         <option value="">Chọn địa điểm làm việc</option>
                                         <option v-for="(item, index) in locations" :value="item.id">{{item.name}}</option>
-                                    </select> -->
+                                    </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Ảnh đại diện</label>
-                                    <!-- <input type="file" class="form-control" name="image" v-model="image" placeholder="Nhập ảnh đại diện"> -->
-                                </div>
+                                
                                 <div class="form-group">
                                     <label for="">Ngày tuyển dụng</label>
                                     <input type="date" class="form-control" name="recruit_date" v-model="recruit_date" placeholder="Nhập ngày tuyển dụng">
@@ -52,8 +49,12 @@
                                     <input type="date" class="form-control" name="expired_recruit_date" v-model="expired_recruit_date" placeholder="Nhập ngày hết hạn tuyển dụng">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Mức lương</label>
-                                    <input type="number" class="form-control" name="salary" v-model="salary" placeholder="Nhập mức lương">
+                                    <label for="">Mức lương tối thiểu</label>
+                                    <input type="number" class="form-control" name="min_salary" v-model="min_salary" placeholder="Nhập mức lương tối thiểu">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Mức lương tối đa</label>
+                                    <input type="number" class="form-control" name="max_salary" v-model="max_salary" placeholder="Nhập mức lương tối đa">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Yêu cầu khác</label>
@@ -63,10 +64,7 @@
                                     <label for="">Yêu cầu công việc</label>
                                     <textarea name="job_requirement" id="job_requirement" cols="30" rows="10" class="form-control" v-model="job_requirement"></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Yêu cầu khác</label>
-                                    <textarea name="other_requirement" id="other_requirement" cols="30" rows="10" class="form-control" v-model="other_requirement"></textarea>
-                                </div>
+                             
                                 <div class="form-group">
                                     <label for="">Trạng thái</label>
                                     <select name="status" id="status" class="form-control" v-model="status">
@@ -92,10 +90,7 @@
                                     <label for="">Email</label>
                                     <input type="text" class="form-control" name="email" v-model="email" placeholder="Nhập email">
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Website</label>
-                                    <input type="text" class="form-control" name="website" v-model="website" placeholder="Nhập website">
-                                </div>
+                                
                                 <div class="form-group">
                                     <label for="">Địa chỉ</label>
                                     <input type="text" class="form-control" name="address" v-model="address" placeholder="Nhập địa chỉ">
@@ -112,22 +107,8 @@
                                     <label for="">Ngày cập nhật</label>
                                     <input type="date" class="form-control" name="updated_at" v-model="updated_at" placeholder="Nhập ngày cập nhật">
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Ngày xóa</label>
-                                    <input type="date" class="form-control" name="deleted_at" v-model="deleted_at" placeholder="Nhập ngày xóa">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Mã nhà tuyển dụng</label>
-                                    <input type="text" class="form-control" name="company_id" v-model="company_id" placeholder="Nhập mã nhà tuyển dụng">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Mã ngành nghề</label>
-                                    <input type="text" class="form-control" name="industry_id" v-model="industry_id" placeholder="Nhập mã ngành nghề">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Mã tỉnh thành</label>
-                                    <input type="text" class="form-control" name="city_id" v-model="city_id" placeholder="Nhập mã tỉnh thành">
-                                </div>
+                    
+
                             </form>
                         </div>
                         <div class="modal-footer">
