@@ -7,7 +7,6 @@
                 <label class="form-label">Tên đăng nhập</label>
                 <input @focus="focus" type="text" class="form-control" v-model="username" required placeholder="Tên đăng nhập" minlength="9">
                 <div class="invalid-feedback">
-                    CMND/CCCD đối với người lao động.<br/>
                     Mã số thuế đối với doanh nghiệp.
                 </div>
             </div>
@@ -37,7 +36,7 @@
     </div>
 </template>
 <script>
-    const {BASE_URL} =  require('../utils/config')
+    const {BASE_URL} =  require('../../utils/config')
     export default {
         data(){
             return {
@@ -70,7 +69,7 @@
                                         this.$router.push('/create-cv')
                                     }
                                     else {
-                                        this.$router.push('/listproject')
+                                        this.$router.push('/business')
                                     }
 
                                     //this.$router.push('listproject');

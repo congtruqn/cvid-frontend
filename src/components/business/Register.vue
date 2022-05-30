@@ -64,7 +64,7 @@
     </div>
 </template>
 <script>
-    const {BASE_URL} =  require('../utils/config')
+    const {BASE_URL} =  require('../../utils/config')
 
     export default {  
         data(){

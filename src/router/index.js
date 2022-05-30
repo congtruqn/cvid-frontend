@@ -15,39 +15,93 @@ let router = new Router({
       }
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/components/Login'),
+      path: '/employee/login',
+      name: 'employeelogin',
+      component: () => import('@/components/employee/Login'),
       meta: {
           guest: true,
-          layout: 'Default'
+          layout: 'Auth'
       }
     },
     {
-        path: '/employee/register',
-        name: 'employeeregister',
-        component: () => import('@/components/EmployeeRegister'),
+        path: '/business/login',
+        name: 'businesslogin',
+        component: () => import('@/components/business/Login'),
         meta: {
             guest: true,
-            layout: 'Default'
+            layout: 'Auth'
+        }
+      },
+    {
+        path: '/employee/register',
+        name: 'employeeregister',
+        component: () => import('@/components/employee/Register'),
+        meta: {
+            guest: true,
+            layout: 'Auth'
         }
     },
     {
         path: '/business/register',
         name: 'businessregister',
-        component: () => import('@/components/BusinessRegister'),
+        component: () => import('@/components/business/Register'),
+        meta: {
+            guest: true,
+            layout: 'Auth'
+        }
+    },
+    {
+        path: '/create-cv',
+        name: 'createcv',
+        component: () => import('@/components/employee/CreateCV'),
         meta: {
             guest: true,
             layout: 'Default'
         }
     },
     {
-        path: '/create-cv',
-        name: 'createcv',
-        component: () => import('@/components/CreateCV'),
+        path: '/business',
+        name: 'business',
+        component: () => import('@/components/business/Business'),
         meta: {
             guest: true,
-            layout: 'Default'
+            layout: 'Business'
+        }
+    },
+    {
+        path: '/business/:id',
+        name: 'businessdetail',
+        component: () => import('@/components/business/Recruit'),
+        meta: {
+            guest: true,
+            layout: 'Business'
+        }
+    },
+    {
+        path: '/quan-ly-nhan-vien',
+        name: 'quan-ly-nhan-vien',
+        component: () => import('@/components/business/EmployeeList'),
+        meta: {
+            guest: true,
+            layout: 'Business'
+        }
+    },
+    {
+        path: '/tao-tin-tuyen-dung',
+        name: 'tao-tin-tuyen-dung',
+        component: () => import('@/components/business/CreateRecruit'),
+        meta: {
+            guest: true,
+            layout: 'Business'
+        }
+    },
+    {
+        path: '/quan-ly-phong-ban',
+        name: 'quan-ly-phong-ban',
+        component: () => import('@/components/business/Department'),
+        meta: {
+            guest: true,
+            layout: 'Business'
         }
     },
 
