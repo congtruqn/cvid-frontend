@@ -6,7 +6,7 @@
             </span> 
             <span class="text">Thêm phòng ban</span>
         </a>
-        <div v-for="index in 3" class="my-3 p-3 bg-body rounded shadow-sm">
+        <div v-for="index in 3" class="my-3 p-3 bg-body rounded shadow-sm table-responsive-xl">
             <h6 class="border-bottom pb-2 mb-0">Tên phòng ban</h6>
             <table class="table table-sm table-hover">
                 <thead class="table-light">
@@ -56,7 +56,7 @@
             </small>
             <div class="row">
                 <div class="col-md-6">
-                    
+
                 </div>
             </div>
         </div>
