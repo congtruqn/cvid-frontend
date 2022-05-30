@@ -65,7 +65,7 @@
                                     <textarea name="job_requirement" id="job_requirement" cols="30" rows="10" class="form-control" v-model="job_requirement"></textarea>
                                 </div>
                              
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="">Trạng thái</label>
                                     <select name="status" id="status" class="form-control" v-model="status">
                                         <option value="">Chọn trạng thái</option>
@@ -73,7 +73,7 @@
                                         <option value="2">Đã hết hạn</option>
                                         <option value="3">Đã hết hạn</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label for="">Người tuyển</label>
                                     <input type="text" class="form-control" name="recruiter" v-model="recruiter" placeholder="Nhập người tuyển">
@@ -99,14 +99,14 @@
                                     <label for="">Nội dung</label>
                                     <textarea name="content" id="content" cols="30" rows="10" class="form-control" v-model="content"></textarea>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="">Ngày tạo</label>
                                     <input type="date" class="form-control" name="created_at" v-model="created_at" placeholder="Nhập ngày tạo">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Ngày cập nhật</label>
                                     <input type="date" class="form-control" name="updated_at" v-model="updated_at" placeholder="Nhập ngày cập nhật">
-                                </div>
+                                </div> -->
                     
 
                             </form>
