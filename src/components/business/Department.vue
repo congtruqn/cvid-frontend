@@ -22,7 +22,7 @@
                 </thead>
                 <tbody class="table-group-divider">
                     <tr v-for="index1 in 3">
-                        <td>{{index}}</td>
+                        <td>{{index1}}</td>
                         <td>
                             Tên vị trí tuyển dụng
                         </td>
@@ -47,14 +47,12 @@
                             </button>
                         </td>
                     </tr>
-                    <tr colspan="4">
-                    </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -161,7 +159,7 @@
             </div>
         </div>
         <div class="modal fade" id="view" tabindex="-1" aria-labelledby="view" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
