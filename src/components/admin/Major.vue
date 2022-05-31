@@ -40,6 +40,8 @@ export default {
             .then(response => {
                 console.log(response.data)
             })
+            this.major = ''
+            alert('Thêm thành công')
         }
     },
     
