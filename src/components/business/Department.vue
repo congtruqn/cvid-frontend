@@ -36,7 +36,7 @@
                             Đang tuyển dụng
                         </td>
                         <td>
-                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary btn-sm">
+                            <button data-bs-toggle="modal" data-bs-target="#view" class="btn btn-primary btn-sm">
                                 <i class="fas fa-eye"></i>
                             </button>
                             <button data-bs-toggle="modal" data-bs-target="#edit" href="#" class="btn btn-primary btn-sm">
@@ -53,7 +53,7 @@
             </table>
         </div>
 
-        <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -159,6 +159,67 @@
                 </div>
                 </div>
             </div>
+        </div>
+        <div class="modal fade" id="view" tabindex="-1" aria-labelledby="view" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive-xxl m-4">
+                        <table class="table table-sm table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên nhân viên</th>
+                                    <th>Số CVID</th>
+                                    <th>Điểm CV đầu vào</th>
+                                    <th>Loại hợp đồng</th>
+                                    <th>Ngày kí hợp đồng</th>
+                                    <th>Tình trạng</th>
+                                    <th>Thời gian làm việc</th>
+                                    <th>Ngày nghỉ</th>
+                                    <th>Kết quả làm việc</th>
+                                    <th>Xếp loại cv đầu ra</th>
+                                </tr>
+                                
+                            </thead>
+                            <tbody class="table-group-divider">
+                                <tr v-for="(item, index) in 10">
+                                    <td>{{index+1}}</td>
+                                    <!-- <td>{{item.name}}</td>
+                                    <td>{{item.cvid}}</td>
+                                    <td>{{item.cv_score}}</td>
+                                    <td>{{item.contract_type}}</td>
+                                    <td>{{item.contract_date}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td>{{item.working_time}}</td>
+                                    <td>{{item.leave_date}}</td>
+                                    <td>{{item.result}}</td>
+                                    <td>{{item.cv_type}}</td> -->
+                                    <td>Trần Văn A</td>
+                                    <td>CV103290345</td>
+                                    <td>7/10</td>
+                                    <td>chính thức</td>
+                                    <td>21/07/2020</td>
+                                    <td>Đang làm</td>
+                                    <td>3 tháng</td>
+                                    <td></td>
+                                    <td>Chưa cập nhật</td>
+                                    <td>Chưa cập nhật</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                   
+                </div>
+                </div>
             </div>
         </div>
+    </div>
 </template>
