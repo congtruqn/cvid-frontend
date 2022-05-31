@@ -104,6 +104,15 @@ let router = new Router({
             layout: 'Business'
         }
     },
+    {
+        path: '/add-major',
+        name: 'quan-ly-phong-ban',
+        component: () => import('@/components/admin/Major'),
+        meta: {
+            guest: true,
+            layout: 'Auth'
+        }
+    },
 
   ]
 })

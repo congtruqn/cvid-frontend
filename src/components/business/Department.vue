@@ -6,50 +6,61 @@
             </span> 
             <span class="text">Thêm phòng ban</span>
         </a>
-        <div v-for="index in 3" class="my-3 p-3 bg-body rounded shadow-sm table-responsive-xl">
-            <h6 class="border-bottom pb-2 mb-0">Tên phòng ban</h6>
-            <table class="table table-sm table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Vị trí tuyển dụng</th>
-                        <th>Số lượng</th>
-                        <th>Số lượng hiện có</th>
-                        <th>Trạng thái</th>
-                        <th>Thao tác</th>
-                    </tr>
-                    
-                </thead>
-                <tbody class="table-group-divider">
-                    <tr v-for="index1 in 3">
-                        <td>{{index1}}</td>
-                        <td>
-                            Tên vị trí tuyển dụng
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            8
-                        </td>
-                        <td>
-                            Đang tuyển dụng
-                        </td>
-                        <td>
-                            <button data-bs-toggle="modal" data-bs-target="#view" class="btn btn-primary btn-sm">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button data-bs-toggle="modal" data-bs-target="#edit" href="#" class="btn btn-primary btn-sm">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <button href="#" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="container" v-for="index1 in 2" style="width: 80vw">
+            <h2 class="d-inline mb-2">Tên phòng ban </h2>
+            <a href="">
+                <i class="fas fa-pencil-alt"></i>
+            </a>
+            
+            <div class="table-responsive-xl">
+                <table class="table table-hover" style="minWidth: 800px">
+                    <thead>
+                        <tr>
+                            <th scope="col">Stt</th>
+                            <th scope="col">Vị trí tuyển dụng</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Hiện có</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr scope="row" v-for="index in 5">    
+                            <td >
+                            {{index}}
+                            </td>
+                            <td>Tên vị trí tuyển dụng</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td><span class="badge rounded-pill bg-secondary">Đang tuyển</span></td>
+                            <td>
+                                <button data-bs-toggle="modal" data-bs-target="#view" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="#edit" href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button href="#" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr >
+                            <td colspan="100">
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus"></i> Thêm vị trí tuyển dụng
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+
+
 
         <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
@@ -166,9 +177,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive-xxl m-4">
+                    <div class="table-responsive-xl m-4">
                         <table class="table table-sm table-hover">
-                            <thead class="table-light">
+                            <thead class="table-primary">
                                 <tr>
                                     <th>#</th>
                                     <th>Tên nhân viên</th>
@@ -187,16 +198,6 @@
                             <tbody class="table-group-divider">
                                 <tr v-for="(item, index) in 10">
                                     <td>{{index+1}}</td>
-                                    <!-- <td>{{item.name}}</td>
-                                    <td>{{item.cvid}}</td>
-                                    <td>{{item.cv_score}}</td>
-                                    <td>{{item.contract_type}}</td>
-                                    <td>{{item.contract_date}}</td>
-                                    <td>{{item.status}}</td>
-                                    <td>{{item.working_time}}</td>
-                                    <td>{{item.leave_date}}</td>
-                                    <td>{{item.result}}</td>
-                                    <td>{{item.cv_type}}</td> -->
                                     <td>Trần Văn A</td>
                                     <td>CV103290345</td>
                                     <td>7/10</td>
