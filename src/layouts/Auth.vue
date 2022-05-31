@@ -1,7 +1,5 @@
 <template>
-  <div class="login-wapper">
     <router-view />           
-  </div>
 </template>
 
 <script>

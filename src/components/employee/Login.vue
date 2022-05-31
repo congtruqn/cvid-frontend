@@ -23,7 +23,7 @@
                 <button type="submit" class="btn btn-primary w-100" @click="handleSubmit">Đăng nhập</button>
                 <div class="float-right">
                     Chưa có tài khoản? <br>
-                    <a href="employee/register">Đăng kí tài khoản</a><br>
+                    <a href="employee/register">Đăng kí tài khoản CVID</a><br>
                 </div>
             </div>
 
