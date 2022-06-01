@@ -114,7 +114,7 @@
                     </table>
                 </div>
             </div>
-            <h4 class="mb-3">Lịch sử công tác</h4>
+            <h4 class="mb-3">Quá trình công tác</h4>
             <div class="row clearfix">
                 <div class="col-md-12 column" :style="{overflowX: 'auto'}">
                     <table class="table table-bordered table-hover">
@@ -153,49 +153,7 @@
                             </tr >
                                 <button @click="addJob" type="button" class="btn btn-primary w-auto me-4 m-3">Thêm hàng</button>
                                 <button @click="delJob" type="button" class="btn btn-primary w-auto m-3">Xóa hàng</button>
-                            <tr>
-                                <td colspan="2">
-                                Tiêu chí đánh giá
-                                </td>
-                                <td colspan="2">
-                                Điểm đánh giá (1-10)
-                                </td>
-                            </tr>
-                            <tr v-for="(item, index1) in criteria" :key="index1" >
-                                <td colspan="2">
-                                    {{index1+1}}. {{item.name}}
-                                </td>
-                                <td colspan="2">
-                                    <input type="number" v-model='point[index1]' class="form-control form-control-sm"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="1">
-                                    Chỉ số KPI đạt được
-                                </td>
-                                <td colspan="4" class="">
-                                    <div class="input-group input-group-sm">
-                                        <span class="input-group-text">Quý 1</span>
-                                        <input type="text" v-model="KPI[0]" class="form-control form-control-sm">
-                                        <span class="input-group-text">Quý 2</span>
-                                        <input type="text" v-model="KPI[1]" class="form-control form-control-sm">
-                                        <span class="input-group-text">Quý 3</span>
-                                        <input type="text" v-model="KPI[2]" class="form-control form-control-sm">
-                                        <span class="input-group-text">Quý 4</span>
-                                        <input type="text" v-model="KPI[3]" class="form-control form-control-sm">
-                                        <span class="input-group-text">Năm</span>
-                                        <input type="text" v-model="KPI[4]" class="form-control form-control-sm">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <input class="form-check-input" type="checkbox" id="invalidCheck" >
-                                    <label class="form-check-label" for="invalidCheck">
-                                        Bạn đã hoàn thành nhiệm vụ đúng theo luật lao động quy định không?
-                                    </label>
-                                </td>
-                            </tr>
+                            
                             <!-- <tr>
                                 <td colspan="5">
                                     
@@ -205,8 +163,76 @@
                         </tbody>
                         
                     </table>
+                
                 </div>
             </div>
+            <table class="table table-bordered"> 
+                <thead>
+                    <tr>
+                        <th colspan=2 scope="col">
+                        Kết quả đánh giá
+                        </th>
+                        <th scope="col">
+                        Điểm đánh giá (1-10)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="accordion" id="accordionExample">
+                    
+                            <!-- <tr v-for="(item, index1) in criteria" :key="index1" >
+                                <td colspan="2">
+                                    {{index1+1}}. {{item.name}}
+                                </td>
+                                <td colspan="2">
+                                    <input type="number" v-model='point[index1]' class="form-control form-control-sm"/>
+                                </td>
+                            </tr> -->
+                    <tr v-for="(item, index) in criteria">
+                        <td colspan=2>
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" :id="'flush-heading'+index">
+                                <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse'+index" aria-expanded="false" :aria-controls="'flush-collapse'+index">
+                                    {{item.name}}
+                                </button>
+                                </h4>
+                                <div :id="'flush-collapse'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading'+index" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">{{item.detail}}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="width: 180px">
+                            <input type="number" v-model='point[index]' class="form-control form-control-sm"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 180px">
+                            Chỉ số KPI đạt được
+                        </td>
+                        <td colspan="2">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Quý 1</span>
+                                <input type="text" v-model="KPI[0]" class="form-control form-control-sm">
+                                <span class="input-group-text">Quý 2</span>
+                                <input type="text" v-model="KPI[1]" class="form-control form-control-sm">
+                                <span class="input-group-text">Quý 3</span>
+                                <input type="text" v-model="KPI[2]" class="form-control form-control-sm">
+                                <span class="input-group-text">Quý 4</span>
+                                <input type="text" v-model="KPI[3]" class="form-control form-control-sm">
+                                <span class="input-group-text">Năm</span>
+                                <input type="text" v-model="KPI[4]" class="form-control form-control-sm">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="50">
+                            <input class="form-check-input" type="checkbox" id="invalidCheck" >
+                            <label class="form-check-label" for="invalidCheck">
+                                Bạn đã hoàn thành nhiệm vụ đúng theo luật lao động quy định không?
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <button type="submit" class="btn btn-primary" @click="handleSubmit">Submit</button>
         </form>
     </div>
@@ -241,7 +267,7 @@
                     to: '',
                     
                 }],
-                point: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                point: [],
                 KPI: ['','','','',''],
                 criteria: '',
             }
@@ -295,6 +321,7 @@
             this.infor.birthdate = this.infor.birthdate.split('T')[0]
             this.$http.get(`${BASE_URL}/criteria/getall`).then(res => {
                 this.criteria = res.data;
+                console.log(this.criteria)
             })
             
             // this.$http.post(`${BASE_URL}/employee/get-resume`, {
