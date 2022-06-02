@@ -33,42 +33,6 @@
         </div>
     </div>
 </div>
-    
-    <!-- <div id="login">
-        <h3 class="text-center mb-4">Đăng nhập</h3>
-        <form class="row g-3 needs-validation">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <label class="form-label">Tên đăng nhập</label>
-                <input @focus="focus" type="text" class="form-control" v-model="username" required placeholder="Tên đăng nhập" minlength="9">
-                <div class="invalid-feedback">
-                    Mã số thuế đối với doanh nghiệp.
-                </div>
-            </div>
-            <div class="col-md-3"></div>
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <label class="form-label">Mật khẩu</label>
-                <input @focus="focus" type="password" class="form-control" v-model="password" required placeholder="Mật khẩu">
-            </div>
-
-            <div class="col-md-3"></div>
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-primary w-100" @click="handleSubmit">Đăng nhập</button>
-                <div class="float-right">
-                    Chưa có tài khoản? <br>
-                    <a href="employee/register">Đăng kí tài khoản</a><br>
-                </div>
-            </div>
-
-            
-            
-                
-            
-	        
-        </form>
-    </div> -->
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config')

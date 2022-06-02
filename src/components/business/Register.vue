@@ -1,7 +1,7 @@
 <template>
     <div id="register" class="container">
         <form class="row g-3 needs-validation">
-            <h2 class="text-center mb-4">Đăng kí tài khoản cho doanh nghiệp</h2>
+            <h2 class="text-center mb-4">Đăng kí tài khoản tuyển dụng</h2>
                 <div class="col-md-4">
                     <label class="form-label">Tên doanh nghiệp</label>
                     <input @click="focus" type="text" class="form-control" v-model="name" required>

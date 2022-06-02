@@ -88,7 +88,6 @@
                                 <th class="text-center" :style="{ minWidth: '100px', width: '100px' }">
                                     Năm cấp
                                 </th>
-                                
                             </tr>
                         </thead>
                         <tbody>
@@ -108,7 +107,6 @@
                                     <button @click="addSkill" type="button" class="btn btn-primary w-auto">Thêm hàng</button>
                                     <button @click="delSkill" type="button" class="btn btn-primary w-auto">Xóa hàng</button>
                                 </td>
-                                
                             </tr>
                         </tbody>
                     </table>
@@ -169,24 +167,17 @@
             <table class="table table-bordered"> 
                 <thead>
                     <tr>
-                        <th colspan=2 scope="col">
-                        Kết quả đánh giá
+                        <th>#</th>
+                        <th colspan=2>
+                        Kết quả tự đánh giá
                         </th>
-                        <th scope="col">
+                        <th >
                         Điểm đánh giá (1-10)
                         </th>
                     </tr>
                 </thead>
                 <tbody class="accordion" id="accordionExample">
                     
-                            <!-- <tr v-for="(item, index1) in criteria" :key="index1" >
-                                <td colspan="2">
-                                    {{index1+1}}. {{item.name}}
-                                </td>
-                                <td colspan="2">
-                                    <input type="number" v-model='point[index1]' class="form-control form-control-sm"/>
-                                </td>
-                            </tr> -->
                     <tr v-for="(item, index) in criteria">
                         <td colspan=2>
                             <div class="accordion-item">
