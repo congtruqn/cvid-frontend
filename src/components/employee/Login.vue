@@ -130,6 +130,7 @@
     }
 </script>
 <style scoped>
+
 #login {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -164,8 +165,7 @@
 .login-1 .col-right {
     padding: 30px;
     display: flex;
-    left: -12px;
-    position: relative;
+  
 }
 
 .login-1 .col-left {
