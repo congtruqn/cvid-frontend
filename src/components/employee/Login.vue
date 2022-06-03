@@ -6,7 +6,7 @@
                 <div class="login-text">
                     <h3>Chào mừng bạn quay trở lại</h3>
                     <p>Bạn chưa có tài khoản?<br>Đăng ký dễ dàng,<br> hoàn toàn miễn phí</p>
-                    <a class="btn" href="/employee/register">Đăng ký</a>
+                    <a class="btn" href="register">Đăng ký</a>
                 </div>
             </div>
             <div class="col-right">

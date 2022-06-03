@@ -36,7 +36,7 @@
                     <div class="col-md-6 mb-4">
                         <div class="form-floating">
                         <input @click="focus" type="date" class="form-control" v-model="birthdate" required :max="new Date().toISOString().substr(0, 10)"/>
-                        <label class="form-label" >Ngày tháng năm sinh</label>
+                        <label class="form-label">Ngày, tháng, năm sinh</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
@@ -98,6 +98,7 @@
                             <div class="form-floating">
                                 <select @click="focus" class="form-control" v-model="district" required>
                                     <option value="" disabled>Chọn phường/xã</option>
+                                    <!-- <option v-for="ward in wards" :key="ward.Id" :value=[ward.Id,ward.WardName]>{{ward.WardName}}</option> -->
                                 </select>
                                 <label class="form-label">Phường/Xã</label>
                             </div>
@@ -188,7 +189,7 @@
                             confirmButtonText: 'Đăng nhập',
                         }).then((result) => {
                             if (result.value) {
-                                this.$router.push('/login')
+                                this.$router.push('login')
                             }
                         })
                     }
@@ -244,7 +245,7 @@
             },
             major(newValue){
                 this.skill = "";
-                this.skills = this.majors.find(major => major.name === newValue).skills;
+                this.skills = this.majors.find(major => major.name === newValue).skill;
             }
             
         }
