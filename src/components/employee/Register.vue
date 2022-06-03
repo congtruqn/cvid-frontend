@@ -62,11 +62,10 @@
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="major" required>
                             <option value="" disabled>Chọn ngành nghề</option>
-                            <option v-for="major in majors" :key="major.code" :value="major.name">{{major.name}}</option>     
+                            <option v-for="(major, index) in majors" v-if="major.level === level" :key="index" :value="major.name">{{major.name}}</option>     
                         </select>
                         <label class="form-label">Nghành nghề</label>
                     </div>
-
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="skill" required>
                             <option value="" disabled>Chọn chuyên nghành</option>
@@ -156,7 +155,6 @@
                 password2 : "",
                 provinces: [],
                 districts: [],
-                listMajor: [],
                 majors: [],
                 skills: [],
             }
@@ -223,8 +221,8 @@
 
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
-                this.listMajor = response.data;
-                console.log(this.listMajor)
+                this.majors = response.data;
+                console.log(this.majors)
             })
             .catch(function (error) {
                 console.error(error.response);
@@ -240,12 +238,10 @@
             level(newValue){
                 this.major = "";
                 this.skill = "";
-                this.majors = this.listMajor.find(major => major.level === newValue).majors;
-                this.skills = [];
             },
             major(newValue){
                 this.skill = "";
-                this.skills = this.majors.find(major => major.name === newValue).skill;
+                this.skills = this.majors.find(major => major.name === newValue).skills;
             }
             
         }
