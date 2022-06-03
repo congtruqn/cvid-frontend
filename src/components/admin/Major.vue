@@ -27,7 +27,7 @@
         <div class="mb-4 form-floating">
             <select @click="focus" class="form-control" v-model="major" required>
                 <option value="" disabled>Chọn ngành nghề</option>
-                <option v-for="major in majors" :key="major.code" :value="major.name">{{major.name}}</option>     
+                <option v-for="major in majors" :value="major.name" v-if="major.level == level">{{major.name}}</option>     
             </select>
             <label class="form-label">Nghành nghề</label>
         </div>
@@ -37,7 +37,7 @@
             <label class="form-label" for="form3Example1m">Chuyên nghành</label>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" @click="handleSubmit1">Thêm Nghành nghề</button>
+        <button type="submit" class="btn btn-primary" @click="handleSubmit1">Thêm Chuyên nghành</button>
     </div>
 </template>
 <script>
@@ -53,14 +53,13 @@ export default {
             password2: '',
             majors: [],
             skills: [],
-            listMajor: [],
             focus: false,
         }
     },
     created() {
         this.$http.get(`${BASE_URL}/major/list`)
         .then(response => {
-            this.listMajor = response.data;
+            this.majors = response.data;
             console.log(this.listMajor)
         })
         .catch(function (error) {
@@ -80,25 +79,24 @@ export default {
             this.major = ''
             alert('Thêm thành công')
         },
-        handleSubmit(e){
+        handleSubmit1(e){
             e.preventDefault()
-            this.$http.post(`${BASE_URL}/major/addmajor`, {
+            this.$http.post(`${BASE_URL}/major/addskill`, {
                 level: this.level,
-                major: this.major
+                major: this.major,
+                skill: this.skill
             })
             .then(response => {
                 console.log(response.data)
             })
-            this.major = ''
-            alert('Thêm thành công')
+            this.skill = ''
+            alert('Thêm chuyên nghành thành công')
         }
     },
     watch: {
-        level(newValue){
+        level(){
                 this.major = "";
                 this.skill = "";
-                this.majors = this.listMajor.find(major => major.level === newValue).majors;
-                this.skills = [];
             },
     }
     

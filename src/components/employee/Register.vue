@@ -222,7 +222,7 @@
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data;
-                console.log(this.majors)
+               
             })
             .catch(function (error) {
                 console.error(error.response);
@@ -233,9 +233,8 @@
             province(newValue){
                 this.district = "";
                 this.districts = this.provinces.find(province => province.Id === newValue[0]).Districts;
-                console.log(this.major)
             },
-            level(newValue){
+            level(){
                 this.major = "";
                 this.skill = "";
             },
