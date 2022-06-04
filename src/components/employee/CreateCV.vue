@@ -126,7 +126,6 @@
                     </tr>
                 </thead>
                 <tbody class="accordion" id="accordionExample">
-                    
                     <tr v-for="(item, index) in criteria">
                         <td colspan=2>
                             <div class="accordion-item">
@@ -143,34 +142,27 @@
                             </div>
                         </td>
                         <td style="width: 110px">
-                            <input type="number" v-model='point[index]' class="form-control form-control-sm"/>
+                            <input type="number" v-model='point[index]' min="1" max="10" class="form-control form-control-sm"/>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 180px">
+                        <td colspan="100">
                             Chỉ số KPI đạt được
                         </td>
-                        <td colspan="2">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-text">Quý 1</span>
-                                <input type="text" v-model="KPI[0]" class="form-control form-control-sm">
-                                <span class="input-group-text">Quý 2</span>
-                                <input type="text" v-model="KPI[1]" class="form-control form-control-sm">
-                                <span class="input-group-text">Quý 3</span>
-                                <input type="text" v-model="KPI[2]" class="form-control form-control-sm">
-                                <span class="input-group-text">Quý 4</span>
-                                <input type="text" v-model="KPI[3]" class="form-control form-control-sm">
-                                <span class="input-group-text">Năm</span>
-                                <input type="text" v-model="KPI[4]" class="form-control form-control-sm">
-                            </div>
-                        </td>
+                    </tr>
+                    <tr v-for="index in 4">
+                        <td colspan="2">Quý {{index}}</td>
+                        <td><input type="number" v-model='KPI[index-1]' min="1" max="10" class="form-control form-control-sm"/></td>
+                    </tr>
+                    <tr >
+                        <td colspan="2">Cả năm</label></td>
+                        <td><input type="number" v-model='KPI[4]' min="1" max="10" class="form-control form-control-sm"/></td>
                     </tr>
                     <tr>
-                        <td colspan="50">
-                            <input class="form-check-input" type="checkbox" id="invalidCheck" >
-                            <label class="form-check-label" for="invalidCheck">
-                                Bạn đã hoàn thành nhiệm vụ đúng theo luật lao động quy định không?
-                            </label>
+                        <td colspan="100">
+                            <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="7" aria-valuemin="0" aria-valuemax="10" :style="{ 'width': point_cv*10 + '%' }">Điẻm CV: {{point_cv}}</div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -192,11 +184,6 @@
     export default {  
         data(){
             return {
-                infor: '',
-                profession: '',
-                peRegistration: '',
-                peNumber: '',
-                lengthOfEmployment: '',
                 degrees: [{
                     name: '',
                     major: '',
@@ -220,6 +207,7 @@
                 point: [],
                 KPI: ['','','','',''],
                 criteria: '',
+                point_cv: 0,
             }
         },
         methods : {
@@ -296,9 +284,15 @@
             // });
             
         },
+        updated(){
+            this.point_cv = this.point.reduce((a, b) => {
+                a = parseInt(a)
+                b = parseInt(b)
+                return a+b
+            }, 0) / this.criteria.length
+        },
         watch : {
-           
-            
+               
             
         }
     }
