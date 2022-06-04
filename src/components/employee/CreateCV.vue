@@ -48,9 +48,9 @@
                             <input type="text" class="form-control" v-model="degree.school">
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mt-2">
+                            <div class="col-md-6 mt-2 needs-validation">
                                 <label class="form-label">Năm tốt nghiệp</label>
-                                <input type="text" class="form-control" v-model="degree.year">
+                                <input v-model="degree.year" @click="focus" type="text" class="form-control" placeholder="MM/YYYY" pattern="^((0[1-9])|(1[0-2]))\/(\d{4})$" required>
                             </div>
                             <div class="col-md-6 mt-2">
                                 <label class="form-label">Mã số chứng chỉ</label>
@@ -74,9 +74,9 @@
                             <label class="form-label">Trường</label>
                             <input type="text" class="form-control" v-model="skill.school">
                         </div>
-                        <div class="mt-2">
+                        <div class="mt-2 needs-validation">
                             <label class="form-label">Năm cấp</label>
-                            <input type="text" class="form-control" v-model="skill.year">
+                            <input @click="focus" type="text" class="form-control" placeholder="MM/YYYY" pattern="^((0[1-9])|(1[0-2]))\/(\d{4})$" required v-model="skill.year">
                         </div>
                         <hr class="bg-danger border-2 border-top border-danger"/>    
                         </div>
@@ -87,7 +87,7 @@
                         <button @click="addCompany" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
                     </div>
                     <div class="col-xl-6"/>
-                    <div class="col-xl-6 mt-4 p-3 border border-primary" v-for="(company, index1) in companys">
+                    <div class="col-xl-6 mt-4 p-3 border border-primary" v-for="(company, index1) in companies">
                         <div class="mt-2">
                             <label class="form-label">Tên công ty</label>
                             <input type="text" class="form-control" v-model="company.name">
@@ -95,20 +95,20 @@
                         <div v-for="(item, index2) in company.position">
                         <div class="mt-2">
                             <label class="form-label">Chức vụ</label>
-                            <div class="input-group mb-3">
+                            <div class="input-group">
                                 <input type="text" class="form-control" v-model="item.name"/>
                                 <button @click="addPosition(index1)" class="btn btn-primary" v-if="index2 == 0">Thêm</button>
                                 <button @click="delPosition(index1,index2)" class="btn btn-danger" v-else>Xóa</button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 mt-2 needs-validation">
                                 <label class="form-label">Từ</label>
-                                <input type="text" class="form-control" v-model="item.from">
+                                <input @click="focus" type="text" class="form-control" placeholder="MM/YYYY" pattern="^((0[1-9])|(1[0-2]))\/(\d{4})$" required v-model="item.from">
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 mt-2 needs-validation">
                                 <label class="form-label">Đến</label>
-                                <input type="text" class="form-control" v-model="item.to">
+                                <input @click="focus" type="text" class="form-control" placeholder="MM/YYYY" pattern="^((0[1-9])|(1[0-2]))\/(\d{4})$" required v-model="item.to">
                             </div>  
                         </div>
                         </div>
@@ -125,7 +125,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="accordion" id="accordionExample">
+                <tbody class="accordion needs-validation" id="accordionExample">
                     <tr v-for="(item, index) in criteria">
                         <td colspan=2>
                             <div class="accordion-item">
@@ -142,7 +142,7 @@
                             </div>
                         </td>
                         <td style="width: 110px">
-                            <input type="number" v-model='point[index]' min="1" max="10" class="form-control form-control-sm"/>
+                            <input @click="focus" type="number" v-model='point[index]' min="1" max="10" class="form-control form-control-sm" required/>
                         </td>
                     </tr>
                     <tr>
@@ -196,7 +196,7 @@
                     school: '',
                     year: '',
                 }],
-                companys: [{
+                companies: [{
                     name: '',
                     position: [{
                         'from': '',
@@ -213,7 +213,21 @@
         methods : {
             handleSubmit(e){
                 e.preventDefault()
-                console.log(this.companys)
+                this.$http.post(`${BASE_URL}/resume/create`, {
+                    cvid : this.employee.username,
+                    degrees: this.degrees,
+                    skills: this.skills,
+                    companies: this.companies,
+                    point: this.point,
+                    KPI: this.KPI,
+                })
+                .then(response => {
+                    console.log(response.data)
+                    this.$router.push('/resume')
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
             },
             addDegree(){
                 this.degrees.push({
@@ -238,7 +252,7 @@
                 this.skills.pop();
             },
             addCompany(){
-                this.companys.push({
+                this.companies.push({
                     name: '',
                     position: [{
                         'from': '',
@@ -248,41 +262,32 @@
                 });
             },
             delCompany(){
-                this.companys.pop();
+                this.companies.pop();
             },
             addPosition(index){
-                    this.companys[index].position.push({
+                    this.companies[index].position.push({
                         'from': '',
                         'to': '',
                         'name': ''
                     });
             },
             delPosition(index, index1){
-                this.companys[index].position.splice(index1, 1);
+                this.companies[index].position.splice(index1, 1);
             },
-            
+            focus(){
+                document.querySelectorAll('.needs-validation').forEach(function(item){
+                    item.classList.add('was-validated')
+                })
+            }
       
         },
         created(){
             this.employee = JSON.parse(localStorage.getItem('employee'))
             this.employee.birthdate = this.employee.birthdate.split('T')[0]
-            this.$http.get(`${BASE_URL}/criteria/getall`).then(res => {
+            this.$http.get(`${BASE_URL}/criteria/getall`)
+            .then(res => {
                 this.criteria = res.data;
-                console.log(this.criteria)
-            })
-            
-            // this.$http.post(`${BASE_URL}/employee/get-resume`, {
-            //     id: JSON.parse(localStorage.getItem('user')).username
-            // })
-            // .then(response => {
-            //     if(response.data.resume){
-            //         this.$router.push('/listproject')
-            //     }
-            // })
-            // .catch(function (error) {
-            //     console.log(error)
-            // });
-            
+            })  
         },
         updated(){
             this.point_cv = this.point.reduce((a, b) => {

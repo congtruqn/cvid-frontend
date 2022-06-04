@@ -67,12 +67,6 @@
                                         localStorage.setItem('employee',JSON.stringify(user));
                                         this.$router.push('/create-cv')
                                     }
-                                    else {
-                                        localStorage.setItem('business',JSON.stringify(user));
-                                        this.$router.push('/business')
-                                    }
-
-                                    //this.$router.push('listproject');
                                 }
                             }                 
                         }

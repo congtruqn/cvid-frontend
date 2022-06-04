@@ -54,8 +54,6 @@
                     .then(response => {
                         console.log(response.data.userinfo)
                         if(response.data.userinfo){
-                            console.log("1")
-                            localStorage.setItem('user',JSON.stringify(response.data.userinfo));
                             localStorage.setItem('token',response.data.token);
                             if (localStorage.getItem('token') != null){
                                 this.$emit('loggedIn')
@@ -63,15 +61,11 @@
                                     this.$router.push(this.$route.params.nextUrl)
                                 }
                                 else {
-                                    var user = JSON.parse(localStorage.getItem('user'))
-                                    if(user.type == 4){
-                                        this.$router.push('/create-cv')
-                                    }
-                                    else {
+                                    var user = response.data.userinfo
+                                    if(user.type == 5){
+                                        localStorage.setItem('business',JSON.stringify(user));
                                         this.$router.push('/business')
                                     }
-
-                                    //this.$router.push('listproject');
                                 }
                             }                 
                         }
