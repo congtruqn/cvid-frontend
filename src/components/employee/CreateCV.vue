@@ -1,5 +1,4 @@
 <template>
-    <div id="create-cv" class="">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col">
@@ -23,9 +22,18 @@
                 <div class="card-body px-md-5">
                 <div class="row">
                     <div class="col-xl-6 mt-4 border-end border-2 border-primary">
-                        <h4 class="my-4 d-inline">BẰNG CẤP, CHỨNG CHỈ</h4>
-                        <button @click="delDegree" class="btn btn-danger float-end mx-1 p-1"><i class="fas fa-minus"></i> Xóa</button>
-                        <button @click="addDegree" class="btn btn-success float-end mx-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
+                        <h5 class="ms-n2 my-4 d-inline">Bằng cấp, chứng chỉ</h5>
+                        <button @click="delDegree" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
+                        <button @click="addDegree" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
+                        <!-- <div class="dropdown d-inline my-4">
+                        <a class="btn btn-primary dropdown-toggle rounded-pill" id="dropdownDegree" data-bs-toggle="dropdown" aria-expanded="true">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownDegree">
+                            <li @click="addDegree"><a class="dropdown-item" href="#">Thêm</a></li>
+                            <li @click="delDegree"><a class="dropdown-item" href="#">Xóa</a></li>
+                        </ul>
+                        </div> -->
                         <div v-for="degree in degrees">
                         <div class="mt-4">
                             <label class="form-label">Tên bằng cấp, chứng chỉ</label>
@@ -54,9 +62,9 @@
                         
                     </div>
                     <div class="col-xl-6 mt-4 border-start border-2 border-primary">
-                        <h4 class="my-4 d-inline">KĨ NĂNG CHUYÊN BIỆT</h4>
-                        <button @click="delSkill" class="btn btn-danger float-end mx-1 p-1"><i class="fas fa-minus"></i> Xóa</button>
-                        <button @click="addSkill" class="btn btn-success float-end mx-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
+                        <h5 class="ms-n2 my-4 d-inline">Kỹ nằng chuyên biệt</h5>
+                        <button @click="delSkill" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
+                        <button @click="addSkill" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
                         <div v-for="skill in skills">
                         <div class="mt-4">
                             <label class="form-label">Tên kĩ nămg</label>
@@ -74,9 +82,9 @@
                         </div>
                     </div>
                     <div class="col-xl-6 mt-4 d-inline">
-                        <h4 class="my-4 d-inline">QUÁ TRÌNH CÔNG TÁC</h4>
-                        <button @click="delCompany" class="btn btn-danger float-end mx-1 p-1"><i class="fas fa-minus"></i> Xóa</button>
-                        <button @click="addCompany" class="btn btn-success float-end mx-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
+                        <h5 class="ms-n2 my-4 d-inline">Quá trình công tác</h5>
+                        <button @click="delCompany" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
+                        <button @click="addCompany" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
                     </div>
                     <div class="col-xl-6"/>
                     <div class="col-xl-6 mt-4 p-3 border border-primary" v-for="(company, index1) in companys">
@@ -90,7 +98,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" v-model="item.name"/>
                                 <button @click="addPosition(index1)" class="btn btn-primary" v-if="index2 == 0">Thêm</button>
-                                <button @click="delPosition(index1,index2)" class="btn btn-primary" v-else>Xóa</button>
+                                <button @click="delPosition(index1,index2)" class="btn btn-danger" v-else>Xóa</button>
                             </div>
                         </div>
                         <div class="row">
@@ -110,7 +118,7 @@
                 <thead>
                     <tr>
                         <th colspan=2>
-                        <h4 class="my-4 d-inline">KẾT QUẢ ĐÁNH GIÁ</h4>
+                        <h5 class="my-4 d-inline">Kết quả đánh giá</h5>
                         </th>
                         <th >
                         Điểm (1-10)
@@ -128,7 +136,9 @@
                                 </button>
                                 </h4>
                                 <div :id="'flush-collapse'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading'+index" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">{{item.detail}}</div>
+                                <div class="accordion-body">
+                                    <li v-for="mess in item.detail.split('.,')">{{mess}}</li>
+                                </div>
                                 </div>
                             </div>
                         </td>
@@ -174,11 +184,6 @@
             
         </div>
         </div>
-    </div>
-
-
-        <h2 class="text-center mb-4">CVID</h2>
-        
     </div>
 </template>
 <script>
@@ -299,14 +304,5 @@
     }
 </script>
 <style scoped>
-    .box-infor{
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        position: relative;
-        
-        
-        margin: 10px;
-        padding: 10px;
-        box-shadow: 2px 4px 8px #ccc;
-    }
+
 </style>
