@@ -167,8 +167,8 @@
                     </tr>
                 </tbody>
             </table>
+            <span class="">Câu cam kết...</span>
             </div>
-           
             
             <button type="submit" class="btn btn-primary" @click="handleSubmit">Submit</button>
         
