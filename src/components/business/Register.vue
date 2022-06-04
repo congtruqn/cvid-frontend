@@ -1,67 +1,109 @@
 <template>
-    <div id="register" class="container">
-        <form class="row g-3 needs-validation">
-            <h2 class="text-center mb-4">Đăng kí tài khoản tuyển dụng</h2>
-                <div class="col-md-4">
-                    <label class="form-label">Tên doanh nghiệp</label>
-                    <input @click="focus" type="text" class="form-control" v-model="name" required>
-                    <div class="invalid-feedback">
-                        Vui lòng nhập tên doanh nghiệp.
-                    </div>
+    <section class="h-100 bg-dark">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+            <div class="card card-registration my-4">
+            <div class="row g-0">
+                <div class="col-xl-6 d-none d-xl-block">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                    alt="Sample photo" class="img-fluid"
+                    style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
                 </div>
+                <div class="col-xl-6  needs-validation">
+                <div class="card-body p-md-5 text-black">
+                    <h3 class="mb-5 text-uppercase">Đăng kí tài khoản tuyển dụng</h3>
+                    <div class="mb-4 form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="name" required>
+                        <label class="form-label" for="form3Example1m">Tên doanh nghiệp</label>
+                    </div>
+                    <div class="mb-4 form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="nameforeign" required>
+                        <label class="form-label" for="form3Example1m">Tên doanh nghiệp viết bằng tiếng nước ngoài</label>
+                    </div>
+                    <div class="mb-4 form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="nameacronym" required>
+                        <label class="form-label" for="form3Example1m">Tên doanh nghiệp viết tắt</label>
+                    </div>
 
-                <div class="col-md-3">
-                    <label class="form-label">Mã số thuế</label>
-                    <input @click="focus" type="text" class="form-control" v-model="MST" required>
-                    <div class="invalid-feedback">
-                        Mã này sẽ được sử dụng để đăng nhập. Không thể thay đổi vui lòng nhập chính xác!
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <label class="form-label">Email</label>
-                    <input @click="focus" type="email" class="form-control" v-model="email" required>
-                    <div class="invalid-feedback">
-                        Vui lòng nhập email.
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <label class="form-label">Địa chỉ</label>
                     <div class="row">
-                        <div class="col-md-4">
-                        <select @click="focus" class="form-control" v-model="province" required>
-                            <option value="" disabled>Chọn tỉnh/thành phố</option>
-                            <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
-                        </select>
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                            <input @click="focus" type="text" class="form-control" v-model="MST" required>
+                            <label class="form-label">Mã số thuế</label>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <select @click="focus" class="form-control" v-model="district" required>
-                                <option value="" disabled>Chọn quận/huyện</option>
-                                <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
-                            </select>
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                            <input @click="focus" type="email" class="form-control" v-model="email" required/>
+                            <label class="form-label">Email</label>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <input @click="focus" type="text" class="form-control" v-model="address" required placeholder="Số nhà, tên đường, phường/xã">
+                    </div>      
+                    <div class="mb-4 form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="nameofbusiness" required/>
+                        <label class="form-label" for="form3Example1m">Nghành, nghề kinh doanh</label>
+                    </div>           
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <select @click="focus" class="form-control" v-model="province" required>
+                                    <option value="" disabled>Chọn tỉnh/thành phố</option>
+                                    <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
+                                </select>
+                                <label class="form-label">Tỉnh/Thành phố</label>
+                            </div>
                         </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <select @click="focus" class="form-control" v-model="district" required>
+                                    <option value="" disabled>Chọn quận/huyện</option>
+                                    <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
+                                </select>
+                                <label class="form-label">Quận/Huyện</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <select @click="focus" class="form-control" v-model="ward" required>
+                                    <option value="" disabled>Chọn phường/xã</option>
+                                    <!-- <option v-for="ward in wards" :key="ward.Id" :value=[ward.Id,ward.WardName]>{{ward.WardName}}</option> -->
+                                </select>
+                                <label class="form-label">Phường/Xã</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input @click="focus" type="text" class="form-control" v-model="address" required/>
+                                <label class="form-label">Địa chỉ doanh nghiệp</label>
+                            </div>
+                        </div>          
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input @click="focus" type="password" class="form-control" v-model="password" required minlength="6"/>
+                                <label class="form-label">Mật khẩu</label>
+                            </div>
+                        </div>   
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input @click="focus" type="password" class="form-control" v-model="password2" minlength="6" required/>
+                                <label class="form-label">Nhập lại mật khẩu</label>
+                            </div>
+                        </div>   
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label">Lĩnh vực kinh doanh</label>
-                    <input @click="focus" type="text" class="form-control" v-model="major" required placeholder="">
-                </div>
+                    <div class="d-flex justify-content-end pt-3">
+                    <!-- <button type="button" class="btn btn-light btn-lg">Reset all</button> -->
+                    <button type="button" class="btn btn-primary btn-lg ms-2" @click="handleSubmit">Đăng kí</button>
+                    </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Mật khẩu</label>
-                    <input @click="focus" type="password" class="form-control" v-model="password" required>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label">Nhập lại mật khẩu</label>
-                    <input @click="focus" type="password" class="form-control" v-model="password2" required>
                 </div>
-                
-	        <button type="submit" class="btn btn-primary" @click="handleSubmit">Đăng kí</button>
-        </form>
+            </div>
+            </div>
+        </div>
+        </div>
     </div>
+    </section>
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config')
