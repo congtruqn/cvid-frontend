@@ -94,12 +94,16 @@
                         </div>
                         <div v-for="(item, index2) in company.position">
                         <div class="mt-2">
-                            <label class="form-label">Chức vụ</label>
+                            <label class="form-label">Công việc thực hiện</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" v-model="item.name"/>
                                 <button @click="addPosition(index1)" class="btn btn-primary" v-if="index2 == 0">Thêm</button>
                                 <button @click="delPosition(index1,index2)" class="btn btn-danger" v-else>Xóa</button>
                             </div>
+                        </div>
+                        <div class="mt-2">
+                            <label class="form-label">Chức vụ</label>
+                            <input type="text" class="form-control" v-model="a">
                         </div>
                         <div class="row">
                             <div class="col-sm-6 mt-2 needs-validation">
@@ -157,13 +161,6 @@
                     <tr >
                         <td colspan="2">Cả năm</label></td>
                         <td><input type="number" v-model='KPI[4]' min="1" max="10" class="form-control form-control-sm"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="100">
-                            <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="7" aria-valuemin="0" aria-valuemax="10" :style="{ 'width': point_cv*10 + '%' }">Điẻm CV: {{point_cv}}</div>
-                            </div>
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -223,7 +220,7 @@
                 })
                 .then(response => {
                     console.log(response.data)
-                    this.$router.push('/resume')
+                    this.$router.push('/')
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -275,9 +272,9 @@
                 this.companies[index].position.splice(index1, 1);
             },
             focus(){
-                document.querySelectorAll('.needs-validation').forEach(function(item){
-                    item.classList.add('was-validated')
-                })
+                // document.querySelectorAll('.needs-validation').forEach(function(item){
+                //     item.classList.add('was-validated')
+                // })
             }
       
         },
