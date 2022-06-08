@@ -60,23 +60,32 @@ let router = new Router({
         }
     },
     {
-        path: '/business',
+        path: '/business/job-list',
         name: 'business',
-        component: () => import('@/components/business/Business'),
+        component: () => import('@/components/business/JobList'),
         meta: {
             guest: true,
             layout: 'Business'
         }
     },
     {
-        path: '/business/:id',
-        name: 'businessdetail',
-        component: () => import('@/components/business/Recruit'),
+        path: '/business/job-detail/:id',
+        name: 'job-detail',
+        component: () => import('@/components/business/JobDetail'),
         meta: {
             guest: true,
             layout: 'Business'
         }
     },
+    // {
+    //     path: '/business/:id',
+    //     name: 'businessdetail',
+    //     component: () => import('@/components/business/Recruit'),
+    //     meta: {
+    //         guest: true,
+    //         layout: 'Business'
+    //     }
+    // },
     {
         path: '/quan-ly-nhan-vien',
         name: 'quan-ly-nhan-vien',

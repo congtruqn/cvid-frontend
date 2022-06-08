@@ -34,13 +34,13 @@
                             <td>5</td>
                             <td><span class="badge rounded-pill bg-secondary">Đang tuyển</span></td>
                             <td>
-                                <button data-bs-toggle="modal" data-bs-target="#view" class="btn btn-primary btn-sm">
+                                <button data-bs-toggle="modal" data-bs-target="#view" class="btn btn-primary btn-sm" title="Xem danh sách nhân viên">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button data-bs-toggle="modal" data-bs-target="#edit" href="#" class="btn btn-primary btn-sm">
+                                <button data-bs-toggle="modal" data-bs-target="#edit" href="#" class="btn btn-primary btn-sm"  title="Chỉnh sửa thông tin tuyển dụng">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button href="#" class="btn btn-danger btn-sm">
+                                <button href="#" class="btn btn-danger btn-sm"  title="Xóa vị trí tuyển dụng">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
