@@ -49,7 +49,7 @@
                             <div class="form-floating">
                                 <select @click="focus" class="form-control" v-model="province" required>
                                     <option value="" disabled>Chọn tỉnh/thành phố</option>
-                                    <option v-for="province in provinces" :key="province.Id" :value=[province.Id,province.Name]>{{province.Name}}</option>
+                                    <option v-for="province in provinces" :value='province'>{{province}}</option>
                                 </select>
                                 <label class="form-label">Tỉnh/Thành phố</label>
                             </div>
@@ -58,7 +58,7 @@
                             <div class="form-floating">
                                 <select @click="focus" class="form-control" v-model="district" required>
                                     <option value="" disabled>Chọn quận/huyện</option>
-                                    <option v-for="district in districts" :key="district.Id" :value=[district.Id,district.DistrictName]>{{district.DistrictName}}</option>
+                                    <option v-for="district in districts" :value='district'>{{district}}</option>
                                 </select>
                                 <label class="form-label">Quận/Huyện</label>
                             </div>
@@ -67,7 +67,7 @@
                             <div class="form-floating">
                                 <select @click="focus" class="form-control" v-model="ward" required>
                                     <option value="" disabled>Chọn phường/xã</option>
-                                    <!-- <option v-for="ward in wards" :key="ward.Id" :value=[ward.Id,ward.WardName]>{{ward.WardName}}</option> -->
+                                    <option v-for="ward in wards" :value='ward'>{{ward}}</option>
                                 </select>
                                 <label class="form-label">Phường/Xã</label>
                             </div>
@@ -120,9 +120,10 @@
                 email : "",
                 password : "",
                 password2 : "",
+                province_list: [],
                 provinces: [],
                 districts: [],
-               
+                wards: [],
             }
         },
         methods : {
@@ -174,18 +175,21 @@
         created(){
             this.$http.get(`${BASE_URL}/province/list`)
             .then(response => {
-                this.provinces = response.data;
+                this.province_list = response.data;
+                this.provinces = new Set(this.province_list.map(item => item.province))  
             })
             .catch(function (error) {
                 console.error(error.response);
-            });
-
-            
+            });           
         },
         watch : {
-            province(newVal){
+            province(newValue){
                 this.district = "";
-                this.districts = this.provinces.find(province => province.Id === newVal[0]).Districts;
+                this.districts = new Set(this.province_list.filter(item => item.province == newValue).map(item => item.district))
+            },
+            district(newValue){
+                this.ward = "";
+                this.wards = new Set(this.province_list.filter(item => item.district == newValue).map(item => item.ward))
             },
 
         }
