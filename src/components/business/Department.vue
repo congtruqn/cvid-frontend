@@ -39,7 +39,7 @@
                                 <button data-bs-toggle="modal" data-bs-target="#editPosition" class="btn btn-primary btn-sm" @click="openModalEdit(department._id, position._id)" title="Chỉnh sửa thông tin tuyển dụng">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button href="#" class="btn btn-danger btn-sm"  title="Xóa vị trí tuyển dụng">
+                                <button @click="deletePosition(department._id, position._id)" class="btn btn-danger btn-sm" title="Xóa vị trí tuyển dụng">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
@@ -455,6 +455,35 @@
                     console.log(err)
                 })
             },
+            deletePosition(department_id, position_id){
+                Swal.fire({
+                    title: 'Bạn có chắc chắn muốn xóa chức danh này?',
+                    text: "Sau khi xóa, bạn sẽ không thể khôi phục lại!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: 'var(--primary)',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xóa'
+                }).then((result) => {
+                    if (result.value) {
+                        this.$http.post(`${BASE_URL}/department/position/delete`, {
+                            department_id: department_id,
+                            position_id: position_id
+                        }).then(res => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thông báo',
+                                text: 'Xóa chức danh thành công',
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: 'var(--primary)',
+                            });
+                            window.location.reload();
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                    }
+                })
+            }
         },
         created(){
             this.$http.get(`${BASE_URL}/department/list/${id}`).then(res => {
