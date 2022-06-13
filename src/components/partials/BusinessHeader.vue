@@ -33,7 +33,7 @@
                         
                     </div>
                 </div> -->
-                <a href="/quan-ly-phong-ban" class="nav-item nav-link">Phòng ban</a>
+                <a href="/business/department" class="nav-item nav-link">Phòng ban</a>
                 <a href="/quan-ly-nhan-vien" class="nav-item nav-link">Nhân viên</a>
                 <a href="/business/job-list" class="nav-item nav-link">Tuyển dụng</a>
                 <a href="/login" class="nav-item nav-link">Login</a>

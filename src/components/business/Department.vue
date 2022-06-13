@@ -97,9 +97,9 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Địa điểm làm việc</label>
-                                <select name="location_id" class="form-control" v-model="new_department.position.work_location">
+                                <select class="form-control" v-model="new_department.position.work_location">
                                     <option value="">Chọn địa điểm làm việc</option>
-                                    <!-- <option v-for="(item, index) in locations" :value="item.id">{{item.name}}</option> -->
+                                    <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>
                             </div>
 
@@ -150,7 +150,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" @click="addPosition">Thêm vị trí</button>
+                    <button type="button" class="btn btn-primary" @click="editPosition">Lưu</button>
                 </div>
                 </div>
             </div>
@@ -196,9 +196,9 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Địa điểm làm việc</label>
-                                <select name="location_id" class="form-control" v-model="new_department.position.work_location">
+                                <select class="form-control" v-model="new_department.position.work_location">
                                     <option value="">Chọn địa điểm làm việc</option>
-                                    <!-- <option v-for="(item, index) in locations" :value="item.id">{{item.name}}</option> -->
+                                    <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>
                             </div>
 
@@ -347,6 +347,7 @@
     export default {
         data (){
             return {
+                provinces: [],
                 departments: [],
                 new_department: {
                     name: '',
@@ -405,7 +406,7 @@
             addPosition(e){
                 e.preventDefault();
                 
-                this.$http.post(`${BASE_URL}/department/add-position`, {
+                this.$http.post(`${BASE_URL}/department/position/new`, {
                     department: this.new_department
                 }).then(res => {
                     Swal.fire({
@@ -425,6 +426,7 @@
                 this.departments.filter(department => {
                     if (department._id == department_id){
                         this.new_department.name = department.name
+                        this.new_department.id = department._id
                         department.position.filter(position => {
                             if (position._id == position_id){
                                 position.enddate = position.enddate.split('T')[0]
@@ -433,7 +435,26 @@
                         })
                     }
                 })
-            }
+                console.log(this.new_department)
+            },
+            editPosition(e){
+                e.preventDefault();
+                this.$http.post(`${BASE_URL}/department/position/edit`, {
+                    department: this.new_department
+                }).then(res => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thông báo',
+                        text: 'Sửa chức danh thành công',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: 'var(--primary)',
+                    });
+                    this.name_position = '';
+                    window.location.reload();
+                }).catch(err => {
+                    console.log(err)
+                })
+            },
         },
         created(){
             this.$http.get(`${BASE_URL}/department/list/${id}`).then(res => {
@@ -441,6 +462,15 @@
             }).catch(err => {
                 console.log(err)
             })
+            this.$http.get(`${BASE_URL}/province/list`)
+            .then(response => {
+                this.provinces = response.data;
+                this.provinces = new Set(this.provinces.map(item => item.province))  
+                console.log(this.provinces)
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });   
         }
     }
 </script>

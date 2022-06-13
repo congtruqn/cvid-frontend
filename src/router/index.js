@@ -105,8 +105,8 @@ let router = new Router({
         }
     },
     {
-        path: '/quan-ly-phong-ban',
-        name: 'quan-ly-phong-ban',
+        path: '/business/department',
+        name: 'department',
         component: () => import('@/components/business/Department'),
         meta: {
             guest: true,
