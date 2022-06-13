@@ -73,7 +73,7 @@
                                 <input type="text" class="form-control" :value="new_department.name" readonly disabled>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Vị trí tuyển dụng</label>
+                                <label class="form-label">Vị trí tuyển dụng <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" v-model="new_department.position.name" placeholder=''>
                             </div>
                             <div class="form-group mb-3">
@@ -81,22 +81,22 @@
                                 <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.description"></textarea>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Số lượng</label>
+                                <label for="">Số lượng <span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" v-model="new_department.position.amount" placeholder="Nhập số lượng">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Ngày hết hạn</label>
+                                <label for="">Ngày hết hạn <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control"  v-model="new_department.position.enddate" placeholder="Nhập ngày hết hạn">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Ngành nghề</label>
+                                <label for="">Ngành nghề </label>
                                 <select name="category_id" class="form-control" v-model="new_department.position.majors">
                                     <option value="">Chọn ngành nghề</option>
                                     <!-- <option v-for="(item, index) in categories" :value="item.id">{{item.name}}</option> -->
                                 </select>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Địa điểm làm việc</label>
+                                <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>
                                 <select class="form-control" v-model="new_department.position.work_location">
                                     <option value="">Chọn địa điểm làm việc</option>
                                     <option v-for="province in provinces" :value="province">{{province}}</option>
@@ -104,11 +104,11 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="">Mức lương tối thiểu</label>
+                                <label for="">Mức lương tối thiểu (triệu đồng)</label>
                                 <input type="number" class="form-control" v-model="new_department.position.min_salary" placeholder="Nhập mức lương tối thiểu">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Mức lương tối đa</label>
+                                <label for="">Mức lương tối đa (triệu đồng)</label>
                                 <input type="number" class="form-control" v-model="new_department.position.max_salary" placeholder="Nhập mức lương tối đa">
                             </div>
                             <div class="form-group mb-3">
@@ -117,7 +117,7 @@
                             </div>
                             
                             <div class="form-group mb-3">
-                                <label for="">Trạng thái</label>
+                                <label for="">Trạng thái <span class="text-danger">*</span></label>
                                 <select name="status" class="form-control" v-model="new_department.position.status">
                                     <option value="">Chọn trạng thái</option>
                                     <option value="0">Dừng tuyển</option>
@@ -376,7 +376,7 @@
         methods : {
             addDepartment(e){
                 e.preventDefault();
-                if (this.name_department == ''){
+                if (this.new_department.name == ''){
                     Swal.fire({
                         icon: 'info',
                         title: 'Thông báo',
@@ -396,7 +396,7 @@
                             confirmButtonText: 'OK',
                             confirmButtonColor: 'var(--primary)',
                         });
-                        this.name_department = '';
+                        this.new_department.name = '';
                         window.location.reload();
                     }).catch(err => {
                         console.log(err)
@@ -431,6 +431,7 @@
                             if (position._id == position_id){
                                 position.enddate = position.enddate.split('T')[0]
                                 this.new_department.position = position
+                                console.log(this.new_department)
                             }
                         })
                     }
@@ -495,7 +496,6 @@
             .then(response => {
                 this.provinces = response.data;
                 this.provinces = new Set(this.provinces.map(item => item.province))  
-                console.log(this.provinces)
             })
             .catch(function (error) {
                 console.error(error.response);
