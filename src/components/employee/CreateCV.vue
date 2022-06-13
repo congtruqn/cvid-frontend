@@ -25,15 +25,7 @@
                         <h5 class="ms-n2 my-4 d-inline">Bằng cấp, chứng chỉ</h5>
                         <button @click="delDegree" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
                         <button @click="addDegree" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
-                        <!-- <div class="dropdown d-inline my-4">
-                        <a class="btn btn-primary dropdown-toggle rounded-pill" id="dropdownDegree" data-bs-toggle="dropdown" aria-expanded="true">
-                            <i class="bi bi-three-dots-vertical"></i>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownDegree">
-                            <li @click="addDegree"><a class="dropdown-item" href="#">Thêm</a></li>
-                            <li @click="delDegree"><a class="dropdown-item" href="#">Xóa</a></li>
-                        </ul>
-                        </div> -->
+
                         <div v-for="degree in degrees">
                         <div class="mt-4">
                             <label class="form-label">Tên bằng cấp, chứng chỉ</label>
@@ -48,9 +40,9 @@
                             <input type="text" class="form-control" v-model="degree.school">
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mt-2 needs-validation">
+                            <div class="col-md-6 mt-2 ">
                                 <label class="form-label">Năm tốt nghiệp</label>
-                                <input v-model="degree.year" @click="focus" type="text" class="form-control" placeholder="MM/YYYY" pattern="^((0[1-9])|(1[0-2]))\/(\d{4})$" required>
+                                <input v-model="degree.year" type="month" class="form-control" required>
                             </div>
                             <div class="col-md-6 mt-2">
                                 <label class="form-label">Mã số chứng chỉ</label>
@@ -62,21 +54,21 @@
                         
                     </div>
                     <div class="col-xl-6 mt-4 border-start border-2 border-primary">
-                        <h5 class="ms-n2 my-4 d-inline">Kỹ nằng chuyên biệt</h5>
+                        <h5 class="ms-n2 my-4 d-inline">Kỹ năng chuyên biệt</h5>
                         <button @click="delSkill" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
                         <button @click="addSkill" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
                         <div v-for="skill in skills">
                         <div class="mt-4">
-                            <label class="form-label">Tên kĩ nămg</label>
+                            <label class="form-label">Tên kĩ năng</label>
                             <input type="text" class="form-control" v-model="skill.name">
                         </div>
                         <div class="mt-2">
                             <label class="form-label">Trường</label>
                             <input type="text" class="form-control" v-model="skill.school">
                         </div>
-                        <div class="mt-2 needs-validation">
+                        <div class="mt-2 ">
                             <label class="form-label">Năm cấp</label>
-                            <input @click="focus" type="text" class="form-control" placeholder="MM/YYYY" pattern="^((0[1-9])|(1[0-2]))\/(\d{4})$" required v-model="skill.year">
+                            <input type="month" class="form-control" required v-model="skill.year">
                         </div>
                         <hr class="bg-danger border-2 border-top border-danger"/>    
                         </div>
@@ -96,23 +88,27 @@
                         <div class="mt-2">
                             <label class="form-label">Công việc thực hiện</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" v-model="item.name"/>
+                                <input type="text" class="form-control" v-model="item.work"/>
                                 <button @click="addPosition(index1)" class="btn btn-primary" v-if="index2 == 0">Thêm</button>
                                 <button @click="delPosition(index1,index2)" class="btn btn-danger" v-else>Xóa</button>
                             </div>
                         </div>
                         <div class="mt-2">
                             <label class="form-label">Chức vụ</label>
-                            <input type="text" class="form-control" v-model="a">
+                            <input type="text" class="form-control" v-model="item.name">
+                        </div>
+                        <div class="mt-2">
+                            <label class="form-label">Địa chỉ làm việc</label>
+                            <input type="text" class="form-control" v-model="item.address">
                         </div>
                         <div class="row">
-                            <div class="col-sm-6 mt-2 needs-validation">
+                            <div class="col-sm-6 mt-2 ">
                                 <label class="form-label">Từ</label>
-                                <input @click="focus" type="text" class="form-control" placeholder="MM/YYYY" pattern="^((0[1-9])|(1[0-2]))\/(\d{4})$" required v-model="item.from">
+                                <input type="month" class="form-control" required v-model="item.from">
                             </div>
-                            <div class="col-sm-6 mt-2 needs-validation">
+                            <div class="col-sm-6 mt-2 ">
                                 <label class="form-label">Đến</label>
-                                <input @click="focus" type="text" class="form-control" placeholder="MM/YYYY" pattern="^((0[1-9])|(1[0-2]))\/(\d{4})$" required v-model="item.to">
+                                <input type="month" class="form-control" required v-model="item.to">
                             </div>  
                         </div>
                         </div>
@@ -129,7 +125,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="accordion needs-validation" id="accordionExample">
+                <tbody class="accordion " id="accordionExample">
                     <tr v-for="(item, index) in criteria">
                         <td colspan=2>
                             <div class="accordion-item">
@@ -146,7 +142,7 @@
                             </div>
                         </td>
                         <td style="width: 110px">
-                            <input @click="focus" type="number" v-model='point[index]' min="1" max="10" class="form-control form-control-sm" required/>
+                            <input type="number" v-model='point[index]' min="1" max="10" class="form-control form-control-sm" required/>
                         </td>
                     </tr>
                     <tr>
@@ -161,6 +157,11 @@
                     <tr >
                         <td colspan="2">Cả năm</label></td>
                         <td><input type="number" v-model='KPI[4]' min="1" max="10" class="form-control form-control-sm"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <h6 class="display-6 text-primary text-center">Điểm CV: {{point_cv}}</h6>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -198,13 +199,15 @@
                     position: [{
                         'from': '',
                         'to': '',
-                        'name': ''
+                        'name': '',
+                        'work': '',
+                        'address': ''
                     }]
                 }],
-                point: [],
-                KPI: ['','','','',''],
+                point: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                KPI: [0,0,0,0,0],
                 criteria: '',
-                point_cv: 0,
+                point_cv: '',
             }
         },
         methods : {
@@ -219,7 +222,6 @@
                     KPI: this.KPI,
                 })
                 .then(response => {
-                    console.log(response.data)
                     this.$router.push('/')
                 })
                 .catch(function (error) {
@@ -254,7 +256,9 @@
                     position: [{
                         'from': '',
                         'to': '',
-                        'name': ''
+                        'name': '',
+                        'position': '',
+                        'address': ''
                     }]
                 });
             },
@@ -265,17 +269,14 @@
                     this.companies[index].position.push({
                         'from': '',
                         'to': '',
-                        'name': ''
+                        'name': '',
+                        'position': '',
+                        'address': ''
                     });
             },
             delPosition(index, index1){
                 this.companies[index].position.splice(index1, 1);
             },
-            focus(){
-                // document.querySelectorAll('.needs-validation').forEach(function(item){
-                //     item.classList.add('was-validated')
-                // })
-            }
       
         },
         created(){
@@ -287,11 +288,7 @@
             })  
         },
         updated(){
-            this.point_cv = this.point.reduce((a, b) => {
-                a = parseInt(a)
-                b = parseInt(b)
-                return a+b
-            }, 0) / this.criteria.length
+            this.point_cv = Math.round((this.point.reduce((a,b) => parseInt(a) + parseInt(b), 0) + this.KPI.reduce((a,b) => parseInt(a) + parseInt(b), 0)) * 10 / 21) /10
         },
         watch : {
                
