@@ -33,6 +33,9 @@
                             <td v-if="position.status == 0"><span class="badge rounded-pill bg-secondary">Dừng tuyển</span></td>
                             <td v-else><span class="badge rounded-pill bg-primary">Đang tuyển</span></td>
                             <td>
+                                <button @click="searchCV(position)" data-bs-toggle="modal" data-bs-target="#search" class="btn btn-secondary btn-sm" title="Tìm kiếm ứng viên">
+                                    <i class="fas fa-search"></i>
+                                </button>
                                 <button data-bs-toggle="modal" data-bs-target="#view" class="btn btn-primary btn-sm" title="Xem danh sách nhân viên">
                                     <i class="fas fa-eye"></i>
                                 </button>
@@ -57,7 +60,44 @@
                 </table>
             </div>
         </div>
-
+        <div class="modal fade" id="search" tabindex="-1" aria-labelledby="search" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchLabel">Danh sách ứng viên đề xuất</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="row gy-1">
+                            <a href="view-cv/idcv" v-for="index in 5" class="job-item p-4 mb-2">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Nguyễn Trọng Hoàng</h5>
+                                            <span class="text-truncate me-3"><i class="fas fa-file-alt"></i> Điểm CV: 7/10</span>
+                                            <span class="text-truncate me-3"><i class="fas fa-building"></i> Cấp bậc: Đại học</span>
+                                            <span class="text-truncate me-0"><i class="far fa-page"></i>Chuyên nghành: Khoa học máy tính</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-4 d-flex flex-column align-items-start align-items-lg-end justify-content-center">
+                                        <div class="d-flex my-3">
+                                            <a class="btn btn-primary" href="">Gửi lời mời</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>          
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" @click="editPosition">Lưu</button>
+                </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="editPosition" tabindex="-1" aria-labelledby="editPosition" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
@@ -370,7 +410,8 @@
                         note: "",
                     },
                     id: ''
-                }
+                },
+                list_cv: [],
             }
         },
         methods : {

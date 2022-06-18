@@ -46,7 +46,7 @@
             this.$http.get(`${BASE_URL}/department/list/${id}`).then(res => {
                 res.data.forEach(item => {
                     item.position.forEach(position => {
-                        if (position.status == '1' && position.enddate > new Date().toISOString().split('T')[0]) {
+                        if (position.status == '1' && position.enddate > new Date().toISOString().split('T')[0] && position.amount > 0) {
                             this.position.push(position)
                         }
                     })
