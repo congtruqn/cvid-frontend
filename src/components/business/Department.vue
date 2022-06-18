@@ -303,7 +303,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive-xl m-4">
-                        <table class="table table-sm table-hover">
+                        <table class="table table-sm table-hover" :style="{minWidth: '1500px'}">
                             <thead class="table-primary">
                                 <tr>
                                     <th>#</th>
@@ -317,6 +317,7 @@
                                     <th>Ngày nghỉ</th>
                                     <th>Kết quả làm việc</th>
                                     <th>Xếp loại cv đầu ra</th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 
                             </thead>
@@ -333,6 +334,10 @@
                                     <td></td>
                                     <td>Chưa cập nhật</td>
                                     <td>Chưa cập nhật</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" title="Đánh giá nhân viên"><i class="fas fa-book"></i></button>
+                                        <button class="btn btn-sm btn-danger" title="Xóa nhân viên"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
