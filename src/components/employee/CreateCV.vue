@@ -7,7 +7,7 @@
                     <h3 class="mb-4 text-uppercase">{{employee.name}}</h3>
                     <div class="row">
                         <div class="col-xl-6">
-                            <p><i class="bi bi-geo-alt"></i> {{employee.address + ', ' + employee.district.Name + ', ' + employee.province.Name}}</p>
+                            <p><i class="bi bi-geo-alt"></i> {{employee.address + ', ' + employee.ward + ', ' + employee.district + ', ' + employee.province}}</p>
                             <p><i class="bi bi-envelope"></i> {{employee.email}}</p>
                             <p><i class="bi bi-calendar"></i> {{employee.birthdate}}</p>
                         </div>
@@ -142,7 +142,7 @@
                             </div>
                         </td>
                         <td style="width: 110px">
-                            <input type="number" v-model='point[index]' min="1" max="10" class="form-control form-control-sm" required/>
+                            <input type="number" v-model='assessment[index]' min="1" max="10" class="form-control form-control-sm" required/>
                         </td>
                     </tr>
                     <tr>
@@ -152,11 +152,11 @@
                     </tr>
                     <tr v-for="index in 4">
                         <td colspan="2">Quý {{index}}</td>
-                        <td><input type="number" v-model='KPI[index-1]' min="1" max="10" class="form-control form-control-sm"/></td>
+                        <td><input type="number" v-model='pointKPI[index-1]' min="1" max="10" class="form-control form-control-sm"/></td>
                     </tr>
                     <tr >
                         <td colspan="2">Cả năm</label></td>
-                        <td><input type="number" v-model='KPI[4]' min="1" max="10" class="form-control form-control-sm"/></td>
+                        <td><input type="number" v-model='pointKPI[4]' min="1" max="10" class="form-control form-control-sm"/></td>
                     </tr>
                     <tr>
                         <td colspan="100">
@@ -204,8 +204,8 @@
                         'address': ''
                     }]
                 }],
-                point: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                KPI: [0,0,0,0,0],
+                assessment: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                pointKPI: [0,0,0,0,0],
                 criteria: '',
                 point_cv: '',
             }
@@ -213,13 +213,13 @@
         methods : {
             handleSubmit(e){
                 e.preventDefault()
-                this.$http.post(`${BASE_URL}/resume/create`, {
-                    cvid : this.employee.username,
+                this.$http.post(`${BASE_URL}/employee/createCV`, {
+                    id : this.employee._id,
                     degrees: this.degrees,
                     skills: this.skills,
                     companies: this.companies,
-                    point: this.point,
-                    KPI: this.KPI,
+                    assessment: this.assessment,
+                    pointKPI: this.pointKPI,
                 })
                 .then(response => {
                     this.$router.push('/')
@@ -282,14 +282,17 @@
         created(){
             this.employee = JSON.parse(localStorage.getItem('employee'))
             this.employee.birthdate = this.employee.birthdate.split('T')[0]
+            if (this.employee.point) {
+                this.$router.push('/employee')
+            }
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
                 this.criteria = res.data;
             })  
         },
-        updated(){
-            this.point_cv = Math.round((this.point.reduce((a,b) => parseInt(a) + parseInt(b), 0) + this.KPI.reduce((a,b) => parseInt(a) + parseInt(b), 0)) * 10 / 21) /10
-        },
+        /*updated(){
+            this.point_cv = Math.round((this.assessment.reduce((a,b) => parseInt(a) + parseInt(b), 0) + this.pointKPI.reduce((a,b) => parseInt(a) + parseInt(b), 0)) * 10 / 21) /10
+        },*/
         watch : {
                
             

@@ -33,7 +33,7 @@
                             <td v-if="position.status == 0"><span class="badge rounded-pill bg-secondary">Dừng tuyển</span></td>
                             <td v-else><span class="badge rounded-pill bg-primary">Đang tuyển</span></td>
                             <td>
-                                <button @click="searchCV(position)" data-bs-toggle="modal" data-bs-target="#search" class="btn btn-secondary btn-sm" title="Tìm kiếm ứng viên">
+                                <button @click="findCV(department._id, position._id)" data-bs-toggle="modal" data-bs-target="#findCV" class="btn btn-secondary btn-sm" title="Tìm kiếm ứng viên">
                                     <i class="fas fa-search"></i>
                                 </button>
                                 <button data-bs-toggle="modal" data-bs-target="#view" class="btn btn-primary btn-sm" title="Xem danh sách nhân viên">
@@ -60,25 +60,25 @@
                 </table>
             </div>
         </div>
-        <div class="modal fade" id="search" tabindex="-1" aria-labelledby="search" aria-hidden="true">
+        <div class="modal fade" id="findCV" tabindex="-1" aria-labelledby="findCV" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="searchLabel">Danh sách ứng viên đề xuất</h5>
+                    <h5 class="modal-title" id="findCVLabel">Danh sách ứng viên đề xuất</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="card-body">
                         <div class="row gy-1">
-                            <a href="view-cv/idcv" v-for="index in 5" class="job-item p-4 mb-2">
+                            <a href="view-cv/idcv" v-for="index in list_cv" class="job-item p-4 mb-2">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-8 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                         <div class="text-start ps-4">
-                                            <h5 class="mb-3">Nguyễn Trọng Hoàng</h5>
-                                            <span class="text-truncate me-3"><i class="fas fa-file-alt"></i> Điểm CV: 7/10</span>
-                                            <span class="text-truncate me-3"><i class="fas fa-building"></i> Cấp bậc: Đại học</span>
-                                            <span class="text-truncate me-0"><i class="far fa-page"></i>Chuyên nghành: Khoa học máy tính</span>
+                                            <h5 class="mb-3">{{index.name}}</h5>
+                                            <span class="text-truncate me-3"><i class="fas fa-file-alt"></i> Điểm CV: {{index.point}}/10</span>
+                                            <span class="text-truncate me-3"><i class="fas fa-building"></i> Cấp bậc: {{index.level}}</span>
+                                            <span class="text-truncate me-0"><i class="far fa-page"></i>Chuyên nghành: {{index.skill}}</span>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-4 d-flex flex-column align-items-start align-items-lg-end justify-content-center">
@@ -129,11 +129,23 @@
                                 <input type="date" class="form-control"  v-model="new_department.position.enddate" placeholder="Nhập ngày hết hạn">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Ngành nghề </label>
-                                <select name="category_id" class="form-control" v-model="new_department.position.majors">
-                                    <option value="">Chọn ngành nghề</option>
-                                    <!-- <option v-for="(item, index) in categories" :value="item.id">{{item.name}}</option> -->
-                                </select>
+                                <label for="">Ngành nghề</label>
+                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor2" role="button" aria-controls="offcanvasMajor2" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề'">
+                                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor2" aria-labelledby="offcanvasMajor2Label">
+                                    <div class="offcanvas-header">
+                                      <h5 class="offcanvas-title" id="offcanvasMajor2Label">Chọn nghành nghề</h5>
+                                      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <div v-for="(major, index) in majors" v-if="major.level === 'Đại học'" :key="index" class="form-check">
+                                            <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name" :id="'major'+index">
+                                            <label class="form-check-label" :for="'major'+index">
+                                                {{major.name}}
+                                            </label>
+                                          </div>
+                                          
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>
@@ -229,10 +241,22 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Ngành nghề</label>
-                                <select name="category_id"" class="form-control" v-model="new_department.position.majors">
-                                    <option value="">Chọn ngành nghề</option>
-                                    <!-- <option v-for="(item, index) in categories" :value="item.id">{{item.name}}</option> -->
-                                </select>
+                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor1" role="button" aria-controls="offcanvasMajor1" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề'">
+                                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor1" aria-labelledby="offcanvasMajor1Label">
+                                    <div class="offcanvas-header">
+                                      <h5 class="offcanvas-title" id="offcanvasMajor1Label">Chọn nghành nghề</h5>
+                                      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <div v-for="(major, index) in majors" v-if="major.level === 'Đại học'" :key="index" class="form-check">
+                                            <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name" :id="'major1'+index">
+                                            <label class="form-check-label" :for="'major1'+index">
+                                                {{major.name}}
+                                            </label>
+                                          </div>
+                                          
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Địa điểm làm việc</label>
@@ -351,7 +375,7 @@
             </div>
         </div>
 
-
+        
 
         <div class="modal fade" id="addDepartment" tabindex="-1" aria-labelledby="addDepartmentLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -392,6 +416,7 @@
     export default {
         data (){
             return {
+                majors: [],
                 provinces: [],
                 departments: [],
                 new_department: {
@@ -451,7 +476,6 @@
             },
             addPosition(e){
                 e.preventDefault();
-                
                 this.$http.post(`${BASE_URL}/department/position/new`, {
                     department: this.new_department
                 }).then(res => {
@@ -477,12 +501,11 @@
                             if (position._id == position_id){
                                 position.enddate = position.enddate.split('T')[0]
                                 this.new_department.position = position
-                                console.log(this.new_department)
+                        
                             }
                         })
                     }
                 })
-                console.log(this.new_department)
             },
             editPosition(e){
                 e.preventDefault();
@@ -530,7 +553,15 @@
                         })
                     }
                 })
-            }
+            },
+            findCV(department_id, position_id){
+                this.$http.get(`${BASE_URL}/department/findCV/${department_id}/${position_id}`).then(res => {
+                    this.list_cv = res.data
+                    console.log(this.list_cv)
+                }).catch(err => {
+                    console.log(err)
+                })
+            },
         },
         created(){
             this.$http.get(`${BASE_URL}/department/list/${id}`).then(res => {
@@ -546,6 +577,10 @@
             .catch(function (error) {
                 console.error(error.response);
             });   
+            this.$http.get(`${BASE_URL}/major/list`)
+            .then(response => {
+                this.majors = response.data;
+            })
         }
     }
 </script>
