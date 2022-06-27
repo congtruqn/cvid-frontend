@@ -47,7 +47,7 @@
                                 </button>
                             </td>
                         </tr>
-                        <tr >
+                        <tr>
                             <td colspan="100">
                                 <button data-bs-toggle="modal" data-bs-target="#addPosition" @click="new_department.id=department._id;new_department.name=department.name;" class="btn btn-primary btn-sm">
                                     <i class="fas fa-plus"></i> Thêm vị trí tuyển dụng
@@ -130,7 +130,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Ngành nghề</label>
-                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor2" role="button" aria-controls="offcanvasMajor2" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề'">
+                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor2" role="button" aria-controls="offcanvasMajor2" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề'" readonly>
                                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor2" aria-labelledby="offcanvasMajor2Label">
                                     <div class="offcanvas-header">
                                       <h5 class="offcanvas-title" id="offcanvasMajor2Label">Chọn nghành nghề</h5>
@@ -241,7 +241,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Ngành nghề</label>
-                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor1" role="button" aria-controls="offcanvasMajor1" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề'">
+                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor1" role="button" aria-controls="offcanvasMajor1" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề'" readonly>
                                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor1" aria-labelledby="offcanvasMajor1Label">
                                     <div class="offcanvas-header">
                                       <h5 class="offcanvas-title" id="offcanvasMajor1Label">Chọn nghành nghề</h5>

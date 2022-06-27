@@ -13,33 +13,40 @@
                 <div class="col-xl-6  needs-validation">
                 <div class="card-body p-md-5 text-black">
                     <h3 class="mb-5 text-uppercase">Đăng kí tài khoản tuyển dụng</h3>
+        
                     <div class="mb-4 form-floating">
+                        <select @click="focus" class="form-control" v-model="type" required>
+                            <option value="" disabled>Chọn loại hình tuyển dụng</option>
+                            <option value="Cá nhân">Cá nhân</option>
+                            <option value="Doanh nghiệp">Doanh nghiệp</option>
+                        </select>
+                        <label class="form-label">Loại hình tuyển dụng</label>
+                    </div>
+                    <div v-if="type=='Doanh nghiệp'" class="mb-4 form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="MST" required>
+                        <label class="form-label">Mã số thuế</label>
+                    </div>
+                    <div v-if="type=='Cá nhân'" class="mb-4 form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="MST" required>
+                        <label class="form-label">Số điện thoại</label>
+                    </div>
+                    <div v-if="type=='Doanh nghiệp'" class="mb-4 form-floating">
                         <input @click="focus" type="text" class="form-control" v-model="name" required>
                         <label class="form-label" for="form3Example1m">Tên doanh nghiệp</label>
                     </div>
-                    <div class="mb-4 form-floating">
+                    <div v-if="type=='Doanh nghiệp'" class="mb-4 form-floating">
                         <input @click="focus" type="text" class="form-control" v-model="nameforeign" required>
                         <label class="form-label" for="form3Example1m">Tên doanh nghiệp viết bằng tiếng nước ngoài</label>
                     </div>
-                    <div class="mb-4 form-floating">
+                    <div v-if="type=='Doanh nghiệp'" class="mb-4 form-floating">
                         <input @click="focus" type="text" class="form-control" v-model="nameacronym" required>
                         <label class="form-label" for="form3Example1m">Tên doanh nghiệp viết tắt</label>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
-                            <div class="form-floating">
-                            <input @click="focus" type="text" class="form-control" v-model="MST" required>
-                            <label class="form-label">Mã số thuế</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="form-floating">
-                            <input @click="focus" type="email" class="form-control" v-model="email" required/>
-                            <label class="form-label">Email</label>
-                            </div>
-                        </div>
-                    </div>      
+                    <div class="mb-4 form-floating">
+                        <input @click="focus" type="email" class="form-control" v-model="email" required/>
+                        <label class="form-label">Email</label>
+                    </div>
                     <div class="mb-4 form-floating">
                         <input @click="focus" type="text" class="form-control" v-model="nameofbusiness" required/>
                         <label class="form-label" for="form3Example1m">Nghành, nghề kinh doanh</label>
@@ -111,10 +118,12 @@
     export default {  
         data(){
             return {
+                type: "Doanh nghiệp",
                 name: "",
                 MST: "",
                 province: "",
                 district: "",
+                ward: "",
                 address: "",
                 major: "",
                 email : "",

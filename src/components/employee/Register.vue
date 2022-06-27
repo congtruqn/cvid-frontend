@@ -54,11 +54,15 @@
                             <option value="Trung cấp">Trung cấp</option>
                             <option value="Cao đẳng">Cao đẳng</option>
                             <option value="Đại học">Đại học</option>
-                            <option value="Trên đại học">Trên đại học</option>
                         </select>
                         <label class="form-label">Cấp bậc</label>
                     </div>
-
+                    <div class="mb-4 form-floating">
+                        <select @click="focus" class="form-control" v-model="level" required>
+                            <option value="" disabled>Chọn trường</option>
+                        </select>
+                        <label class="form-label">Trường</label>
+                    </div>
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="major" required>
                             <option value="" disabled>Chọn ngành nghề</option>
@@ -69,11 +73,24 @@
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="skill" required>
                             <option value="" disabled>Chọn chuyên nghành</option>
-                            <option v-for="skill in skills" :key="skill.code" :value='skill.name'>{{skill.name}}</option>
+                            <option v-for="skill in skills" :value='skill'>{{skill}}</option>
                         </select>
                         <label class="form-label">Chuyên nghành</label>
                     </div>
-
+                    <div class="mb-4 form-floating">
+                        <select @click="focus" class="form-control" v-model="a" required>
+                            <option value="" disabled>Chọn chức danh/ chuyên môn</option>
+                            <option value=''></option>
+                        </select>
+                        <label class="form-label">Chức danh/ chuyên môn</label>
+                    </div>
+                    <div class="mb-4 form-floating">
+                        <select @click="focus" class="form-control" v-model="country" required>
+                            <option value="" disabled>Chọn quốc gia</option>
+                            <option value='Việt Nam'>Việt Nam</option>
+                        </select>
+                        <label class="form-label">Quốc gia</label>
+                    </div>
                     <div class="row">
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
@@ -146,12 +163,14 @@
                 birthdate : "",
                 level : "",
                 email : "",
+                country: "",
                 province : "",
                 district : "",
                 ward : "",
                 address : "",
                 major : "",
                 skill : "",
+                position: "",
                 password : "",
                 password2 : "",
                 provinces: [],

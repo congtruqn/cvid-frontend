@@ -6,15 +6,16 @@
                 <div class="card-body px-md-5 text-black">
                     <h3 class="mb-4 text-uppercase">{{employee.name}}</h3>
                     <div class="row">
-                        <div class="col-xl-6">
-                            <p><i class="bi bi-geo-alt"></i> {{employee.address + ', ' + employee.ward + ', ' + employee.district + ', ' + employee.province}}</p>
-                            <p><i class="bi bi-envelope"></i> {{employee.email}}</p>
-                            <p><i class="bi bi-calendar"></i> {{employee.birthdate}}</p>
-                        </div>
+                        
                         <div class="col-xl-6">
                             <p>Cấp bậc: {{employee.level}}</p>
                             <p>Ngành: {{employee.major}}</p>
                             <p>Chuyên nghành: {{employee.skill}}</p>
+                        </div>
+                        <div class="col-xl-6">
+                            <p><i class="bi bi-geo-alt"></i> {{employee.address + ', ' + employee.ward + ', ' + employee.district + ', ' + employee.province}}</p>
+                            <p><i class="bi bi-envelope"></i> {{employee.email}}</p>
+                            <p><i class="bi bi-calendar"></i> {{employee.birthdate}}</p>
                         </div>
                     </div>  
                 </div>
@@ -145,19 +146,7 @@
                             <input type="number" v-model='assessment[index]' min="1" max="10" class="form-control form-control-sm" required/>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="100">
-                            Chỉ số KPI đạt được
-                        </td>
-                    </tr>
-                    <tr v-for="index in 4">
-                        <td colspan="2">Quý {{index}}</td>
-                        <td><input type="number" v-model='pointKPI[index-1]' min="1" max="10" class="form-control form-control-sm"/></td>
-                    </tr>
-                    <tr >
-                        <td colspan="2">Cả năm</label></td>
-                        <td><input type="number" v-model='pointKPI[4]' min="1" max="10" class="form-control form-control-sm"/></td>
-                    </tr>
+                    
                     <tr>
                         <td colspan="100">
                             <h6 class="display-6 text-primary text-center">Điểm CV: {{point_cv}}</h6>
@@ -205,7 +194,7 @@
                     }]
                 }],
                 assessment: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                pointKPI: [0,0,0,0,0],
+            
                 criteria: '',
                 point_cv: '',
             }
@@ -219,10 +208,20 @@
                     skills: this.skills,
                     companies: this.companies,
                     assessment: this.assessment,
-                    pointKPI: this.pointKPI,
+                    
                 })
                 .then(response => {
-                    this.$router.push('/')
+                    if (response.data.success){
+                        this.$router.push('/employee')
+                    } else {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Cập nhật thất bại',
+                            text: `${response.data.message}`,
+                            confirmButtonColor: 'var(--primary)',
+                            confirmButtonText: 'Nhập lại',
+                        });
+                    }
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -290,12 +289,8 @@
                 this.criteria = res.data;
             })  
         },
-        /*updated(){
-            this.point_cv = Math.round((this.assessment.reduce((a,b) => parseInt(a) + parseInt(b), 0) + this.pointKPI.reduce((a,b) => parseInt(a) + parseInt(b), 0)) * 10 / 21) /10
-        },*/
+
         watch : {
-               
-            
         }
     }
 </script>
