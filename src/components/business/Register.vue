@@ -17,28 +17,28 @@
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="type" required>
                             <option value="" disabled>Chọn loại hình tuyển dụng</option>
-                            <option value="Cá nhân">Cá nhân</option>
-                            <option value="Doanh nghiệp">Doanh nghiệp</option>
+                            <option value="6">Cá nhân</option>
+                            <option value="5">Doanh nghiệp</option>
                         </select>
                         <label class="form-label">Loại hình tuyển dụng</label>
                     </div>
-                    <div v-if="type=='Doanh nghiệp'" class="mb-4 form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="MST" required>
+                    <div v-if="type==5" class="mb-4 form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="username" required>
                         <label class="form-label">Mã số thuế</label>
                     </div>
-                    <div v-if="type=='Cá nhân'" class="mb-4 form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="MST" required>
+                    <div v-if="type!=5" class="mb-4 form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="username" required>
                         <label class="form-label">Số điện thoại</label>
                     </div>
-                    <div v-if="type=='Doanh nghiệp'" class="mb-4 form-floating">
+                    <div v-if="type==5" class="mb-4 form-floating">
                         <input @click="focus" type="text" class="form-control" v-model="name" required>
                         <label class="form-label" for="form3Example1m">Tên doanh nghiệp</label>
                     </div>
-                    <div v-if="type=='Doanh nghiệp'" class="mb-4 form-floating">
+                    <div v-if="type==5" class="mb-4 form-floating">
                         <input @click="focus" type="text" class="form-control" v-model="nameforeign" required>
                         <label class="form-label" for="form3Example1m">Tên doanh nghiệp viết bằng tiếng nước ngoài</label>
                     </div>
-                    <div v-if="type=='Doanh nghiệp'" class="mb-4 form-floating">
+                    <div v-if="type==5" class="mb-4 form-floating">
                         <input @click="focus" type="text" class="form-control" v-model="nameacronym" required>
                         <label class="form-label" for="form3Example1m">Tên doanh nghiệp viết tắt</label>
                     </div>
@@ -48,9 +48,16 @@
                         <label class="form-label">Email</label>
                     </div>
                     <div class="mb-4 form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="nameofbusiness" required/>
+                        <input @click="focus" type="text" class="form-control" v-model="major" required/>
                         <label class="form-label" for="form3Example1m">Nghành, nghề kinh doanh</label>
-                    </div>           
+                    </div>  
+                    <div class="mb-4 form-floating">
+                        <select @click="focus" class="form-control" v-model="country" required>
+                            <option value="" disabled>Chọn quốc gia</option>
+                            <option  value="Việt Nam">Việt Nam</option>
+                        </select>
+                        <label class="form-label">Quốc gia</label>
+                    </div>         
                     <div class="row">
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
@@ -118,9 +125,12 @@
     export default {  
         data(){
             return {
-                type: "Doanh nghiệp",
+                type: "",
                 name: "",
-                MST: "",
+                nameforeign: "",
+                nameacronym: "",
+                username: "",
+                country: "",
                 province: "",
                 district: "",
                 ward: "",
@@ -139,10 +149,15 @@
             handleSubmit(e){
                 e.preventDefault()
                 this.$http.post(`${BASE_URL}/business/register`, {
+                    type: this.type,
                     name: this.name,
-                    MST: this.MST,
+                    nameforeign: this.nameforeign,
+                    nameacronym: this.nameacronym,
+                    username: this.username,
+                    country: this.country,
                     province: this.province,
                     district: this.district,
+                    ward: this.ward,
                     address: this.address,
                     major: this.major,
                     email: this.email,
@@ -159,7 +174,7 @@
                             confirmButtonText: 'Đăng nhập',
                         }).then((result) => {
                             if (result.value) {
-                                this.$router.push('/login')
+                                this.$router.push('/business/login')
                             }
                         })
                     }

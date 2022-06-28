@@ -62,10 +62,8 @@
                                 }
                                 else {
                                     var user = response.data.userinfo
-                                    if(user.type == 5){
-                                        localStorage.setItem('business',JSON.stringify(user));
-                                        this.$router.push('/business/department')
-                                    }
+                                    localStorage.setItem('business',JSON.stringify(user));
+                                    this.$router.push('/business/department')
                                 }
                             }                 
                         }

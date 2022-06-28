@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <button type="button" class="btn btn-primary btn-icon-split ms-5 my-4" data-bs-toggle="modal" data-bs-target="#addDepartment">
+        <button v-if="business.type==5" type="button" class="btn btn-primary btn-icon-split ms-5 my-4" data-bs-toggle="modal" data-bs-target="#addDepartment">
             <i class="fas fa-plus"></i> Thêm phòng ban
         </button>
         
@@ -393,11 +393,11 @@
                     <h5 class="mb-2">Tài khoản phòng ban</h5>
                     <div class="mb-2">
                         <label class="col-form-label">Tên tài khoản</label>
-                        <input type="text" class="form-control" placeholder="Nhập tên tài khoản">
+                        <input type="text" class="form-control" placeholder="Nhập tên tài khoản" v-model="username">
                     </div>
                     <div class="mb-2">
                         <label class="col-form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" placeholder="Nhập mật khẩu">
+                        <input type="password" class="form-control" placeholder="Nhập mật khẩu" v-model="password">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -411,12 +411,14 @@
     </div>
 </template>
 <script>
-    const {BASE_URL} =  require('../../utils/config')
-    const id = JSON.parse(localStorage.getItem('business')).username
+    const {BASE_URL} =  require('../../utils/config') 
     export default {
         data (){
             return {
+                business : JSON.parse(localStorage.getItem('business')),
                 majors: [],
+                username: '',
+                password: '',
                 provinces: [],
                 departments: [],
                 new_department: {
@@ -458,7 +460,9 @@
                 } else {
                     this.$http.post(`${BASE_URL}/department/new`, {
                         name : this.new_department.name,
-                        id: id,
+                        id: this.business.username,
+                        username: this.username,
+                        password: this.password
                     }).then(res => {
                         Swal.fire({
                             icon: 'success',
@@ -564,11 +568,19 @@
             },
         },
         created(){
-            this.$http.get(`${BASE_URL}/department/list/${id}`).then(res => {
-                this.departments = res.data
-            }).catch(err => {
-                console.log(err)
-            })
+            if (this.business.type==5){
+                this.$http.get(`${BASE_URL}/department/list/${this.business.username}`).then(res => {
+                    this.departments = res.data
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else if (this.business.type==7){
+                this.$http.get(`${BASE_URL}/department/detail/${this.business.name}`).then(res => {
+                    this.departments = [res.data]
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
             this.$http.get(`${BASE_URL}/province/list`)
             .then(response => {
                 this.provinces = response.data;
