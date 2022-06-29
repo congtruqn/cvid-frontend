@@ -77,15 +77,24 @@ let router = new Router({
             layout: 'Business'
         }
     },
-    // {
-    //     path: '/business/:id',
-    //     name: 'businessdetail',
-    //     component: () => import('@/components/business/Recruit'),
-    //     meta: {
-    //         guest: true,
-    //         layout: 'Business'
-    //     }
-    // },
+    {
+        path: '/employee',
+        name: 'employee',
+        component: () => import('@/components/index/Index'),
+        meta: {
+            guest: true,
+            layout: 'Default'
+        }
+    },
+    {
+        path: '/view-cv',
+        name: 'view-cv',
+        component: () => import('@/components/employee/ViewCV'),
+        meta: {
+            guest: true,
+            layout: 'Default'
+        }
+    },
     {
         path: '/quan-ly-nhan-vien',
         name: 'quan-ly-nhan-vien',

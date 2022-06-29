@@ -1,7 +1,7 @@
 <template>
     <div>
       <header>
-          <AdminHeader />
+          <EmployeeHeader />
       </header>
       <div>
           <router-view />
@@ -74,12 +74,12 @@
     
 </template>
 <script>
-import AdminHeader from '@/components/partials/AdminHeader'
+import EmployeeHeader from '@/components/partials/EmployeeHeader'
 
   export default {
     name: 'defaultLayout',
     components: {
-        AdminHeader,
+        EmployeeHeader,
     }
   }
 </script>

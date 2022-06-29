@@ -167,7 +167,6 @@
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config')
-    const user = JSON.parse(localStorage.getItem('user'))
     export default {  
         data(){
             return {
@@ -281,9 +280,9 @@
         created(){
             this.employee = JSON.parse(localStorage.getItem('employee'))
             this.employee.birthdate = this.employee.birthdate.split('T')[0]
-            if (this.employee.point) {
+        /*    if (this.employee.point) {
                 this.$router.push('/employee')
-            }
+            }*/
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
                 this.criteria = res.data;
