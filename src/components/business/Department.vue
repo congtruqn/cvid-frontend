@@ -793,9 +793,9 @@
                 })
             },
             findCV(department_id, position_id){
+                this.list_cv = [];
                 this.$http.get(`${BASE_URL}/department/findCV/${department_id}/${position_id}`).then(res => {
                     this.list_cv = res.data
-                    console.log(this.list_cv)
                 }).catch(err => {
                     console.log(err)
                 })
