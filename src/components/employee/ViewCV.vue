@@ -31,46 +31,48 @@
             <div class="main-wrapper">
                 <section class="section experiences-section">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Bằng cấp, Chứng chỉ</h2>   
-                    <div class="item">
+                    <div class="item" v-for="degree in employee.degrees">
                         <div class="meta">
                             <div class="upper-row">
-                                <h3 class="job-title">Tên bằng cấp</h3>
-                                <div class="time">Năm tốt nghiệp</div>
+                                <h3 class="job-title">{{degree.name}}</h3>
+                                <div class="time">{{degree.year}}</div>
                             </div><!--//upper-row-->
-                            <div class="company">Mã số chứng chỉ: </div>
+                            <div class="company">Mã số chứng chỉ: {{degree.code}}</div>
                         </div><!--//meta-->
                         <div class="details">
-                            <p class="m-2">Trường: </p>  
-                            <p class="m-2">Nghành học: </p>
+                            <p class="m-2">{{degree.school}}</p>  
+                            <p class="m-2">{{degree.major}}</p>
                         </div><!--//details-->
                     </div><!--//item-->
                 </section>
 
                 <section class="section experiences-section">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Kĩ năng chuyên biệt</h2>   
-                    <div class="item">
+                    <div class="item" v-for="skill in employee.skills">
                         <div class="meta">
                             <div class="upper-row">
-                                <h3 class="job-title">Tên kĩ năng: </h3>
-                                <div class="time">Năm cấp: </div>
+                                <h3 class="job-title">{{skill.name}}</h3>
+                                <div class="time">{{skill.year}}</div>
                             </div><!--//upper-row-->
-                            <div class="company">Trường: </div>
+                            <div class="company">{{skill.school}}</div>
                         </div><!--//meta-->
                     </div><!--//item-->
                 </section>
                 <section class="section experiences-section">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Quá trình công tác</h2>   
-                    <div class="item">
+                    <div class="item" v-for="companie in employee.companies">
                         <div class="meta">
                             <div class="upper-row">
-                                <h3 class="job-title">Tên công ty:</h3>
-                                <div class="time">Từ - Đến</div>
-                            </div><!--//upper-row-->
+                                <h3 class="job-title">{{companie.name}}</h3>
+                            </div>
                         </div><!--//meta-->
-                        <div class="details">
-                            <p class="m-2">Công việc thực hiện: </p>  
-                            <p class="m-2">Chức vụ: </p>
-                            <p class="m-2">Địa điểm: </p>
+                        <div class="details" v-for="position in companie.position">
+                            <div class="upper-row">
+                              <span class="m-2">{{position.work}}</span>
+                              <div class="time">Từ {{position.from}} đến {{position.to}}</div>
+                            </div> 
+                            <p class="m-2">{{position.name}}</p>
+                            <p class="m-2">{{position.address}}</p>
                         </div><!--//details-->
                     </div><!--//item-->
                 </section>
@@ -78,7 +80,7 @@
                     <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-rocket"></i></span>Kết quả đánh giá</h2>
                     <div class="skillset">        
                         <div class="item" v-for="(item, index) in criteria">
-                            <h3 class="level-title">{{item.name}}</h3>
+                            <h3 class="level-title me-2">{{item.name}}</h3>
                             <div class="progress level-bar">
                                 <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: employee.assessment[index]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>                               

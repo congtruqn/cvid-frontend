@@ -25,10 +25,38 @@
                         <a href="404.html" class="dropdown-item">404</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
-                <a href="../login" class="nav-item nav-link">Login</a> -->
+                <a href="contact.html" class="nav-item nav-link">Contact</a>-->
+                <a href="../login" class="nav-item nav-link">Login</a> 
             </div>
             <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
 </template>
+<script>
+    const {BASE_URL} =  require('../../utils/config')
+    const token= localStorage.getItem('token')
+    export default {  
+        data(){
+            return {
+        
+            }
+        },
+        created(){
+            if (token){
+                this.$http.post(`${BASE_URL}/employee/me`,{
+                    token: token
+                })
+                .then(res => {
+                    if (res.data.code == 200){
+                        localStorage.setItem('employee', JSON.stringify(res.data.user))
+                    } else {
+                        localStorage.removeItem('employee')
+                    }
+                })
+                .catch(function (error) {
+                    console.error(error.response);
+                });
+            } 
+        }
+    }
+</script>
