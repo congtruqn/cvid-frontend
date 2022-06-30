@@ -47,9 +47,9 @@
                     token: token
                 })
                 .then(res => {
-                    if (res.data.code == 200){
+                    if (res.data.code == 200 && res.data.user.type == 4){
                         localStorage.setItem('employee', JSON.stringify(res.data.user))
-                    } else {
+                    } else if (res.data.code != 200){
                         localStorage.removeItem('employee')
                     }
                 })
