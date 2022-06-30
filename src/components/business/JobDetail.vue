@@ -31,33 +31,6 @@
                             <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
                         </ul> -->
                     </div>
-    
-                    <div class="">
-                        <h4 class="mb-4">Danh sách ứng viên</h4>
-                        <div class="container">
-                            <div class="row gy-1">
-                                <a href="../view-cv/idcv" v-for="index in 5" class="job-item p-4 mb-4">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                            <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
-                                            <div class="text-start ps-4">
-                                                <h5 class="mb-3">Nguyễn Trọng Hoàng</h5>
-                                                <span class="text-truncate me-3"><i class="fas fa-file-alt"></i> Điểm CV: 7/10</span>
-                                                <span class="text-truncate me-3"><i class="fas fa-building"></i> Cấp bậc: Đại học</span>
-                                                <span class="text-truncate me-0"><i class="far fa-page"></i>Chuyên nghành: Khoa học máy tính</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                            <div class="d-flex mb-3">
-                                                <a class="btn btn-primary" href="">Chấp nhận</a>
-                                            </div>
-                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: 01 Jan, 2045</small>
-                                        </div>
-                                    </div>
-                                </a>          
-                            </div>
-                          </div>
-                    </div>
                 </div>
     
                 <div class="col-lg-4">
@@ -90,42 +63,16 @@
         name: 'job-detail',
         data() {
             return {
-                position: {
-                    name: "",
-                    majors: [],
-                    amount: 0,
-                    description: "",
-                    enddate: "",
-                    startdate: "",
-                    work_location: "",
-                    min_salary: 0,
-                    max_salary: 0,
-                    requirements: "",
-                    status: 0,
-                    contact: "",
-                    phone: "",
-                    email: "",
-                    address: "",
-                    note: "",
-                }
+                position: ''
             }
         },
         created(){
-            this.$http.get(`${BASE_URL}/department/list/${id}`).then(res => {
-                res.data.forEach(item => {
-                    item.position.forEach(position => {
-                        if (position._id == this.$route.params.id) {
-                            position.requirements = position.requirements.split('.')
-                            position.enddate = new Date(position.enddate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'})
-                            this.position = position
-                        }
-                    })
-                })
-                console.log(this.position)
+            this.$http.get(`${BASE_URL}/department/position/${this.$route.params.id}`).then(res => {
+                this.position = res.data
+                this.position.enddate = new Date(this.position.enddate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'})
             }).catch(err => {
                 console.log(err)
             })
         }
-
     }
 </script>

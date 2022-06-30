@@ -236,7 +236,6 @@
             this.$http.get(`${BASE_URL}/province/list`)
             .then(response => {
                 this.province_list = response.data;
-            
                 this.provinces = new Set(this.province_list.map(item => item.province))
               
             })

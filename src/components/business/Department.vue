@@ -27,7 +27,7 @@
                             <td >
                             {{index+1}}
                             </td>
-                            <td>{{position.name}}</td>
+                            <td @click="goToJobDetail(position._id)">{{position.name}}</td>
                             <td>{{position.amount}}</td>
                             <td>5</td>
                             <td v-if="position.status == 0"><span class="badge rounded-pill bg-secondary">Dừng tuyển</span></td>
@@ -406,8 +406,8 @@
                                                             <div :id="'flush-collapse-TC-'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading-TC-'+index" data-bs-parent="#accordionFlushTrungCap">
                                                                 <div class="accordion-body py-2">
                                                                 <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="skill" :id="'majorTC1'+index+'-'+index1">
-                                                                    <label class="form-check-label" :for="'majorTC1'+index+'-'+index1">
+                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="skill" :id="'majorTC-1'+index+'-'+index1">
+                                                                    <label class="form-check-label" :for="'majorTC-1'+index+'-'+index1">
                                                                         {{skill}}
                                                                     </label>
                                                                 </div>
@@ -792,7 +792,8 @@
                     }
                 })
             },
-            findCV(department_id, position_id){
+            findCV(e, department_id, position_id){
+                e.preventDefault();
                 this.list_cv = [];
                 this.$http.get(`${BASE_URL}/department/findCV/${department_id}/${position_id}`).then(res => {
                     this.list_cv = res.data
@@ -800,6 +801,9 @@
                     console.log(err)
                 })
             },
+            goToJobDetail(id) {
+                this.$router.push({ name: 'job-detail', params: { id: id } });
+            }
         },
         created(){
             if (this.business.type==5){

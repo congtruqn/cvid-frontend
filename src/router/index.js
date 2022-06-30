@@ -69,6 +69,15 @@ let router = new Router({
         }
     },
     {
+        path: '/job-detail/:id',
+        name: 'employee-job-detail',
+        component: () => import('@/components/business/JobDetail'),
+        meta: {
+            guest: true,
+            layout: 'Default'
+        }
+    },
+    {
         path: '/business/job-detail/:id',
         name: 'job-detail',
         component: () => import('@/components/business/JobDetail'),

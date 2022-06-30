@@ -51,7 +51,6 @@
                         }
                     })
                 })
-                console.log(this.position)
             }).catch(err => {
                 console.log(err)
             })
