@@ -128,8 +128,8 @@
                                 <input type="date" class="form-control"  v-model="new_department.position.enddate" placeholder="Nhập ngày hết hạn">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Ngành nghề</label>
-                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor2" role="button" aria-controls="offcanvasMajor2" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề'" readonly>
+                                <label for="">Ngành/ Chuyên nghành</label>
+                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor2" role="button" aria-controls="offcanvasMajor2" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề, ' + new_department.position.skills.length + ' chuyên nghành'" readonly>
                                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor2" aria-labelledby="offcanvasMajor2Label">
                                     <div class="offcanvas-header">
                                       <h5 class="offcanvas-title" id="offcanvasMajor2Label">Chọn nghành nghề</h5>
@@ -137,6 +137,10 @@
                                     </div>
                                     <div class="offcanvas-body">
                                         <div class="accordion" id="accordionMajor">
+                                            <form class="mb-2" v-on:submit.prevent>
+                                                <input class="form-control me-2" v-model="searchSkill" placeholder="Search" aria-label="Search">
+                                            </form>
+                                            
                                             <div class="accordion-item">
                                               <h2 class="accordion-header" id="headingOne">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -211,7 +215,7 @@
                                                             </a>
                                                             <div :id="'flush-collapse-1-CD-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-CD-1-'+index" data-bs-parent="#accordionFlushCaoDang">
                                                                 <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
+                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check">
                                                                     <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorCD1'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorCD1'+index+'-'+index1">
                                                                         {{skill}}
@@ -357,7 +361,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Ngành nghề</label>
-                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor1" role="button" aria-controls="offcanvasMajor1" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề'" readonly>
+                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor1" role="button" aria-controls="offcanvasMajor1" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề, ' + new_department.position.skills.length + ' chuyên nghành'" readonly>
                                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor1" aria-labelledby="offcanvasMajor1Label">
                                     <div class="offcanvas-header">
                                       <h5 class="offcanvas-title" id="offcanvasMajor1Label">Chọn nghành nghề</h5>
@@ -365,10 +369,10 @@
                                     </div>
                                     <div class="offcanvas-body">
                                         
-                                              <form class="mb-2" v-on:submit.prevent>
-                                                <input class="form-control me-2" v-model="searchSkill" placeholder="Search" aria-label="Search">
-                                              </form>
-                                            
+                                        <form class="mb-2" v-on:submit.prevent>
+                                        <input class="form-control me-2" v-model="searchSkill" placeholder="Search" aria-label="Search">
+                                        </form>
+                                    
                                         <div class="accordion" id="accordionAddMajor">
                                             <div class="accordion-item">
                                               <h2 class="accordion-header" id="headingMajorOne">
