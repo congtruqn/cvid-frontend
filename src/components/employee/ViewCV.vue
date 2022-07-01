@@ -74,6 +74,17 @@
                             <p class="m-2">{{position.address}}</p>
                         </div><!--//details-->
                     </div><!--//item-->
+                    <section class="skills-section section">
+                      
+                      <div class="skillset">        
+                          <div class="item" v-for="(item, index) in criteria">
+                              <h3 class="level-title me-2">{{item.name}}</h3>
+                              <div class="progress level-bar">
+                                  <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: employee.assessment[index]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>                               
+                          </div><!--//item-->
+                      </div>  
+                    </section><!--//skills-section-->
                 </section>
                 <section class="skills-section section">
                     <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-rocket"></i></span>Kết quả đánh giá</h2>
