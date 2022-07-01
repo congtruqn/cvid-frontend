@@ -165,7 +165,7 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushTrungCap">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp'">
                                                             <a class="accordion-header" :id="'flush-heading-TC-1-'+index">
-                                                                <div class="accordion-button collapsed p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-TC-'+index" aria-expanded="false" aria-controls="'flush-collapse-1-TC-'+index">
+                                                                <div class="accordion-button p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-TC-'+index" aria-expanded="true" aria-controls="'flush-collapse-1-TC-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
                                                                         <label class="form-check-label">
@@ -176,7 +176,7 @@
                                                             </a>
                                                             <div :id="'flush-collapse-1-TC-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-TC-1-'+index" data-bs-parent="#accordionFlushTrungCap">
                                                                 <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
+                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check">
                                                                     <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorTC'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorTC'+index+'-'+index1">
                                                                         {{skill}}
@@ -235,7 +235,7 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushDaiHoc">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học'">
                                                             <a class="accordion-header" :id="'flush-heading-DH-1-'+index">
-                                                                <div class="accordion-button collapsed p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-DH-'+index" aria-expanded="false" aria-controls="'flush-collapse-1-DH-'+index">
+                                                                <div class="accordion-button collapsed p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-DH-'+index" aria-expanded="true" aria-controls="'flush-collapse-1-DH-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
                                                                         <label class="form-check-label">
@@ -246,7 +246,7 @@
                                                             </a>
                                                             <div :id="'flush-collapse-1-DH-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-DH-1-'+index" data-bs-parent="#accordionFlushDaiHoc">
                                                                 <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
+                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check">
                                                                     <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorDH'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorDH'+index+'-'+index1">
                                                                         {{skill}}
@@ -364,6 +364,13 @@
                                       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                     </div>
                                     <div class="offcanvas-body">
+                                        <nav class="navbar navbar-light bg-white">
+                                            <div class="container-fluid">
+                                              <form class="d-flex" v-on:submit.prevent>
+                                                <input class="form-control me-2" v-model="searchSkill" placeholder="Search" aria-label="Search">
+                                              </form>
+                                            </div>
+                                        </nav>
                                         <div class="accordion" id="accordionAddMajor">
                                             <div class="accordion-item">
                                               <h2 class="accordion-header" id="headingMajorOne">
@@ -393,7 +400,7 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushTrungCap">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp'">
                                                             <a class="accordion-header" :id="'flush-heading-TC-'+index">
-                                                                <div class="accordion-button collapsed p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-TC-'+index" aria-expanded="true" aria-controls="'flush-collapse-TC-'+index">
+                                                                <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-TC-'+index" aria-expanded="true" aria-controls="'flush-collapse-TC-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
                                                                         <label class="form-check-label" >
@@ -404,7 +411,7 @@
                                                             </a>
                                                             <div :id="'flush-collapse-TC-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-TC-'+index" data-bs-parent="#accordionFlushTrungCap">
                                                                 <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
+                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check"  v-if="skill.search(searchSkill) != -1">
                                                                     <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorTC-1'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorTC-1'+index+'-'+index1">
                                                                         {{skill}}
@@ -428,7 +435,7 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushCaoDang">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Cao đẳng'">
                                                             <a class="accordion-header" :id="'flush-heading-CD-'+index">
-                                                                <div class="accordion-button collapsed p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-CD-'+index">
+                                                                <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-CD-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
                                                                         <label class="form-check-label" >
@@ -439,7 +446,7 @@
                                                             </a>
                                                             <div :id="'flush-collapse-CD-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-CD-'+index" data-bs-parent="#accordionFlushCaoDang">
                                                                 <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
+                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check">
                                                                     <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorCD'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorCD'+index+'-'+index1">
                                                                         {{skill}}
@@ -463,7 +470,7 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushDaiHoc">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học'">
                                                             <a class="accordion-header" :id="'flush-heading-DH-'+index">
-                                                                <div class="accordion-button collapsed p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-DH-'+index" aria-expanded="true" aria-controls="'flush-collapse-DH-'+index">
+                                                                <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-DH-'+index" aria-expanded="true" aria-controls="'flush-collapse-DH-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
                                                                         <label class="form-check-label" >
@@ -474,7 +481,7 @@
                                                             </a>
                                                             <div :id="'flush-collapse-DH-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-DH-'+index" data-bs-parent="#accordionFlushDaiHoc">
                                                                 <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
+                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check">
                                                                     <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorDH1'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorDH1'+index+'-'+index1">
                                                                         {{skill}}
@@ -648,6 +655,7 @@
     export default {
         data (){
             return {
+                searchSkill: '',
                 business : JSON.parse(localStorage.getItem('business')),
                 majors: [],
                 username: '',
@@ -803,6 +811,11 @@
             },
             goToJobDetail(id) {
                 this.$router.push({ name: 'business-job-detail', params: { id: id } });
+            },
+            filteredSkill(skills){
+                return skills.filter((item) =>
+                    item.search(this.searchSkill) != -1
+                );
             }
         },
         created(){
@@ -832,10 +845,5 @@
                 this.majors = response.data;
             })
         }, 
-        watch: {
-            test(newValue){
-                console.log(newValue)
-            }
-        }
     }
 </script>
