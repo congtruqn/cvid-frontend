@@ -364,13 +364,11 @@
                                       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                     </div>
                                     <div class="offcanvas-body">
-                                        <nav class="navbar navbar-light bg-white">
-                                            <div class="container-fluid">
-                                              <form class="d-flex" v-on:submit.prevent>
+                                        
+                                              <form class="mb-2" v-on:submit.prevent>
                                                 <input class="form-control me-2" v-model="searchSkill" placeholder="Search" aria-label="Search">
                                               </form>
-                                            </div>
-                                        </nav>
+                                            
                                         <div class="accordion" id="accordionAddMajor">
                                             <div class="accordion-item">
                                               <h2 class="accordion-header" id="headingMajorOne">
