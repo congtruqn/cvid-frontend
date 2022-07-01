@@ -268,7 +268,7 @@
             },
             major(newValue){
                 this.skill = "";
-                this.skills = this.majors.find(major => major.name === newValue).skills;
+                this.skills = this.majors.find(major => major.name === newValue && major.level === this.level).skills;
             }
             
         }

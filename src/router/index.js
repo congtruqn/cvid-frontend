@@ -69,7 +69,7 @@ let router = new Router({
         }
     },
     {
-        path: '/job-detail/:id',
+        path: '/employee/job-detail/:id',
         name: 'employee-job-detail',
         component: () => import('@/components/business/JobDetail'),
         meta: {
@@ -79,7 +79,7 @@ let router = new Router({
     },
     {
         path: '/business/job-detail/:id',
-        name: 'job-detail',
+        name: 'business-job-detail',
         component: () => import('@/components/business/JobDetail'),
         meta: {
             guest: true,

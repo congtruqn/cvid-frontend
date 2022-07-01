@@ -126,7 +126,7 @@
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
                             <div class="job-item p-4 mb-4" v-for="item in position">
-                                <a class="row g-4" :href="'/job-detail/'+item._id">
+                                <a class="row g-4" :href="'/employee/job-detail/'+item._id">
                                     <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="@/assets/images/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                         <div class="text-start ps-4">

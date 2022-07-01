@@ -9,7 +9,6 @@
             <a href="">
                 <i class="fas fa-pencil-alt"></i>
             </a>
-            
             <div class="table-responsive-xl">
                 <table class="table table-hover" style="minWidth: 800px">
                     <thead>
@@ -33,7 +32,7 @@
                             <td v-if="position.status == 0"><span class="badge rounded-pill bg-secondary">Dừng tuyển</span></td>
                             <td v-else><span class="badge rounded-pill bg-primary">Đang tuyển</span></td>
                             <td>
-                                <button @click="findCV(department._id, position._id)" data-bs-toggle="modal" data-bs-target="#findCV" class="btn btn-secondary btn-sm" title="Tìm kiếm ứng viên">
+                                <button @click="findCV(position._id)" data-bs-toggle="modal" data-bs-target="#findCV" class="btn btn-secondary btn-sm" title="Tìm kiếm ứng viên">
                                     <i class="fas fa-search"></i>
                                 </button>
                                 <button data-bs-toggle="modal" data-bs-target="#view" class="btn btn-primary btn-sm" title="Xem danh sách nhân viên">
@@ -93,7 +92,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" @click="editPosition">Lưu</button>
+                    <button type="button" class="btn btn-primary" @click="">Lưu</button>
                 </div>
                 </div>
             </div>
@@ -178,7 +177,7 @@
                                                             <div :id="'flush-collapse-1-TC-'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading-TC-1-'+index" data-bs-parent="#accordionFlushTrungCap">
                                                                 <div class="accordion-body py-2">
                                                                 <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="skill" :id="'majorTC'+index+'-'+index1">
+                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorTC'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorTC'+index+'-'+index1">
                                                                         {{skill}}
                                                                     </label>
@@ -213,7 +212,7 @@
                                                             <div :id="'flush-collapse-1-CD-'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading-CD-1-'+index" data-bs-parent="#accordionFlushCaoDang">
                                                                 <div class="accordion-body py-2">
                                                                 <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="skill" :id="'majorCD1'+index+'-'+index1">
+                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorCD1'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorCD1'+index+'-'+index1">
                                                                         {{skill}}
                                                                     </label>
@@ -248,7 +247,7 @@
                                                             <div :id="'flush-collapse-1-DH-'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading-DH-1-'+index" data-bs-parent="#accordionFlushDaiHoc">
                                                                 <div class="accordion-body py-2">
                                                                 <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="skill" :id="'majorDH'+index+'-'+index1">
+                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorDH'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorDH'+index+'-'+index1">
                                                                         {{skill}}
                                                                     </label>
@@ -406,7 +405,7 @@
                                                             <div :id="'flush-collapse-TC-'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading-TC-'+index" data-bs-parent="#accordionFlushTrungCap">
                                                                 <div class="accordion-body py-2">
                                                                 <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="skill" :id="'majorTC-1'+index+'-'+index1">
+                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorTC-1'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorTC-1'+index+'-'+index1">
                                                                         {{skill}}
                                                                     </label>
@@ -441,7 +440,7 @@
                                                             <div :id="'flush-collapse-CD-'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading-CD-'+index" data-bs-parent="#accordionFlushCaoDang">
                                                                 <div class="accordion-body py-2">
                                                                 <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="skill" :id="'majorCD'+index+'-'+index1">
+                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorCD'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorCD'+index+'-'+index1">
                                                                         {{skill}}
                                                                     </label>
@@ -476,7 +475,7 @@
                                                             <div :id="'flush-collapse-DH-'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading-DH-'+index" data-bs-parent="#accordionFlushDaiHoc">
                                                                 <div class="accordion-body py-2">
                                                                 <div v-for="(skill, index1) in major.skills" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="skill" :id="'majorDH1'+index+'-'+index1">
+                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorDH1'+index+'-'+index1">
                                                                     <label class="form-check-label" :for="'majorDH1'+index+'-'+index1">
                                                                         {{skill}}
                                                                     </label>
@@ -656,10 +655,12 @@
                 provinces: [],
                 departments: [],
                 new_department: {
+                    _id: '',
                     name: '',
                     position: {
                         name: "",
                         majors: [],
+                        skills: [],
                         amount: 0,
                         description: "",
                         enddate: "",
@@ -792,10 +793,9 @@
                     }
                 })
             },
-            findCV(e, department_id, position_id){
-                e.preventDefault();
+            findCV(position_id){
                 this.list_cv = [];
-                this.$http.get(`${BASE_URL}/department/findCV/${department_id}/${position_id}`).then(res => {
+                this.$http.get(`${BASE_URL}/department/findCV/${position_id}`).then(res => {
                     this.list_cv = res.data
                 }).catch(err => {
                     console.log(err)

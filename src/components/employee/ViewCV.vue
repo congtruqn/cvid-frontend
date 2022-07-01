@@ -13,20 +13,19 @@
                         <li class="email"><i class="fas fa-envelope"></i><a href="mailto: yourname@email.com">{{employee.email}}</a></li>
                         <li class=""><i class="fas fa-calendar"></i> 19/07/2000</li>
                         <li class=""><i class="bi bi-geo-alt"></i><a> {{employee.address+', '+employee.ward+', '+employee.district +', '+employee.province}}</a></li>
-                        <li class=""><i class="fas fa-phone"></i><a href="tel:0123 456 789"> 0123 456 789</a></li>
                         <li class=""><i class=""></i><a>Cấp bậc: {{employee.level}}</a></li>
                         <li class=""><i class=""></i><a >{{employee.skill}}</a></li>
                     </ul>
-                </div><!--//contact-container-->
+                </div>
                 <div class="education-container container-block">
                     <h2 class="container-block-title">Học vấn</h2>
                     <div class="item">
-                        <h4 class="degree">Trường</h4>
+                        <h4 class="degree">{{employee.school}}</h4>
                         <h5 class="meta">{{employee.major}}</h5>
-                        <div class="time">Từ đến</div>
-                    </div><!--//item-->
-                </div><!--//education-container-->
-            </div><!--//sidebar-wrapper-->
+                        <!-- <div class="time">Từ đến</div> -->
+                    </div>
+                </div>
+            </div>
             
             <div class="main-wrapper">
                 <section class="section experiences-section">
