@@ -59,7 +59,7 @@
                 </section>
                 <section class="section experiences-section">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Quá trình công tác</h2>   
-                    <div class="item" v-for="companie in employee.companies">
+                    <div class="item" v-for="companie in employee.companies.slice().reverse()">
                         <div class="meta">
                             <div class="upper-row">
                                 <h3 class="job-title">{{companie.name}}</h3>
@@ -94,9 +94,9 @@
                             <div class="progress level-bar">
                                 <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: employee.assessment[index]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>                               
-                        </div><!--//item-->
+                        </div>
                     </div>  
-                </section><!--//skills-section-->
+                </section>
                 
                     
               
