@@ -165,10 +165,10 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushTrungCap">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp'">
                                                             <a class="accordion-header" :id="'flush-heading-TC-1-'+index">
-                                                                <div class="accordion-button collapsed p-1">
+                                                                <div class="accordion-button collapsed p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-TC-'+index" aria-expanded="false" aria-controls="'flush-collapse-1-TC-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-TC-'+index" aria-expanded="false" aria-controls="'flush-collapse-1-TC-'+index">
+                                                                        <label class="form-check-label">
                                                                         {{major.name}}
                                                                         </label>
                                                                     </div>
@@ -200,10 +200,10 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushCaoDang">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Cao đẳng'">
                                                             <a class="accordion-header" :id="'flush-heading-CD-1-'+index">
-                                                                <div class="accordion-button collapsed p-1">
-                                                                    <div class="form-check">
+                                                                <div class="accordion-button collapsed p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-1-CD-'+index">
+                                                                    <div class="form-check" >
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-1-CD-'+index">
+                                                                        <label class="form-check-label" >
                                                                         {{major.name}}
                                                                         </label>
                                                                     </div>
@@ -235,10 +235,10 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushDaiHoc">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học'">
                                                             <a class="accordion-header" :id="'flush-heading-DH-1-'+index">
-                                                                <div class="accordion-button collapsed p-1">
+                                                                <div class="accordion-button collapsed p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-DH-'+index" aria-expanded="false" aria-controls="'flush-collapse-1-DH-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-DH-'+index" aria-expanded="false" aria-controls="'flush-collapse-1-DH-'+index">
+                                                                        <label class="form-check-label">
                                                                         {{major.name}}
                                                                         </label>
                                                                     </div>
@@ -393,10 +393,10 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushTrungCap">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp'">
                                                             <a class="accordion-header" :id="'flush-heading-TC-'+index">
-                                                                <div class="accordion-button collapsed p-1">
+                                                                <div class="accordion-button collapsed p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-TC-'+index" aria-expanded="true" aria-controls="'flush-collapse-TC-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-TC-'+index" aria-expanded="true" aria-controls="'flush-collapse-TC-'+index">
+                                                                        <label class="form-check-label" >
                                                                         {{major.name}}
                                                                         </label>
                                                                     </div>
@@ -428,10 +428,10 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushCaoDang">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Cao đẳng'">
                                                             <a class="accordion-header" :id="'flush-heading-CD-'+index">
-                                                                <div class="accordion-button collapsed p-1">
+                                                                <div class="accordion-button collapsed p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-CD-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-CD-'+index">
+                                                                        <label class="form-check-label" >
                                                                         {{major.name}}
                                                                         </label>
                                                                     </div>
@@ -463,10 +463,10 @@
                                                     <div class="accordion accordion-flush" id="accordionFlushDaiHoc">
                                                         <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học'">
                                                             <a class="accordion-header" :id="'flush-heading-DH-'+index">
-                                                                <div class="accordion-button collapsed p-1">
+                                                                <div class="accordion-button collapsed p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-DH-'+index" aria-expanded="true" aria-controls="'flush-collapse-DH-'+index">
                                                                     <div class="form-check">
                                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-DH-'+index" aria-expanded="true" aria-controls="'flush-collapse-DH-'+index">
+                                                                        <label class="form-check-label" >
                                                                         {{major.name}}
                                                                         </label>
                                                                     </div>
