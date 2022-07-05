@@ -58,8 +58,9 @@
                         <label class="form-label">Cấp bậc</label>
                     </div>
                     <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="level" required>
+                        <select @click="focus" class="form-control" v-model="school" required>
                             <option value="" disabled>Chọn trường</option>
+                            <option v-for="(school, index) in schools" :key="index" :value="school.name">{{school.name}}</option>     
                         </select>
                         <label class="form-label">Trường</label>
                     </div>
@@ -168,6 +169,7 @@
                 district : "",
                 ward : "",
                 address : "",
+                school: "",
                 major : "",
                 skill : "",
                 position: "",
@@ -176,6 +178,7 @@
                 provinces: [],
                 districts: [],
                 wards: [],
+                schools: [],
                 majors: [],
                 skills: [],
             }
@@ -237,11 +240,11 @@
             .then(response => {
                 this.province_list = response.data;
                 this.provinces = new Set(this.province_list.map(item => item.province))
-              
             })
             .catch(function (error) {
                 console.error(error.response);
             });
+
 
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
@@ -252,6 +255,13 @@
                 console.error(error.response);
             });
             
+            this.$http.get(`${BASE_URL}/school/getall`)
+            .then(response => {
+                this.schools = response.data;
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
         },
         watch : {
             province(newValue){
