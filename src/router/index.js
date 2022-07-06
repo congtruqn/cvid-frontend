@@ -96,7 +96,7 @@ let router = new Router({
         }
     },
     {
-        path: '/view-cv',
+        path: '/cvid/:id',
         name: 'view-cv',
         component: () => import('@/components/employee/ViewCV'),
         meta: {

@@ -67,9 +67,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <label class="form-label">Lọc CVID: </label>
+                        <div class="mb-3 col-md-6">
+                            <input type="text" class="form-control" placeholder="Điểm CV">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <input type="text" class="form-control" placeholder="Trường">
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="row gy-1">
-                            <a href="view-cv/idcv" v-for="index in list_cv" class="job-item p-4 mb-2">
+                            <a :href="'/cvid/'+index._id" v-for="index in list_cv" class="job-item p-4 mb-2">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-8 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
@@ -130,6 +139,9 @@
                             <div class="form-group mb-3">
                                 <label for="">Ngành/ Chuyên nghành</label>
                                 <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor2" role="button" aria-controls="offcanvasMajor2" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề, ' + new_department.position.skills.length + ' chuyên nghành'" readonly>
+                                <ul v-for="item in new_department.position.skills" class="m-2">
+                                    <li>{{item}}</li>
+                                </ul>
                                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor2" aria-labelledby="offcanvasMajor2Label">
                                     <div class="offcanvas-header">
                                       <h5 class="offcanvas-title" id="offcanvasMajor2Label">Chọn nghành nghề</h5>
@@ -266,6 +278,18 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label class="form-label">Chức danh chuyên môn</label>
+                                <div class="dropdown">
+                                <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" >Chức danh 1</a></li>
+                                    <li><a class="dropdown-item" >Chức danh 2</a></li>
+                                    <li><a class="dropdown-item" >Chức danh 3</a></li>
+                                </ul>
+                            </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>

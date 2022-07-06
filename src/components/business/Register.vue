@@ -48,9 +48,22 @@
                         <label class="form-label">Email</label>
                     </div>
                     <div class="mb-4 form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="major" required/>
-                        <label class="form-label" for="form3Example1m">Nghành, nghề kinh doanh</label>
-                    </div>  
+                        <select @click="focus" class="form-control" v-model="level" required>
+                            <option value="" disabled>Chọn cấp bậc</option>
+                            <option value="Sơ cấp">Sơ cấp</option>
+                            <option value="Trung cấp">Trung cấp</option>
+                            <option value="Cao đẳng">Cao đẳng</option>
+                            <option value="Đại học">Đại học</option>
+                        </select>
+                        <label class="form-label">Cấp bậc</label>
+                    </div>
+                    <div class="mb-4 form-floating">
+                        <select @click="focus" class="form-control" v-model="major" required>
+                            <option value="" disabled>Chọn ngành nghề</option>
+                            <option v-for="(major, index) in majors" v-if="major.level === level" :key="index" :value="major.name">{{major.name}}</option>     
+                        </select>
+                        <label class="form-label">Nghành nghề kinh doanh</label>
+                    </div>
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="country" required>
                             <option value="" disabled>Chọn quốc gia</option>
@@ -135,10 +148,12 @@
                 district: "",
                 ward: "",
                 address: "",
+                level: "",
                 major: "",
                 email : "",
                 password : "",
                 password2 : "",
+                majors: "",
                 province_list: [],
                 provinces: [],
                 districts: [],
@@ -204,7 +219,16 @@
             })
             .catch(function (error) {
                 console.error(error.response);
-            });           
+            });      
+            
+            this.$http.get(`${BASE_URL}/major/list`)
+            .then(response => {
+                this.majors = response.data;
+               
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
         },
         watch : {
             province(newValue){

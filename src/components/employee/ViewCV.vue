@@ -4,24 +4,24 @@
             <div class="sidebar-wrapper">
                 <div class="profile-container">
                     <img class="profile" src="../../assets/images/user.png" alt="" />
-                    <h1 class="name">{{employee.name}}</h1>
+                    <h1 class="name">{{cv.name}}</h1>
                     <h3 class="tagline">Full Stack Developer</h3>
                 </div><!--//profile-container-->
                 
                 <div class="contact-container container-block">
                     <ul class="list-unstyled contact-list">
-                        <li class="email"><i class="fas fa-envelope"></i><a href="mailto: yourname@email.com">{{employee.email}}</a></li>
+                        <li class="email"><i class="fas fa-envelope"></i><a href="mailto: yourname@email.com">{{cv.email}}</a></li>
                         <li class=""><i class="fas fa-calendar"></i> 19/07/2000</li>
-                        <li class=""><i class="bi bi-geo-alt"></i><a> {{employee.address+', '+employee.ward+', '+employee.district +', '+employee.province}}</a></li>
-                        <!-- <li class=""><i class=""></i><a>Cấp bậc: {{employee.level}}</a></li>
-                        <li class=""><i class=""></i><a >{{employee.skill}}</a></li> -->
+                        <li class=""><i class="bi bi-geo-alt"></i><a> {{cv.address+', '+cv.ward+', '+cv.district +', '+cv.province}}</a></li>
+                        <!-- <li class=""><i class=""></i><a>Cấp bậc: {{cv.level}}</a></li>
+                        <li class=""><i class=""></i><a >{{cv.skill}}</a></li> -->
                     </ul>
                 </div>
                 <div class="education-container container-block">
                     <h2 class="container-block-title">Học vấn</h2>
                     <div class="item">
-                        <h4 class="degree">{{employee.school}}</h4>
-                        <h5 class="meta">{{employee.major}}</h5>
+                        <h4 class="degree">{{cv.school}}</h4>
+                        <h5 class="meta">{{cv.major}}</h5>
                         <!-- <div class="time">Từ đến</div> -->
                     </div>
                 </div>
@@ -30,7 +30,7 @@
             <div class="main-wrapper">
                 <section class="section experiences-section">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Bằng cấp</h2>   
-                    <div class="item" v-for="degree in employee.degrees">
+                    <div class="item" v-for="degree in cv.degrees">
                         <div class="meta">
                             <div class="upper-row">
                                 <h3 class="job-title">{{degree.name}}</h3>
@@ -47,7 +47,7 @@
 
                 <section class="section experiences-section">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Chứng chỉ</h2>   
-                    <div class="item" v-for="skill in employee.skills">
+                    <div class="item" v-for="skill in cv.skills">
                         <div class="meta">
                             <div class="upper-row">
                                 <h3 class="job-title">{{skill.name}}</h3>
@@ -60,7 +60,7 @@
                 </section>
                 <section class="section experiences-section">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Quá trình công tác</h2>   
-                    <div class="item" v-for="(companie, count1) in employee.companies.slice().reverse()" :key="count1">
+                    <div class="item" v-for="(companie, count1) in cv.companies.slice().reverse()" :key="count1">
                         <div class="meta">
                             <div class="upper-row">
                                 <h3 class="job-title">{{companie.name}}</h3>
@@ -79,7 +79,7 @@
                               <div class="item" v-for="(item, count2) in criteria" :key="count2">
                                   <h3 class="level-title me-2">{{item.name}}</h3>
                                   <div class="progress level-bar">
-                                      <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: employee.assessment[count2]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100"></div>
+                                      <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: cv.assessment[count2]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100"></div>
                                   </div>                               
                               </div><!--//item-->
                           </div>  
@@ -102,11 +102,17 @@
     export default {  
         data(){
             return {
-                employee: JSON.parse(localStorage.getItem('employee')),
+                cv: '',
                 criteria: ''
             }
         },
         created(){
+            this.$http.get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
+            .then(res => {
+                this.cv = res.data;
+                console.log(this.cv)
+            }) 
+
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
                 this.criteria = res.data;

@@ -79,7 +79,7 @@
                         <label class="form-label">Chuyên nghành</label>
                     </div>
                     <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="a" required>
+                        <select @click="focus" class="form-control" v-model="school" required>
                             <option value="" disabled>Chọn chức danh/ chuyên môn</option>
                             <option value=''></option>
                         </select>
