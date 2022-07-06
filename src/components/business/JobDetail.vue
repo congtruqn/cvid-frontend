@@ -58,7 +58,6 @@
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config')
-    const id = JSON.parse(localStorage.getItem('business')).username
     export default {
         name: 'job-detail',
         data() {
@@ -70,6 +69,7 @@
             this.$http.get(`${BASE_URL}/department/position/${this.$route.params.id}`).then(res => {
                 this.position = res.data
                 this.position.enddate = new Date(this.position.enddate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'})
+                console.log(res.data)
             }).catch(err => {
                 console.log(err)
             })

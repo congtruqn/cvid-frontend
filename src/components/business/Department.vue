@@ -283,11 +283,9 @@
                             <div class="form-group mb-3">
                                 <label class="form-label">Chức danh chuyên môn</label>
                                 <div class="dropdown">
-                                <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" >Chức danh 1</a></li>
-                                    <li><a class="dropdown-item" >Chức danh 2</a></li>
-                                    <li><a class="dropdown-item" >Chức danh 3</a></li>
+                                <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownvacancy1" data-bs-toggle="dropdown" v-model="new_department.position.vacancy">
+                                <ul class="dropdown-menu w-100" aria-labelledby="dropdownvacancy1">
+                                    <li v-for="index in 5" :key="index" @click="new_department.position.vacancy=index"><a class="dropdown-item">Chức danh {{index}}</a></li>
                                 </ul>
                             </div>
                             </div>
@@ -694,6 +692,7 @@
                     name: '',
                     position: {
                         name: "",
+                        vacancy: "",
                         majors: [],
                         skills: [],
                         amount: 0,
@@ -836,7 +835,7 @@
                 })
             },
             goToJobDetail(id) {
-                this.$router.push({ name: 'business-job-detail', params: { id: id } });
+                this.$router.push({ name: 'job-detail', params: { id: id } });
             },
             filteredSkill(skills){
                 return skills.filter((item) =>

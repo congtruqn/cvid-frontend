@@ -60,6 +60,15 @@ let router = new Router({
         }
     },
     {
+        path: '/employee',
+        name: 'employee',
+        component: () => import('@/components/index/Index'),
+        meta: {
+          guest: true,
+          layout: 'Default'
+        }
+      },
+    {
         path: '/business/job-list',
         name: 'business',
         component: () => import('@/components/business/JobList'),
@@ -69,30 +78,12 @@ let router = new Router({
         }
     },
     {
-        path: '/employee/job-detail/:id',
-        name: 'employee-job-detail',
+        path: '/job-detail/:id',
+        name: 'job-detail',
         component: () => import('@/components/business/JobDetail'),
         meta: {
             guest: true,
-            layout: 'Default'
-        }
-    },
-    {
-        path: '/business/job-detail/:id',
-        name: 'business-job-detail',
-        component: () => import('@/components/business/JobDetail'),
-        meta: {
-            guest: true,
-            layout: 'Business'
-        }
-    },
-    {
-        path: '/employee',
-        name: 'employee',
-        component: () => import('@/components/index/Index'),
-        meta: {
-            guest: true,
-            layout: 'Default'
+            layout: 'Auth'
         }
     },
     {
@@ -101,7 +92,7 @@ let router = new Router({
         component: () => import('@/components/employee/ViewCV'),
         meta: {
             guest: true,
-            layout: 'Default'
+            layout: 'Auth'
         }
     },
     {
