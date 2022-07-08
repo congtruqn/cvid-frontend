@@ -283,11 +283,11 @@
                             <div class="form-group mb-3">
                                 <label class="form-label">Chức danh chuyên môn</label>
                                 <div class="dropdown">
-                                <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownvacancy1" data-bs-toggle="dropdown" v-model="new_department.position.vacancy">
-                                <ul class="dropdown-menu w-100" aria-labelledby="dropdownvacancy1">
-                                    <li v-for="index in 5" :key="index" @click="new_department.position.vacancy=index"><a class="dropdown-item">Chức danh {{index}}</a></li>
-                                </ul>
-                            </div>
+                                    <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownvacancy1" data-bs-toggle="dropdown" v-model="new_department.position.vacancy">
+                                    <ul class="dropdown-menu w-100" aria-labelledby="dropdownvacancy1">
+                                        <li v-for="position in positions" @click="new_department.position.vacancy=position"><a class="dropdown-item">position</a></li>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>
@@ -870,5 +870,17 @@
                 this.majors = response.data;
             })
         }, 
+        computed: {
+            positions() {
+                var positions = [];
+                this.majors.filter(function(major){
+                    if (this.new_department.majors.includes(major.name)){
+                        major.position = major.position?major.position:[]
+                        positions.concat(major.position)
+                        return true
+                    }
+                })
+            }
+        },
     }
 </script>

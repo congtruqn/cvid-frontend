@@ -48,21 +48,40 @@
                         <label class="form-label">Email</label>
                     </div>
                     <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="level" required>
-                            <option value="" disabled>Chọn cấp bậc</option>
-                            <option value="Sơ cấp">Sơ cấp</option>
-                            <option value="Trung cấp">Trung cấp</option>
-                            <option value="Cao đẳng">Cao đẳng</option>
-                            <option value="Đại học">Đại học</option>
-                        </select>
-                        <label class="form-label">Cấp bậc</label>
-                    </div>
-                    <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="major" required>
-                            <option value="" disabled>Chọn ngành nghề</option>
-                            <option v-for="(major, index) in majors" v-if="major.level === level" :key="index" :value="major.name">{{major.name}}</option>     
-                        </select>
-                        <label class="form-label">Nghành nghề kinh doanh</label>
+                        <div class="dropdown form-floating">
+                            <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" :value="'Đã chọn '+ major.length +' nghành nghề'" readonly>
+                            <label class="form-label">Trình độ ứng viên và ngành nghề kinh doanh</label>
+                            <ul class="dropdown-menu w-100 p-2" aria-labelledby="dropdownposition" style="maxHeight: 500px;overflow: auto;">
+                                <label class="form-label fw-bold">Sơ cấp</label>
+                                <div class="form-check" v-for="(item, index) in majors" :v-if="item.level == 'Sơ cấp'">
+                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
+                                    <label class="form-check-label" >
+                                        {{item.name}}
+                                    </label>
+                                </div>
+                                <label class="form-label fw-bold">Trung cấp</label>
+                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Trung cấp'">
+                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
+                                    <label class="form-check-label" >
+                                        {{item.name}}
+                                    </label>
+                                </div>
+                                <label class="form-label fw-bold">Cao đẳng</label>
+                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Cao đẳng'">
+                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
+                                    <label class="form-check-label" >
+                                        {{item.name}}
+                                    </label>
+                                </div>
+                                <label class="form-label fw-bold">Đại học</label>
+                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Đại học'">
+                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
+                                    <label class="form-check-label" >
+                                        {{item.name}}
+                                    </label>
+                                </div>
+                            </ul>
+                        </div>
                     </div>
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="country" required>
@@ -149,7 +168,7 @@
                 ward: "",
                 address: "",
                 level: "",
-                major: "",
+                major: [],
                 email : "",
                 password : "",
                 password2 : "",
@@ -239,6 +258,9 @@
                 this.ward = "";
                 this.wards = new Set(this.province_list.filter(item => item.district == newValue).map(item => item.ward))
             },
+            major(va){
+                console.log(va);
+            }
 
         }
     }

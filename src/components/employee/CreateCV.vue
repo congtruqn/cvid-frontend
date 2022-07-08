@@ -9,8 +9,10 @@
                         
                         <div class="col-xl-6">
                             <p>Cấp bậc: {{employee.level}}</p>
+                            <p>Trường: {{employee.school}}</p>
                             <p>Ngành: {{employee.major}}</p>
                             <p>Chuyên nghành: {{employee.skill}}</p>
+                            <p>Chức danh: {{employee.position}}</p>
                         </div>
                         <div class="col-xl-6">
                             <p><i class="bi bi-geo-alt"></i> {{employee.address + ', ' + employee.ward + ', ' + employee.district + ', ' + employee.province}}</p>
@@ -23,7 +25,7 @@
                 <div class="card-body px-md-5">
                 <div class="row">
                     <div class="col-xl-6 mt-4 border-end border-2 border-primary">
-                        <h5 class="ms-n2 my-4 d-inline">Bằng cấp, chứng chỉ</h5>
+                        <h5 class="ms-n2 my-4 d-inline">Bằng cấp</h5>
                         <button @click="delDegree" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
                         <button @click="addDegree" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
 
@@ -55,20 +57,20 @@
                         
                     </div>
                     <div class="col-xl-6 mt-4 border-start border-2 border-primary">
-                        <h5 class="ms-n2 my-4 d-inline">Kỹ năng chuyên biệt</h5>
+                        <h5 class="ms-n2 my-4 d-inline">Chứng chỉ</h5>
                         <button @click="delSkill" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
                         <button @click="addSkill" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
                         <div v-for="skill in skills">
                         <div class="mt-4">
-                            <label class="form-label">Tên kĩ năng</label>
+                            <label class="form-label">Tên chứng chỉ</label>
                             <input type="text" class="form-control" v-model="skill.name">
                         </div>
                         <div class="mt-2">
-                            <label class="form-label">Trường</label>
+                            <label class="form-label">Nơi cấp</label>
                             <input type="text" class="form-control" v-model="skill.school">
                         </div>
                         <div class="mt-2 ">
-                            <label class="form-label">Năm cấp</label>
+                            <label class="form-label">Năm hết hạn</label>
                             <input type="month" class="form-control" required v-model="skill.year">
                         </div>
                         <hr class="bg-danger border-2 border-top border-danger"/>    

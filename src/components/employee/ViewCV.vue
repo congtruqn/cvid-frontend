@@ -5,13 +5,14 @@
                 <div class="profile-container">
                     <img class="profile" src="../../assets/images/user.png" alt="" />
                     <h1 class="name">{{cv.name}}</h1>
-                    <h3 class="tagline">Full Stack Developer</h3>
+                    <h3 class="tagline">{{cv.position}}</h3>
                 </div><!--//profile-container-->
                 
                 <div class="contact-container container-block">
                     <ul class="list-unstyled contact-list">
-                        <li class="email"><i class="fas fa-envelope"></i><a href="mailto: yourname@email.com">{{cv.email}}</a></li>
-                        <li class=""><i class="fas fa-calendar"></i> 19/07/2000</li>
+
+                        <li class=""><i class="fas fa-calendar"></i> {{new Date(cv.birthdate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'})}}</li>
+                        <li class=""><i class="fas fa-globe"></i><a> Quốc tịch: {{cv.country}}</a></li>
                         <li class=""><i class="bi bi-geo-alt"></i><a> {{cv.address+', '+cv.ward+', '+cv.district +', '+cv.province}}</a></li>
                         <!-- <li class=""><i class=""></i><a>Cấp bậc: {{cv.level}}</a></li>
                         <li class=""><i class=""></i><a >{{cv.skill}}</a></li> -->
@@ -21,8 +22,8 @@
                     <h2 class="container-block-title">Học vấn</h2>
                     <div class="item">
                         <h4 class="degree">{{cv.school}}</h4>
-                        <h5 class="meta">{{cv.major}}</h5>
-                        <!-- <div class="time">Từ đến</div> -->
+                        <h5 class="meta my-2">Nghành: {{cv.major}}</h5>
+                        <h5 class="meta">Chuyên nghành: {{cv.skill}}</h5>
                     </div>
                 </div>
             </div>
@@ -51,10 +52,9 @@
                         <div class="meta">
                             <div class="upper-row">
                                 <h3 class="job-title">{{skill.name}}</h3>
-                                <div class="time">{{skill.year}}</div>
                             </div><!--//upper-row-->
                             <div class="company">{{skill.school}}</div>
-                            <div class="company">Ngày hết hạn: </div>
+                            <div class="company">Ngày hết hạn: {{skill.year}}</div>
                         </div><!--//meta-->
                     </div><!--//item-->
                 </section>
@@ -236,7 +236,7 @@
       }
       .sidebar-wrapper .education-container .meta {
         color: rgba(255, 255, 255, 0.6);
-        font-weight: 500;
+        font-weight: 400;
         margin-bottom: 0px;
         margin-top: 0;
         font-size: 14px;

@@ -74,16 +74,18 @@
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="skill" required>
                             <option value="" disabled>Chọn chuyên nghành</option>
-                            <option v-for="skill in skills" :value='skill'>{{skill}}</option>
+                            <option v-for="skill in major_.skills" :value='skill'>{{skill}}</option>
                         </select>
                         <label class="form-label">Chuyên nghành</label>
                     </div>
                     <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="school" required>
-                            <option value="" disabled>Chọn chức danh/ chuyên môn</option>
-                            <option value=''></option>
-                        </select>
-                        <label class="form-label">Chức danh/ chuyên môn</label>
+                        <div class="dropdown form-floating">
+                            <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" v-model="position">
+                            <label class="form-label">Chức danh/ Chuyên môn</label>
+                            <ul class="dropdown-menu w-100" aria-labelledby="dropdownposition">
+                                <li v-for="position in major_.position"  @click="position=position"><a class="dropdown-item">{{position}}</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="country" required>
@@ -180,7 +182,7 @@
                 wards: [],
                 schools: [],
                 majors: [],
-                skills: [],
+                major_: [],
             }
         },
         methods : {
@@ -191,13 +193,16 @@
                     username : this.username,
                     birthdate : this.birthdate,
                     level : this.level,
+                    school: this.school,
+                    major : this.major,
+                    skill : this.skill,
+                    position: this.position,
                     email : this.email,
+                    country: this.country,
                     province : this.province,
                     district : this.district,
                     ward : this.ward,
                     address : this.address,
-                    major : this.major,
-                    skill : this.skill,
                     password : this.password,
                     password2 : this.password2,
 
@@ -278,7 +283,7 @@
             },
             major(newValue){
                 this.skill = "";
-                this.skills = this.majors.find(major => major.name === newValue && major.level === this.level).skills;
+                this.major_ = this.majors.find(major => major.name === newValue && major.level === this.level);
             }
             
         }
