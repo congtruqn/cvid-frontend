@@ -52,15 +52,8 @@
                             <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" :value="'Đã chọn '+ major.length +' nghành nghề'" readonly>
                             <label class="form-label">Trình độ ứng viên và ngành nghề kinh doanh</label>
                             <ul class="dropdown-menu w-100 p-2" aria-labelledby="dropdownposition" style="maxHeight: 500px;overflow: auto;">
-                                <label class="form-label fw-bold">Sơ cấp</label>
-                                <div class="form-check" v-for="(item, index) in majors" :v-if="item.level == 'Sơ cấp'">
-                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
-                                    <label class="form-check-label" >
-                                        {{item.name}}
-                                    </label>
-                                </div>
-                                <label class="form-label fw-bold">Trung cấp</label>
-                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Trung cấp'">
+                                <label class="form-label fw-bold">Đại học</label>
+                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Đại học'">
                                     <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
                                     <label class="form-check-label" >
                                         {{item.name}}
@@ -73,8 +66,15 @@
                                         {{item.name}}
                                     </label>
                                 </div>
-                                <label class="form-label fw-bold">Đại học</label>
-                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Đại học'">
+                                <label class="form-label fw-bold">Trung cấp</label>
+                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Trung cấp'">
+                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
+                                    <label class="form-check-label" >
+                                        {{item.name}}
+                                    </label>
+                                </div>
+                                <label class="form-label fw-bold">Sơ cấp</label>
+                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Sơ cấp'">
                                     <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
                                     <label class="form-check-label" >
                                         {{item.name}}
