@@ -111,7 +111,7 @@
         created(){
             this.$http.post(`${BASE_URL}/employee/findPosition`,{
                 major: this.employee.major,
-                skill: his.employee.skill
+                skill: this.employee.skill
             })
             .then(res => {
                 res.data.forEach(item => {
