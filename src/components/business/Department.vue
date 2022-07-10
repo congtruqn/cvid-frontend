@@ -870,7 +870,7 @@
             },
             filteredSkill(skills){
                 return skills.filter((item) =>
-                    item.search(this.searchSkill) != -1
+                    item.toLowerCase().indexOf(this.searchSkill) != -1
                 );
             },
             filteredCV(list_cv) {
