@@ -19,7 +19,7 @@
                         <p>{{position.description}}</p>
                         <h4 class="mb-3">Yêu cầu ứng viên</h4>
                         <ul class="list-unstyled">
-                            <li v-for="item in position.requirements" v-if="item != ''"><i class="fa fa-angle-right text-primary me-2"></i>{{item}}</li>
+                            <li v-for="item in position.requirements.split('. ')" v-if="item != ''"><i class="fa fa-angle-right text-primary me-2"></i>{{item}}.</li>
                         </ul>
                         <!-- <h4 class="mb-3">Quyền lợi</h4>
                         <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
