@@ -41,14 +41,14 @@
                                 <button data-bs-toggle="modal" data-bs-target="#editPosition" class="btn btn-primary btn-sm" @click="openModalEdit(department._id, position._id)" title="Chỉnh sửa thông tin tuyển dụng">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button @click="deletePosition(department._id, position._id)" class="btn btn-danger btn-sm" title="Xóa vị trí tuyển dụng">
+                                <button @click="deletePosition(position._id)" class="btn btn-danger btn-sm" title="Xóa vị trí tuyển dụng">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="100">
-                                <button data-bs-toggle="modal" data-bs-target="#addPosition" @click="new_department.id=department._id;new_department.name=department.name;" class="btn btn-primary btn-sm">
+                                <button @click="openModalAddPosition(department._id, department.name)" data-bs-toggle="modal" data-bs-target="#addPosition"  class="btn btn-primary btn-sm">
                                     <i class="fas fa-plus"></i> Thêm vị trí tuyển dụng
                                 </button>
                             </td>
@@ -68,17 +68,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <label class="form-label">Lọc CVID: </label>
+                        <!-- <label class="form-label h3">Lọc CVID: </label> -->
                         <div class="mb-3 col-md-6">
-                            <input type="text" class="form-control" placeholder="Điểm CV">
+                            <label class="form-label">Điểm CVID:</label>
+                            <input type="number" class="form-control" placeholder="Điểm CV" v-model="min_point" max="10" min="0">
                         </div>
                         <div class="mb-3 col-md-6">
+                            <label class="form-label">Trường:</label>
                             <input type="text" class="form-control" placeholder="Trường">
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row gy-1">
-                            <a :href="'/cvid/'+index._id" v-for="index in list_cv" class="job-item p-4 mb-2">
+                            <a :href="'/cvid/'+index._id" v-for="index in filteredCV(list_cv)" class="job-item p-4 mb-2">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-8 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
@@ -118,7 +120,7 @@
                         <form >
                             <div class="form-group mb-3">
                                 <label class="form-label">Phòng ban</label>
-                                <input type="text" class="form-control" :value="new_department.name" readonly disabled>
+                                <input type="text" class="form-control" v-model="new_department.name" readonly disabled>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Vị trí tuyển dụng <span class="text-danger">*</span></label>
@@ -280,15 +282,15 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group mb-3">
+                            <!-- <div class="form-group mb-3">
                                 <label class="form-label">Chức danh chuyên môn</label>
                                 <div class="dropdown">
                                     <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownvacancy1" data-bs-toggle="dropdown" v-model="new_department.position.vacancy">
                                     <ul class="dropdown-menu w-100" aria-labelledby="dropdownvacancy1">
-                                        <li v-for="position in positions" @click="new_department.position.vacancy=position"><a class="dropdown-item">position</a></li>
+                                        <li v-for="position in 4" @click="new_department.position.vacancy=position"><a class="dropdown-item">{{position}}</a></li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group mb-3">
                                 <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>
                                 <select class="form-control" v-model="new_department.position.work_location">
@@ -363,7 +365,7 @@
                         <form >
                             <div class="form-group mb-3">
                                 <label class="form-label">Phòng ban</label>
-                                <input type="text" class="form-control" :value="new_department.name" readonly disabled>
+                                <input type="text" class="form-control" :value="new_department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Vị trí tuyển dụng</label>
@@ -382,8 +384,11 @@
                                 <input type="date" class="form-control"  v-model="new_department.position.enddate" placeholder="Nhập ngày hết hạn">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Ngành nghề</label>
+                                <label for="">Nghành/ Chuyên nghành</label>
                                 <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor1" role="button" aria-controls="offcanvasMajor1" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề, ' + new_department.position.skills.length + ' chuyên nghành'" readonly>
+                                <ul v-for="item in new_department.position.skills" class="m-2">
+                                    <li>{{item}}</li>
+                                </ul>
                                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor1" aria-labelledby="offcanvasMajor1Label">
                                     <div class="offcanvas-header">
                                       <h5 class="offcanvas-title" id="offcanvasMajor1Label">Chọn nghành nghề</h5>
@@ -404,7 +409,7 @@
                                               </h2>
                                               <div id="collapseMajorOne" class="accordion-collapse collapse" aria-labelledby="headingMajorOne" data-bs-parent="#accordionAddMajor">
                                                 <div class="accordion-body">
-                                                    <div v-for="(major, index) in majors" v-if="major.level === 'Sơ cấp'" :key="index" class="form-check">
+                                                    <div v-for="(major, index) in majors" v-if="major.level == 'Sơ cấp'" :key="index" class="form-check">
                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name" :id="'majorSC0'+index">
                                                         <label class="form-check-label" :for="'majorSC0'+index">
                                                             {{major.name}}
@@ -676,21 +681,24 @@
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config') 
+
     export default {
         data (){
             return {
                 searchSkill: '',
+                min_point: 0,
                 business : JSON.parse(localStorage.getItem('business')),
                 majors: [],
                 username: '',
                 password: '',
-                test: [],
                 provinces: [],
                 departments: [],
                 new_department: {
-                    _id: '',
-                    name: '',
+                    _id: "",
+                    name: "",
+                    id: "",
                     position: {
+                        _id: "",
                         name: "",
                         vacancy: "",
                         majors: [],
@@ -709,10 +717,9 @@
                         email: "",
                         address: "",
                         note: "",
-                    },
-                    id: ''
+                    }
                 },
-                list_cv: [],
+                list_cv: []
             }
         },
         methods : {
@@ -769,7 +776,7 @@
                 this.departments.filter(department => {
                     if (department._id == department_id){
                         this.new_department.name = department.name
-                        this.new_department.id = department._id
+                        this.new_department._id = department._id
                         department.position.filter(position => {
                             if (position._id == position_id){
                                 position.enddate = position.enddate.split('T')[0]
@@ -778,6 +785,31 @@
                         })
                     }
                 })
+            },
+            openModalAddPosition(department_id, department_name){
+                this.new_department._id = department_id
+                this.new_department.name = department_name
+                this.new_department.position = {
+                    _id: "",
+                    name: "",
+                    vacancy: "",
+                    majors: [],
+                    skills: [],
+                    amount: 0,
+                    description: "",
+                    enddate: "",
+                    startdate: "",
+                    work_location: "",
+                    min_salary: 0,
+                    max_salary: 0,
+                    requirements: "",
+                    status: 0,
+                    contact: "",
+                    phone: "",
+                    email: "",
+                    address: "",
+                    note: "",
+                }
             },
             editPosition(e){
                 e.preventDefault();
@@ -797,7 +829,7 @@
                     console.log(err)
                 })
             },
-            deletePosition(department_id, position_id){
+            deletePosition(position_id){
                 Swal.fire({
                     title: 'Bạn có chắc chắn muốn xóa chức danh này?',
                     text: "Sau khi xóa, bạn sẽ không thể khôi phục lại!",
@@ -809,7 +841,6 @@
                 }).then((result) => {
                     if (result.value) {
                         this.$http.post(`${BASE_URL}/department/position/delete`, {
-                            department_id: department_id,
                             position_id: position_id
                         }).then(res => {
                             Swal.fire({
@@ -841,12 +872,20 @@
                 return skills.filter((item) =>
                     item.search(this.searchSkill) != -1
                 );
+            },
+            filteredCV(list_cv) {
+                return list_cv.filter((cv) =>{
+                    if (this.min_point < cv.point){
+                        return true
+                    }
+                });
             }
         },
         created(){
             if (this.business.type==5){
                 this.$http.get(`${BASE_URL}/department/list/${this.business.username}`).then(res => {
                     this.departments = res.data
+                    console.log(res.data)
                 }).catch(err => {
                     console.log(err)
                 })
@@ -869,18 +908,7 @@
             .then(response => {
                 this.majors = response.data;
             })
-        }, 
-        computed: {
-            positions() {
-                var positions = [];
-                this.majors.filter(function(major){
-                    if (this.new_department.majors.includes(major.name)){
-                        major.position = major.position?major.position:[]
-                        positions.concat(major.position)
-                        return true
-                    }
-                })
-            }
         },
+
     }
 </script>
