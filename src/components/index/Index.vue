@@ -116,7 +116,7 @@
             .then(res => {
                 res.data.forEach(item => {
                     item.position.forEach(position => {
-                        if (position.enddate > new Date().toISOString().split('T')[0] && position.majors.includes(this.employee.major)) {
+                        if (position.enddate > new Date().toISOString().split('T')[0] && (position.skills.includes(this.employee.skill) || position.majors.includes(this.employee.major))) {
                             this.position.push(position)
                         }
                     })
