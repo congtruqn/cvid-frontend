@@ -79,13 +79,6 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                        <div class="d-flex mb-3">
-                                            <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
-                                            <a class="btn btn-primary" href="">Chấp nhận</a>
-                                        </div>
-                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: {{item.enddate.split('T')[0]}}</small>
-                                    </div>
                                 </a>
                             </div>
                             
@@ -116,7 +109,7 @@
             .then(res => {
                 res.data.forEach(item => {
                     item.position.forEach(position => {
-                        if (position.enddate > new Date().toISOString().split('T')[0] && (position.skills.includes(this.employee.skill) || position.majors.includes(this.employee.major))) {
+                        if (position.skills.includes(this.employee.skill) || position.majors.includes(this.employee.major)) {
                             this.position.push(position)
                         }
                     })

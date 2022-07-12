@@ -148,12 +148,6 @@
                             <input type="number" v-model='assessment[index]' min="1" max="10" class="form-control form-control-sm" required/>
                         </td>
                     </tr>
-                    
-                    <tr>
-                        <td colspan="100">
-                            <h6 class="display-6 text-primary text-center">Điểm CV: {{point_cv}}</h6>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <span class="">Câu cam kết...</span>

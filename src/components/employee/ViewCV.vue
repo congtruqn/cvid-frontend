@@ -59,8 +59,9 @@
                     </div><!--//item-->
                 </section>
                 <section class="section experiences-section">
-                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Quá trình công tác</h2>   
-                    <div class="item" v-for="(companie, count1) in cv.companies.slice().reverse()" :key="count1">
+                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Quá trình công tác</h2>  
+                    <h6 class="section-title">Kinh nghiệm làm việc {{getExperience}} năm</h6> 
+                    <div class="item" v-for="(companie, count1) in cv.companies" :key="count1">
                         <div class="meta">
                             <div class="upper-row">
                                 <h3 class="job-title">{{companie.name}}</h3>
@@ -74,7 +75,9 @@
                             <p class="m-2">{{position.name}}</p>
                             <p class="m-2">{{position.address}}</p>
                         </div><!--//details-->
-                        <section v-if="count1 == 0" class="skills-section section mt-4">
+                        
+                    </div><!--//item-->
+                    <section class="skills-section section mt-4">
                           <div class="skillset">        
                               <div class="item" v-for="(item, count2) in criteria" :key="count2">
                                   <h3 class="level-title me-2">{{item.name}}</h3>
@@ -84,8 +87,6 @@
                               </div><!--//item-->
                           </div>  
                         </section><!--//skills-section-->
-                    </div><!--//item-->
-                    
                 </section>
                 
                 
@@ -110,14 +111,26 @@
             this.$http.get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
             .then(res => {
                 this.cv = res.data;
-                console.log(this.cv)
             }) 
 
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
                 this.criteria = res.data;
             }) 
-        }
+        },
+        computed: {
+          getExperience(){
+            var sum = 0
+            if (this.cv.companies){
+              this.cv.companies.filter(function(company){
+                company.position.filter(function(position){
+                  sum += ((new Date(position.to)).getTime()-(new Date(position.from)).getTime())
+                })
+              })
+            }
+            return Math.round(sum/15768000000)/2
+          }
+        },
     }
 </script>
 <style scoped>

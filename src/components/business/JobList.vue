@@ -23,7 +23,7 @@
                                 : item.min_salary == '' && item.max_salary != '' ? 'trên ' + item.min_salary + ' triệu đồng'
                                 : 'Dưới ' + item.min_salary + ' triệu đồng'}}
                             </span>
-                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: {{item.enddate.split('T')[0]}}</small>
+                            <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: {{item.enddate.split('T')[0]}}</small> -->
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
             this.$http.get(`${BASE_URL}/department/list/${id}`).then(res => {
                 res.data.forEach(item => {
                     item.position.forEach(position => {
-                        if (position.status == '1' && position.enddate > new Date().toISOString().split('T')[0] && position.amount > 0) {
+                        if (position.status == '1' &&  position.amount > 0) {
                             this.position.push(position)
                         }
                     })

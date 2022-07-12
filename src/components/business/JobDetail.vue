@@ -7,7 +7,7 @@
                         <img class="flex-shrink-0 img-fluid border rounded" src="../../assets/images/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;">
                         <div class="text-start ps-4">
                             <h3 class="mb-3">{{position.name}}</h3>
-                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Thời hạn nộp hồ sơ: {{position.enddate}}</small>
+                            <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Thời hạn nộp hồ sơ: {{position.enddate}}</small> -->
                             <!-- <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>New York, USA</span>
                             <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span>
                             <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$123 - $456</span> -->
@@ -45,7 +45,6 @@
                             : position.min_salary == '' && position.max_salary != '' ? 'trên ' + position.min_salary + ' triệu đồng'
                             : 'Dưới ' + position.min_salary + ' triệu đồng'}}</p>
                         <p><i class="fa fa-angle-right text-primary me-2"></i>Địa điểm: {{position.work_location}}</p>
-                        <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Ngày hết hạn: {{position.enddate}}</p>
                     </div>
                     <!-- <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: slideInUp;">
                         <h4 class="mb-4">Company Detail</h4>
@@ -68,8 +67,7 @@
         created(){
             this.$http.get(`${BASE_URL}/department/position/${this.$route.params.id}`).then(res => {
                 this.position = res.data
-                this.position.enddate = new Date(this.position.enddate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'})
-                console.log(res.data)
+               
             }).catch(err => {
                 console.log(err)
             })

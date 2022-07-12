@@ -57,13 +57,7 @@
                         </select>
                         <label class="form-label">Cấp bậc</label>
                     </div>
-                    <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="school" required>
-                            <option value="" disabled>Chọn trường</option>
-                            <option v-for="(school, index) in schools" :key="index" :value="school.name">{{school.name}}</option>     
-                        </select>
-                        <label class="form-label">Trường</label>
-                    </div>
+                    
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="major" required>
                             <option value="" disabled>Chọn ngành nghề</option>
@@ -71,12 +65,19 @@
                         </select>
                         <label class="form-label">Nghành nghề</label>
                     </div>
-                    <div class="mb-4 form-floating">
+                    <div class="mb-4 form-floating" v-if="level != 'Sơ cấp'">
                         <select @click="focus" class="form-control" v-model="skill" required>
                             <option value="" disabled>Chọn chuyên nghành</option>
                             <option v-for="skill in major_.skills" :value='skill'>{{skill}}</option>
                         </select>
                         <label class="form-label">Chuyên nghành</label>
+                    </div>
+                    <div class="mb-4 form-floating" v-if="level == 'Đại học'">
+                        <select @click="focus" class="form-control" v-model="school" required>
+                            <option value="" disabled>Chọn trường</option>
+                            <option v-for="(school, index) in schools" :key="index" :value="school.name">{{school.name}}</option>     
+                        </select>
+                        <label class="form-label">Trường</label>
                     </div>
                     <div class="mb-4 form-floating">
                         <div class="dropdown form-floating">

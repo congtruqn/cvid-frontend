@@ -82,18 +82,13 @@
                         <div class="row gy-1">
                             <a :href="'/cvid/'+index._id" v-for="index in filteredCV(list_cv)" class="job-item p-4 mb-2">
                                 <div class="row">
-                                    <div class="col-md-12 col-lg-8 d-flex align-items-center">
+                                    <div class="col-12 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                         <div class="text-start ps-4">
                                             <h5 class="mb-3">{{index.name}}</h5>
                                             <span class="text-truncate me-3"><i class="fas fa-file-alt"></i> Điểm CV: {{index.point}}/10</span>
                                             <span class="text-truncate me-3"><i class="fas fa-building"></i> Cấp bậc: {{index.level}}</span>
                                             <span class="text-truncate me-0"><i class="far fa-page"></i>Chuyên nghành: {{index.skill}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-4 d-flex flex-column align-items-start align-items-lg-end justify-content-center">
-                                        <div class="d-flex my-3">
-                                            <a class="btn btn-primary" href="">Gửi lời mời</a>
                                         </div>
                                     </div>
                                 </div>
@@ -133,10 +128,6 @@
                             <div class="form-group mb-3">
                                 <label for="">Số lượng <span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" v-model="new_department.position.amount" placeholder="Nhập số lượng">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Ngày hết hạn <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control"  v-model="new_department.position.enddate" placeholder="Nhập ngày hết hạn">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Ngành/ Chuyên nghành</label>
@@ -379,10 +370,7 @@
                                 <label for="">Số lượng</label>
                                 <input type="number" class="form-control" v-model="new_department.position.amount" placeholder="Nhập số lượng">
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="">Ngày hết hạn</label>
-                                <input type="date" class="form-control"  v-model="new_department.position.enddate" placeholder="Nhập ngày hết hạn">
-                            </div>
+
                             <div class="form-group mb-3">
                                 <label for="">Nghành/ Chuyên nghành</label>
                                 <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor1" role="button" aria-controls="offcanvasMajor1" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề, ' + new_department.position.skills.length + ' chuyên nghành'" readonly>
@@ -705,7 +693,7 @@
                         skills: [],
                         amount: 0,
                         description: "",
-                        enddate: "",
+                       
                         startdate: "",
                         work_location: "",
                         min_salary: 0,
@@ -779,7 +767,6 @@
                         this.new_department._id = department._id
                         department.position.filter(position => {
                             if (position._id == position_id){
-                                position.enddate = position.enddate.split('T')[0]
                                 this.new_department.position = position
                             }
                         })
@@ -797,7 +784,6 @@
                     skills: [],
                     amount: 0,
                     description: "",
-                    enddate: "",
                     startdate: "",
                     work_location: "",
                     min_salary: 0,
