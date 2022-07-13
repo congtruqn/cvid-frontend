@@ -31,7 +31,7 @@
 
                         <div v-for="degree in degrees">
                         <div class="mt-4">
-                            <label class="form-label">Tên bằng cấp, chứng chỉ</label>
+                            <label class="form-label">Tên bằng cấp</label>
                             <input type="text" class="form-control" v-model="degree.name">
                         </div>
                         <div class="mt-2">

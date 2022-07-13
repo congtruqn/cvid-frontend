@@ -79,6 +79,10 @@
                         </select>
                         <label class="form-label">Trường</label>
                     </div>
+                    <div class="mb-4 form-floating" v-else>
+                        <input @click="focus" type="text" class="form-control" v-model="school" required/>
+                        <label class="form-label">Trường</label>
+                    </div>
                     <div class="mb-4 form-floating">
                         <div class="dropdown form-floating">
                             <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" v-model="position">
