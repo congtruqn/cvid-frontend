@@ -80,11 +80,17 @@
                     <!--//skills-section-->
                 </section>
                 <section class="skills-section section mt-4">
-                  <div class="skillset">        
+                  <div class="skillset">     
+                         <div class="item">
+                          <h3 class="level-title me-2"> </h3>
+                          <div class="progress level-bar">
+                          </div>                               
+                      </div>
                       <div class="item" v-for="(item, count2) in criteria" :key="count2">
                           <h3 class="level-title me-2">{{item.name}}</h3>
                           <div class="progress level-bar">
-                              <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: cv.assessment[count2]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100"></div>
+                            
+                              <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: cv.assessment[count2]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100">{{cv.assessment[count2]}}</div>
                           </div>                               
                       </div><!--//item-->
                   </div>  

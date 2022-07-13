@@ -146,11 +146,11 @@
                         <td colspan=2>
                             <div class="accordion-item">
                                 <h4 class="accordion-header" :id="'flush-heading'+index">
-                                <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse'+index" aria-expanded="false" :aria-controls="'flush-collapse'+index">
+                                <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse'+index" aria-expanded="true" :aria-controls="'flush-collapse'+index">
                                     {{index+1}}. {{item.name}}
                                 </button>
                                 </h4>
-                                <div :id="'flush-collapse'+index" class="accordion-collapse collapse" :aria-labelledby="'flush-heading'+index" data-bs-parent="#accordionExample">
+                                <div :id="'flush-collapse'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading'+index" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <li v-for="mess in item.detail.split('.,')">{{mess}}</li>
                                 </div>
