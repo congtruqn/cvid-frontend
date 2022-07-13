@@ -29,7 +29,7 @@
             </div>
             
             <div class="main-wrapper">
-                <section class="section experiences-section">
+                <section class="section experiences-section" v-if="cv.degrees.length">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Bằng cấp</h2>   
                     <div class="item" v-for="degree in cv.degrees">
                         <div class="meta">
@@ -46,7 +46,7 @@
                     </div><!--//item-->
                 </section>
 
-                <section class="section experiences-section">
+                <section class="section experiences-section" v-if="cv.skills.length">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Chứng chỉ</h2>   
                     <div class="item" v-for="skill in cv.skills">
                         <div class="meta">
@@ -58,9 +58,9 @@
                         </div><!--//meta-->
                     </div><!--//item-->
                 </section>
-                <section class="section experiences-section">
+                <section class="section experiences-section" v-if="cv.companies.length">
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Quá trình công tác</h2>  
-                    <h6 class="section-title">Kinh nghiệm làm việc {{getExperience}} năm</h6> 
+                    <h6 class="section-title text-danger">Kinh nghiệm làm việc: {{getExperience}} năm</h6> 
                     <div class="item" v-for="(companie, count1) in cv.companies" :key="count1">
                         <div class="meta">
                             <div class="upper-row">
@@ -77,18 +77,18 @@
                         </div><!--//details-->
                         
                     </div><!--//item-->
-                    <section class="skills-section section mt-4">
-                          <div class="skillset">        
-                              <div class="item" v-for="(item, count2) in criteria" :key="count2">
-                                  <h3 class="level-title me-2">{{item.name}}</h3>
-                                  <div class="progress level-bar">
-                                      <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: cv.assessment[count2]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>                               
-                              </div><!--//item-->
-                          </div>  
-                        </section><!--//skills-section-->
+                    <!--//skills-section-->
                 </section>
-                
+                <section class="skills-section section mt-4">
+                  <div class="skillset">        
+                      <div class="item" v-for="(item, count2) in criteria" :key="count2">
+                          <h3 class="level-title me-2">{{item.name}}</h3>
+                          <div class="progress level-bar">
+                              <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: cv.assessment[count2]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>                               
+                      </div><!--//item-->
+                  </div>  
+                </section>
                 
                     
               

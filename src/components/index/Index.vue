@@ -30,7 +30,7 @@
                             <div class="col-md-4">
                                 <input type="text" class="form-control border-0" placeholder="Keyword" />
                             </div>
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <select class="form-select border-0">
                                     <option selected>Category</option>
                                     <option value="1">Category 1</option>
@@ -43,7 +43,7 @@
                                     <option selected>Location</option>
                                     <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -115,15 +115,15 @@
                     })
                 })
             }) 
-            this.$http.get(`${BASE_URL}/province/list`)
-            .then(response => {
-                this.provinces = response.data;
-                this.provinces = new Set(this.provinces.map(item => item.province))
+            // this.$http.get(`${BASE_URL}/province/list`)
+            // .then(response => {
+            //     this.provinces = response.data;
+            //     this.provinces = new Set(this.provinces.map(item => item.province))
               
-            })
-            .catch(function (error) {
-                console.error(error.response);
-            });
+            // })
+            // .catch(function (error) {
+            //     console.error(error.response);
+            // });
         }
     }
   

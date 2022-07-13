@@ -35,8 +35,21 @@
                             <input type="text" class="form-control" v-model="degree.name">
                         </div>
                         <div class="mt-2">
-                            <label class="form-label">Nghành học</label>
-                            <input type="text" class="form-control" v-model="degree.major">
+                            <label class="form-label">Cấp bậc</label>
+                            <select class="form-control" v-model="degree.level" required>
+                                <option value="" disabled>Chọn cấp bậc</option>
+                                <option value="Sơ cấp">Sơ cấp</option>
+                                <option value="Trung cấp">Trung cấp</option>
+                                <option value="Cao đẳng">Cao đẳng</option>
+                                <option value="Đại học">Đại học</option>
+                            </select>
+                        </div>
+                        <div class="mt-2">
+                            <label class="form-label">Nghành</label>
+                            <select class="form-control" v-model="degree.major" required>
+                                <option value="" disabled>Chọn ngành nghề</option>
+                                <option v-for="(major, index) in majors" v-if="major.level === degree.level" :key="index" :value="major.name">{{major.name}}</option>     
+                            </select>
                         </div>
                         <div class="mt-2">
                             <label class="form-label">Trường</label>
@@ -168,6 +181,7 @@
             return {
                 degrees: [{
                     name: '',
+                    level: '',
                     major: '',
                     school: '',
                     year: '',
@@ -189,7 +203,7 @@
                     }]
                 }],
                 assessment: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            
+                majors: '',
                 criteria: '',
                 point_cv: '',
             }
@@ -277,16 +291,22 @@
             this.employee = JSON.parse(localStorage.getItem('employee'))
             this.employee.birthdate = this.employee.birthdate.split('T')[0]
             if (this.employee.point) {
-                this.$router.push('/employee')
+                //this.$router.push('/employee')
             }
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
                 this.criteria = res.data;
             })  
+
+            this.$http.get(`${BASE_URL}/major/list`)
+            .then(response => {
+                this.majors = response.data;
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
         },
 
-        watch : {
-        }
     }
 </script>
 <style scoped>
