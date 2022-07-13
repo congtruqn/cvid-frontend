@@ -83,6 +83,20 @@
                         <input @click="focus" type="text" class="form-control" v-model="school" required/>
                         <label class="form-label">Trường</label>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input @click="focus" type="number" class="form-control" required />
+                                <label class="form-label">Năm nhập học:</label>
+                            </div>
+                        </div>   
+                        <div class="col-md-6 mb-4">
+                            <div class="form-floating">
+                                <input @click="focus" type="number" class="form-control" required/>
+                                <label class="form-label">Năm tốt nghiệp</label>
+                            </div>
+                        </div>   
+                    </div>
                     <div class="mb-4 form-floating">
                         <div class="dropdown form-floating">
                             <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" v-model="position">
