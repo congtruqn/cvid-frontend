@@ -86,13 +86,13 @@
                     <div class="row">
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
-                                <input @click="focus" type="number" class="form-control" required v-model="startdate"/>
+                                <input @click="focus" type="number" class="form-control" required v-model="startyear"/>
                                 <label class="form-label">Năm nhập học:</label>
                             </div>
                         </div>   
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
-                                <input @click="focus" type="number" class="form-control" required v-model="enddate"/>
+                                <input @click="focus" type="number" class="form-control" required v-model="endyear"/>
                                 <label class="form-label">Năm tốt nghiệp</label>
                             </div>
                         </div>   
@@ -191,8 +191,8 @@
                 ward : "",
                 address : "",
                 school: "",
-                startdate: "",
-                enddate: "",
+                startyear: "",
+                endyear: "",
                 major : "",
                 skill : "",
                 position: "",
@@ -215,8 +215,8 @@
                     birthdate : this.birthdate,
                     level : this.level,
                     school: this.school,
-                    startdate: this.startdate,
-                    enddate: this.enddate,
+                    startyear: this.startyear,
+                    endyear: this.endyear,
                     major : this.major,
                     skill : this.skill,
                     position: this.position,

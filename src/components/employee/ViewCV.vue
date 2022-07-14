@@ -24,6 +24,7 @@
                         <h4 class="degree">{{cv.school}}</h4>
                         <h5 class="meta my-2">Nghành: {{cv.major}}</h5>
                         <h5 class="meta">Chuyên nghành: {{cv.skill}}</h5>
+                        <h5 class="meta">{{cv.startyear}} - {{cv.endyear}}</h5>
                     </div>
                 </div>
             </div>
@@ -34,14 +35,16 @@
                     <div class="item" v-for="degree in cv.degrees">
                         <div class="meta">
                             <div class="upper-row">
-                                <h3 class="job-title">{{degree.name}}</h3>
+                                <h3 class="job-title">Tên bằng cấp: {{degree.name}}</h3>
                                 <div class="time">{{degree.year}}</div>
                             </div><!--//upper-row-->
                             <div class="company">Mã số chứng chỉ: {{degree.code}}</div>
                         </div><!--//meta-->
                         <div class="details">
-                            <p class="m-2">{{degree.school}}</p>  
-                            <p class="m-2">{{degree.major}}</p>
+                            <p class="m-2">Cấp bậc: {{degree.level}}</p>  
+                            <p class="m-2">Trường: {{degree.school}}</p>  
+                            <p class="m-2">Nghành: {{degree.major}}</p>
+                            <p class="m-2">Chuyên nghành: {{degree.skill}}</p>
                         </div><!--//details-->
                     </div><!--//item-->
                 </section>
@@ -51,9 +54,9 @@
                     <div class="item" v-for="skill in cv.skills">
                         <div class="meta">
                             <div class="upper-row">
-                                <h3 class="job-title">{{skill.name}}</h3>
+                                <h3 class="job-title">Tên chứng chỉ{{skill.name}}</h3>
                             </div><!--//upper-row-->
-                            <div class="company">{{skill.school}}</div>
+                            <div class="company">Nơi cấp: {{skill.school}}</div>
                             <div class="company">Ngày hết hạn: {{skill.year}}</div>
                         </div><!--//meta-->
                     </div><!--//item-->
