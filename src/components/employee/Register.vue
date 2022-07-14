@@ -79,20 +79,20 @@
                         </select>
                         <label class="form-label">Trường</label>
                     </div>
-                    <div class="mb-4 form-floating" v-else>
+                    <div class="mb-4 form-floating" v-if="level != 'Đại học'">
                         <input @click="focus" type="text" class="form-control" v-model="school" required/>
                         <label class="form-label">Trường</label>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
-                                <input @click="focus" type="number" class="form-control" required />
+                                <input @click="focus" type="number" class="form-control" required v-model="startdate"/>
                                 <label class="form-label">Năm nhập học:</label>
                             </div>
                         </div>   
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
-                                <input @click="focus" type="number" class="form-control" required/>
+                                <input @click="focus" type="number" class="form-control" required v-model="enddate"/>
                                 <label class="form-label">Năm tốt nghiệp</label>
                             </div>
                         </div>   
@@ -102,7 +102,7 @@
                             <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" v-model="position">
                             <label class="form-label">Chức danh/ Chuyên môn</label>
                             <ul class="dropdown-menu w-100" aria-labelledby="dropdownposition">
-                                <li v-for="position in major_.position"  @click="position=position"><a class="dropdown-item">{{position}}</a></li>
+                                <li v-for="item in major_.position"  @click="position=item"><a class="dropdown-item">{{item}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -191,6 +191,8 @@
                 ward : "",
                 address : "",
                 school: "",
+                startdate: "",
+                enddate: "",
                 major : "",
                 skill : "",
                 position: "",
@@ -213,6 +215,8 @@
                     birthdate : this.birthdate,
                     level : this.level,
                     school: this.school,
+                    startdate: this.startdate,
+                    enddate: this.enddate,
                     major : this.major,
                     skill : this.skill,
                     position: this.position,
@@ -299,10 +303,15 @@
             level(){
                 this.major = "";
                 this.skill = "";
+                this.position = "";
             },
             major(newValue){
+                this.major_ = []
                 this.skill = "";
-                this.major_ = this.majors.find(major => major.name === newValue && major.level === this.level);
+                if (this.major && this.level){
+                    this.major_ = this.majors.find(major => major.name === this.major && major.level === this.level);
+                }
+                
             }
             
         }

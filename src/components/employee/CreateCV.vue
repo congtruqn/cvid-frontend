@@ -36,7 +36,7 @@
                         </div>
                         <div class="mt-2">
                             <label class="form-label">Cấp bậc</label>
-                            <select class="form-control" v-model="degree.level" required>
+                            <select class="form-control" v-model="degree.level" required @change="degree.major=''">
                                 <option value="" disabled>Chọn cấp bậc</option>
                                 <option value="Sơ cấp">Sơ cấp</option>
                                 <option value="Trung cấp">Trung cấp</option>
@@ -46,14 +46,24 @@
                         </div>
                         <div class="mt-2">
                             <label class="form-label">Nghành</label>
-                            <select class="form-control" v-model="degree.major" required>
+                            <select class="form-control" v-model="degree.major" required @change="degree.skill=''">
                                 <option value="" disabled>Chọn ngành nghề</option>
                                 <option v-for="(major, index) in majors" v-if="major.level === degree.level" :key="index" :value="major.name">{{major.name}}</option>     
                             </select>
                         </div>
                         <div class="mt-2">
+                            <label class="form-label">Chuyên nghành</label>
+                            <select class="form-control" v-model="degree.skill" required>
+                                <option value="" disabled>Chọn chuyên nghành</option>
+                                <option v-for="skill in skillList(degree.level, degree.major)" :value="skill">{{skill}}</option>     
+                            </select>
+                        </div>
+                        <div class="mt-2">
                             <label class="form-label">Trường</label>
-                            <input type="text" class="form-control" v-model="degree.school">
+                            <select class="form-control" v-model="degree.school" required >
+                                <option value="" disabled>Chọn trường</option>
+                                <option v-for="school in schools" :value="school">{{schools}}</option>     
+                            </select>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mt-2 ">
@@ -158,7 +168,7 @@
                             </div>
                         </td>
                         <td style="width: 110px">
-                            <input type="number" v-model='assessment[index]' min="1" max="10" class="form-control form-control-sm" required/>
+                            <input type="number" v-model='assessment[index]' @change="changePoint(index)" class="form-control form-control-sm" required/>
                         </td>
                     </tr>
                 </tbody>
@@ -183,6 +193,7 @@
                     name: '',
                     level: '',
                     major: '',
+                    skill: '',
                     school: '',
                     year: '',
                     code: ''
@@ -203,7 +214,8 @@
                     }]
                 }],
                 assessment: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                majors: '',
+                majors: [],
+                schools: [],
                 criteria: '',
                 point_cv: '',
             }
@@ -239,7 +251,9 @@
             addDegree(){
                 this.degrees.push({
                     name: '',
+                    level: '',
                     major: '',
+                    skill: '',
                     school: '',
                     year: '',
                     code: '',
@@ -285,13 +299,30 @@
             delPosition(index, index1){
                 this.companies[index].position.splice(index1, 1);
             },
+            skillList(level, major){
+                var result = this.majors.filter(function(item){
+                    return (item.name == major && item.level == level)
+                })     
+                if (result.length){
+                    return result[0].skills
+                }           
+                return []
+            },
+            changePoint(index){
+                if (this.assessment[index] > 10){
+                    this.assessment[index] = 10
+                }
+                else if (this.assessment[index] < 0){
+                    this.assessment[index] = 0
+                }
+            }
       
         },
         created(){
             this.employee = JSON.parse(localStorage.getItem('employee'))
             this.employee.birthdate = this.employee.birthdate.split('T')[0]
             if (this.employee.point) {
-                //this.$router.push('/employee')
+                this.$router.push('/employee')
             }
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
@@ -301,6 +332,14 @@
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data;
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
+
+            this.$http.get(`${BASE_URL}/school/getall`)
+            .then(response => {
+                this.schools = response.data;
             })
             .catch(function (error) {
                 console.error(error.response);
