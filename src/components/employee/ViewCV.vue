@@ -31,7 +31,7 @@
             
             <div class="main-wrapper">
                 <section class="section experiences-section" v-if="cv.degrees.length">
-                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Bằng cấp</h2>   
+                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Bằng cấp bổ sung</h2>   
                     <div class="item" v-for="degree in cv.degrees">
                         <div class="meta">
                             <div class="upper-row">
