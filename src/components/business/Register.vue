@@ -193,7 +193,7 @@
                     district: this.district,
                     ward: this.ward,
                     address: this.address,
-                    major: this.major,
+                    majors: this.major,
                     email: this.email,
                     password: this.password,
                     password2: this.password2
@@ -258,9 +258,6 @@
                 this.ward = "";
                 this.wards = new Set(this.province_list.filter(item => item.district == newValue).map(item => item.ward))
             },
-            major(va){
-                console.log(va);
-            }
 
         }
     }

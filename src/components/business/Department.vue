@@ -166,7 +166,7 @@
                                               </h2>
                                               <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionMajor">
                                                 <div class="accordion-body">
-                                                    <div v-for="(major, index) in majors" v-if="major.level === 'Sơ cấp' && business.major.includes(major.name)" :key="index" class="form-check">
+                                                    <div v-for="(major, index) in majors" v-if="major.level === 'Sơ cấp' && business.majors.includes(major.name)" :key="index" class="form-check">
                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name" :id="'majorSC'+index">
                                                         <label class="form-check-label" :for="'majorSC'+index">
                                                             {{major.name}}
@@ -184,7 +184,7 @@
                                               <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionMajor">
                                                 <div class="accordion-body">
                                                     <div class="accordion accordion-flush" id="accordionFlushTrungCap">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp' && business.major.includes(major.name)">
+                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp' && business.majors.includes(major.name)">
                                                             <a class="accordion-header" :id="'flush-heading-TC-1-'+index">
                                                                 <div class="accordion-button p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-TC-'+index" aria-expanded="true" aria-controls="'flush-collapse-1-TC-'+index">
                                                                     <div class="form-check">
@@ -219,7 +219,7 @@
                                               <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionMajor">
                                                 <div class="accordion-body">
                                                     <div class="accordion accordion-flush" id="accordionFlushCaoDang">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Cao đẳng' && business.major.includes(major.name)">
+                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Cao đẳng' && business.majors.includes(major.name)">
                                                             <a class="accordion-header" :id="'flush-heading-CD-1-'+index">
                                                                 <div class="accordion-button collapsed p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-1-CD-'+index">
                                                                     <div class="form-check" >
@@ -254,7 +254,7 @@
                                                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionMajor">
                                                   <div class="accordion-body">
                                                     <div class="accordion accordion-flush" id="accordionFlushDaiHoc">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học' && business.major.includes(major.name)">
+                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học' && business.majors.includes(major.name)">
                                                             <a class="accordion-header" :id="'flush-heading-DH-1-'+index">
                                                                 <div class="accordion-button collapsed p-1" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-1-DH-'+index" aria-expanded="true" aria-controls="'flush-collapse-1-DH-'+index">
                                                                     <div class="form-check">
@@ -409,7 +409,7 @@
                                               </h2>
                                               <div id="collapseMajorOne" class="accordion-collapse collapse" aria-labelledby="headingMajorOne" data-bs-parent="#accordionAddMajor">
                                                 <div class="accordion-body">
-                                                    <div v-for="(major, index) in majors" v-if="major.level == 'Sơ cấp' && business.major.includes(major.name)" :key="index" class="form-check">
+                                                    <div v-for="(major, index) in majors" v-if="major.level == 'Sơ cấp' && business.majors.includes(major.name)" :key="index" class="form-check">
                                                         <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name" :id="'majorSC0'+index">
                                                         <label class="form-check-label" :for="'majorSC0'+index">
                                                             {{major.name}}
@@ -427,7 +427,7 @@
                                               <div id="collapseMajorTwo" class="accordion-collapse collapse" aria-labelledby="headingMajorTwo" data-bs-parent="#accordionAddMajor">
                                                 <div class="accordion-body">
                                                     <div class="accordion accordion-flush" id="accordionFlushTrungCap">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp' && business.major.includes(major.name)">
+                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp' && business.majors.includes(major.name)">
                                                             <a class="accordion-header" :id="'flush-heading-TC-'+index">
                                                                 <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-TC-'+index" aria-expanded="true" aria-controls="'flush-collapse-TC-'+index">
                                                                     <div class="form-check">
@@ -462,7 +462,7 @@
                                               <div id="collapseMajorThree" class="accordion-collapse collapse" aria-labelledby="headingMajorThree" data-bs-parent="#accordionAddMajor">
                                                 <div class="accordion-body">
                                                     <div class="accordion accordion-flush" id="accordionFlushCaoDang">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Cao đẳng' && business.major.includes(major.name)">
+                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Cao đẳng' && business.majors.includes(major.name)">
                                                             <a class="accordion-header" :id="'flush-heading-CD-'+index">
                                                                 <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-CD-'+index">
                                                                     <div class="form-check">
@@ -497,7 +497,7 @@
                                                 <div id="collapseMajorFour" class="accordion-collapse collapse" aria-labelledby="headingMajorFour" data-bs-parent="#accordionAddMajor">
                                                   <div class="accordion-body">
                                                     <div class="accordion accordion-flush" id="accordionFlushDaiHoc">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học' && business.major.includes(major.name)">
+                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học' && business.majors.includes(major.name)">
                                                             <a class="accordion-header" :id="'flush-heading-DH-'+index">
                                                                 <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-DH-'+index" aria-expanded="true" aria-controls="'flush-collapse-DH-'+index">
                                                                     <div class="form-check">

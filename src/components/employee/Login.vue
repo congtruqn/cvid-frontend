@@ -48,25 +48,22 @@
             handleSubmit(e){
                 e.preventDefault()
                 if (this.password.length > 0) {
-                    this.$http.post(`${BASE_URL}/user/login`, {
+                    this.$http.post(`${BASE_URL}/employee/login`, {
                         username: this.username,
                         password: this.password
                     })
                     .then(response => {
-                        console.log(response.data.userinfo)
                         if(response.data.userinfo){
                             localStorage.setItem('token',response.data.token);
                             if (localStorage.getItem('token') != null){
-                                this.$emit('loggedIn')
                                 if(this.$route.params.nextUrl != null){
                                     this.$router.push(this.$route.params.nextUrl)
+                                    this.$router.push('/create-cv')
                                 }
                                 else {
                                     var user = response.data.userinfo
-                                    if(user.type == 4){
-                                        localStorage.setItem('employee',JSON.stringify(user));
-                                        this.$router.push('/create-cv')
-                                    }
+                                    localStorage.setItem('employee',JSON.stringify(user));
+                                    this.$router.push('/create-cv')
                                 }
                             }                 
                         }
