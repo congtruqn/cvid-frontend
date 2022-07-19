@@ -47,7 +47,7 @@
             handleSubmit(e){
                 e.preventDefault()
                 if (this.password.length > 0) {
-                    this.$http.post(`${BASE_URL}/user/login`, {
+                    this.$http.post(`${BASE_URL}/business/login`, {
                         username: this.username,
                         password: this.password
                     })
