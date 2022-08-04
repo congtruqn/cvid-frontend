@@ -54,7 +54,7 @@
                     <div class="item" v-for="skill in cv.skills">
                         <div class="meta">
                             <div class="upper-row">
-                                <h3 class="job-title">Tên chứng chỉ{{skill.name}}</h3>
+                                <h3 class="job-title">Tên chứng chỉ: {{skill.name}}</h3>
                             </div><!--//upper-row-->
                             <div class="company">Nơi cấp: {{skill.school}}</div>
                             <div class="company">Ngày hết hạn: {{skill.year}}</div>

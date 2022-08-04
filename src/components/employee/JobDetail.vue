@@ -32,7 +32,7 @@
                         </ul> -->
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-primary w-100" type="submit">Apply Now</button>   
+                        <button class="btn btn-primary w-100" type="submit" @click="onSubmit">Apply Now</button>   
                     </div>
                 </div>
     
@@ -70,10 +70,24 @@
         created(){
             this.$http.get(`${BASE_URL}/department/position/${this.$route.params.id}`).then(res => {
                 this.position = res.data
-               
             }).catch(err => {
                 console.log(err)
             })
+        },
+        methods: {
+            onSubmit(){
+                this.$http.post(`${BASE_URL}/job/create`, {
+                    employee: JSON.parse(localStorage.getItem('employee'))._id,
+                    position: this.$route.params.id,
+                    type: 1
+                }).then(res => {
+                    this.position = res.data
+               
+                }).catch(err => {
+                    console.log(err)
+                })
+                alert('ok')
+            }
         }
     }
 </script>

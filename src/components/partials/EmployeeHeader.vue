@@ -11,10 +11,10 @@
                 <a href="/employee" class="nav-item nav-link active">Home</a>
                 <a :href="'/employee/cvid/'+cvid" class="nav-item nav-link">CVID</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Việc làm</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                        <a href="job-list.html" class="dropdown-item">Job List</a>
-                        <a href="job-detail.html" class="dropdown-item">Job Detail</a>
+                        <a href="/employee/jobs-sent" class="dropdown-item">Đã nộp</a>
+                        <a href="/employee/jobs-invited" class="dropdown-item">Lời mời</a>
                     </div>
                 </div>
                 <!-- <div class="nav-item dropdown">

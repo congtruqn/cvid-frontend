@@ -56,6 +56,24 @@ let router = new Router({
         component: () => import('@/components/employee/CreateCV'),
         meta: {
             guest: true,
+            layout: 'Auth'
+        }
+    },
+    {
+        path: '/employee/jobs-invited',
+        name: 'createcv',
+        component: () => import('@/components/employee/JobsInvited'),
+        meta: {
+            guest: true,
+            layout: 'Default'
+        }
+    },
+    {
+        path: '/employee/jobs-sent',
+        name: 'createcv',
+        component: () => import('@/components/employee/JobsSent'),
+        meta: {
+            guest: true,
             layout: 'Default'
         }
     },
