@@ -81,8 +81,8 @@
                     position: this.$route.params.id,
                     type: 1
                 }).then(res => {
-                    this.position = res.data
-               
+                    this.$router.push('/employee/jobs-sent')
+
                 }).catch(err => {
                     console.log(err)
                 })
