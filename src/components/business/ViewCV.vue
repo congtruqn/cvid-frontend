@@ -94,7 +94,7 @@
                   </div>  
                 </section>
                 <div class="col-12">
-                    <button class="btn btn-primary w-100" type="submit">Chấp nhận</button>   
+                    <button class="btn btn-primary w-100" :disabled="this.$route.params.posid=='undefined'" type="submit" @click="onSubmit">Chấp nhận</button>   
                 </div>
                 
                 
@@ -116,7 +116,7 @@
             }
         },
         created(){
-            this.$http.get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
+            this.$http.get(`${BASE_URL}/employee/cvid/${this.$route.params.cvid}`)
             .then(res => {
                 this.cv = res.data;
             }) 
@@ -125,6 +125,21 @@
             .then(res => {
                 this.criteria = res.data;
             }) 
+        },
+        methods: {
+          onSubmit(){
+            this.$http.post(`${BASE_URL}/job/create`, {
+                    employee: this.$route.params.cvid,
+                    position: this.$route.params.posid,
+                    business: JSON.parse(localStorage.getItem('business'))._id,
+                    type: 2
+                }).then(res => {
+                    this.$router.push('/business/candidate')
+
+                }).catch(err => {
+                    console.log(err)
+                })
+          }
         },
         computed: {
           getExperience(){

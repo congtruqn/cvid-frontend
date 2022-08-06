@@ -48,18 +48,18 @@ const {BASE_URL} =  require('../../utils/config')
             this.$http.post(`${BASE_URL}/job/getforemployee`, {
                 id: JSON.parse(localStorage.getItem('employee'))._id
             }).then(res => {
-                console.log(JSON.parse(localStorage.getItem('employee'))._id)
+               
                 res.data.forEach(job =>{
                     if (job.type == 1){
                         this.list_id.push(job.position_id)
-                        console.log(this.list_id)
+                       
                     }
                 })
                 this.$http.post(`${BASE_URL}/department/position/list`, {
                     selected: this.list_id
                 }).then(res => {
                     this.position = res.data
-                    console.log(this.position)
+                   
                 }).catch(err => {
                     console.log(err)
                 })

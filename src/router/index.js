@@ -114,7 +114,7 @@ let router = new Router({
         }
     },
     {
-        path: '/business/cvid/:id',
+        path: '/business/cvid/:cvid/:posid',
         name: 'business-view-cv',
         component: () => import('@/components/business/ViewCV'),
         meta: {
@@ -141,9 +141,9 @@ let router = new Router({
         }
     },
     {
-        path: '/tao-tin-tuyen-dung',
-        name: 'tao-tin-tuyen-dung',
-        component: () => import('@/components/business/CreateRecruit'),
+        path: '/business/candidate',
+        name: 'ung-vien',
+        component: () => import('@/components/business/CandidateList'),
         meta: {
             guest: true,
             layout: 'Business'

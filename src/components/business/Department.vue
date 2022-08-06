@@ -80,7 +80,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row gy-1">
-                            <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in filteredCV(list_cv_recommend)" class="job-item p-4 mb-2">
+                            <a :href="'/business/cvid/'+index._id+'/'+position_id" target="_blank" v-for="index in filteredCV(list_cv_recommend)" class="job-item p-4 mb-2">
                                 <div class="row">
                                     <div class="col-12 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
@@ -104,7 +104,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row gy-1">
-                            <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in list_cv" class="job-item p-4 mb-2">
+                            <a :href="'/business/cvid/'+index._id+'/'+position_id" target="_blank" v-for="index in list_cv" class="job-item p-4 mb-2">
                                 <div class="row">
                                     <div class="col-12 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
@@ -701,8 +701,9 @@
                 min_point: 0,
                 business : JSON.parse(localStorage.getItem('business')),
                 majors: [],
-                username: '',
-                password: '',
+                // username: '',
+                // password: '',
+                position_id: '',
                 provinces: [],
                 departments: [],
                 new_department: {
@@ -869,6 +870,7 @@
                 })
             },
             findCV(position_id){
+                this.position_id = position_id
                 this.list_cv_recommend = [];
                 this.$http.get(`${BASE_URL}/department/findCV/${position_id}`).then(res => {
                     this.list_cv_recommend = res.data
