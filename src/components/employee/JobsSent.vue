@@ -6,8 +6,10 @@
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
                             <div class="job-item p-4 mb-4" v-for="item in position">
+                                
                                 <a class="row g-4" :href="'/employee/job-detail/'+item._id">
-                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                    <input type="checkbox" class="col-auto" v-model="selected"/>
+                                    <div class="col-sm-11 col-md-7 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="@/assets/images/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                         <div class="text-start ps-4">
                                             <h5 class="mb-3">{{item.name}}</h5>
@@ -22,10 +24,25 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <!-- <div class="d-flex mb-3">
+                                            <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
+                                            <a class="btn btn-primary" href="">Apply Now</a>
+                                           
+                                        </div> -->
+                                        <span class="text-truncate">Trạng thái: Chờ thanh toán</span>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: Chưa có</small>
+                                    </div>
                                 </a>
                             </div>
                             
-                            <!-- <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a> -->
+                            <div class="d-flex justify-content-end">
+                                <div class="d-flex mb-3">
+                                    <a class="p-1 fs-4 me-2"><i class="fw-bold">Tổng:</i> {{calculator.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")}} VNĐ</a>
+                                    <a class="btn btn-primary" href="">Thanh toán</a>
+                                </div>
+                                <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: Chưa có</small> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,6 +56,13 @@ const {BASE_URL} =  require('../../utils/config')
             return {
                 position: [],
                 list_id: [],
+                price: 1000000,
+                selected: []
+            }
+        },
+        computed: {
+            calculator() {
+                return this.selected.length*100000
             }
         },
         methods: {

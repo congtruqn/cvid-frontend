@@ -6,7 +6,8 @@
                     <div class="row gy-1">
                         <a :href="'/business/cvid/'+index._id+'/'+position_id" target="_blank" v-for="index in cvid_list" class="job-item p-4 mb-2">
                             <div class="row">
-                                <div class="col-12 d-flex align-items-center">
+                                <input type="checkbox" class="col-auto" v-model="selected" :value="index._id"/>
+                                <div class="col-sm-11 col-md-7 d-flex align-items-center">
                                     <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                     <div class="text-start ps-4">
                                         <h5 class="mb-3">{{index.name}}</h5>
@@ -15,8 +16,24 @@
                                         <span class="text-truncate me-0"><i class="far fa-page"></i>Chuyên nghành: {{index.skill}}</span>
                                     </div>
                                 </div>
+                                <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <!-- <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a> -->
+                                            <a class="btn btn-primary" href="">Đặt lịch phỏng vấn</a>
+                                           
+                                        </div>
+                                        <span class="text-truncate">Trạng thái: Chờ thanh toán</span>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: Chưa có</small>
+                                    </div>
                             </div>
                         </a>   
+                    </div>
+                    <div class="mt-2 d-flex justify-content-end">
+                        <div class="d-flex mb-3">
+                            <a class="p-1 fs-4 me-2"><i class="fw-bold">Tổng:</i> {{calculator.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")}} VNĐ</a>
+                            <a class="btn btn-primary" href="">Thanh toán</a>
+                        </div>
+                        <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: Chưa có</small> -->
                     </div>
                 </div>
             </div>
@@ -30,6 +47,12 @@ const {BASE_URL} =  require('../../utils/config')
                 position: [],
                 cvid_list: [],
                 list_id: [],
+                selected: []
+            }
+        },
+        computed: {
+            calculator() {
+                return this.selected.length*100000
             }
         },
         methods: {
