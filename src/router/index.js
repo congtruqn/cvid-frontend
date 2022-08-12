@@ -114,7 +114,7 @@ let router = new Router({
         }
     },
     {
-        path: '/business/cvid/:cvid/:posid',
+        path: '/business/cvid/:cvid',
         name: 'business-view-cv',
         component: () => import('@/components/business/ViewCV'),
         meta: {

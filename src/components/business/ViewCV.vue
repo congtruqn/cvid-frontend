@@ -93,8 +93,8 @@
                       </div><!--//item-->
                   </div>  
                 </section>
-                <div class="col-12">
-                    <button class="btn btn-primary w-100" :disabled="this.$route.params.posid=='undefined'" type="submit" @click="onSubmit">Chấp nhận</button>   
+                <div class="col-12" v-if="this.$route.query.position">
+                    <button class="btn btn-primary w-100" type="submit" @click="onSubmit">Chấp nhận</button>   
                 </div>
                 
                 
@@ -130,7 +130,7 @@
           onSubmit(){
             this.$http.post(`${BASE_URL}/job/create`, {
                     employee: this.$route.params.cvid,
-                    position: this.$route.params.posid,
+                    position: this.this.$route.query.position,
                     business: JSON.parse(localStorage.getItem('business'))._id,
                     type: 2
                 }).then(res => {
