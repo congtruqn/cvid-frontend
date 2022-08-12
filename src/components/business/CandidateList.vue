@@ -23,7 +23,7 @@
                                 
                             </div>
                             <span class="text-truncate">100.000 VNĐ</span>
-                            <small class="text-truncate" v-for="item in job_list" v-if="item.employee_id == index._id"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{item.schedule.replace('T', ' ')}}</small>
+                            <small class="text-truncate" v-for="item in job_list" v-if="item.employee_id == index._id"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{item.schedule?item.schedule.replace('T', ' '):'Chưa có'}}</small>
                         </div>
                         <div class="form-check col-sm-1 col-md-1 d-flex align-items-center justify-content-center">
                             <input type="checkbox" class="form-check-input" v-model="selected" :value="index._id" 
