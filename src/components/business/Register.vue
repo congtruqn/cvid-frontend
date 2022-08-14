@@ -181,23 +181,24 @@
         },
         methods : {
             getBusiness(){
-                // this.$http.get('https://dichvuthongtin.dkkd.gov.vn/inf/default.aspx')
-                // .then(response => {
-                //     console.log(response.data) 
-                // })
-                // .catch(function (error) {
-                //     console.error(error.response);
-                // });
-
-                this.$http.post('https://dichvuthongtin.dkkd.gov.vn/inf/Public/Srv.aspx/GetSearch', {
-                    searchField: '0308902032',
-                    h: '637958549586114171-700DEC793744AA1AB2A422A8E7817EF39FDFD05DF3C343FC1B2203C25439A7BB'
-                }).then(response => {
-                    console.log(response) 
+                this.$http.get('https://dichvuthongtin.dkkd.gov.vn/inf/default.aspx')
+                .then(response => {
+                    console.log(response.data) 
                 })
                 .catch(function (error) {
                     console.error(error.response);
                 });
+
+                $.ajax({ url: 'https://dichvuthongtin.dkkd.gov.vn/inf/Public/Srv.aspx/GetSearch', success: function(data) { alert(data); } });
+                // this.$http.post('https://dichvuthongtin.dkkd.gov.vn/inf/Public/Srv.aspx/GetSearch', {
+                //     searchField: '0308902032',
+                //     h: '637958549586114171-700DEC793744AA1AB2A422A8E7817EF39FDFD05DF3C343FC1B2203C25439A7BB'
+                // }).then(response => {
+                //     console.log(response) 
+                // })
+                // .catch(function (error) {
+                //     console.error(error.response);
+                // });
             },
             handleSubmit(e){
                 e.preventDefault()
