@@ -93,7 +93,7 @@ const {BASE_URL} =  require('../../utils/config')
                 var item = [];
                 this.job_list.forEach(el => {
                     if (this.selected.includes(el.employee_id)){
-                        item.push(el._id)
+                        item.push(el)
                     }
                 })
                 if (item.length == 0){
@@ -115,16 +115,21 @@ const {BASE_URL} =  require('../../utils/config')
                     }).then((result) => {
                         if (result.isConfirmed) {
                             this.$http.post(`${BASE_URL}/job/pay`, {
-                                selected: item
+                                job_list: item
                             }).then(res => {
-                                console.log(item)
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thanh toán thành công',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                window.location.reload();
                             }).catch(err => {
                                 console.log(err)
                             })
                         }
                     });
                 }
-                console.log(item)
             }
         },
         created(){
