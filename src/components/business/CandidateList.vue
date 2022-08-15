@@ -35,7 +35,7 @@
             <div class="mt-2 d-flex justify-content-end">
                 <div class="d-flex mb-3">
                     <a class="p-1 fs-4 me-2"><i class="fw-bold">Tổng:</i> {{calculator.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")}} VNĐ</a>
-                    <a class="btn btn-primary" href="">Thanh toán</a>
+                    <a class="btn btn-primary" @click="pay">Thanh toán</a>
                 </div>
                 <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: Chưa có</small> -->
             </div>
@@ -89,15 +89,42 @@ const {BASE_URL} =  require('../../utils/config')
                 })
                 this.schedule = ''
             },
-            getSchedule(id) {
-                var result = 'Chua cos'
-                this.job_list.forEach(item =>{
-                    if (item.employee_id == id && item.schedule){
-                        console.log(item.schedule)
-                        return item.schedule   
+            pay() {
+                var item = [];
+                this.job_list.forEach(el => {
+                    if (this.selected.includes(el.employee_id)){
+                        item.push(el._id)
                     }
                 })
-                return result
+                if (item.length == 0){
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Thất bại',
+                        text: 'Vui lòng chọn ứng viên',
+                        // confirmButtonColor: 'var(--light)',
+                        confirmButtonText: 'Quay lại',
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Xác nhận thanh toán',
+                        // text: 'Vui lòng chọn ứng viên',
+                        confirmButtonColor: 'var(--primary)',
+                        showCancelButton: true,
+                        confirmButtonText: 'Xác nhận',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.$http.post(`${BASE_URL}/job/pay`, {
+                                selected: item
+                            }).then(res => {
+                                console.log(item)
+                            }).catch(err => {
+                                console.log(err)
+                            })
+                        }
+                    });
+                }
+                console.log(item)
             }
         },
         created(){
