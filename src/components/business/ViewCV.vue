@@ -130,12 +130,11 @@
           onSubmit(){
             this.$http.post(`${BASE_URL}/job/create`, {
                     employee: this.$route.params.cvid,
-                    position: this.this.$route.query.position,
+                    position: this.$route.query.position,
                     business: JSON.parse(localStorage.getItem('business'))._id,
                     type: 2
                 }).then(res => {
                     this.$router.push('/business/candidate')
-
                 }).catch(err => {
                     console.log(err)
                 })
