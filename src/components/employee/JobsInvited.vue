@@ -7,7 +7,7 @@
                         <div id="tab-1" class="tab-pane fade show p-0 active">
                             <div class="job-item p-4 mb-4" v-for="item in position">
                                 <a class="row g-4" :href="'/employee/job-detail/'+item._id">
-                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                    <div class="col-sm-12 col-md-7 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="@/assets/images/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                         <div class="text-start ps-4">
                                             <h5 class="mb-3">{{item.name}}</h5>
@@ -22,6 +22,16 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <div class="col-sm-11 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <button type="button" class="btn btn-primary">Xác nhận</button>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{item.schedule?item.schedule.replace('T', ' '):'Chưa có'}}</small>
+                                    </div>
+                                    <!-- <div class="form-check col-sm-1 col-md-1 d-flex align-items-center justify-content-center">
+                                        <input type="checkbox" class="form-check-input" v-model="selected" :value="index._id" 
+                                        v-for="item in job_list" v-if="item.employee_id == index._id && item.schedule"/>
+                                    </div> -->
                                 </a>
                             </div>
                             
@@ -38,7 +48,7 @@ const {BASE_URL} =  require('../../utils/config')
         data() {
             return {
                 position: [],
-                list_id: [],
+                job_list: [],
             }
         },
         methods: {
@@ -50,14 +60,13 @@ const {BASE_URL} =  require('../../utils/config')
             }).then(res => {
                 res.data.forEach(job =>{
                     if (job.type == 2){
-                        this.list_id.push(job.position_id)
+                        this.job_list.push(job)
                     }
                 })
                 this.$http.post(`${BASE_URL}/department/position/list`, {
-                    selected: this.list_id
+                    selected: this.job_list.map((obj) => obj.position_id)
                 }).then(res => {
-                    this.position = res.data
-                 
+                    this.position = this.job_list.map(t1 => ({...t1, ...res.data.find(t2 => t2._id === t1.position_id)}))
                 }).catch(err => {
                     console.log(err)
                 })

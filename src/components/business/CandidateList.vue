@@ -23,7 +23,7 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                 <div class="row gy-1">
-                    <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in cvid_list" class="job-item p-4 mb-2">
+                    <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in cvid_list" v-if="index.status == 0" class="job-item p-4 mb-2">
                         <div class="row">
                             
                             <div class="col-sm-12 col-md-7 d-flex align-items-center">
@@ -38,15 +38,15 @@
                             <div class="col-sm-11 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                 <div class="d-flex mb-3">
                                     <!-- <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a> -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ScheduleModal" @click.prevent="employee_id = index._id" v-for="item in job_list" v-if="item.employee_id == index._id && !item.schedule">Đặt lịch phỏng vấn</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ScheduleModal" @click.prevent="employee_id = index._id" v-for="item in job_list" v-if="item.employee_id == index._id && item.schedule">Thay đổi lịch phỏng vấn</button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ScheduleModal" @click.prevent="employee_id = index._id" v-if="!index.schedule">Đặt lịch phỏng vấn</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ScheduleModal" @click.prevent="employee_id = index._id" v-if="index.schedule">Thay đổi lịch phỏng vấn</button>
                                 </div>
                                 <span class="text-truncate">100.000 VNĐ</span>
-                                <small class="text-truncate" v-for="item in job_list" v-if="item.employee_id == index._id"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{item.schedule?item.schedule.replace('T', ' '):'Chưa có'}}</small>
+                                <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{index.schedule?index.schedule.replace('T', ' '):'Chưa có'}}</small>
                             </div>
                             <div class="form-check col-sm-1 col-md-1 d-flex align-items-center justify-content-center">
                                 <input type="checkbox" class="form-check-input" v-model="selected" :value="index._id" 
-                                v-for="item in job_list" v-if="item.employee_id == index._id && item.schedule"/>
+                                v-if="index.schedule"/>
                             </div>
                         </div>
                     </a>   
@@ -61,7 +61,7 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade show p-0">
                 <div class="row gy-1">
-                    <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in cvid_list_paid" class="job-item p-4 mb-2">
+                    <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in cvid_list" v-if="index.status == 1" class="job-item p-4 mb-2">
                         <div class="row">
                             <div class="col-sm-12 col-md-7 d-flex align-items-center">
                                 <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
@@ -76,10 +76,9 @@
                                 <div class="d-flex mb-3">
                                     <!-- <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a> -->
                                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ScheduleModal" @click.prevent="employee_id = index._id">Thay đổi lịch phỏng vấn</button>
-                                    
                                 </div>
                                 
-                                <small class="text-truncate" v-for="item in job_list_paid" v-if="item.employee_id == index._id"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{item.schedule?item.schedule.replace('T', ' '):'Chưa có'}}</small>
+                                <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{index.schedule?index.schedule.replace('T', ' '):'Chưa có'}}</small>
                             </div>
                         </div>
                     </a>   
@@ -118,9 +117,7 @@ const {BASE_URL} =  require('../../utils/config')
             return {
                 employee_id: '',
                 cvid_list: [],
-                cvid_list_paid: [],
                 job_list: [],
-                job_list_paid: [],
                 selected: [],
                 schedule: '',
             }
@@ -132,12 +129,13 @@ const {BASE_URL} =  require('../../utils/config')
         },
         methods: {
             setSchedule() {
-                this.job_list.forEach(item =>{
-                    if (item.employee_id == this.employee_id){
+                this.cvid_list.forEach(item =>{
+                    if (item._id == this.employee_id){
                         item.schedule = this.schedule
                     }
                 })
                 this.schedule = ''
+                console.log(this.job_list)
             },
             pay() {
                 var item = [];
@@ -187,28 +185,18 @@ const {BASE_URL} =  require('../../utils/config')
                 id: JSON.parse(localStorage.getItem('business'))._id
             }).then(res => {
                 res.data.forEach(job =>{
-                    if (job.type == 2 && job.status == 0){
+                    if (job.type == 2){
                         this.job_list.push(job)
-                    } else if (job.type == 2 && job.status == 1){
-                        this.job_list_paid.push(job)
                     }
                 })
                 this.$http.post(`${BASE_URL}/employee/list/cvid`, {
                     selected: this.job_list.map((obj) => obj.employee_id)
                 }).then(res => {
-                    this.cvid_list = res.data
-                 
+                    this.cvid_list = this.job_list.map(t1 => ({...t1, ...res.data.find(t2 => t2._id === t1.employee_id)}))
                 }).catch(err => {
                     console.log(err)
                 })
-                this.$http.post(`${BASE_URL}/employee/list/cvid`, {
-                    selected: this.job_list_paid.map((obj) => obj.employee_id)
-                }).then(res => {
-                    this.cvid_list_paid = res.data
-                 
-                }).catch(err => {
-                    console.log(err)
-                })
+                
             }).catch(err => {
                 console.log(err)
             })
