@@ -63,13 +63,15 @@
                 <div class="row gy-1">
                     <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in cvid_list" v-if="index.status == 1" class="job-item p-4 mb-2">
                         <div class="row">
-                            <div class="col-sm-12 col-md-7 d-flex align-items-center">
+                            <div class="col-sm-12 col-md-7 d-flex align-items-center overflow-visible">
                                 <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                 <div class="text-start ps-4">
-                                    <h5 class="mb-3">{{index.name}}</h5>
+                                    <h5 class="mb-3">{{index.name}} <span class="text-primary"> - {{index.username}}</span></h5>
                                     <span class="text-truncate me-3"><i class="fas fa-file-alt"></i> Điểm CV: {{index.point}}/10</span>
                                     <span class="text-truncate me-3"><i class="fas fa-building"></i> Cấp bậc: {{index.level}}</span>
-                                    <span class="text-truncate me-0"><i class="far fa-page"></i>Chuyên nghành: {{index.skill}}</span>
+                                    <span class="text-truncate me-3"><i class="far fa-page"></i>Chuyên nghành: {{index.skill}}</span>
+                                    <span class="text-truncate me-3"><i class="far fa-email"></i>Email: {{index.email}}</span>
+                                    <span class="text-truncate me-3"><i class="far fa-email"></i>Địa chỉ: {{index.address + ', ' + index.ward + ', ' + index.district + ', ' + index.province}}</span>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
@@ -99,6 +101,14 @@
                     <label class="form-label">Thời gian:</label>
                     <input type="datetime-local" class="form-control" v-model="schedule" :min="new Date().toISOString().substr(0, 16)">
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Số điện thoại:</label>
+                    <input type="tel" class="form-control" v-model="phone">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email:</label>
+                    <input type="email" class="form-control" v-model="email">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -120,6 +130,8 @@ const {BASE_URL} =  require('../../utils/config')
                 job_list: [],
                 selected: [],
                 schedule: '',
+                phone: '',
+                email: ''
             }
         },
         computed: {
@@ -129,13 +141,23 @@ const {BASE_URL} =  require('../../utils/config')
         },
         methods: {
             setSchedule() {
+                if (this.schedule == '' || this.phone == '' || this.email == ''){
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Thất bại',
+                        text: 'Vui lòng nhập các trường bắt buộc',
+                        // confirmButtonColor: 'var(--light)',
+                        confirmButtonText: 'Quay lại',
+                    });
+                }
                 this.cvid_list.forEach(item =>{
                     if (item._id == this.employee_id){
                         item.schedule = this.schedule
+                        item.phone = this.phone
+                        item.email = this.email
                     }
                 })
                 this.schedule = ''
-                console.log(this.job_list)
             },
             pay() {
                 var item = [];
