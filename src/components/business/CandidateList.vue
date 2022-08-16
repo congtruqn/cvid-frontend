@@ -63,7 +63,7 @@
                 <div class="row gy-1">
                     <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in cvid_list" v-if="index.status == 1" class="job-item p-4 mb-2">
                         <div class="row">
-                            <div class="col-sm-12 col-md-7 d-flex align-items-center overflow-visible">
+                            <div class="col-sm-12 col-md-7 d-flex align-items-center">
                                 <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                 <div class="text-start ps-4">
                                     <h5 class="mb-3">{{index.name}} <span class="text-primary"> - {{index.username}}</span></h5>
@@ -102,12 +102,24 @@
                     <input type="datetime-local" class="form-control" v-model="schedule" :min="new Date().toISOString().substr(0, 16)">
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Địa chỉ:</label>
+                    <input type="text" class="form-control" v-model="address">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Người liên hệ:</label>
+                    <input type="tel" class="form-control" v-model="contact">
+                </div>
+                <div class="mb-3">
                     <label class="form-label">Số điện thoại:</label>
                     <input type="tel" class="form-control" v-model="phone">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email:</label>
                     <input type="email" class="form-control" v-model="email">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Yêu cầu:</label>
+                    <input type="text" class="form-control" v-model="email">
                 </div>
             </div>
             <div class="modal-footer">
