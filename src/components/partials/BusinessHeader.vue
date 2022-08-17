@@ -35,6 +35,7 @@
                 </div> -->
                 <a href="/business/department" class="nav-item nav-link">Tuyển dụng</a>
                 <a href="/business/candidate" class="nav-item nav-link">Ứng viên</a>
+                <a href="/business/login" class="nav-item nav-link">Login</a>
             </div>
             <a href="/tao-tin-tuyen-dung" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Tạo tin tuyển dụng<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
