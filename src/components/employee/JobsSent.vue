@@ -38,6 +38,13 @@
                                         : item.min_salary == '' && item.max_salary != '' ? 'trên ' + item.min_salary + ' triệu đồng'
                                         : 'Dưới ' + item.min_salary + ' triệu đồng'}}
                                     </span>
+                                    <ul class="text-start overflow-auto">
+                                        <li class="text-truncate ms-n4">Yêu cầu chuyên nghành:</li>
+                                        <li class="" v-for="skill in item.skills">{{skill}}</li>
+                                        <!-- <li class="text-truncate"><i class="fas fa-phone text-primary me-1"></i> {{index.username}}</li>
+                                        <li class="text-truncate"><i class="fas fa-envelope text-primary me-1"></i>{{index.email}}</li>
+                                        <li class="text-truncate"><i class="fas fa-map-marker text-primary me-1"></i>{{index.address+', '+index.ward+', '+index.district+', '+index.province}}</li> -->
+                                    </ul>
                                 </div>
                             </div>
                             <div class="col-sm-11 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
@@ -82,6 +89,7 @@
                                         : item.min_salary == '' && item.max_salary != '' ? 'trên ' + item.min_salary + ' triệu đồng'
                                         : 'Dưới ' + item.min_salary + ' triệu đồng'}}
                                     </span>
+                                    
                                 </div>
                             </div>
                             <div class="col-sm-11 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
