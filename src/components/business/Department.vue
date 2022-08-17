@@ -3,7 +3,6 @@
         <button v-if="business.type==5" type="button" class="btn btn-primary btn-icon-split ms-5 my-4" data-bs-toggle="modal" data-bs-target="#addDepartment">
             <i class="fas fa-plus"></i> Thêm phòng ban
         </button>
-        
         <div class="container" v-for="department in departments" style="width: 80vw">
             <h2 class="d-inline mb-2">{{department.name}}</h2>
             <a href="">

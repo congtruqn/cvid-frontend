@@ -6,7 +6,7 @@
             <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
                 <li class="nav-item">
                     <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
-                        <h6 class="mt-n1 mb-0">Chưa thanh toán</h6>
+                        <h6 class="mt-n1 mb-0">Danh sách đã chọn</h6>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -23,12 +23,12 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                 <div class="row gy-1">
-                    <div class="job-item p-4 mb-4" v-for="item in position" v-if="item.status == 0"> 
+                    <div class="job-item px-4 pt-3 mb-4" v-for="item in position" v-if="item.status == 0"> 
                         <a class="row g-4" :href="'/employee/job-detail/'+item._id">
                             <div class="col-sm-12 col-md-7 d-flex align-items-center">
                                 <img class="flex-shrink-0 img-fluid border rounded" src="@/assets/images/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                 <div class="text-start ps-4">
-                                    <h5 class="mb-3">{{item.name}}</h5>
+                                    <h5 class="mb-2">{{item.name}}</h5>
                                     <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{item.work_location}}</span>
                                     <!-- <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span> -->
                                     <span class="text-truncate me-3">
@@ -54,6 +54,9 @@
                                     
                                 </div> -->
                                 <!-- <span class="text-truncate">Trạng thái: Chờ thanh toán</span> -->
+                                <div class="d-flex mb-3">
+                                    <button type="button" class="btn btn-light text-primary">Hủy</button>
+                                </div>
                                 <span class="text-truncate">100.000 VNĐ</span>
                                 <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{item.schedule?item.schedule.replace('T', ' '):'Chưa có'}}</small>
                             </div>
