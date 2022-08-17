@@ -3,16 +3,16 @@
         <button v-if="business.type==5" type="button" class="btn btn-primary btn-icon-split ms-5 my-4" data-bs-toggle="modal" data-bs-target="#addDepartment">
             <i class="fas fa-plus"></i> Thêm phòng ban
         </button>
-        <div class="card mb-3 mx-md-4" v-for="department in departments">
+        <div class="card mb-3 mx-md-4" v-for="department in departments" :key="department._id">
             <div class="card-body">
                 <h5 class="card-title">{{department.name}}</h5>
                 <h5 class="card-title text-center text-primary" v-if="!department.position.length">Chưa có vị trí</h5>
-                <div class="card mb-2" v-for="position in department.position">
+                <div class="card mb-2" v-for="position in department.position" :key="position._id">
                     <div class="card-header">
                         {{position.name}}
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive-md">
+                        <div class="table-responsive table-responsive-md">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -70,22 +70,13 @@
             </a>
             <div class="table-responsive-xl">
                 <table class="table table-hover" style="minWidth: 800px">
-                    <thead>
-                        <tr>
-                            <th scope="col">Stt</th>
-                            <th scope="col">Vị trí tuyển dụng</th>
-                            <th scope="col">Số lượng</th>
-                            <th scope="col">Hiện có</th>
-                            <th scope="col">Trạng thái</th>
-                            <th scope="col">Thao tác</th>
-                        </tr>
-                    </thead>
+                   
                     <tbody>
                         <tr scope="row" v-for="(position, index) in department.position">    
                             <td >
                             {{index+1}}
                             </td>
-                            <td @click="goToJobDetail(position._id)">{{position.name}}</td>
+                            <td>{{position.name}}</td>
                             <td>{{position.amount}}</td>
                             <td>5</td>
                             <td v-if="position.status == 0"><span class="badge rounded-pill bg-secondary">Dừng tuyển</span></td>
@@ -831,9 +822,6 @@
                 }).catch(err => {
                     console.log(err)
                 })
-            },
-            goToJobDetail(id) {
-                this.$router.push({ name: 'job-detail', params: { id: id } });
             },
             filteredSkill(skills){
                 return skills.filter((item) =>
