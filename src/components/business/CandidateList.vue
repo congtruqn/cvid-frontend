@@ -73,6 +73,7 @@
                                     <li class="text-truncate"><i class="fas fa-envelope text-primary me-1"></i>{{index.email}}</li>
                                     <li class="text-truncate"><i class="fas fa-map-marker text-primary me-1"></i>{{index.address+', '+index.ward+', '+index.district+', '+index.province}}</li>
                                 </ul>
+                                
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                 <div class="d-flex mb-2">
@@ -102,7 +103,7 @@
                     <input type="datetime-local" class="form-control" v-model="schedule" :min="new Date().toISOString().substr(0, 16)">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Địa chỉ:</label>
+                    <label class="form-label">Địa điểm:</label>
                     <input type="text" class="form-control" v-model="address">
                 </div>
                 <div class="mb-3">
@@ -117,9 +118,9 @@
                     <label class="form-label">Email:</label>
                     <input type="email" class="form-control" v-model="email">
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Yêu cầu:</label>
-                    <input type="text" class="form-control" v-model="email">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Yêu cầu:</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="note"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -142,6 +143,11 @@ const {BASE_URL} =  require('../../utils/config')
                 job_list: [],
                 selected: [],
                 schedule: '',
+                phone: '',
+                email: '',
+                address: '',
+                contact: '',
+                note: ''
             }
         },
         computed: {
@@ -151,13 +157,27 @@ const {BASE_URL} =  require('../../utils/config')
         },
         methods: {
             setSchedule() {
+                if (this.schedule == '' || this.phone == '' || this.email == '' || this.address == '' || this.contact == ''){
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Thất bại',
+                        text: 'Vui lòng nhập các trường bắt buộc',
+                        // confirmButtonColor: 'var(--light)',
+                        confirmButtonText: 'Quay lại',
+                    });
+                }
                 this.cvid_list.forEach(item =>{
                     if (item._id == this.employee_id){
                         item.schedule = this.schedule
                     }
                 })
+                this.job_list.forEach(item =>{
+                    if (item.employee_id == this.employee_id){
+                        item.schedule = this.schedule
+                        item.address = this.address
+                    }
+                })
                 this.schedule = ''
-                console.log(this.job_list)
             },
             pay() {
                 var item = [];

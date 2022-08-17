@@ -20,6 +20,11 @@
                                                 : item.min_salary == '' && item.max_salary != '' ? 'trên ' + item.min_salary + ' triệu đồng'
                                                 : 'Dưới ' + item.min_salary + ' triệu đồng'}}
                                             </span>
+                                            <!-- <div v-if="item.schedule">
+                                                <span class="text-truncate me-3">
+                                                    <i class="fa fa-mail text-primary me-2"></i>
+                                                </span>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="col-sm-11 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
