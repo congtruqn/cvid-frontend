@@ -3,7 +3,67 @@
         <button v-if="business.type==5" type="button" class="btn btn-primary btn-icon-split ms-5 my-4" data-bs-toggle="modal" data-bs-target="#addDepartment">
             <i class="fas fa-plus"></i> Thêm phòng ban
         </button>
-        <div class="container" v-for="department in departments" style="width: 80vw">
+        <div class="card mb-3 mx-md-4" v-for="department in departments">
+            <div class="card-body">
+                <h5 class="card-title">{{department.name}}</h5>
+                <h5 class="card-title text-center text-primary" v-if="!department.position.length">Chưa có vị trí</h5>
+                <div class="card mb-2" v-for="position in department.position">
+                    <div class="card-header">
+                        {{position.name}}
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive-md">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tên nhân viên</th>
+                                <th scope="col">Điểm CV</th>
+                                <th scope="col">Ngày bắt đầu</th>
+                                <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" title="Đánh giá nhân viên"><i class="fas fa-book"></i></button>
+                                        <button class="btn btn-sm btn-danger" title="Xóa nhân viên"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" title="Đánh giá nhân viên"><i class="fas fa-book"></i></button>
+                                        <button class="btn btn-sm btn-danger" title="Xóa nhân viên"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        
+                        <a href="/business/recruit" class="btn btn-sm btn-primary">Tuyển dụng</a>
+                        <button data-bs-toggle="modal" data-bs-target="#editPosition" @click="openModalEdit(department._id, position._id)" class="btn btn-sm btn-secondary">Chỉnh sửa</button>
+                        <button @click="deletePosition(position._id)" class="btn btn-sm btn-danger">Xoá</button>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="card-footer">
+                <button @click="openModalAddPosition(department._id, department.name)" data-bs-toggle="modal" data-bs-target="#addPosition"  class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Thêm vị trí công việc
+                </button>
+            </div>
+        </div>
+        <div class="container" v-for="department in []" style="width: 80vw">
             <h2 class="d-inline mb-2">{{department.name}}</h2>
             <a href="">
                 <i class="fas fa-pencil-alt"></i>
@@ -325,36 +385,6 @@
                                 <label for="">Yêu cầu công việc</label>
                                 <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.requirements"></textarea>
                             </div>
-                            
-                            <div class="form-group mb-3">
-                                <label for="">Trạng thái <span class="text-danger">*</span></label>
-                                <select name="status" class="form-control" v-model="new_department.position.status">
-                                    <option value="">Chọn trạng thái</option>
-                                    <option value="0">Dừng tuyển</option>
-                                    <option value="1">Đăng tuyển</option>
-                                </select>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Người liên hệ</label>
-                                <input type="text" class="form-control" name="contact" v-model="new_department.position.contact" placeholder="Nhập người liên hệ">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Số điện thoại</label>
-                                <input type="text" class="form-control" name="phone" v-model="new_department.position.phone" placeholder="Nhập số điện thoại">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Email</label>
-                                <input type="text" class="form-control" name="email" v-model="new_department.position.email" placeholder="Nhập email">
-                            </div>
-                            
-                            <div class="form-group mb-3">
-                                <label for="">Địa chỉ</label>
-                                <input type="text" class="form-control" name="address" v-model="new_department.position.address" placeholder="Nhập địa chỉ">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Nội dung</label>
-                                <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.note"></textarea>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -558,36 +588,6 @@
                                 <label for="">Yêu cầu công việc</label>
                                 <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.requirements"></textarea>
                             </div>
-                            
-                            <div class="form-group mb-3">
-                                <label for="">Trạng thái</label>
-                                <select name="status" class="form-control" v-model="new_department.position.status">
-                                    <option value="">Chọn trạng thái</option>
-                                    <option value="0">Dừng tuyển</option>
-                                    <option value="1">Đăng tuyển</option>
-                                </select>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Người liên hệ</label>
-                                <input type="text" class="form-control" name="contact" v-model="new_department.position.contact" placeholder="Nhập người liên hệ">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Số điện thoại</label>
-                                <input type="text" class="form-control" name="phone" v-model="new_department.position.phone" placeholder="Nhập số điện thoại">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Email</label>
-                                <input type="text" class="form-control" name="email" v-model="new_department.position.email" placeholder="Nhập email">
-                            </div>
-                            
-                            <div class="form-group mb-3">
-                                <label for="">Địa chỉ</label>
-                                <input type="text" class="form-control" name="address" v-model="new_department.position.address" placeholder="Nhập địa chỉ">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Nội dung</label>
-                                <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.note"></textarea>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -598,63 +598,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="view" tabindex="-1" aria-labelledby="view" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-scrollable">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive-xl m-4">
-                        <table class="table table-sm table-hover" :style="{minWidth: '1500px'}">
-                            <thead class="table-primary">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Tên nhân viên</th>
-                                    <th>Số CVID</th>
-                                    <th>Điểm CV đầu vào</th>
-                                    <th>Loại hợp đồng</th>
-                                    <th>Ngày kí hợp đồng</th>
-                                    <th>Tình trạng</th>
-                                    <th>Thời gian làm việc</th>
-                                    <th>Ngày nghỉ</th>
-                                    <th>Kết quả làm việc</th>
-                                    <th>Xếp loại cv đầu ra</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                                
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr v-for="(item, index) in 10">
-                                    <td>{{index+1}}</td>
-                                    <td>Trần Văn A</td>
-                                    <td>CV103290345</td>
-                                    <td>7/10</td>
-                                    <td>chính thức</td>
-                                    <td>21/07/2020</td>
-                                    <td>Đang làm</td>
-                                    <td>3 tháng</td>
-                                    <td></td>
-                                    <td>Chưa cập nhật</td>
-                                    <td>Chưa cập nhật</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary" title="Đánh giá nhân viên"><i class="fas fa-book"></i></button>
-                                        <button class="btn btn-sm btn-danger" title="Xóa nhân viên"><i class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                   
-                </div>
-                </div>
-            </div>
-        </div>
-
+      
         
 
         <div class="modal fade" id="addDepartment" tabindex="-1" aria-labelledby="addDepartmentLabel" aria-hidden="true">
@@ -717,18 +661,12 @@
                         skills: [],
                         amount: 0,
                         description: "",
-                       
                         startdate: "",
                         work_location: "",
                         min_salary: 0,
                         max_salary: 0,
                         requirements: "",
                         status: 0,
-                        contact: "",
-                        phone: "",
-                        email: "",
-                        address: "",
-                        note: "",
                     }
                 },
                 list_cv: [],
@@ -815,11 +753,6 @@
                     max_salary: 0,
                     requirements: "",
                     status: 0,
-                    contact: "",
-                    phone: "",
-                    email: "",
-                    address: "",
-                    note: "",
                 }
             },
             editPosition(e){

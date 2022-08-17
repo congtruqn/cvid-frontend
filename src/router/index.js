@@ -132,9 +132,9 @@ let router = new Router({
         }
     },
     {
-        path: '/quan-ly-nhan-vien',
-        name: 'quan-ly-nhan-vien',
-        component: () => import('@/components/business/EmployeeList'),
+        path: '/business/recruit',
+        name: 'recruit',
+        component: () => import('@/components/business/Recruit'),
         meta: {
             guest: true,
             layout: 'Business'
