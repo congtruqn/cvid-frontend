@@ -66,7 +66,7 @@
                     </div>
                     <div class="mb-4 form-floating">
                         <div class="dropdown form-floating">
-                            <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" :value="'Đã chọn '+ major.length +' nghành nghề'" readonly>
+                            <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="'Đã chọn '+ major.length +' nghành nghề'" readonly>
                             <label class="form-label">Trình độ ứng viên và ngành nghề kinh doanh</label>
                             <ul class="dropdown-menu w-100 p-2" aria-labelledby="dropdownposition" style="maxHeight: 500px;overflow: auto;">
                                 <label class="form-label fw-bold">Đại học</label>
@@ -200,6 +200,11 @@
         methods : {
             getBusiness(){
                 if (this.username == ""){
+                    this.name = ""
+                    this.province = ""
+                    this.district = ""
+                    this.ward = ""
+                    this.address = ""
                     return
                 }
                 this.$http.post(`${BASE_URL}/business/getinfo`, {
