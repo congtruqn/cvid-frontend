@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a href="/index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
-            <h1 class="m-0 text-primary">JobEntry</h1>
+            <h1 class="m-0 text-primary">CVIDPro</h1>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -33,12 +33,11 @@
                         
                     </div>
                 </div> -->
-                <a href="/business/department" class="nav-item nav-link">Phòng ban</a>
+                <a href="/business/department" class="nav-item nav-link">Vị trí tuyển dụng</a>
                 <a href="/business/recruit" class="nav-item nav-link">Tuyển dụng</a>
                 <a href="/business/candidate" class="nav-item nav-link">Ứng viên</a>
                 <a href="/business/login" class="nav-item nav-link">Login</a>
             </div>
-            <a href="/tao-tin-tuyen-dung" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Tạo tin tuyển dụng<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
 </template>
