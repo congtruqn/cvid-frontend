@@ -24,7 +24,7 @@
                     </div>
                     <div v-if="type==5">
                         <div class="mb-4 form-floating">
-                            <input @blur="getBusiness" type="text" class="form-control" v-model="username" required>
+                            <input @blur="getBusiness" type="number" class="form-control" v-model="username" required>
                             <label class="form-label">Mã số thuế</label>
                         </div>
                         <div class="mb-4 form-floating">
@@ -221,7 +221,6 @@
                         this.username = htmlObject[0].getElementsByTagName("p")[0].getElementsByTagName("a")[0].innerHTML
                         this.address = ""
                         address = address.split("Địa chỉ:")[1].trim().split(", ").reverse();
-                        console.log(address)
                         address.forEach((item, index) =>{
                             if (index == 0) this.province = item
                             else if (index == 1) this.district = item
