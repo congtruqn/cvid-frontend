@@ -28,8 +28,8 @@
                             <label class="form-label">Mã số thuế</label>
                         </div>
                         <div class="mb-4 form-floating">
-                            <input @click="focus" type="text" class="form-control" v-model="name" required>
-                            <label class="form-label" for="form3Example1m">Tên doanh nghiệp</label>
+                            <input @click="focus" type="text" class="form-control" v-model="name" required disabled>
+                            <label class="form-label" >Tên doanh nghiệp</label>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-4 form-floating">
@@ -210,20 +210,24 @@
                     htmlObject.innerHTML = response.data;
                     htmlObject = htmlObject.getElementsByClassName("search-results")
                     if (htmlObject.length == 0){
-                        return
+                        this.name = ""
+                        this.province = ""
+                        this.district = ""
+                        this.ward = ""
+                        this.address = ""
                     } else {
                         this.name = htmlObject[0].getElementsByTagName("a")[0].innerHTML;
                         var address = htmlObject[0].getElementsByTagName("p")[0].innerHTML;
+                        this.username = htmlObject[0].getElementsByTagName("p")[0].getElementsByTagName("a")[0].innerHTML
                         this.address = ""
                         address = address.split("Địa chỉ:")[1].trim().split(", ").reverse();
                         console.log(address)
                         address.forEach((item, index) =>{
                             if (index == 0) this.province = item
-                            if (index == 1) this.district = item
-                            if (index == 2) this.ward = item
-                            if (index == 3) this.address = item
+                            else if (index == 1) this.district = item
+                            else if (index == 2) this.ward = item
+                            else this.address = item +' '+ this.address
                         })
-                        return
                     }
                 
                 }).catch(function (error) {
