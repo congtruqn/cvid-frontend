@@ -22,27 +22,44 @@
                         </select>
                         <label class="form-label">Loại hình tuyển dụng</label>
                     </div>
-                    <div v-if="type==5" class="mb-4 form-floating">
-                        <input @blur="getBusiness" type="text" class="form-control" v-model="username" required>
-                        <label class="form-label">Mã số thuế</label>
+                    <div v-if="type==5">
+                        <div class="mb-4 form-floating">
+                            <input @blur="getBusiness" type="text" class="form-control" v-model="username" required>
+                            <label class="form-label">Mã số thuế</label>
+                        </div>
+                        <div class="mb-4 form-floating">
+                            <input @click="focus" type="text" class="form-control" v-model="name" required>
+                            <label class="form-label" for="form3Example1m">Tên doanh nghiệp</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4 form-floating">
+                                <input @click="focus" type="text" class="form-control" v-model="province" required disabled>
+                                <label class="ms-2 form-label">Tỉnh/Thành phố</label>
+                            </div>
+                            <div class="col-md-6 mb-4 form-floating">
+                                <input @click="focus" type="text" class="form-control" v-model="district" required disabled>
+                                <label class="ms-2 form-label">Chọn quận/huyện</label>
+                            </div>
+                            <div class="col-md-6 mb-4 form-floating">
+                                <input @click="focus" type="text" class="form-control" v-model="ward" required disabled>
+                                <label class="ms-2 form-label">Chọn phường/xã</label>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input @click="focus" type="text" class="form-control" v-model="address" required disabled/>
+                                    <label class="form-label">Địa chỉ doanh nghiệp</label>
+                                </div>
+                            </div>        
+                        </div>
                     </div>
-                    <div v-if="type!=5" class="mb-4 form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="username" required>
-                        <label class="form-label">Số điện thoại</label>
+                    <div v-else>
+                        <div class="mb-4 form-floating">
+                            <input @click="focus" type="text" class="form-control" v-model="username" required>
+                            <label class="form-label">Số điện thoại</label>
+                        </div>
                     </div>
-                    <div v-if="type==5" class="mb-4 form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="name" required>
-                        <label class="form-label" for="form3Example1m">Tên doanh nghiệp</label>
-                    </div>
-                    <div v-if="type==5" class="mb-4 form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="nameforeign" required>
-                        <label class="form-label" for="form3Example1m">Tên doanh nghiệp viết bằng tiếng nước ngoài</label>
-                    </div>
-                    <div v-if="type==5" class="mb-4 form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="nameacronym" required>
-                        <label class="form-label" for="form3Example1m">Tên doanh nghiệp viết tắt</label>
-                    </div>
-
+                    
+                    
                     <div class="mb-4 form-floating">
                         <input @click="focus" type="email" class="form-control" v-model="email" required/>
                         <label class="form-label">Email</label>
@@ -90,7 +107,7 @@
                         </select>
                         <label class="form-label">Quốc gia</label>
                     </div>         
-                    <div class="row">
+                    <div class="row" v-if="type != 5">
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
                                 <select @click="focus" class="form-control" v-model="province" required>
@@ -120,10 +137,12 @@
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
-                                <input @click="focus" type="text" class="form-control" v-model="address" required/>
+                                <input @click="focus" type="text" class="form-control" v-model="address" required />
                                 <label class="form-label">Địa chỉ doanh nghiệp</label>
                             </div>
-                        </div>          
+                        </div>        
+                    </div>
+                    <div class="row">
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
                                 <input @click="focus" type="password" class="form-control" v-model="password" required minlength="6"/>
@@ -180,30 +199,36 @@
         },
         methods : {
             getBusiness(){
-                //alert(KEY)
-                // this.$http.get('https://dichvuthongtin.dkkd.gov.vn/inf/default.aspx')
-                // .then(response => {
-                //     console.log(response.data) 
-                // })
-                // .catch(function (error) {
-                //     console.error(error.response);
-                // });
-                //                 (async () => {
-                // const response = await fetch('https://dichvuthongtin.dkkd.gov.vn/inf/default.aspx');
-                // const template = await response.text();
-                // alert(template);
-                // })();
-                // $.ajax({ url: 'https://dichvuthongtin.dkkd.gov.vn/inf/default.aspx', success: function(data) { alert(data); } });
-
-                // this.$http.post('https://dichvuthongtin.dkkd.gov.vn/inf/Public/Srv.aspx/GetSearch', {
-                //     searchField: '0308902032',
-                //     h: '637958549586114171-700DEC793744AA1AB2A422A8E7817EF39FDFD05DF3C343FC1B2203C25439A7BB'
-                // }).then(response => {
-                //     console.log(response) 
-                // })
-                // .catch(function (error) {
-                //     console.error(error.response);
-                // });
+                if (this.username == ""){
+                    return
+                }
+                this.$http.post(`${BASE_URL}/business/getinfo`, {
+                    mst: this.username
+                })
+                .then(response => {
+                    var htmlObject = document.createElement('div');
+                    htmlObject.innerHTML = response.data;
+                    htmlObject = htmlObject.getElementsByClassName("search-results")
+                    if (htmlObject.length == 0){
+                        return
+                    } else {
+                        this.name = htmlObject[0].getElementsByTagName("a")[0].innerHTML;
+                        var address = htmlObject[0].getElementsByTagName("p")[0].innerHTML;
+                        this.address = ""
+                        address = address.split("Địa chỉ:")[1].trim().split(", ").reverse();
+                        console.log(address)
+                        address.forEach((item, index) =>{
+                            if (index == 0) this.province = item
+                            if (index == 1) this.district = item
+                            if (index == 2) this.ward = item
+                            if (index == 3) this.address = item
+                        })
+                        return
+                    }
+                
+                }).catch(function (error) {
+                    console.log(error);
+                });  
             },
             handleSubmit(e){
                 e.preventDefault()
@@ -276,10 +301,12 @@
         },
         watch : {
             province(newValue){
+                if (this.type == 5) return
                 this.district = "";
                 this.districts = new Set(this.province_list.filter(item => item.province == newValue).map(item => item.district))
             },
             district(newValue){
+                if (this.type == 5) return
                 this.ward = "";
                 this.wards = new Set(this.province_list.filter(item => item.district == newValue).map(item => item.ward))
             },

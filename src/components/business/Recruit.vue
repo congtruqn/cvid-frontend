@@ -91,12 +91,13 @@
                         </div>
                         <div class="card mb-3" v-for="cv in getCV(position._id)">
                             <div class="card-body">
-                                <h5 class="card-title">{{cv.name}}</h5>
+                                3
+                                <!-- <h5 class="card-title">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id" class="btn btn-primary">Xem chi tiết</a>
+                                <a :href="'/business/cvid/'+cv._id" class="btn btn-primary">Xem chi tiết</a> -->
                             </div>
                         </div>
                     </div>
@@ -164,6 +165,7 @@ export default {
         },
         
         getCV(position){
+            console.log(position)
             this.$http.post(`${BASE_URL}/job/getforposition`, {
                 id: position
             }).then(res => {
@@ -176,6 +178,7 @@ export default {
                 this.$http.post(`${BASE_URL}/employee/list/cvid`, {
                     selected: list_id
                 }).then(res => {
+                    console.log(res.data)
                     return res.data
                 }).catch(err => {
                     console.log(err)
