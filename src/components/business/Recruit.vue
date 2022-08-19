@@ -165,7 +165,8 @@ export default {
             });
         },
         getNamePosition(id){
-            this.position_list.find(element => element._id == id).name
+            return this.position_list.find(element => element._id == id).name
+
         }
         
     },
