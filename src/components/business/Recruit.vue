@@ -84,20 +84,19 @@
                 </div>
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
-                    <div v-for="position in position_list">
+                    <div v-for="item in list_cv">
                         <div class="d-flex justify-content-around my-2">
-                            <div class="text-muted h5">{{position.name}}</div>
+                            <div class="text-muted h5">{{item.position_name}}</div>
                             <!-- <button class="btn btn-sm btn-secondary">Dừng tuyển</button> -->
                         </div>
-                        <div class="card mb-3" v-for="cv in getCV(position._id)">
+                        <div class="card mb-3" v-for="cv in item.cv">
                             <div class="card-body">
-                                3
-                                <!-- <h5 class="card-title">{{cv.name}}</h5>
+                                <h5 class="card-title">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id" class="btn btn-primary">Xem chi tiết</a> -->
+                                <a :href="'/business/cvid/'+cv._id" class="btn btn-primary">Xem chi tiết</a>
                             </div>
                         </div>
                     </div>
@@ -120,7 +119,8 @@ export default {
             schools: [],
             searchSchool: "",
             point: 0,
-            list_cv_recommend: []
+            list_cv_recommend: [],
+            list_cv: []
         }
     },
     computed: {
@@ -143,7 +143,10 @@ export default {
                 });
                 return
             }
-            this.$http.get(`${BASE_URL}/department/findCV/${this.selected[0]}`).then(res => {
+            this.$http.get(`${BASE_URL}/department/findCV/${this.selected[0]}`, {
+
+            }).then(res => {
+                console.log(res.data)
                 this.list_cv_recommend = res.data
             }).catch(err => {
                 console.log(err)
@@ -164,10 +167,53 @@ export default {
             });
         },
         
-        getCV(position){
-            console.log(position)
+        getCV(position) {
+            
+                // this.$http.post(`${BASE_URL}/job/getforposition`, {
+                //     id: position
+                // }).then(res => {
+                //     var list_id = []
+                //     res.data.forEach(job =>{
+                //         if (job.type == 1){
+                //             list_id.push(job.employee_id)
+                //         }
+                //     })
+                //     this.$http.post(`${BASE_URL}/employee/list/cvid`, {
+                //         selected: list_id
+                //     }).then(res => {
+                //         console.log(res.data)
+                //         resolve(res.data)
+                //     }).catch(err => {
+                //         console.log(err)
+                //     })
+                // }).catch(err => {
+                //     console.log(err)
+                // })
+        }        
+    },
+    async created(){
+
+        await this.$http.get(`${BASE_URL}/department/list/${this.business.username}`)
+        .then(res => {
+            res.data.forEach(department =>{
+                department.position.forEach(position => {
+                    this.position_list.push(position)
+                })
+            })
+        }).catch(err => {
+            console.log(err)
+        })
+        this.$http.get(`${BASE_URL}/school/getall`)
+        .then(response => {
+            this.schools = response.data;
+        })
+        .catch(function (error) {
+            console.error(error.response);
+        });
+
+        this.position_list.forEach(position=>{
             this.$http.post(`${BASE_URL}/job/getforposition`, {
-                id: position
+                id: position._id
             }).then(res => {
                 var list_id = []
                 res.data.forEach(job =>{
@@ -178,36 +224,19 @@ export default {
                 this.$http.post(`${BASE_URL}/employee/list/cvid`, {
                     selected: list_id
                 }).then(res => {
-                    console.log(res.data)
-                    return res.data
+                    this.list_cv.push({
+                        position_id: position._id,
+                        position_name: position.name,
+                        cv: res.data
+                    })
                 }).catch(err => {
                     console.log(err)
                 })
             }).catch(err => {
                 console.log(err)
             })
-            return []
-        },
-        
-    },
-    created(){
-
-        this.$http.get(`${BASE_URL}/department/list/${this.business.username}`).then(res => {
-            res.data.forEach(department =>{
-                department.position.forEach(position => {
-                    this.position_list.push(position)
-                })
-            })
-        }).catch(err => {
-            console.log(err)
+            console.log(this.list_cv)
         })
-        this.$http.get(`${BASE_URL}/school/getall`)
-            .then(response => {
-                this.schools = response.data;
-            })
-            .catch(function (error) {
-                console.error(error.response);
-            });
     }
 }
 </script>

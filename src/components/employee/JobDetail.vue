@@ -32,7 +32,8 @@
                         </ul> -->
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-primary w-100" type="submit" @click="onSubmit">Apply Now</button>   
+                        <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="status == false">Apply Now</button>   
+                        <button class="btn btn-secondary w-100" type="submit" @click="onSubmit" v-else>Hủy</button>
                     </div>
                 </div>
     
@@ -64,12 +65,22 @@
         name: 'job-detail',
         data() {
             return {
-                position: ''
+                position: '',
+                status: false
             }
         },
         created(){
             this.$http.get(`${BASE_URL}/department/position/${this.$route.params.id}`).then(res => {
                 this.position = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+            this.$http.post(`${BASE_URL}/job/checkjob`, {
+                employee: JSON.parse(localStorage.getItem('employee'))._id,
+                position: this.$route.params.id,
+            }).then(res => {
+                if (res.data)
+                this.status = true
             }).catch(err => {
                 console.log(err)
             })
@@ -81,9 +92,7 @@
                     position: this.$route.params.id,
                     type: 1
                 }).then(res => {
-                    console.log(res.data)
                     this.$router.push('/employee/jobs-sent')
-
                 }).catch(err => {
                     console.log(err)
                 })

@@ -224,7 +224,7 @@ const {BASE_URL} =  require('../../utils/config')
         },
         created(){
             this.$http.post(`${BASE_URL}/job/getforbusiness`, {
-                id: JSON.parse(localStorage.getItem('business'))._id
+                id: JSON.parse(localStorage.getItem('business')).username
             }).then(res => {
                 res.data.forEach(job =>{
                     if (job.type == 2){

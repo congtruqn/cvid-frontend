@@ -605,7 +605,7 @@
                         <input type="text" class="form-control" placeholder="Nhập tên phòng ban" v-model="new_department.name">
                     </div>
                     <hr>
-                    <h5 class="mb-2">Tài khoản phòng ban</h5>
+                    <!-- <h5 class="mb-2">Tài khoản phòng ban</h5>
                     <div class="mb-2">
                         <label class="col-form-label">Tên tài khoản</label>
                         <input type="text" class="form-control" placeholder="Nhập tên tài khoản" v-model="username">
@@ -613,7 +613,7 @@
                     <div class="mb-2">
                         <label class="col-form-label">Mật khẩu</label>
                         <input type="password" class="form-control" placeholder="Nhập mật khẩu" v-model="password">
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -650,7 +650,6 @@
                         vacancy: "",
                         majors: [],
                         skills: [],
-                        amount: 0,
                         description: "",
                         startdate: "",
                         work_location: "",
@@ -679,8 +678,8 @@
                     this.$http.post(`${BASE_URL}/department/new`, {
                         name : this.new_department.name,
                         id: this.business.username,
-                        username: this.username,
-                        password: this.password
+                        // username: this.username,
+                        // password: this.password
                     }).then(res => {
                         Swal.fire({
                             icon: 'success',
@@ -736,7 +735,6 @@
                     vacancy: "",
                     majors: [],
                     skills: [],
-                    amount: 0,
                     description: "",
                     startdate: "",
                     work_location: "",
