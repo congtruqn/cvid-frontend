@@ -89,6 +89,7 @@
                             <div class="text-muted h5">{{item.position_name}}</div>
                             <!-- <button class="btn btn-sm btn-secondary">Dừng tuyển</button> -->
                         </div>
+                        <h5 class="card-title text-center text-primary" v-if="!item.cv.length">Chưa có ứng viên</h5>
                         <div class="card mb-3" v-for="cv in item.cv">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
