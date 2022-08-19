@@ -22,7 +22,7 @@
                     <label for="inputSchool" class="form-label">Trường</label>
                     <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false" v-model="searchSchool"/>
                     <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSchool" style="max-height: 400px;">
-                        <div class="form-check mx-3" v-for="(item,index) in filteredSchool" :key="item._id">
+                        <div class="form-check mx-3" v-for="item in filteredSchool" :key="item._id">
                             <input class="form-check-input" type="checkbox" v-model="school" :value="item.name" :id="'school'+item._id">
                             <label class="form-check-label" :for="'school'+item._id">
                                 {{item.name}}
@@ -64,12 +64,12 @@
             <div class="row g-md-4">
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
-                    <div>
+                    <div v-for="(id, index) in selected" v-if="list_cv_recommend.length != 0">
                         <div class="d-flex justify-content-around my-2">
-                            <div class="text-muted h5"></div>
+                            <div class="text-muted h5">{{getNamePosition(id)}}</div>
                             <button class="btn btn-sm btn-secondary">Dừng tuyển</button>
                         </div>
-                        <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)">
+                        <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend[index])">
                         <div class="card-body">
                             <h5 class="card-title">{{cv.name}}</h5>
                             <p class="card-text text-primary mb-0">{{cv.position}}</p>
@@ -143,17 +143,15 @@ export default {
                 });
                 return
             }
-            this.$http.get(`${BASE_URL}/department/findCV/${this.selected[0]}`, {
-
-            }).then(res => {
-                console.log(res.data)
-                this.list_cv_recommend = res.data
-            }).catch(err => {
-                console.log(err)
+            this.selected.forEach(id => {
+                this.$http.get(`${BASE_URL}/department/findCV/${id}`, {
+                }).then(res => {
+                    this.list_cv_recommend.push(res.data)
+                    console.log(this.list_cv_recommend)
+                }).catch(err => {
+                    console.log(err)
+                })
             })
-            this.list_cv = [];
-
-           
         },
         filteredCV(list_cv) {
             return list_cv.filter((cv) =>{
@@ -166,30 +164,10 @@ export default {
                 return true
             });
         },
+        getNamePosition(id){
+            this.position_list.find(element => element._id == id).name
+        }
         
-        getCV(position) {
-            
-                // this.$http.post(`${BASE_URL}/job/getforposition`, {
-                //     id: position
-                // }).then(res => {
-                //     var list_id = []
-                //     res.data.forEach(job =>{
-                //         if (job.type == 1){
-                //             list_id.push(job.employee_id)
-                //         }
-                //     })
-                //     this.$http.post(`${BASE_URL}/employee/list/cvid`, {
-                //         selected: list_id
-                //     }).then(res => {
-                //         console.log(res.data)
-                //         resolve(res.data)
-                //     }).catch(err => {
-                //         console.log(err)
-                //     })
-                // }).catch(err => {
-                //     console.log(err)
-                // })
-        }        
     },
     async created(){
 
@@ -235,8 +213,12 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-            console.log(this.list_cv)
         })
+    },
+    watch: {
+        selected(){
+            this.list_cv_recommend = []
+        }
     }
 }
 </script>
