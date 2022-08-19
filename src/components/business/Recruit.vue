@@ -154,6 +154,7 @@ export default {
             })
         },
         filteredCV(list_cv) {
+            if (!list_cv){list_cv = []}
             return list_cv.filter((cv) =>{
                 if (this.point > cv.point || !cv.point){
                     return false
@@ -161,7 +162,14 @@ export default {
                 if (this.school.length > 0 && !this.school.includes(cv.school)){
                     return false
                 }
-                return true
+                var tag = true
+                this.list_cv.forEach(item => {
+                    item.cv.forEach(cvid => {
+                        if (cvid._id == cv._id) tag = false
+                    })
+                })
+
+                return tag
             });
         },
         getNamePosition(id){
