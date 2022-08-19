@@ -94,7 +94,8 @@
                   </div>  
                 </section>
                 <div class="col-12" v-if="this.$route.query.position">
-                    <button class="btn btn-primary w-100" type="submit" @click="onSubmit">Chấp nhận</button>   
+                    <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="status=false">Chấp nhận</button>   
+                    <button class="btn btn-secondary w-100" type="submit" v-else>Hủy</button>
                 </div>
                 
                 
@@ -112,7 +113,8 @@
         data(){
             return {
                 cv: '',
-                criteria: ''
+                criteria: '',
+                status: false
             }
         },
         created(){
@@ -125,6 +127,15 @@
             .then(res => {
                 this.criteria = res.data;
             }) 
+            this.$http.post(`${BASE_URL}/job/checkjob`, {
+                employee: this.$route.params.cvid,
+                position: this.$route.query.position,
+            }).then(res => {
+                if (res.data)
+                this.status = true
+            }).catch(err => {
+                console.log(err)
+            })
         },
         methods: {
           onSubmit(){
