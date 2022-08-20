@@ -77,7 +77,7 @@
                             <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                             <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
                             
-                            <a :href="'/business/cvid/'+cv._id+'?position='+id" class="btn btn-primary">Xem chi tiết</a>
+                            <a :href="'/business/cvid/'+cv._id+'?position='+item.id" class="btn btn-primary">Xem chi tiết</a>
                         </div>
                         </div>
                     </div>
@@ -225,10 +225,5 @@ export default {
             })
         })
     },
-    watch: {
-        selected(){
-            this.list_cv_recommend = []
-        }
-    }
 }
 </script>
