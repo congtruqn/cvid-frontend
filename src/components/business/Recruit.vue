@@ -64,12 +64,12 @@
             <div class="row g-md-4">
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
-                    <div v-for="(id, index) in selected" v-if="list_cv_recommend.length != 0">
+                    <div v-for="item in list_cv_recommend">
                         <div class="d-flex justify-content-around my-2">
-                            <div class="text-muted h5">{{getNamePosition(id)}}</div>
+                            <div class="text-muted h5">{{getNamePosition(item.id)}}</div>
                             <button class="btn btn-sm btn-secondary">Dừng tuyển</button>
                         </div>
-                        <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend[index])">
+                        <div class="card mb-3" v-for="cv in filteredCV(item.cv)">
                         <div class="card-body">
                             <h5 class="card-title">{{cv.name}}</h5>
                             <p class="card-text text-primary mb-0">{{cv.position}}</p>
@@ -147,7 +147,7 @@ export default {
             this.selected.forEach(id => {
                 this.$http.get(`${BASE_URL}/department/findCV/${id}`, {
                 }).then(res => {
-                    this.list_cv_recommend.push(res.data)
+                    this.list_cv_recommend.push({id: id, cv:res.data})
                     console.log(this.list_cv_recommend)
                 }).catch(err => {
                     console.log(err)
