@@ -94,7 +94,7 @@
                   </div>  
                 </section>
                 <div class="col-12" v-if="this.$route.query.position">
-                    <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="status=false">Chấp nhận</button>   
+                    <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="status==false">Chấp nhận</button>   
                     <button class="btn btn-secondary w-100" type="submit" v-else>Hủy</button>
                 </div>
                 
@@ -133,6 +133,7 @@
             }).then(res => {
                 if (res.data)
                 this.status = true
+                console.log(this.status)
             }).catch(err => {
                 console.log(err)
             })
