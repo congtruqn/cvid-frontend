@@ -196,8 +196,12 @@ export default {
             res.data.forEach(department =>{
                 department.position.forEach(position => {
                     this.position_list.push(position)
+                    if (position.status == 1){
+                        this.selected.push(position._id)
+                    }
                 })
             })
+            this.recruit();
         }).catch(err => {
             console.log(err)
         })
