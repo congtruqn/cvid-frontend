@@ -109,7 +109,7 @@
             .then(res => {
                 res.data.forEach(item => {
                     item.position.forEach(position => {
-                        if (position.skills.includes(this.employee.skill) || position.majors.includes(this.employee.major)) {
+                        if (position.skills.includes(this.employee.skill) || position.majors.includes(this.employee.major) && position.status == 1) {
                             this.position.push(position)
                         }
                     })
