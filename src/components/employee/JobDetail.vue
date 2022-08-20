@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-12">
                         <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="status == false">Apply Now</button>   
-                        <button class="btn btn-secondary w-100" type="submit" @click="onSubmit" v-else>Hủy</button>
+                        <button class="btn btn-secondary w-100" type="submit" @click="onCancel" v-else>Hủy</button>
                     </div>
                 </div>
     
@@ -93,6 +93,18 @@
                     type: 1
                 }).then(res => {
                     this.$router.push('/employee/jobs-sent')
+                }).catch(err => {
+                    console.log(err)
+                })
+            },
+            onCancel(){
+                this.$http.post(`${BASE_URL}/job/delete`, {
+                    employee: JSON.parse(localStorage.getItem('employee'))._id,
+                    position: this.$route.params.id,
+                    type: 1
+                }).then(res => {
+                    if (res.data)
+                    window.location.reload();
                 }).catch(err => {
                     console.log(err)
                 })

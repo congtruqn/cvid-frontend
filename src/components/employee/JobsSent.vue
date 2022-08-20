@@ -55,7 +55,7 @@
                                 </div> -->
                                 <!-- <span class="text-truncate">Trạng thái: Chờ thanh toán</span> -->
                                 <div class="d-flex mb-3">
-                                    <button type="button" class="btn btn-light text-primary">Hủy</button>
+                                    <button type="button" class="btn btn-light text-primary" @click="((e) =>{onCancel(item._id, e)})">Hủy</button>
                                 </div>
                                 <span class="text-truncate">Đơn giá: 100.000 VNĐ</span>
                                 <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: {{item.schedule?item.schedule.replace('T', ' '):'Chưa có'}}</small>
@@ -137,7 +137,20 @@ const {BASE_URL} =  require('../../utils/config')
         methods: {
            pay(){
 
-           }
+           },
+           onCancel(id, e){
+                e.preventDefault();
+                this.$http.post(`${BASE_URL}/job/delete`, {
+                    employee: JSON.parse(localStorage.getItem('employee'))._id,
+                    position: id,
+                    type: 1
+                }).then(res => {
+                    if (res.data)
+                    window.location.reload();
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
         },
         created(){
             this.$http.post(`${BASE_URL}/job/getforemployee`, {

@@ -67,7 +67,7 @@
                     <div v-for="item in list_cv_recommend">
                         <div class="d-flex justify-content-around my-2">
                             <div class="text-muted h5">{{getNamePosition(item.id)}}</div>
-                            <button class="btn btn-sm btn-secondary">Dừng tuyển</button>
+                            <button class="btn btn-sm btn-secondary" @click="stopRecruiting(item.id)">Dừng tuyển</button>
                         </div>
                         <div class="card mb-3" v-for="cv in filteredCV(item.cv)">
                         <div class="card-body">
@@ -176,6 +176,16 @@ export default {
         getNamePosition(id){
             return this.position_list.find(element => element._id == id).name
 
+        },
+        stopRecruiting(id){
+            this.$http.post(`${BASE_URL}/department/position/stop`,{
+                position_id: id
+            })
+            .then(res => {
+                if (res.data) window.location.reload();
+            }).catch(err => {
+                console.log(err)
+            })
         }
         
     },
