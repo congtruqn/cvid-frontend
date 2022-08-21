@@ -94,8 +94,18 @@
                   </div>  
                 </section>
                 <div class="col-12" v-if="this.$route.query.position">
-                    <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="status==false">Chấp nhận</button>   
-                    <button class="btn btn-secondary w-100" type="submit" v-else>Hủy</button>
+                  <label class="btn btn-secondary disabled me-2">Xếp loại: </label>
+                  <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off">
+                  <label class="btn btn-outline-success" for="success-outlined">A</label>
+
+                  <input type="radio" class="btn-check" name="options-outlined" id="warning-outlined" autocomplete="off">
+                  <label class="btn btn-outline-warning" for="warning-outlined">B</label>
+
+                  <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
+                  <label class="btn btn-outline-danger" for="danger-outlined">C</label>
+                  <label class="btn btn-primary float-end">Chọn</label>
+  <!-- <button class="btn btn-primary" type="submit" @click="onSubmit" v-if="status==false">Đánh giá</button>   -->
+                    <!-- <button class="btn btn-secondary w-100" type="submit" v-else>Hủy</button> -->
                 </div>
                 
                 
