@@ -65,27 +65,27 @@
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
                     <div class="accordion" id="accordionRecommend">
-                    <div class="accordion-item" v-for="(item,id) in list_cv_recommend" :key="id">
+                    <div class="accordion-item" v-for="(position,id) in selected" :key="id">
                         <h2 class="accordion-header row m-0" :id="'headingRecommend'+id">
                         <button class="accordion-button" :style="{width: '75%'}" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
-                            {{getNamePosition(item.id)}}
+                            {{getNamePosition(position)}}
                         </button>
                         <button class="btn btn-sm btn-secondary col-3" @click="stopRecruiting(item.id, e)">Dừng tuyển</button>
 
                         </h2>
                         <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
                         <div class="accordion-body0">
-                            <div class="card mb-3" v-for="cv in filteredCV(item.cv)">
+                            <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)" v-if="cv.position_id == position">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id+'?position='+item.id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <a :href="'/business/cvid/'+cv._id+'?position='+position" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <span class="m-auto">{{cv.review}}</span>
                                 <input type="checkbox" class="form-check-input float-end me-2 p-3">
-                                <span class="badge bg-secondary float-end me-2 p-3">A</span>
-                                
+                                <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
                             </div>
                             </div>                        
                         </div>
@@ -96,22 +96,22 @@
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
                     <div class="accordion" id="accordionRecruitment">
-                    <div class="accordion-item" v-for="(item,id) in list_cv" :key="id">
+                    <div class="accordion-item" v-for="(position,id) in selected" :key="id">
                         <h2 class="accordion-header row m-0" :id="'headingRecruitment'+id">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecruitment'+id" aria-expanded="true" :aria-controls="'collaoseRecruitment'+id">
-                            {{getNamePosition(item.position_id)}}
+                            {{getNamePosition(position)}}
                         </button>
                         </h2>
                         <div :id="'collaoseRecruitment'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecruitment'+id">
                         <div class="accordion-body0">
-                            <div class="card mb-3" v-for="cv in item.cv">
+                            <div class="card mb-3" v-for="cv in list_cv" v-if="cv.position_id == id">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id+'?position='+item.id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <a :href="'/business/cvid/'+cv._id+'?position='+id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
                             </div>
                             </div>                        
                         </div>
@@ -153,36 +153,36 @@ export default {
             this.list_cv_recommend = [];
             this.list_cv = [];
             this.selected.forEach(id => {
-                this.$http.get(`${BASE_URL}/department/findCV/${id}`, {
-                }).then(res => {
-                    this.list_cv_recommend.push({id: id, cv:res.data})
-                }).catch(err => {
-                    console.log(err)
-                })
-
-                this.$http.post(`${BASE_URL}/job/getforposition`, {
+                this.$http.post(`${BASE_URL}/job/getcvidforposition`, {
                     id: id
                 }).then(res => {
-                    var list_id = []
-                    res.data.forEach(job =>{
-                        if (job.type == 1){
-                            list_id.push(job.employee_id)
+                    const job_list = res.data.job_list 
+                    const cvid = job_list.map(t1 => ({...t1, ...res.data.cv_list.find(t2 => t2._id == t1.employee_id)}))
+                    cvid.forEach(el => {
+                        if (el.type == 1){
+                            this.list_cv.push(el)
                         }
                     })
-                    this.$http.post(`${BASE_URL}/employee/list/cvid`, {
-                        selected: list_id
+                    this.$http.get(`${BASE_URL}/department/findcvforposition/${id}`, {
                     }).then(res => {
-                        this.list_cv.push({
-                            position_id: id,
-                            cv: res.data
+                        let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
+                        cvid_recommend.forEach(el => {
+                            if (el.type == 0 || !el.type){
+                                el.position_id = id
+                                el._id = el.employee_id?el.employee_id:el._id
+                                this.list_cv_recommend.push(el)
+                            }
                         })
+                        console.log(this.list_cv_recommend)  
                     }).catch(err => {
                         console.log(err)
                     })
                 }).catch(err => {
                     console.log(err)
                 })
+                
             })
+          
         },
         filteredCV(list_cv) {
             if (!list_cv){list_cv = []}
@@ -193,19 +193,11 @@ export default {
                 if (this.school.length > 0 && !this.school.includes(cv.school)){
                     return false
                 }
-                var tag = true
-                this.list_cv.forEach(item => {
-                    item.cv.forEach(cvid => {
-                        if (cvid._id == cv._id) tag = false
-                    })
-                })
-
-                return tag
+                return true
             });
         },
         getNamePosition(id){
             return this.position_list.find(element => element._id == id).name
-
         },
         stopRecruiting(id, e){
             e.preventDefault()
@@ -233,6 +225,7 @@ export default {
                 })
             })
             this.recruit();
+            
         }).catch(err => {
             console.log(err)
         })

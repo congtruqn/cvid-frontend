@@ -793,7 +793,7 @@
             findCV(position_id){
                 this.position_id = position_id
                 this.list_cv_recommend = [];
-                this.$http.get(`${BASE_URL}/department/findCV/${position_id}`).then(res => {
+                this.$http.get(`${BASE_URL}/department/findcvforposition/${position_id}`).then(res => {
                     this.list_cv_recommend = res.data
                 }).catch(err => {
                     console.log(err)

@@ -30,7 +30,7 @@
             </div>
             
             <div class="main-wrapper">
-                <section class="section experiences-section" v-if="cv.degrees.length">
+                <section class="section experiences-section" v-if="cv.degrees.length" >
                     <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Bằng cấp bổ sung</h2>   
                     <div class="item" v-for="degree in cv.degrees">
                         <div class="meta">
@@ -93,21 +93,29 @@
                       </div><!--//item-->
                   </div>  
                 </section>
-                <div class="col-12" v-if="this.$route.query.position">
-                  <label class="btn btn-secondary disabled me-2">Xếp loại: </label>
-                  <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off">
-                  <label class="btn btn-outline-success" for="success-outlined">A</label>
-
-                  <input type="radio" class="btn-check" name="options-outlined" id="warning-outlined" autocomplete="off">
-                  <label class="btn btn-outline-warning" for="warning-outlined">B</label>
-
-                  <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
-                  <label class="btn btn-outline-danger" for="danger-outlined">C</label>
-                  <label class="btn btn-primary float-end">Chọn</label>
-  <!-- <button class="btn btn-primary" type="submit" @click="onSubmit" v-if="status==false">Đánh giá</button>   -->
-                    <!-- <button class="btn btn-secondary w-100" type="submit" v-else>Hủy</button> -->
+                <div class="row" v-if="this.$route.query.position">
+                <div class="col-12 col-md-6 mb-3">
+                  <label class="btn btn-secondary btn-sm disabled me-2">Xếp loại: </label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" v-model="job.rating" type="radio" id="inlineCheckbox1" value="A">
+                    <label class="form-check-label" for="inlineCheckbox1">A</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" v-model="job.rating" type="radio" id="inlineCheckbox2" value="B">
+                    <label class="form-check-label" for="inlineCheckbox2">B</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" v-model="job.rating" type="radio" id="inlineCheckbox3" value="C">
+                    <label class="form-check-label" for="inlineCheckbox3">C</label>
+                  </div>
                 </div>
-                
+                <div class="col-12 col-md-6 mb-3" :style="{maxWidth: '300px'}">
+                  <div class="input-group">
+                    <input type="text" class="form-control form-control-sm" placeholder="Đánh giá" v-model="job.review">
+                    <button class="btn btn-outline-secondary btn-sm" type="button" @click="onSubmit">Lưu</button>
+                  </div>
+                </div>
+                </div>                
                 
                     
               
@@ -124,13 +132,14 @@
             return {
                 cv: '',
                 criteria: '',
+                job: '',
                 status: false
             }
         },
         created(){
             this.$http.get(`${BASE_URL}/employee/cvid/${this.$route.params.cvid}`)
             .then(res => {
-                this.cv = res.data;
+				if (res.data) this.cv = res.data;
             }) 
 
             this.$http.get(`${BASE_URL}/criteria/getall`)
@@ -141,11 +150,17 @@
                 employee: this.$route.params.cvid,
                 position: this.$route.query.position,
             }).then(res => {
-                var job = res.data
-                // if (job.type != 2){
-                //     this.status = true
-                // }
-                
+                if (res.data){
+                  this.job = res.data
+                } else {
+                  this.job = {
+                    employee_id: this.$route.params.cvid,
+                    position_id: this.$route.query.position,
+                    type: 0,
+                    rating: '',
+                    review: '',
+                  }
+                }
             }).catch(err => {
                 console.log(err)
             })
@@ -153,15 +168,12 @@
         methods: {
           onSubmit(){
             this.$http.post(`${BASE_URL}/job/create`, {
-                    employee: this.$route.params.cvid,
-                    position: this.$route.query.position,
-                    business: JSON.parse(localStorage.getItem('business')).username,
-                    type: 2
-                }).then(res => {
-                    this.$router.push('/business/candidate')
-                }).catch(err => {
-                    console.log(err)
-                })
+				job: this.job
+			}).then(res => {
+				this.$router.push('/business/recruit')
+			}).catch(err => {
+				console.log(err)
+			})
           }
         },
         computed: {
