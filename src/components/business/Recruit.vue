@@ -11,7 +11,7 @@
                     <input type="text" class="form-control dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly/>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuPosition">
                         <div class="form-check mx-3" v-for="position in position_list" :key="position._id">
-                            <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id">
+                            <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id" :disabled="position.status == 1">
                             <label class="form-check-label" :for="'position'+position._id">
                                 {{position.name}}
                             </label>
@@ -64,42 +64,59 @@
             <div class="row g-md-4">
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
-                    <div v-for="item in list_cv_recommend">
-                        <div class="d-flex justify-content-around my-2">
-                            <div class="text-muted h5">{{getNamePosition(item.id)}}</div>
-                            <button class="btn btn-sm btn-secondary" @click="stopRecruiting(item.id)">Dừng tuyển</button>
-                        </div>
-                        <div class="card mb-3" v-for="cv in filteredCV(item.cv)">
-                        <div class="card-body">
-                            <h5 class="card-title">{{cv.name}}</h5>
-                            <p class="card-text text-primary mb-0">{{cv.position}}</p>
-                            <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
-                            <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
-                            <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                            
-                            <a :href="'/business/cvid/'+cv._id+'?position='+item.id" class="btn btn-primary">Xem chi tiết</a>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
-                    <div v-for="item in list_cv">
-                        <div class="d-flex justify-content-around my-2">
-                            <div class="text-muted h5">{{item.position_name}}</div>
-                            <!-- <button class="btn btn-sm btn-secondary">Dừng tuyển</button> -->
-                        </div>
-                        <h5 class="card-title text-center text-primary" v-if="!item.cv.length">Chưa có ứng viên</h5>
-                        <div class="card mb-3" v-for="cv in item.cv">
+                    <div class="accordion" id="accordionRecommend">
+                    <div class="accordion-item" v-for="(item,id) in list_cv_recommend" :key="id">
+                        <h2 class="accordion-header row m-0" :id="'headingRecommend'+id">
+                        <button class="accordion-button" :style="{width: '75%'}" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
+                            {{getNamePosition(item.id)}}
+                        </button>
+                        <button class="btn btn-sm btn-secondary col-3" @click="stopRecruiting(item.id, e)">Dừng tuyển</button>
+
+                        </h2>
+                        <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
+                        <div class="accordion-body0">
+                            <div class="card mb-3" v-for="cv in filteredCV(item.cv)">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id+'?position='+item.position_id" class="btn btn-primary">Xem chi tiết</a>
+                                <a :href="'/business/cvid/'+cv._id+'?position='+item.id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <input type="checkbox" class="form-check-input float-end me-2 p-3">
+                                <span class="badge bg-secondary float-end me-2 p-3">A</span>
+                                
                             </div>
+                            </div>                        
                         </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
+                    <div class="accordion" id="accordionRecruitment">
+                    <div class="accordion-item" v-for="(item,id) in list_cv" :key="id">
+                        <h2 class="accordion-header row m-0" :id="'headingRecruitment'+id">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecruitment'+id" aria-expanded="true" :aria-controls="'collaoseRecruitment'+id">
+                            {{getNamePosition(item.position_id)}}
+                        </button>
+                        </h2>
+                        <div :id="'collaoseRecruitment'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecruitment'+id">
+                        <div class="accordion-body0">
+                            <div class="card mb-3" v-for="cv in item.cv">
+                            <div class="card-body">
+                                <h5 class="card-title">{{cv.name}}</h5>
+                                <p class="card-text text-primary mb-0">{{cv.position}}</p>
+                                <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
+                                <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
+                                <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
+                                <a :href="'/business/cvid/'+cv._id+'?position='+item.id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                            </div>                        
+                        </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -134,21 +151,34 @@ export default {
     methods: {
         recruit(){
             this.list_cv_recommend = [];
-            if (this.selected.length == 0) {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Thất bại',
-                    text: 'Vui lòng chọn vị trí tuyển dụng',
-                    // confirmButtonColor: 'var(--light)',
-                    confirmButtonText: 'Quay lại',
-                });
-                return
-            }
+            this.list_cv = [];
             this.selected.forEach(id => {
                 this.$http.get(`${BASE_URL}/department/findCV/${id}`, {
                 }).then(res => {
                     this.list_cv_recommend.push({id: id, cv:res.data})
-                    console.log(this.list_cv_recommend)
+                }).catch(err => {
+                    console.log(err)
+                })
+
+                this.$http.post(`${BASE_URL}/job/getforposition`, {
+                    id: id
+                }).then(res => {
+                    var list_id = []
+                    res.data.forEach(job =>{
+                        if (job.type == 1){
+                            list_id.push(job.employee_id)
+                        }
+                    })
+                    this.$http.post(`${BASE_URL}/employee/list/cvid`, {
+                        selected: list_id
+                    }).then(res => {
+                        this.list_cv.push({
+                            position_id: id,
+                            cv: res.data
+                        })
+                    }).catch(err => {
+                        console.log(err)
+                    })
                 }).catch(err => {
                     console.log(err)
                 })
@@ -177,7 +207,8 @@ export default {
             return this.position_list.find(element => element._id == id).name
 
         },
-        stopRecruiting(id){
+        stopRecruiting(id, e){
+            e.preventDefault()
             this.$http.post(`${BASE_URL}/department/position/stop`,{
                 position_id: id
             })
@@ -213,31 +244,7 @@ export default {
             console.error(error.response);
         });
 
-        this.position_list.forEach(position=>{
-            this.$http.post(`${BASE_URL}/job/getforposition`, {
-                id: position._id
-            }).then(res => {
-                var list_id = []
-                res.data.forEach(job =>{
-                    if (job.type == 1){
-                        list_id.push(job.employee_id)
-                    }
-                })
-                this.$http.post(`${BASE_URL}/employee/list/cvid`, {
-                    selected: list_id
-                }).then(res => {
-                    this.list_cv.push({
-                        position_id: position._id,
-                        position_name: position.name,
-                        cv: res.data
-                    })
-                }).catch(err => {
-                    console.log(err)
-                })
-            }).catch(err => {
-                console.log(err)
-            })
-        })
+     
     },
 }
 </script>

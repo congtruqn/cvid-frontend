@@ -131,9 +131,11 @@
                 employee: this.$route.params.cvid,
                 position: this.$route.query.position,
             }).then(res => {
-                if (res.data)
-                this.status = true
-                console.log(this.status)
+                var job = res.data
+                // if (job.type != 2){
+                //     this.status = true
+                // }
+                
             }).catch(err => {
                 console.log(err)
             })
