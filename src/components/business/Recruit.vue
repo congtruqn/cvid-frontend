@@ -8,7 +8,7 @@
             <form class="row g-3" v-on:submit.prevent>
                 <div class="col-12 col-md-5">
                     <label for="inputState" class="form-label">Vị trí tuyển dụng</label>
-                    <input type="text" class="form-control dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly/>
+                    <input type="text" class="form-control dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly :value="'Đang tuyển '+selected.length+' vị trí'"/>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuPosition">
                         <div class="form-check mx-3" v-for="position in position_list" :key="position._id">
                             <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id" :disabled="position.status == 1">
@@ -230,10 +230,19 @@ export default {
                 })    
             };
             if (e.target.checked == false ) {
-                console.log(e);
-                console.log("OFF");
-                console.log(cv);
-                console.log(e.target.checked);
+                var job = {
+                    employee_id: cv._id,
+                    position_id: cv.position_id,
+                    type: 0,
+                }
+                this.$http.post(`${BASE_URL}/job/create`, {
+                    job: job
+                }).then(res => {
+                    console.log(res.data)
+                    
+                }).catch(err => {
+                    console.log(err)
+                })
             }
 },
         
