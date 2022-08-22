@@ -114,7 +114,7 @@
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
                                 <a :href="'/business/cvid/'+cv._id+'?position='+position" target="_blank" class="btn btn-primary">Xem chi tiết</a>
                                 <span class="m-auto">{{cv.review}}</span>
-                                <input type="checkbox" class="form-check-input float-end me-2 p-3">
+                                <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.confirm == 1" @change="onChange($event, cv)">
                                 <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
                             </div>
                             </div>                        
@@ -217,8 +217,8 @@ export default {
                 var job = {
                     employee_id: cv._id,
                     position_id: cv.position_id,
-                    type: (!cv.type || cv.type == 0)?2:cv.type,
-                    confirm: cv.type==1?1:0
+                    type: (!cv.type ||cv.type == 0)?2:cv.type,
+                    confirm: (cv.type == 1)?1:cv.confirm
                 }
                 this.$http.post(`${BASE_URL}/job/create`, {
                     job: job
@@ -233,7 +233,8 @@ export default {
                 var job = {
                     employee_id: cv._id,
                     position_id: cv.position_id,
-                    type: 0,
+                    type: cv.type==2?0:cv.type,
+                    confirm: (cv.type == 1)?0:cv.confirm
                 }
                 this.$http.post(`${BASE_URL}/job/create`, {
                     job: job
