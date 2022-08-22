@@ -84,14 +84,13 @@
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
                                 <a :href="'/business/cvid/'+cv._id+'?position='+position" target="_blank" class="btn btn-primary">Xem chi tiết</a>
                                 <span class="m-auto">{{cv.review}}</span>
-                                <input type="checkbox" class="form-check-input float-end me-2 p-3">
+                                <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.type == 2" @change="onChange($event, cv)">
                                 <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
                             </div>
                             </div>                        
                         </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary mt-2 ">Chọn</button>
                     </div>
                     
                 </div>
@@ -136,6 +135,7 @@ export default {
         return {
             business: JSON.parse(localStorage.getItem('business')),
             position_list: [],
+            cvid: '',
             selected: [],
             school: [],
             schools: [],
@@ -167,18 +167,16 @@ export default {
                             this.list_cv.push(el)
                         }
                     })
-                    console.log(this.list_cv)
                     this.$http.get(`${BASE_URL}/department/findcvforposition/${id}`, {
                     }).then(res => {
                         let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
                         cvid_recommend.forEach(el => {
-                            if (el.type == 0 || !el.type){
+                            if (el.type != 1){
                                 el.position_id = id
                                 el._id = el.employee_id?el.employee_id:el._id
                                 this.list_cv_recommend.push(el)
                             }
-                        })
-                        console.log(this.list_cv_recommend)  
+                        }) 
                     }).catch(err => {
                         console.log(err)
                     })
@@ -213,7 +211,31 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-        }
+        },
+        onChange(e, cv) {
+            if (e.target.checked == true) {
+                var job = {
+                    employee_id: cv._id,
+                    position_id: cv.position_id,
+                    type: (!cv.type || cv.type == 0)?2:cv.type,
+                    confirm: cv.type==1?1:0
+                }
+                this.$http.post(`${BASE_URL}/job/create`, {
+                    job: job
+                }).then(res => {
+                    console.log(res.data)
+                    alert("CV đã được chuyển sang phòng nhân sự")
+                }).catch(err => {
+                    console.log(err)
+                })    
+            };
+            if (e.target.checked == false ) {
+                console.log(e);
+                console.log("OFF");
+                console.log(cv);
+                console.log(e.target.checked);
+            }
+},
         
     },
     async created(){

@@ -67,7 +67,7 @@
             return {
                 position: '',
                 status: false,
-                job: ''
+                job: '',
                 
             }
         },
