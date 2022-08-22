@@ -31,8 +31,8 @@
                             <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
                         </ul> -->
                     </div>
-                    <div class="col-12">
-                        <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="status == false">Apply Now</button>   
+                    <div class="col-12" v-if="job.status == 1">
+                        <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="job.type == 0 || !job.type">Apply Now</button>   
                         <button class="btn btn-secondary w-100" type="submit" @click="onCancel" v-else>Hủy</button>
                     </div>
                 </div>
@@ -66,7 +66,9 @@
         data() {
             return {
                 position: '',
-                status: false
+                status: false,
+                job: ''
+                
             }
         },
         created(){
@@ -79,18 +81,23 @@
                 employee: JSON.parse(localStorage.getItem('employee'))._id,
                 position: this.$route.params.id,
             }).then(res => {
-                if (res.data)
-                this.status = true
+                if (res.data) {
+                    this.job = res.data
+                } else {
+                    this.job = {
+                        employee_id: JSON.parse(localStorage.getItem('employee'))._id,
+                        position_id: this.$route.params.id,
+                    }
+                }
             }).catch(err => {
                 console.log(err)
             })
         },
         methods: {
             onSubmit(){
+                this.job.type = 1
                 this.$http.post(`${BASE_URL}/job/create`, {
-                    employee: JSON.parse(localStorage.getItem('employee'))._id,
-                    position: this.$route.params.id,
-                    type: 1
+                    job: this.job
                 }).then(res => {
                     this.$router.push('/employee/jobs-sent')
                 }).catch(err => {
