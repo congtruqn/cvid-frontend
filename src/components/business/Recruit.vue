@@ -62,7 +62,7 @@
         <hr>
         <div class="card-body">
             <div class="row g-md-4">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
                     <div class="accordion" id="accordionRecommend">
                     <div class="accordion-item" v-for="(position,id) in position_list" :key="id" v-if="position.status == 1">
@@ -94,7 +94,7 @@
                     </div>
                     
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
                     <div class="accordion" id="accordionRecruitment">
                     <div class="accordion-item" v-for="(position,id) in position_list" :key="id" v-if="position.status == 1">
