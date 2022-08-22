@@ -6,7 +6,7 @@
             <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
                 <li class="nav-item">
                     <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
-                        <h6 class="mt-n1 mb-0">Chưa thanh toán</h6>
+                        <h6 class="mt-n1 mb-0">CVID đã chọn</h6>
                     </a>
                 </li>
                 <li class="nav-item">

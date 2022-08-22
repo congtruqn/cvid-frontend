@@ -11,7 +11,7 @@
                     <input type="text" class="form-control dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly :value="'Đang tuyển '+selected.length+' vị trí'"/>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuPosition">
                         <div class="form-check mx-3" v-for="position in position_list" :key="position._id">
-                            <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id" :disabled="position.status == 1">
+                            <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id" :checked="position.status==1" :disabled="position.status==1">
                             <label class="form-check-label" :for="'position'+position._id">
                                 {{position.name}}
                             </label>
@@ -65,24 +65,24 @@
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
                     <div class="accordion" id="accordionRecommend">
-                    <div class="accordion-item" v-for="(position,id) in selected" :key="id">
+                    <div class="accordion-item" v-for="(position,id) in position_list" :key="id" v-if="position.status == 1">
                         <h2 class="accordion-header row m-0" :id="'headingRecommend'+id">
                         <button class="accordion-button" :style="{width: '75%'}" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
-                            {{getNamePosition(position)}}
+                            {{position.name}}
                         </button>
-                        <button class="btn btn-sm btn-secondary col-3" @click="stopRecruiting(position)">Dừng tuyển</button>
+                        <button class="btn btn-sm btn-secondary col-3" @click="stopRecruiting(position._id)">Dừng tuyển</button>
 
                         </h2>
                         <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
                         <div class="accordion-body0">
-                            <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)" v-if="cv.position_id == position">
+                            <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)" v-if="cv.position_id == position._id">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id+'?position='+position" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <a :href="'/business/cvid/'+cv._id+'?position='+position._id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
                                 <span class="m-auto">{{cv.review}}</span>
                                 <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.type == 2" @change="onChange($event, cv)">
                                 <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
@@ -97,22 +97,22 @@
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
                     <div class="accordion" id="accordionRecruitment">
-                    <div class="accordion-item" v-for="(position,id) in selected" :key="id">
+                    <div class="accordion-item" v-for="(position,id) in position_list" :key="id" v-if="position.status == 1">
                         <h2 class="accordion-header row m-0" :id="'headingRecruitment'+id">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecruitment'+id" aria-expanded="true" :aria-controls="'collaoseRecruitment'+id">
-                            {{getNamePosition(position)}}
+                            {{position.name}}
                         </button>
                         </h2>
                         <div :id="'collaoseRecruitment'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecruitment'+id">
                         <div class="accordion-body0">
-                            <div class="card mb-3" v-for="cv in list_cv" v-if="cv.position_id == position">
+                            <div class="card mb-3" v-for="cv in list_cv" v-if="cv.position_id == position._id">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id+'?position='+position" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <a :href="'/business/cvid/'+cv._id+'?position='+position._id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
                                 <span class="m-auto">{{cv.review}}</span>
                                 <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.confirm == 1" @change="onChange($event, cv)">
                                 <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
@@ -183,7 +183,11 @@ export default {
                 }).catch(err => {
                     console.log(err)
                 })
-                
+                this.position_list.forEach((element, index) => {
+                    if(element._id == id) {
+                        this.position_list[index].status = 1;
+                    }
+                });
             })
           
         },
