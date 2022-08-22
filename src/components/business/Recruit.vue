@@ -106,14 +106,17 @@
                         </h2>
                         <div :id="'collaoseRecruitment'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecruitment'+id">
                         <div class="accordion-body0">
-                            <div class="card mb-3" v-for="cv in list_cv" v-if="cv.position_id == id">
+                            <div class="card mb-3" v-for="cv in list_cv" v-if="cv.position_id == position">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id+'?position='+id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <a :href="'/business/cvid/'+cv._id+'?position='+position" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <span class="m-auto">{{cv.review}}</span>
+                                <input type="checkbox" class="form-check-input float-end me-2 p-3">
+                                <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
                             </div>
                             </div>                        
                         </div>
@@ -133,7 +136,6 @@ export default {
         return {
             business: JSON.parse(localStorage.getItem('business')),
             position_list: [],
-            position_id: "",
             selected: [],
             school: [],
             schools: [],
@@ -159,12 +161,13 @@ export default {
                     id: id
                 }).then(res => {
                     const job_list = res.data.job_list 
-                    const cvid = job_list.map(t1 => ({...t1, ...res.data.cv_list.find(t2 => t2._id == t1.employee_id)}))
+                    let cvid = job_list.map(t1 => ({...t1, ...res.data.cv_list.find(t2 => t2._id == t1.employee_id)}))
                     cvid.forEach(el => {
                         if (el.type == 1){
                             this.list_cv.push(el)
                         }
                     })
+                    console.log(this.list_cv)
                     this.$http.get(`${BASE_URL}/department/findcvforposition/${id}`, {
                     }).then(res => {
                         let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
