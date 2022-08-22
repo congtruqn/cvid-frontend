@@ -70,7 +70,7 @@
                         <button class="accordion-button" :style="{width: '75%'}" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
                             {{getNamePosition(position)}}
                         </button>
-                        <button class="btn btn-sm btn-secondary col-3" @click="stopRecruiting(item.id, e)">Dừng tuyển</button>
+                        <button class="btn btn-sm btn-secondary col-3" @click="stopRecruiting(position)">Dừng tuyển</button>
 
                         </h2>
                         <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
@@ -91,7 +91,9 @@
                         </div>
                         </div>
                     </div>
+                    <button type="button" class="btn btn-primary mt-2 ">Chọn</button>
                     </div>
+                    
                 </div>
                 <div class="col-md-6">
                     <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
@@ -199,8 +201,7 @@ export default {
         getNamePosition(id){
             return this.position_list.find(element => element._id == id).name
         },
-        stopRecruiting(id, e){
-            e.preventDefault()
+        stopRecruiting(id){
             this.$http.post(`${BASE_URL}/department/position/stop`,{
                 position_id: id
             })
