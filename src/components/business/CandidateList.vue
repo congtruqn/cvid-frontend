@@ -2,8 +2,8 @@
 <div class="container-xxl py-5">
     <div class="container">
         <!-- <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Job Listing</h1> -->
-        <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
-            <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
+        <div class="tab-class wow fadeInUp" data-wow-delay="0.3s">
+            <ul class="nav nav-pills position-relative start-50 translate-middle d-inline-flex border-bottom mb-5">
                 <li class="nav-item">
                     <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
                         <h6 class="mt-n1 mb-0">CVID đã chọn</h6>
@@ -22,6 +22,31 @@
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
+                <div class="card mb-3" v-for="department in departments">
+                    <h5 class="card-header bg-primary text-white">
+                        {{department.name}}
+                    </h5>
+                    <div class="card-body mx-2">
+                        <div class="card mb-2" v-for="position in department.position">
+                            <div class="card-header">
+                                {{position.name}}
+                            </div>
+                            <div class="card-body row">
+                                <div class="card-body border col-md-6 mb-1" v-for="cv in cvid_list">
+                                <h5 class="card-title d-inline">{{cv.name}}<span class="badge bg-secondary float-end">10000000 VND</span></h5>
+                                <p class="card-text text-primary mb-0">{{cv.position}}</p>
+                                <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
+                                <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
+                                <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
+                                <a :href="'/business/cvid/'+cv._id+'?position='+position._id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <span class="m-auto">{{cv.review}}</span>
+                                <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.confirm == 1" @change="onChange($event, cv)">
+                                <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row gy-1">
                     <a :href="'/business/cvid/'+index._id" target="_blank" v-for="index in cvid_list" v-if="index.status == 0" class="job-item px-3 pt-3 mb-2">
                         <div class="row">
@@ -138,6 +163,8 @@ const {BASE_URL} =  require('../../utils/config')
     export default {
         data() {
             return {
+                business: JSON.parse(localStorage.getItem('business')),
+                departments: [],
                 employee_id: '',
                 cvid_list: [],
                 job_list: [],
@@ -239,6 +266,28 @@ const {BASE_URL} =  require('../../utils/config')
                     console.log(err)
                 })
                 
+            }).catch(err => {
+                console.log(err)
+            })
+            this.$http.get(`${BASE_URL}/department/list/${this.business.username}`)
+            .then(res => {
+                this.departments = res.data
+                this.departments.forEach(department => {
+                    department.position.forEach(position => {
+                        this.$http.post(`${BASE_URL}/job/getcvidforposition`, {
+                            id: position._id
+                        }).then(res => {
+                            const job_list = res.data.job_list 
+                            let cvid = job_list.map(t1 => ({...t1, ...res.data.cv_list.find(t2 => t2._id == t1.employee_id)}))
+                            // cvid.forEach(el => {
+                            //     if (el.type == 1){
+                            //         this.list_cv.push(el)
+                            //     }
+                            // })
+                            position.cvid = cvid
+                        })
+                    })
+                })
             }).catch(err => {
                 console.log(err)
             })
