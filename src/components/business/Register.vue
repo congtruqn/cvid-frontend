@@ -82,15 +82,6 @@
                                 </div>
                             </ul>
                         </div>
-                        <div class="mb-4 form-floating">
-                            <select @click="focus" class="form-control" required>
-                                <option value="" disabled selected>Chọn loại hình</option>
-                                <option  value="Việt Nam">TNHH</option>
-                                <option  value="Việt Nam">MTV</option>
-                                <option  value="Việt Nam">Cổ phần</option>
-                            </select>
-                            <label class="form-label">Loại hình</label>
-                        </div>
                     </div>
                     <div v-else>
                         <div class="mb-4 form-floating">
