@@ -13,7 +13,13 @@
                 <div class="col-xl-6  needs-validation">
                 <div class="card-body p-md-5 text-black">
                     <h3 class="mb-5 text-uppercase">Đăng kí tài khoản tuyển dụng</h3>
-        
+                    <div class="mb-4 form-floating">
+                        <select @click="focus" class="form-control" v-model="country" required>
+                            <option value="" disabled>Chọn quốc gia</option>
+                            <option  value="Việt Nam">Việt Nam</option>
+                        </select>
+                        <label class="form-label">Quốc gia</label>
+                    </div>
                     <div class="mb-4 form-floating">
                         <select @click="focus" class="form-control" v-model="type" required>
                             <option value="" disabled>Chọn loại hình tuyển dụng</option>
@@ -60,23 +66,23 @@
                             </div>        
                         </div>
                         <div class="mb-4 form-floating">
-                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replace(',', ', ')">
                             <label class="form-label">Lĩnh vực kinh doanh</label> 
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuField">
                                 <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" id="1">
+                                    <input class="form-check-input" type="checkbox" v-model="major" id="1" value="Thương mại">
                                     <label class="form-check-label" for="1">
                                         Thương mại
                                     </label>
                                 </div>
                                 <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" id="2">
+                                    <input class="form-check-input" type="checkbox" v-model="major" id="2" value="Dịch vụ">
                                     <label class="form-check-label" for="2">
                                         Dịch vụ
                                     </label>
                                 </div>
                                 <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" id="3">
+                                    <input class="form-check-input" type="checkbox" v-model="major" id="3" value="Kỹ thuật">
                                     <label class="form-check-label" for="3">
                                         Kỹ thuật
                                     </label>
@@ -99,9 +105,9 @@
                             <label class="form-label">Số điện thoại</label>
                         </div>
                         <div class="mb-4 form-floating">
-                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replace(',', ', ')">
                             <label class="form-label">Lĩnh vực kinh doanh</label> 
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuField">
                                 <div class="form-check mx-3">
                                     <input class="form-check-input" type="checkbox" id="1">
                                     <label class="form-check-label" for="1">
@@ -217,6 +223,7 @@
                 district: "",
                 ward: "",
                 address: "",
+                major: [],
                 email : "",
                 password : "",
                 password2 : "",
