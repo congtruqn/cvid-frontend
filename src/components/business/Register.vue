@@ -59,7 +59,7 @@
                             </div>        
                         </div>
                         <div class="mb-4 form-floating">
-                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replace(',', ', ')">
+                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replaceAll(',', ', ')">
                             <label class="form-label">Lĩnh vực kinh doanh</label> 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuField">
                                 <div class="form-check mx-3">
@@ -89,7 +89,7 @@
                             <label class="form-label">Số điện thoại</label>
                         </div>
                         <div class="mb-4 form-floating">
-                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replace(',', ', ')">
+                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replaceAll(',', ', ')">
                             <label class="form-label">Lĩnh vực kinh doanh</label> 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuField">
                                 <div class="form-check mx-3">
