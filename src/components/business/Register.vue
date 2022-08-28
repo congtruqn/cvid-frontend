@@ -28,13 +28,6 @@
                         </select>
                         <label class="form-label">Loại hình tuyển dụng</label>
                     </div>
-                    <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="country" required>
-                            <option value="" disabled>Chọn quốc gia</option>
-                            <option  value="Việt Nam">Việt Nam</option>
-                        </select>
-                        <label class="form-label">Quốc gia</label>
-                    </div>
                     <div v-if="type==5">
                         <div class="mb-4 form-floating">
                             <input @blur="getBusiness" type="number" class="form-control" v-model="username" required>
@@ -109,19 +102,19 @@
                             <label class="form-label">Lĩnh vực kinh doanh</label> 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuField">
                                 <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" id="1">
+                                    <input class="form-check-input" type="checkbox" v-model="major" id="1" value="Thương mại">
                                     <label class="form-check-label" for="1">
                                         Thương mại
                                     </label>
                                 </div>
                                 <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" id="2">
+                                    <input class="form-check-input" type="checkbox" v-model="major" id="2" value="Dịch vụ">
                                     <label class="form-check-label" for="2">
                                         Dịch vụ
                                     </label>
                                 </div>
                                 <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" id="3">
+                                    <input class="form-check-input" type="checkbox" v-model="major" id="3" value="Kỹ thuật">
                                     <label class="form-check-label" for="3">
                                         Kỹ thuật
                                     </label>
