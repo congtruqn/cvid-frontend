@@ -22,7 +22,13 @@
                         </select>
                         <label class="form-label">Loại hình tuyển dụng</label>
                     </div>
-
+                    <div class="mb-4 form-floating">
+                        <select @click="focus" class="form-control" v-model="country" required>
+                            <option value="" disabled>Chọn quốc gia</option>
+                            <option  value="Việt Nam">Việt Nam</option>
+                        </select>
+                        <label class="form-label">Quốc gia</label>
+                    </div>
                     <div v-if="type==5">
                         <div class="mb-4 form-floating">
                             <input @blur="getBusiness" type="number" class="form-control" v-model="username" required>
@@ -33,13 +39,7 @@
                             <label class="form-label" >Tên doanh nghiệp</label>
                         </div>
                         <div class="row">
-                            <div class="mb-4 form-floating">
-                                <select @click="focus" class="form-control" v-model="country" required>
-                                    <option value="" disabled>Chọn quốc gia</option>
-                                    <option  value="Việt Nam">Việt Nam</option>
-                                </select>
-                                <label class="ms-2 form-label">Quốc gia</label>
-                            </div>
+                
                             <div class="col-md-6 mb-4 form-floating">
                                 <input @click="focus" type="text" class="form-control" v-model="province" required disabled>
                                 <label class="ms-2 form-label">Tỉnh/Thành phố</label>
@@ -59,6 +59,39 @@
                                 </div>
                             </div>        
                         </div>
+                        <div class="mb-4 form-floating">
+                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <label class="form-label">Lĩnh vực kinh doanh</label> 
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                                <div class="form-check mx-3">
+                                    <input class="form-check-input" type="checkbox" id="1">
+                                    <label class="form-check-label" for="1">
+                                        Thương mại
+                                    </label>
+                                </div>
+                                <div class="form-check mx-3">
+                                    <input class="form-check-input" type="checkbox" id="2">
+                                    <label class="form-check-label" for="2">
+                                        Dịch vụ
+                                    </label>
+                                </div>
+                                <div class="form-check mx-3">
+                                    <input class="form-check-input" type="checkbox" id="3">
+                                    <label class="form-check-label" for="3">
+                                        Kỹ thuật
+                                    </label>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="mb-4 form-floating">
+                            <select @click="focus" class="form-control" required>
+                                <option value="" disabled selected>Chọn loại hình</option>
+                                <option  value="Việt Nam">TNHH</option>
+                                <option  value="Việt Nam">MTV</option>
+                                <option  value="Việt Nam">Cổ phần</option>
+                            </select>
+                            <label class="form-label">Loại hình</label>
+                        </div>
                     </div>
                     <div v-else>
                         <div class="mb-4 form-floating">
@@ -66,12 +99,39 @@
                             <label class="form-label">Số điện thoại</label>
                         </div>
                         <div class="mb-4 form-floating">
-                            <select @click="focus" class="form-control" v-model="country" required>
-                                <option value="" disabled>Chọn quốc gia</option>
-                                <option  value="Việt Nam">Việt Nam</option>
-                            </select>
-                            <label class="form-label">Quốc gia</label>
+                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <label class="form-label">Lĩnh vực kinh doanh</label> 
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                                <div class="form-check mx-3">
+                                    <input class="form-check-input" type="checkbox" id="1">
+                                    <label class="form-check-label" for="1">
+                                        Thương mại
+                                    </label>
+                                </div>
+                                <div class="form-check mx-3">
+                                    <input class="form-check-input" type="checkbox" id="2">
+                                    <label class="form-check-label" for="2">
+                                        Dịch vụ
+                                    </label>
+                                </div>
+                                <div class="form-check mx-3">
+                                    <input class="form-check-input" type="checkbox" id="3">
+                                    <label class="form-check-label" for="3">
+                                        Kỹ thuật
+                                    </label>
+                                </div>
+                            </ul>
                         </div>
+                        <div class="mb-4 form-floating">
+                            <select @click="focus" class="form-control" required>
+                                <option value="" selected disabled>Chọn loại hình</option>
+                                <option  value="Việt Na">Hiệp hội</option>
+                                <option  value="Việt N">Cửa hàng</option>
+                                <option  value="">Hộ kinh doanh cá thể</option>
+                            </select>
+                            <label class="form-label">Loại hình</label>
+                        </div>
+                        
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
@@ -251,7 +311,7 @@
                 });
             },
             focus(){
-                document.querySelectorAll('.needs-validation')[0].classList.add('was-validated')
+                // document.querySelectorAll('.needs-validation')[0].classList.add('was-validated')
             }
         },
         created(){
