@@ -22,6 +22,7 @@
                         </select>
                         <label class="form-label">Loại hình tuyển dụng</label>
                     </div>
+
                     <div v-if="type==5">
                         <div class="mb-4 form-floating">
                             <input @blur="getBusiness" type="number" class="form-control" v-model="username" required>
@@ -32,6 +33,13 @@
                             <label class="form-label" >Tên doanh nghiệp</label>
                         </div>
                         <div class="row">
+                            <div class="mb-4 form-floating">
+                                <select @click="focus" class="form-control" v-model="country" required>
+                                    <option value="" disabled>Chọn quốc gia</option>
+                                    <option  value="Việt Nam">Việt Nam</option>
+                                </select>
+                                <label class="ms-2 form-label">Quốc gia</label>
+                            </div>
                             <div class="col-md-6 mb-4 form-floating">
                                 <input @click="focus" type="text" class="form-control" v-model="province" required disabled>
                                 <label class="ms-2 form-label">Tỉnh/Thành phố</label>
@@ -57,90 +65,56 @@
                             <input @click="focus" type="text" class="form-control" v-model="username" required>
                             <label class="form-label">Số điện thoại</label>
                         </div>
+                        <div class="mb-4 form-floating">
+                            <select @click="focus" class="form-control" v-model="country" required>
+                                <option value="" disabled>Chọn quốc gia</option>
+                                <option  value="Việt Nam">Việt Nam</option>
+                            </select>
+                            <label class="form-label">Quốc gia</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <select @click="focus" class="form-control" v-model="province" required>
+                                        <option value="" disabled>Chọn tỉnh/thành phố</option>
+                                        <option v-for="province in provinces" :value='province'>{{province}}</option>
+                                    </select>
+                                    <label class="form-label">Tỉnh/Thành phố</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <select @click="focus" class="form-control" v-model="district" required>
+                                        <option value="" disabled>Chọn quận/huyện</option>
+                                        <option v-for="district in districts" :value='district'>{{district}}</option>
+                                    </select>
+                                    <label class="form-label">Quận/Huyện</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <select @click="focus" class="form-control" v-model="ward" required>
+                                        <option value="" disabled>Chọn phường/xã</option>
+                                        <option v-for="ward in wards" :value='ward'>{{ward}}</option>
+                                    </select>
+                                    <label class="form-label">Phường/Xã</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input @click="focus" type="text" class="form-control" v-model="address" required />
+                                    <label class="form-label">Địa chỉ doanh nghiệp</label>
+                                </div>
+                            </div>        
+                        </div>
                     </div>
                     
+                    
+                             
                     
                     <div class="mb-4 form-floating">
                         <input @click="focus" type="email" class="form-control" v-model="email" required/>
                         <label class="form-label">Email</label>
-                    </div>
-                    <div class="mb-4 form-floating">
-                        <div class="dropdown form-floating">
-                            <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="'Đã chọn '+ major.length +' nghành nghề'" readonly>
-                            <label class="form-label">Trình độ ứng viên và ngành nghề kinh doanh</label>
-                            <ul class="dropdown-menu w-100 p-2" aria-labelledby="dropdownposition" style="maxHeight: 500px;overflow: auto;">
-                                <label class="form-label fw-bold">Đại học</label>
-                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Đại học'">
-                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
-                                    <label class="form-check-label" >
-                                        {{item.name}}
-                                    </label>
-                                </div>
-                                <label class="form-label fw-bold">Cao đẳng</label>
-                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Cao đẳng'">
-                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
-                                    <label class="form-check-label" >
-                                        {{item.name}}
-                                    </label>
-                                </div>
-                                <label class="form-label fw-bold">Trung cấp</label>
-                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Trung cấp'">
-                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
-                                    <label class="form-check-label" >
-                                        {{item.name}}
-                                    </label>
-                                </div>
-                                <label class="form-label fw-bold">Sơ cấp</label>
-                                <div class="form-check" v-for="(item, index) in majors" v-if="item.level == 'Sơ cấp'">
-                                    <input class="form-check-input" type="checkbox" :value="item.name" v-model="major">
-                                    <label class="form-check-label" >
-                                        {{item.name}}
-                                    </label>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="country" required>
-                            <option value="" disabled>Chọn quốc gia</option>
-                            <option  value="Việt Nam">Việt Nam</option>
-                        </select>
-                        <label class="form-label">Quốc gia</label>
-                    </div>         
-                    <div class="row" v-if="type != 5">
-                        <div class="col-md-6 mb-4">
-                            <div class="form-floating">
-                                <select @click="focus" class="form-control" v-model="province" required>
-                                    <option value="" disabled>Chọn tỉnh/thành phố</option>
-                                    <option v-for="province in provinces" :value='province'>{{province}}</option>
-                                </select>
-                                <label class="form-label">Tỉnh/Thành phố</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="form-floating">
-                                <select @click="focus" class="form-control" v-model="district" required>
-                                    <option value="" disabled>Chọn quận/huyện</option>
-                                    <option v-for="district in districts" :value='district'>{{district}}</option>
-                                </select>
-                                <label class="form-label">Quận/Huyện</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="form-floating">
-                                <select @click="focus" class="form-control" v-model="ward" required>
-                                    <option value="" disabled>Chọn phường/xã</option>
-                                    <option v-for="ward in wards" :value='ward'>{{ward}}</option>
-                                </select>
-                                <label class="form-label">Phường/Xã</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="form-floating">
-                                <input @click="focus" type="text" class="form-control" v-model="address" required />
-                                <label class="form-label">Địa chỉ doanh nghiệp</label>
-                            </div>
-                        </div>        
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-4">
@@ -177,20 +151,15 @@
             return {
                 type: "",
                 name: "",
-                nameforeign: "",
-                nameacronym: "",
                 username: "",
-                country: "",
+                country: "Việt Nam",
                 province: "",
                 district: "",
                 ward: "",
                 address: "",
-                level: "",
-                major: [],
                 email : "",
                 password : "",
                 password2 : "",
-                majors: "",
                 province_list: [],
                 provinces: [],
                 districts: [],
@@ -243,15 +212,12 @@
                 this.$http.post(`${BASE_URL}/business/register`, {
                     type: this.type,
                     name: this.name,
-                    nameforeign: this.nameforeign,
-                    nameacronym: this.nameacronym,
                     username: this.username,
                     country: this.country,
                     province: this.province,
                     district: this.district,
                     ward: this.ward,
                     address: this.address,
-                    majors: this.major,
                     email: this.email,
                     password: this.password,
                     password2: this.password2
@@ -298,14 +264,6 @@
                 console.error(error.response);
             });      
             
-            this.$http.get(`${BASE_URL}/major/list`)
-            .then(response => {
-                this.majors = response.data;
-               
-            })
-            .catch(function (error) {
-                console.error(error.response);
-            });
         },
         watch : {
             province(newValue){

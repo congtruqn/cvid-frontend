@@ -91,6 +91,10 @@
                                 <input type="number" class="form-control" v-model="new_department.position.amount" placeholder="Nhập số lượng">
                             </div>
                             <div class="form-group mb-3">
+                                <label for="">Cấp bậc ứng viên</label>
+                                <input type="number" class="form-control" v-model="new_department.position.amount" placeholder="Nhập số lượng">
+                            </div>
+                            <div class="form-group mb-3">
                                 <label for="">Ngành/ Chuyên nghành</label>
                                 <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor2" role="button" aria-controls="offcanvasMajor2" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề, ' + new_department.position.skills.length + ' chuyên nghành'" readonly>
                                 <ul v-for="item in new_department.position.skills" class="m-2">
