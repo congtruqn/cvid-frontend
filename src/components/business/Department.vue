@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <button v-if="business.type==5" type="button" class="btn btn-primary btn-icon-split ms-5 my-4" data-bs-toggle="modal" data-bs-target="#addDepartment">
+        <button v-if="business.type==5" type="button" class="btn btn-primary btn-icon-split ms-5 my-4" data-bs-toggle="modal" data-bs-target="#addDepartment" @click="department.name = ''">
             <i class="fas fa-plus"></i> Thêm phòng ban
         </button>
         <div class="card mb-3 mx-md-4" v-for="department in departments" :key="department._id">
@@ -76,45 +76,67 @@
                         <form >
                             <div class="form-group mb-3">
                                 <label class="form-label">Phòng ban</label>
-                                <input type="text" class="form-control" v-model="new_department.name" readonly disabled>
+                                <input type="text" class="form-control" v-model="department.name" readonly disabled>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Vị trí tuyển dụng <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" v-model="new_department.position.name" placeholder=''>
+                                <label class="form-label">Tên chức danh công việc <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" v-model="position.name" placeholder=''>
+                            </div>
+                           
+                            <div class="form-group mb-3">
+                                <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
+                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels.toString().replaceAll(',', ', ')">
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLevel">
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" v-model="position.levels" id="level01" value="Sơ cấp">
+                                        <label class="form-check-label" for="level01">
+                                            Sơ cấp
+                                        </label>
+                                    </div>
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" v-model="position.levels" id="level02" value="Trung cấp">
+                                        <label class="form-check-label" for="level02">
+                                            Trung cấp
+                                        </label>
+                                    </div>
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" v-model="position.levels" id="level03" value="Cao đẳng">
+                                        <label class="form-check-label" for="level03">
+                                            Cao đẳng
+                                        </label>
+                                    </div>
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" v-model="position.levels" id="level04" value="Đại học">
+                                        <label class="form-check-label" for="level04">
+                                            Đại học
+                                        </label>
+                                    </div>
+                                </ul>          
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Mô tả công việc</label>
-                                <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.description"></textarea>
+                                <label class="form-label">Chuyên nghành ứng viên <span class="text-danger">*</span></label> 
+                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill2" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSkill">
+                                {{filteredSkill[0]}}
+                                <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuSkill2">
+                                    <div class="form-check mx-3" v-for="(skill, index) in filteredSkill">
+                                        <input class="form-check-input" type="checkbox" v-model="position.skills" :id="'1skill'+index" :value="skill">
+                                        <label class="form-check-label" :for="'1skill'+index">
+                                            {{skill}}
+                                        </label>
+                                    </div>
+                                </ul>  
+                                <ul class="list-group m-2 px-4">
+                                    <li class="" v-for="skill in position.skills">{{skill}}</li>
+                                </ul>   
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Số lượng <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" v-model="new_department.position.amount" placeholder="Nhập số lượng">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Cấp bậc ứng viên</label>
-                                <input type="number" class="form-control" v-model="new_department.position.amount" placeholder="Nhập số lượng">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Ngành/ Chuyên nghành</label>
-                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor2" role="button" aria-controls="offcanvasMajor2" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề, ' + new_department.position.skills.length + ' chuyên nghành'" readonly>
-                                <ul v-for="item in new_department.position.skills" class="m-2">
-                                    <li>{{item}}</li>
-                                </ul>
-                                
+                                <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
                             </div>
                             
-                            <!-- <div class="form-group mb-3">
-                                <label class="form-label">Chức danh chuyên môn</label>
-                                <div class="dropdown">
-                                    <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownvacancy1" data-bs-toggle="dropdown" v-model="new_department.position.vacancy">
-                                    <ul class="dropdown-menu w-100" aria-labelledby="dropdownvacancy1">
-                                        <li v-for="position in 4" @click="new_department.position.vacancy=position"><a class="dropdown-item">{{position}}</a></li>
-                                    </ul>
-                                </div>
-                            </div> -->
                             <div class="form-group mb-3">
                                 <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>
-                                <select class="form-control" v-model="new_department.position.work_location">
+                                <select class="form-control" v-model="position.work_location">
                                     <option value="">Chọn địa điểm làm việc</option>
                                     <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>
@@ -122,15 +144,19 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Mức lương tối thiểu (triệu đồng)</label>
-                                <input type="number" class="form-control" v-model="new_department.position.min_salary" placeholder="Nhập mức lương tối thiểu">
+                                <input type="number" class="form-control" v-model="position.min_salary" placeholder="Nhập mức lương tối thiểu">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Mức lương tối đa (triệu đồng)</label>
-                                <input type="number" class="form-control" v-model="new_department.position.max_salary" placeholder="Nhập mức lương tối đa">
+                                <input type="number" class="form-control" v-model="position.max_salary" placeholder="Nhập mức lương tối đa">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="">Mô tả công việc</label>
+                                <textarea cols="30" rows="10" class="form-control" v-model="position.description"></textarea>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Yêu cầu công việc</label>
-                                <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.requirements"></textarea>
+                                <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                             </div>
                         </form>
                     </div>
@@ -156,184 +182,85 @@
                         <form >
                             <div class="form-group mb-3">
                                 <label class="form-label">Phòng ban</label>
-                                <input type="text" class="form-control" :value="new_department.name" readonly>
+                                <input type="text" class="form-control" :value="department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Vị trí tuyển dụng</label>
-                                <input type="text" class="form-control" v-model="new_department.position.name" placeholder=''>
+                                <label class="form-label">Tên chức danh công việc <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" v-model="position.name" placeholder=''>
                             </div>
+                            
                             <div class="form-group mb-3">
-                                <label for="">Mô tả công việc</label>
-                                <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.description"></textarea>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Số lượng</label>
-                                <input type="number" class="form-control" v-model="new_department.position.amount" placeholder="Nhập số lượng">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="">Nghành/ Chuyên nghành</label>
-                                <input class="form-control" data-bs-toggle="offcanvas" href="#offcanvasMajor1" role="button" aria-controls="offcanvasMajor1" :value="'Đã chọn '+ new_department.position.majors.length +' nghành nghề, ' + new_department.position.skills.length + ' chuyên nghành'" readonly>
-                                <ul v-for="item in new_department.position.skills" class="m-2">
-                                    <li>{{item}}</li>
-                                </ul>
-                                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMajor1" aria-labelledby="offcanvasMajor1Label">
-                                    <div class="offcanvas-header">
-                                      <h5 class="offcanvas-title" id="offcanvasMajor1Label">Chọn nghành nghề</h5>
-                                      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
+                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels.toString().replaceAll(',', ', ')">
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLevel">
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv01" value="Sơ cấp">
+                                        <label class="form-check-label" for="lv01">
+                                            Sơ cấp
+                                        </label>
                                     </div>
-                                    <div class="offcanvas-body">
-                                        
-                                        <form class="mb-2" v-on:submit.prevent>
-                                        <input class="form-control me-2" v-model="searchSkill" placeholder="Search" aria-label="Search">
-                                        </form>
-                                    
-                                        <div class="accordion" id="accordionAddMajor">
-                                            <div class="accordion-item">
-                                              <h2 class="accordion-header" id="headingMajorOne">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMajorOne" aria-expanded="false" aria-controls="collapseMajorOne">
-                                                  Sơ cấp
-                                                </button>
-                                              </h2>
-                                              <div id="collapseMajorOne" class="accordion-collapse collapse" aria-labelledby="headingMajorOne" data-bs-parent="#accordionAddMajor">
-                                                <div class="accordion-body">
-                                                    <div v-for="(major, index) in majors" v-if="major.level == 'Sơ cấp' && business.majors.includes(major.name)" :key="index" class="form-check">
-                                                        <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name" :id="'majorSC0'+index">
-                                                        <label class="form-check-label" :for="'majorSC0'+index">
-                                                            {{major.name}}
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                              <h2 class="accordion-header" id="headingMajorTwo">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMajorTwo" aria-expanded="false" aria-controls="collapseMajorTwo">
-                                                  Trung cấp
-                                                </button>
-                                              </h2>
-                                              <div id="collapseMajorTwo" class="accordion-collapse collapse" aria-labelledby="headingMajorTwo" data-bs-parent="#accordionAddMajor">
-                                                <div class="accordion-body">
-                                                    <div class="accordion accordion-flush" id="accordionFlushTrungCap">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Trung cấp' && business.majors.includes(major.name)">
-                                                            <a class="accordion-header" :id="'flush-heading-TC-'+index">
-                                                                <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-TC-'+index" aria-expanded="true" aria-controls="'flush-collapse-TC-'+index">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" >
-                                                                        {{major.name}}
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                            <div :id="'flush-collapse-TC-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-TC-'+index" data-bs-parent="#accordionFlushTrungCap">
-                                                                <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check"  v-if="skill.search(searchSkill) != -1">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorTC-1'+index+'-'+index1">
-                                                                    <label class="form-check-label" :for="'majorTC-1'+index+'-'+index1">
-                                                                        {{skill}}
-                                                                    </label>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                              <h2 class="accordion-header" id="headingMajorThree">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMajorThree" aria-expanded="false" aria-controls="collapseMajorThree">
-                                                  Cao đẳng
-                                                </button>
-                                              </h2>
-                                              <div id="collapseMajorThree" class="accordion-collapse collapse" aria-labelledby="headingMajorThree" data-bs-parent="#accordionAddMajor">
-                                                <div class="accordion-body">
-                                                    <div class="accordion accordion-flush" id="accordionFlushCaoDang">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Cao đẳng' && business.majors.includes(major.name)">
-                                                            <a class="accordion-header" :id="'flush-heading-CD-'+index">
-                                                                <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-CD-'+index" aria-expanded="true" aria-controls="'flush-collapse-CD-'+index">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" >
-                                                                        {{major.name}}
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                            <div :id="'flush-collapse-CD-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-CD-'+index" data-bs-parent="#accordionFlushCaoDang">
-                                                                <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorCD'+index+'-'+index1">
-                                                                    <label class="form-check-label" :for="'majorCD'+index+'-'+index1">
-                                                                        {{skill}}
-                                                                    </label>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="headingMajorFour">
-                                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMajorFour" aria-expanded="false" aria-controls="collapseMajorFour">
-                                                    Đại học
-                                                  </button>
-                                                </h2>
-                                                <div id="collapseMajorFour" class="accordion-collapse collapse" aria-labelledby="headingMajorFour" data-bs-parent="#accordionAddMajor">
-                                                  <div class="accordion-body">
-                                                    <div class="accordion accordion-flush" id="accordionFlushDaiHoc">
-                                                        <div class="accordion-item" v-for="(major, index) in majors" :key="index" v-if="major.level === 'Đại học' && business.majors.includes(major.name)">
-                                                            <a class="accordion-header" :id="'flush-heading-DH-'+index">
-                                                                <div class="accordion-button p-1"  data-bs-toggle="collapse" :data-bs-target="'#flush-collapse-DH-'+index" aria-expanded="true" aria-controls="'flush-collapse-DH-'+index">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" v-model="new_department.position.majors" :value="major.name">
-                                                                        <label class="form-check-label" >
-                                                                        {{major.name}}
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                            <div :id="'flush-collapse-DH-'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading-DH-'+index" data-bs-parent="#accordionFlushDaiHoc">
-                                                                <div class="accordion-body py-2">
-                                                                <div v-for="(skill, index1) in filteredSkill(major.skills)" :key="index1" class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" v-model="new_department.position.skills" :value="skill" :id="'majorDH1'+index+'-'+index1">
-                                                                    <label class="form-check-label" :for="'majorDH1'+index+'-'+index1">
-                                                                        {{skill}}
-                                                                    </label>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                        </div>
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv02" value="Trung cấp">
+                                        <label class="form-check-label" for="lv02">
+                                            Trung cấp
+                                        </label>
                                     </div>
-                                </div>
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv03" value="Cao đẳng">
+                                        <label class="form-check-label" for="lv03">
+                                            Cao đẳng
+                                        </label>
+                                    </div>
+                                    <div class="form-check mx-3">
+                                        <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv04" value="Đại học">
+                                        <label class="form-check-label" for="lv04">
+                                            Đại học
+                                        </label>
+                                    </div>
+                                </ul>          
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Địa điểm làm việc</label>
-                                <select class="form-control" v-model="new_department.position.work_location">
+                                <label class="form-label">Chuyên nghành ứng viên <span class="text-danger">*</span></label> 
+                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSkill">
+                                <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuSkill">
+                                    <div class="form-check mx-3" v-for="(skill, index) in filteredSkill">
+                                        <input class="form-check-input" type="checkbox" v-model="position.skills" :id="'0skill'+index" :value="skill">
+                                        <label class="form-check-label" :for="'0skill'+index">
+                                            {{skill}}
+                                        </label>
+                                    </div>
+                                </ul>  
+                                <ul class="list-group m-2 px-4">
+                                    <li class="" v-for="skill in position.skills">{{skill}}</li>
+                                </ul>   
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="">Số lượng <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>
+                                <select class="form-control" v-model="position.work_location">
                                     <option value="">Chọn địa điểm làm việc</option>
                                     <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="">Mức lương tối thiểu</label>
-                                <input type="number" class="form-control" v-model="new_department.position.min_salary" placeholder="Nhập mức lương tối thiểu">
+                                <label for="">Mức lương tối thiểu (triệu đồng)</label>
+                                <input type="number" class="form-control" v-model="position.min_salary" placeholder="Nhập mức lương tối thiểu">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Mức lương tối đa</label>
-                                <input type="number" class="form-control" v-model="new_department.position.max_salary" placeholder="Nhập mức lương tối đa">
+                                <label for="">Mức lương tối đa (triệu đồng)</label>
+                                <input type="number" class="form-control" v-model="position.max_salary" placeholder="Nhập mức lương tối đa">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="">Mô tả công việc</label>
+                                <textarea cols="30" rows="10" class="form-control" v-model="position.description"></textarea>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Yêu cầu công việc</label>
-                                <textarea cols="30" rows="10" class="form-control" v-model="new_department.position.requirements"></textarea>
+                                <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                             </div>
                         </form>
                     </div>
@@ -358,18 +285,9 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="col-form-label">Tên phòng ban<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Nhập tên phòng ban" v-model="new_department.name">
+                        <input type="text" class="form-control" placeholder="Nhập tên phòng ban" v-model="department.name">
                     </div>
                     <hr>
-                    <!-- <h5 class="mb-2">Tài khoản phòng ban</h5>
-                    <div class="mb-2">
-                        <label class="col-form-label">Tên tài khoản</label>
-                        <input type="text" class="form-control" placeholder="Nhập tên tài khoản" v-model="username">
-                    </div>
-                    <div class="mb-2">
-                        <label class="col-form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" placeholder="Nhập mật khẩu" v-model="password">
-                    </div> -->
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -388,41 +306,37 @@
         data (){
             return {
                 searchSkill: '',
-                min_point: 0,
                 business : JSON.parse(localStorage.getItem('business')),
                 majors: [],
-                // username: '',
-                // password: '',
                 position_id: '',
                 provinces: [],
                 departments: [],
-                new_department: {
+                department: {
                     _id: "",
                     name: "",
                     id: "",
-                    position: {
-                        _id: "",
-                        name: "",
-                        vacancy: "",
-                        majors: [],
-                        skills: [],
-                        description: "",
-                        startdate: "",
-                        work_location: "",
-                        min_salary: 0,
-                        max_salary: 0,
-                        requirements: "",
-                        status: 0,
-                    }
+                    position: "",
                 },
-                list_cv: [],
-                list_cv_recommend: []
+                position: {
+                    _id: "",
+                    name: "",
+                    vacancy: "",
+                    levels: [],
+                    skills: [],
+                    description: "",
+                    work_location: "",
+                    amount: 1,
+                    min_salary: 0,
+                    max_salary: 0,
+                    requirements: "",
+                    status: 0,
+                },
             }
         },
         methods : {
             addDepartment(e){
                 e.preventDefault();
-                if (this.new_department.name == ''){
+                if (this.department.name == ''){
                     Swal.fire({
                         icon: 'info',
                         title: 'Thông báo',
@@ -432,7 +346,7 @@
                     });    
                 } else {
                     this.$http.post(`${BASE_URL}/department/new`, {
-                        name : this.new_department.name,
+                        name : this.department.name,
                         id: this.business.username,
                         // username: this.username,
                         // password: this.password
@@ -444,8 +358,7 @@
                             confirmButtonText: 'OK',
                             confirmButtonColor: 'var(--primary)',
                         });
-                        this.new_department.name = '';
-                        window.location.reload();
+                    window.location.reload()
                     }).catch(err => {
                         console.log(err)
                     })
@@ -453,8 +366,10 @@
             },
             addPosition(e){
                 e.preventDefault();
+                let newDepartment = this.department
+                newDepartment.position = this.position
                 this.$http.post(`${BASE_URL}/department/position/new`, {
-                    department: this.new_department
+                    department: newDepartment
                 }).then(res => {
                     Swal.fire({
                         icon: 'success',
@@ -463,7 +378,6 @@
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'var(--primary)',
                     });
-                    this.name_position = '';
                     window.location.reload();
                 }).catch(err => {
                     console.log(err)
@@ -472,27 +386,31 @@
             openModalEdit(department_id, position_id){
                 this.departments.filter(department => {
                     if (department._id == department_id){
-                        this.new_department.name = department.name
-                        this.new_department._id = department._id
+                        this.department.name = department.name
+                        this.department._id = department._id
                         department.position.filter(position => {
                             if (position._id == position_id){
-                                this.new_department.position = position
+                                this.position = position
+                                //this.position.levels = ['Sơ cấp', 'Trung cấp', 'Đại học']
+                                console.log(this.position)
+                                
                             }
+                            
                         })
                     }
                 })
             },
             openModalAddPosition(department_id, department_name){
-                this.new_department._id = department_id
-                this.new_department.name = department_name
-                this.new_department.position = {
+                this.department._id = department_id
+                this.department.name = department_name
+                this.position = {
                     _id: "",
                     name: "",
                     vacancy: "",
-                    majors: [],
+                    levels: [],
                     skills: [],
+                    amount: 1,
                     description: "",
-                    startdate: "",
                     work_location: "",
                     min_salary: 0,
                     max_salary: 0,
@@ -502,8 +420,10 @@
             },
             editPosition(e){
                 e.preventDefault();
+                let newDepartment = this.department
+                newDepartment.position = this.position
                 this.$http.post(`${BASE_URL}/department/position/edit`, {
-                    department: this.new_department
+                    department: this.newDepartment
                 }).then(res => {
                     Swal.fire({
                         icon: 'success',
@@ -512,7 +432,7 @@
                         confirmButtonText: 'OK',
                         confirmButtonColor: 'var(--primary)',
                     });
-                    this.name_position = '';
+                
                     window.location.reload();
                 }).catch(err => {
                     console.log(err)
@@ -546,18 +466,21 @@
                     }
                 })
             },
-            filteredSkill(skills){
-                return skills.filter((item) =>
-                    item.toLowerCase().indexOf(this.searchSkill) != -1
-                );
-            },
-            filteredCV(list_cv) {
-                return list_cv.filter((cv) =>{
-                    if (this.min_point < cv.point){
-                        return true
+        },
+        computed: {
+            filteredSkill(){
+                this.skills = new Set([])
+                this.majors.forEach(element => {
+                    if (this.position.levels.includes(element.level)){
+                        element.skills.forEach(skill => {
+                            if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1){
+                                this.skills.add(skill)
+                            } 
+                        })
                     }
                 });
-            }
+                return this.skills
+            },
         },
         created(){
             if (this.business.type==5){
@@ -583,7 +506,7 @@
             });   
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
-                this.majors = response.data;
+                this.majors = response.data
             })
         },
 

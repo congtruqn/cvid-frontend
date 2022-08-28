@@ -89,6 +89,10 @@
                             <label class="form-label">Số điện thoại</label>
                         </div>
                         <div class="mb-4 form-floating">
+                            <input @click="focus" type="text" class="form-control" v-model="name" required>
+                            <label class="form-label">Họ và tên</label>
+                        </div>
+                        <div class="mb-4 form-floating">
                             <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replaceAll(',', ', ')">
                             <label class="form-label">Lĩnh vực kinh doanh</label> 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuField">
@@ -199,7 +203,7 @@
     export default {  
         data(){
             return {
-                type: "",
+                type: "6",
                 name: "",
                 username: "",
                 country: "Việt Nam",
