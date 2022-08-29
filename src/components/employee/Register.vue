@@ -43,6 +43,23 @@
                         </div>
                     </div>
                     </div>
+                    <div class="mb-2">
+                        <div class="form-check form-check-inline ms-n4">
+                            <label class="form-check-label" for="inlineRadio1">Giới tính</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">Nam</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                            <label class="form-check-label" for="inlineRadio3">Khác</label>
+                        </div>
+                    </div>
                     <div class="mb-2 form-floating">
                         <select @click="focus" class="form-control" v-model="country" required>
                             <option value="" disabled>Chọn giới tính</option>
