@@ -16,8 +16,8 @@
                     <h3 class="mb-5 text-uppercase">Đăng kí tài khoản CVID</h3>
                     <div class="row">
                     <div class="col-md-6 mb-2">
-                        <div class="form-floating">
-                        <input @click="focus" type="text" class="form-control" v-model="name" required/>
+                        <div class="form-floating form-floating-small small m-0 p-0">
+                        <input @click="focus" type="text" class="form-control form-control-sm m-0 " v-model="name" required/>
                         <label class="form-label" for="form3Example1m">Họ và tên</label>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="mb-2">
                         <div class="form-check form-check-inline ms-n4">
-                            <label class="form-check-label" for="inlineRadio1">Giới tính</label>
+                            <label class="form-check-label" for="inlineRadio1">Giới tính:</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
