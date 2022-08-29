@@ -423,19 +423,6 @@
     export default {  
         data(){
             return {
-                degrees: [{
-                    name: '',
-                    level: '',
-                    major: '',
-                    skill: '',
-                    school: '',
-                    year: '',
-                    code: ''
-                }],
-                skills: [{
-                    name: '',
-                    point: '',
-                }],
                 skillWorking: [{
                     name: '',
                     from: '',
@@ -493,21 +480,10 @@
                     name: '',
                     point: 0
                 }],
-                companies: [{
-                    name: '',
-                    position: [{
-                        'from': '',
-                        'to': '',
-                        'name': '',
-                        'work': '',
-                        'address': ''
-                    }]
-                }],
                 assessment: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                 majors: [],
                 schools: [],
                 criteria: '',
-                point_cv: '',
             }
         },
         methods : {
@@ -538,33 +514,7 @@
                     console.log(error)
                 });
             },
-            addDegree(){
-                this.degrees.push({
-                    name: '',
-                    level: '',
-                    major: '',
-                    skill: '',
-                    school: '',
-                    year: '',
-                    code: '',
-                });
-            },
-            delDegree(index){
-                this.degrees.splice(index, 1)
-            },
-            addSkill(){
-                this.skills.push({
-                    name: '',
-                    school: '',
-                    year: '',
-                });
-            },
-            delSkill(){
-                this.skills.pop();
-            },
-     
-     
-
+        
             delProcess(index1, index2){
                 this.skillWorking[index1].process.splice(index2, 1);
             },
