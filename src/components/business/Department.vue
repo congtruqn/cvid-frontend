@@ -58,6 +58,9 @@
                 
             </div>
             <div class="card-footer">
+                <button class="btn btn-danger btn-sm" v-if="department.position.length == 0" @click="deleteDepartment(department._id)">
+                    <i class="fas fa-trash-alt"></i> Xoá phòng ban
+                </button>
                 <button @click="openModalAddPosition(department._id, department.name)" data-bs-toggle="modal" data-bs-target="#addPosition"  class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Thêm vị trí công việc
                 </button>
@@ -348,8 +351,6 @@
                     this.$http.post(`${BASE_URL}/department/new`, {
                         name : this.department.name,
                         id: this.business.username,
-                        // username: this.username,
-                        // password: this.password
                     }).then(res => {
                         Swal.fire({
                             icon: 'success',
@@ -363,6 +364,28 @@
                         console.log(err)
                     })
                 }
+            },
+            deleteDepartment (id){
+                this.$http.post(`${BASE_URL}/department/delete`, {
+                    id: id
+                }).then(res => {
+                    if (res.data){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Xoá phòng ban thành công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                    this.departments.forEach((department, index) => {
+                        if (department._id == id){
+                            this.departments.splice(index, 1)
+                        }
+                    })
+                }).catch(err => {
+                    console.log(err)
+                })
             },
             addPosition(e){
                 e.preventDefault();
@@ -391,9 +414,6 @@
                         department.position.filter(position => {
                             if (position._id == position_id){
                                 this.position = position
-                                //this.position.levels = ['Sơ cấp', 'Trung cấp', 'Đại học']
-                                console.log(this.position)
-                                
                             }
                             
                         })

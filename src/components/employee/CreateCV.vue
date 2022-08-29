@@ -1,5 +1,140 @@
 <template>
-    <div class="container py-5 h-100">
+    <div class="container">
+        <h3 class="text-primary d-flex justify-content-center my-4">TẠO LÝ LỊCH ỨNG VIÊN</h3>
+        <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="m-1">Họ và tên: {{employee.name}}</p>
+                <p class="m-1">Ngày sinh: {{employee.birthdate}}</p>
+                <p class="m-1">Giới tính: {{employee.gender}}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="m-1">Số điện thoại: {{employee.username}}</p>
+                <p class="m-1">Email: {{employee.email}}</p>
+                <p class="m-1">Địa chỉ: {{employee.address+' '+employee.ward+' '+employee.district+' '+employee.province}}</p>
+            </div>
+        </div>
+        <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệp làm việc</h4>
+        <div class="card border-success mt-3" v-for="(a, index) in 2">
+            <div class="card-header border-success">
+                <div class="row g-3 align-items-center">
+                <div class="col-md-8">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">Công ty {{index+1}}</span>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">Từ</span>
+                        <input type="text" class="form-control">
+                        <span class="input-group-text">Đến</span>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="card-body text-success">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Chức danh công việc</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Mô tả công việc</span>
+                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                    </div>
+
+                    <div class="col-md-6" v-for="i in 3">
+                        <div class="card border-success mb-3">
+                            <div class="card-header bg-transparent border-success">Quá trình làm việc</div>
+                            <div class="card-body text-success">
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Từ</span>
+                                    <input type="text" class="form-control">
+                                    <span class="input-group-text">Đến</span>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Công việc</span>
+                                    <input type="text" class="form-control">
+                                    
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Chức danh công việc</span>
+                                    <input type="text" class="form-control">
+                                
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Kết quả</span>
+                                    <select class="form-select" id="inputGroupSelect01">
+                                        <option selected disabled>Chọn...</option>
+                                        <option value="1">Hoàn thành</option>
+                                        <option value="0">Không hoàn thành</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mx-auto d-grid gap-2 mb-3">
+                        <button class="btn border-success"><i class="fas fa-plus fa-5x"></i></button>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">Lý do nghỉ việc</span>
+                        <select class="form-select" id="inputGroupSelect01">
+                            <option selected disabled>Chọn...</option>
+                            <option value="1">Đúng quy định</option>
+                            <option value="0">Tự nghỉ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="button">Thêm công ty</button>
+        </div>
+        <h5 class="text-primary m-2">Kết quả đánh giá</h5>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                Tiêu chí
+                <input type="text" class="form-control-plaintext form-control-sm" value="Điểm" :style="{maxWidth: '3rem'}" readonly/>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(ele, index) in criteria" :key="index">
+                 {{index+1+'. '+ele.name}}
+                <input type="number" class="form-control form-control-sm" :style="{maxWidth: '3.5rem'}"/>
+            </li>
+        </ul>
+        <h4 class="text-primary mt-2 text-decoration-underline">Quá trình học tập</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Từ:</span>
+                            <input type="text" class="form-control bg-white" :value="employee.startyear" readonly>    
+                            <span class="input-group-text">Đến:</span>
+                            <input type="text" class="form-control bg-white" :value="employee.endyear" readonly>
+                        </div>
+                    </div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">Primary card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+
+
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col">
             <div class="card card-registration my-4">
