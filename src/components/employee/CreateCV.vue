@@ -15,12 +15,12 @@
             </div>
         </div>
         <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệp làm việc</h4>
-        <div class="card border-success mt-3" v-for="(a, index) in 2">
-            <div class="card-header border-success">
+        <div class="card border-success mt-3" v-for="(compa, index1) in companies">
+            <div class="card-header border-success position-relative">
                 <div class="row g-3 align-items-center">
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
-                        <span class="input-group-text">Công ty {{index+1}}</span>
+                        <span class="input-group-text">Công ty {{index1+1}}</span>
                         <input type="text" class="form-control">
                     </div>
                 </div>
@@ -33,6 +33,7 @@
                     </div>
                 </div>
                 </div>
+                <button class="btn position-absolute top-0 start-100 translate-middle" @click="delCompany(index1)"><i class="fas fa-times-circle text-danger fa-lg"></i></button>
             </div>
             <div class="card-body text-success">
                 <div class="row">
@@ -49,9 +50,14 @@
                     </div>
                     </div>
 
-                    <div class="col-md-6" v-for="i in 2">
+                    <div class="col-md-6" v-for="(posi, index2) in compa.position">
                         <div class="card border-success mb-3">
-                            <div class="card-header bg-transparent border-success">Quá trình làm việc</div>
+                            <div class="card-header bg-transparent border-success position-relative">
+                                Quá trình làm việc
+                                <button class="btn position-absolute top-0 start-100 translate-middle" @click="delPosition(index1, index2)">
+                                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                                </button>
+                            </div>
                             <div class="card-body text-success">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
@@ -70,6 +76,11 @@
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Địa chỉ</span>
+                                    <input type="text" class="form-control">
+                                
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Kết quả</span>
                                     <select class="form-select" id="inputGroupSelect01">
                                         <option selected disabled>Chọn...</option>
@@ -82,7 +93,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 me-auto d-grid gap-2 mb-3">
-                        <button class="btn border-success"><i class="fas fa-plus fa-5x"></i></button>
+                        <button class="btn border-success" @click="addPosition(index1)"><i class="fas fa-plus fa-5x"></i></button>
                     </div>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Lý do nghỉ việc</span>
@@ -96,7 +107,7 @@
             </div>
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="button">Thêm công ty</button>
+            <button class="btn btn-primary" type="button" @click="addCompany()">Thêm công ty</button>
         </div>
         <h5 class="text-primary m-2">Kết quả đánh giá</h5>
         <ul class="list-group">
@@ -126,11 +137,23 @@
                         <p class="card-text mx-2 my-1">Cấp bậc: {{employee.level}}</p>
                         <p class="card-text mx-2 my-1">Nghành: {{employee.major}}</p>
                         <p class="card-text mx-2 my-1">Chuyên nghành: {{employee.skill}}</p>
+                        <div class="row mb-2">
+                            <label for="colFormLabelSm" class="mx-2 col-sm-3 col-form-label col-form-label-sm">Điểm:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control form-control-sm">
+                            </div>
+                        </div> 
+                        <div class="row mb-2">
+                            <label for="colFormLabelSm" class="mx-2 col-sm-3 col-form-label col-form-label-sm">Xếp loại:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control form-control-sm">
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
           
-            <div class="col-md-6" v-for="degree in degrees">
+            <div class="col-md-6" v-for="(degree, index) in degrees">
                 <div class="card border-primary mb-3">
                     <div class="card-header">
                         <div class="input-group input-group-sm">
@@ -139,10 +162,15 @@
                             <span class="input-group-text">Đến:</span>
                             <input type="text" class="form-control bg-white">
                         </div>
+                        <button class="btn position-absolute top-0 start-100 translate-middle" @click="delDegree(index)">
+                            <i class="fas fa-times-circle text-danger fa-lg"></i>
+                        </button>
                     </div>
                     <div class="card-body">
-                        
-                        <input type="text" class="form-control form-control-sm mb-2" placeholder="Tên trường">
+                        <input type="text" class="form-control form-control-sm mb-2 dropdown-toggle" :id="'dropdownSchool'+index" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="degree.school" placeholder="Tên trường">
+                        <ul class="dropdown-menu w-100 overflow-auto" :aria-labelledby="'dropdownSchool'+index" :style="{maxHeight: '400px'}">
+                            <li v-for="ele in filteredSchool(degree.school)"  @click="degree.school=ele.name"><a class="dropdown-item">{{ele.name}}</a></li>
+                        </ul>
                         <div class="row mb-2">
                             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Cấp bậc:</label>
                             <div class="col-sm-8">
@@ -173,183 +201,164 @@
                                 </select>
                             </div>
                         </div> 
+                        <div class="row mb-2">
+                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Điểm:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control form-control-sm">
+                            </div>
+                        </div> 
+                        <div class="row mb-2">
+                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Xếp loại:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control form-control-sm">
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
             <div class="col-md-6 me-auto d-grid gap-2 mb-3">
-                <button class="btn border-success"><i class="fas fa-plus fa-5x"></i></button>
+                <button class="btn border-success" @click="addDegree"><i class="fas fa-plus fa-5x"></i></button>
             </div>
         </div>
-        
-
-
-
-
-
-
-        <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col">
-            <div class="card card-registration my-4">
-                
-
-                <div class="card-body px-md-5">
+        <h4 class="text-primary mt-2 text-decoration-underline">Các khoá đào tạo ngắn hạn</h4>
+        <div class="card mb-3" v-for="a in 1">
+            <div class="card-body">
+                <button class="btn position-absolute top-0 start-100 translate-middle">
+                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                </button>
                 <div class="row">
-                    <div class="col-xl-6 mt-4 border-end border-2 border-primary">
-                        <h5 class="ms-n2 my-4 d-inline">Bằng cấp</h5>
-                        <button @click="delDegree" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
-                        <button @click="addDegree" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
-
-                        <div v-for="degree in degrees">
-                        <div class="mt-4">
-                            <label class="form-label">Tên bằng cấp</label>
-                            <input type="text" class="form-control" v-model="degree.name">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Từ</label>
+                            <input type="text" class="form-control">
                         </div>
-                        <div class="mt-2">
-                            <label class="form-label">Cấp bậc</label>
-                            <select class="form-control" v-model="degree.level" @change="degree.major=''">
-                                <option value="" disabled>Chọn cấp bậc</option>
-                                <option value="Sơ cấp">Sơ cấp</option>
-                                <option value="Trung cấp">Trung cấp</option>
-                                <option value="Cao đẳng">Cao đẳng</option>
-                                <option value="Đại học">Đại học</option>
-                            </select>
-                        </div>
-                        <div class="mt-2">
-                            <label class="form-label">Nghành</label>
-                            <select class="form-control" v-model="degree.level" @change="degree.skill=''">
-                                <option value="" disabled>Chọn ngành nghề</option>
-                                <option v-for="(major, index) in majorList(degree.level)" :value="major">{{major}}</option>     
-                            </select>
-                        </div>
-                        <div class="mt-2">
-                            <label class="form-label">Chuyên nghành</label>
-                            <select class="form-control" v-model="degree.skill" required>
-                                <option value="" disabled>Chọn chuyên nghành</option>
-                                <option v-for="skill in skillList(degree.level, degree.major)" :value="skill">{{skill}}</option>     
-                            </select>
-                        </div>
-                        <div class="mt-2">
-                            <label class="form-label">Trường</label>
-                            <select class="form-control" v-model="degree.school" required >
-                                <option value="" disabled>Chọn trường</option>
-                                <option v-for="school in schools" :value="school">{{schools}}</option>     
-                            </select>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mt-2 ">
-                                <label class="form-label">Năm tốt nghiệp</label>
-                                <input v-model="degree.year" type="month" class="form-control" required>
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <label class="form-label">Mã số chứng chỉ</label>
-                                <input type="text" class="form-control" v-model="degree.code">
-                            </div>
-                        </div>
-                        <hr class="bg-danger border-2 border-top border-danger"/>    
-                        </div>
-                        
-                    </div>
-                    <div class="col-xl-6 mt-4 border-start border-2 border-primary">
-                        <h5 class="ms-n2 my-4 d-inline">Chứng chỉ</h5>
-                        <button @click="delSkill" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
-                        <button @click="addSkill" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
-                        <div v-for="skill in skills">
-                        <div class="mt-4">
-                            <label class="form-label">Tên chứng chỉ</label>
-                            <input type="text" class="form-control" v-model="skill.name">
-                        </div>
-                        <div class="mt-2">
-                            <label class="form-label">Nơi cấp</label>
-                            <input type="text" class="form-control" v-model="skill.school">
-                        </div>
-                        <div class="mt-2 ">
-                            <label class="form-label">Năm hết hạn</label>
-                            <input type="month" class="form-control" required v-model="skill.year">
-                        </div>
-                        <hr class="bg-danger border-2 border-top border-danger"/>    
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Đến</label>
+                            <input type="text" class="form-control">
                         </div>
                     </div>
-                    <div class="col-xl-6 mt-4 d-inline">
-                        <h5 class="ms-n2 my-4 d-inline">Quá trình công tác</h5>
-                        <button @click="delCompany" class="btn btn-sm btn-danger float-end me-n3 p-1"><i class="fas fa-minus"></i> Xóa</button>
-                        <button @click="addCompany" class="btn btn-sm btn-success float-end me-1 p-1"><i class="fas fa-plus"></i> Thêm</button>
-                    </div>
-                    <div class="col-xl-6"/>
-                    <div class="col-xl-6 mt-4 p-3 border border-primary" v-for="(company, index1) in companies">
-                        <div class="mt-2">
-                            <label class="form-label">Tên công ty</label>
-                            <input type="text" class="form-control" v-model="company.name">
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Chứng chỉ đại được</label>
+                            <input type="text" class="form-control">
                         </div>
-                        <div v-for="(item, index2) in company.position">
-                        <div class="mt-2">
-                            <label class="form-label">Công việc thực hiện</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" v-model="item.work"/>
-                                <button @click="addPosition(index1)" class="btn btn-primary" v-if="index2 == 0">Thêm</button>
-                                <button @click="delPosition(index1,index2)" class="btn btn-danger" v-else>Xóa</button>
-                            </div>
-                        </div>
-                        <div class="mt-2">
-                            <label class="form-label">Chức vụ</label>
-                            <input type="text" class="form-control" v-model="item.name">
-                        </div>
-                        <div class="mt-2">
-                            <label class="form-label">Địa chỉ làm việc</label>
-                            <input type="text" class="form-control" v-model="item.address">
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 mt-2 ">
-                                <label class="form-label">Từ</label>
-                                <input type="month" class="form-control" required v-model="item.from">
-                            </div>
-                            <div class="col-sm-6 mt-2 ">
-                                <label class="form-label">Đến</label>
-                                <input type="month" class="form-control" required v-model="item.to">
-                            </div>  
-                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Đơn vị tổ chức</label>
+                            <input type="text" class="form-control">
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered mt-5"> 
-                <thead>
-                    <tr>
-                        <th colspan=2>
-                        <h5 class="my-4 d-inline">Kết quả đánh giá</h5>
-                        </th>
-                        <th >
-                        Điểm (1-10)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="accordion " id="accordionExample">
-                    <tr v-for="(item, index) in criteria">
-                        <td colspan=2>
-                            <div class="accordion-item">
-                                <h4 class="accordion-header" :id="'flush-heading'+index">
-                                <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse'+index" aria-expanded="true" :aria-controls="'flush-collapse'+index">
-                                    {{index+1}}. {{item.name}}
-                                </button>
-                                </h4>
-                                <div :id="'flush-collapse'+index" class="accordion-collapse collapse show" :aria-labelledby="'flush-heading'+index" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <li v-for="mess in item.detail.split('.,')">{{mess}}</li>
-                                </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td style="width: 110px">
-                            <input type="number" v-model='assessment[index]' @change="changePoint(index)" class="form-control form-control-sm" required/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
             </div>
-            
-            <button type="submit" class="btn btn-primary" @click="handleSubmit">Submit</button>
-        
-            </div>
-            
         </div>
+        <div class="me-auto d-grid gap-2 mb-3">
+            <button class="btn border-success"><i class="fas fa-plus fa-3x"></i></button>
+        </div>
+        <h4 class="text-primary mt-2 text-decoration-underline">Khả năng ngoại ngữ</h4>
+        <table class="table table-bordered border-primary text-center">
+            <thead>
+                <tr>
+                    <th colspan="5"><h5 class="text-primary m-1">Khả năng Tiếng Anh</h5></th>
+                </tr>
+                <tr>
+                    <th scope="col">Kĩ năng</th>
+                    <th scope="col">Giỏi</th>
+                    <th scope="col">Tốt</th>
+                    <th scope="col">Bình thường</th>
+                    <th scope="col">Cơ bản</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Nghe</th>
+                    <td v-for="index in 4"><input type="radio" name="listening" :value="index"></td>
+                    
+                </tr>
+                <tr>
+                    <th scope="row">Nói</th>
+                    <td v-for="index in 4"><input type="radio" name="speaking" :value="index"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Đọc</th>
+                    <td v-for="index in 4"><input type="radio" name="reading" :value="index"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Viết</th>
+                    <td v-for="index in 4"><input type="radio" name="writing" :value="index"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered border-primary text-center">
+            <thead>
+                <tr>
+                    <th colspan="5"><input type="text" class="form-control text-center text-primary h5 fs-5" placeholder="Tên ngoại ngữ"></th>
+                </tr>
+                <tr>
+                    <th scope="col">Kĩ năng</th>
+                    <th scope="col">Giỏi</th>
+                    <th scope="col">Tốt</th>
+                    <th scope="col">Bình thường</th>
+                    <th scope="col">Cơ bản</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Nghe</th>
+                    <td v-for="index in 4"><input type="radio" name="listening" :value="index"></td>
+                    
+                </tr>
+                <tr>
+                    <th scope="row">Nói</th>
+                    <td v-for="index in 4"><input type="radio" name="speaking" :value="index"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Đọc</th>
+                    <td v-for="index in 4"><input type="radio" name="reading" :value="index"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Viết</th>
+                    <td v-for="index in 4"><input type="radio" name="writing" :value="index"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="me-auto d-grid gap-2 mb-3">
+            <button class="btn border-success"><i class="fas fa-plus fa-3x"></i></button>
+        </div>
+
+        <table class="table table-bordered border-primary text-center">
+            <thead>
+                <tr>
+                    <th colspan="5"><h5 class="text-primary m-1">Khả năng Tin học</h5></th>
+                </tr>
+                <tr>
+                    <th scope="col">World</th>
+                    <th scope="col">Giỏi</th>
+                    <th scope="col">Tốt</th>
+                    <th scope="col">Bình thường</th>
+                    <th scope="col">Cơ bản</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Nghe</th>
+                    <td v-for="index in 4"><input type="radio" name="listening" :value="index"></td>
+                    
+                </tr>
+                <tr>
+                    <th scope="row">Nói</th>
+                    <td v-for="index in 4"><input type="radio" name="speaking" :value="index"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Đọc</th>
+                    <td v-for="index in 4"><input type="radio" name="reading" :value="index"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Viết</th>
+                    <td v-for="index in 4"><input type="radio" name="writing" :value="index"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-grid gap-2 col-6 mx-auto my-5">
+            <button type="submit" class="btn btn-primary" @click="handleSubmit">Submit</button>
         </div>
     </div>
 </template>
@@ -428,8 +437,8 @@
                     code: '',
                 });
             },
-            delDegree(){
-                this.degrees.pop();
+            delDegree(index){
+                this.degrees.splice(index, 1)
             },
             addSkill(){
                 this.skills.push({
@@ -453,8 +462,8 @@
                     }]
                 });
             },
-            delCompany(){
-                this.companies.pop();
+            delCompany(index){
+                this.companies.splice(index, 1)
             },
             addPosition(index){
                     this.companies[index].position.push({
@@ -465,8 +474,8 @@
                         'address': ''
                     });
             },
-            delPosition(index, index1){
-                this.companies[index].position.splice(index1, 1);
+            delPosition(index1, index2){
+                this.companies[index1].position.splice(index2, 1);
             },
             skillList(level, major){
                 var result = this.majors.filter(function(item){
@@ -481,6 +490,13 @@
                 return this.majors.filter(function(item){
                     return (item.level == level)
                 }).name
+            },
+            filteredSchool(key) {
+                return this.schools.filter(school => {
+                    if (school.name.toLowerCase().indexOf(key.toLowerCase()) != -1){
+                        return true
+                    }
+                })
             },
             changePoint(index){
                 if (this.assessment[index] > 10){
