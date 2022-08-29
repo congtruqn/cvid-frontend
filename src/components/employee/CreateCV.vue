@@ -49,7 +49,7 @@
                     </div>
                     </div>
 
-                    <div class="col-md-6" v-for="i in 3">
+                    <div class="col-md-6" v-for="i in 2">
                         <div class="card border-success mb-3">
                             <div class="card-header bg-transparent border-success">Quá trình làm việc</div>
                             <div class="card-body text-success">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mx-auto d-grid gap-2 mb-3">
+                    <div class="col-md-6 me-auto d-grid gap-2 mb-3">
                         <button class="btn border-success"><i class="fas fa-plus fa-5x"></i></button>
                     </div>
                     <div class="input-group input-group-sm">
@@ -123,49 +123,60 @@
                     </div>
                     <div class="card-body text-primary">
                         <h5 class="card-title">{{employee.school}}</h5>
-                        <p class="card-text mx-2 my-0">Cấp bậc: {{employee.level}}</p>
-                        <p class="card-text mx-2 my-0">Nghành: {{employee.major}}</p>
-                        <p class="card-text mx-2 my-0">Chuyên nghành: {{employee.skill}}</p>
+                        <p class="card-text mx-2 my-1">Cấp bậc: {{employee.level}}</p>
+                        <p class="card-text mx-2 my-1">Nghành: {{employee.major}}</p>
+                        <p class="card-text mx-2 my-1">Chuyên nghành: {{employee.skill}}</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+          
+            <div class="col-md-6" v-for="degree in degrees">
                 <div class="card border-primary mb-3">
                     <div class="card-header">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text">Từ:</span>
-                            <input type="text" class="form-control bg-white" :value="employee.startyear" readonly>    
+                            <input type="text" class="form-control" >    
                             <span class="input-group-text">Đến:</span>
-                            <input type="text" class="form-control bg-white" :value="employee.endyear" readonly>
+                            <input type="text" class="form-control bg-white">
                         </div>
                     </div>
-                    <div class="card-body text-primary">
-                        <h5 class="card-title">{{employee.school}}</h5>
-                        <p class="card-text mx-2 my-0">Cấp bậc: {{employee.level}}</p>
-                        <p class="card-text mx-2 my-0">Nghành: {{employee.major}}</p>
-                        <p class="card-text mx-2 my-0">Chuyên nghành: {{employee.skill}}</p>
+                    <div class="card-body">
+                        
+                        <input type="text" class="form-control form-control-sm mb-2" placeholder="Tên trường">
+                        <div class="row mb-2">
+                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Cấp bậc:</label>
+                            <div class="col-sm-8">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="degree.level" @change="degree.major=''">
+                                    <option value="" disabled>Chọn cấp bậc</option>
+                                    <option value="Sơ cấp">Sơ cấp</option>
+                                    <option value="Trung cấp">Trung cấp</option>
+                                    <option value="Cao đẳng">Cao đẳng</option>
+                                    <option value="Đại học">Đại học</option>
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="row mb-2">
+                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nghành:</label>
+                            <div class="col-sm-8">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="degree.major" required @change="degree.skill=''">
+                                    <option value="" disabled>Chọn ngành nghề</option>
+                                    <option v-for="major in majors" v-if="major.level == degree.level" :value="major.name">{{major.name}}</option>   
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="row mb-2">
+                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Chuyên nghành:</label>
+                            <div class="col-sm-8">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="" disabled>Chọn chuyên nghành</option>
+                                    <option v-for="skill in skillList(degree.level, degree.major)" :value="skill">{{skill}}</option>   
+                                </select>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card border-primary mb-3">
-                    <div class="card-header">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-text">Từ:</span>
-                            <input type="text" class="form-control bg-white" :value="employee.startyear" readonly>    
-                            <span class="input-group-text">Đến:</span>
-                            <input type="text" class="form-control bg-white" :value="employee.endyear" readonly>
-                        </div>
-                    </div>
-                    <div class="card-body text-primary">
-                        <h5 class="card-title">{{employee.school}}</h5>
-                        <p class="card-text mx-2 my-0">Cấp bậc: {{employee.level}}</p>
-                        <p class="card-text mx-2 my-0">Nghành: {{employee.major}}</p>
-                        <p class="card-text mx-2 my-0">Chuyên nghành: {{employee.skill}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mx-auto d-grid gap-2 mb-3">
+            <div class="col-md-6 me-auto d-grid gap-2 mb-3">
                 <button class="btn border-success"><i class="fas fa-plus fa-5x"></i></button>
             </div>
         </div>
@@ -179,24 +190,7 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col">
             <div class="card card-registration my-4">
-                <div class="card-body px-md-5 text-black">
-                    <h3 class="mb-4 text-uppercase">{{employee.name}}</h3>
-                    <div class="row">
-                        
-                        <div class="col-xl-6">
-                            <p>Cấp bậc: {{employee.level}}</p>
-                            <p>Trường: {{employee.school}}</p>
-                            <p>Ngành: {{employee.major}}</p>
-                            <p>Chuyên nghành: {{employee.skill}}</p>
-                            <p>Chức danh: {{employee.position}}</p>
-                        </div>
-                        <div class="col-xl-6">
-                            <p><i class="bi bi-geo-alt"></i> {{employee.address + ', ' + employee.ward + ', ' + employee.district + ', ' + employee.province}}</p>
-                            <p><i class="bi bi-envelope"></i> {{employee.email}}</p>
-                            <p><i class="bi bi-calendar"></i> {{employee.birthdate}}</p>
-                        </div>
-                    </div>  
-                </div>
+                
 
                 <div class="card-body px-md-5">
                 <div class="row">
@@ -212,7 +206,7 @@
                         </div>
                         <div class="mt-2">
                             <label class="form-label">Cấp bậc</label>
-                            <select class="form-control" v-model="degree.level" required @change="degree.major=''">
+                            <select class="form-control" v-model="degree.level" @change="degree.major=''">
                                 <option value="" disabled>Chọn cấp bậc</option>
                                 <option value="Sơ cấp">Sơ cấp</option>
                                 <option value="Trung cấp">Trung cấp</option>
@@ -222,9 +216,9 @@
                         </div>
                         <div class="mt-2">
                             <label class="form-label">Nghành</label>
-                            <select class="form-control" v-model="degree.major" required @change="degree.skill=''">
+                            <select class="form-control" v-model="degree.level" @change="degree.skill=''">
                                 <option value="" disabled>Chọn ngành nghề</option>
-                                <option v-for="(major, index) in majors" v-if="major.level === degree.level" :key="index" :value="major.name">{{major.name}}</option>     
+                                <option v-for="(major, index) in majorList(degree.level)" :value="major">{{major}}</option>     
                             </select>
                         </div>
                         <div class="mt-2">
@@ -349,7 +343,6 @@
                     </tr>
                 </tbody>
             </table>
-            <span class="">Câu cam kết...</span>
             </div>
             
             <button type="submit" class="btn btn-primary" @click="handleSubmit">Submit</button>
@@ -483,6 +476,11 @@
                     return result[0].skills
                 }           
                 return []
+            },
+            majorList(level) {
+                return this.majors.filter(function(item){
+                    return (item.level == level)
+                }).name
             },
             changePoint(index){
                 if (this.assessment[index] > 10){
