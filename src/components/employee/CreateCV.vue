@@ -122,10 +122,51 @@
                         </div>
                     </div>
                     <div class="card-body text-primary">
-                        <h5 class="card-title">Primary card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h5 class="card-title">{{employee.school}}</h5>
+                        <p class="card-text mx-2 my-0">Cấp bậc: {{employee.level}}</p>
+                        <p class="card-text mx-2 my-0">Nghành: {{employee.major}}</p>
+                        <p class="card-text mx-2 my-0">Chuyên nghành: {{employee.skill}}</p>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Từ:</span>
+                            <input type="text" class="form-control bg-white" :value="employee.startyear" readonly>    
+                            <span class="input-group-text">Đến:</span>
+                            <input type="text" class="form-control bg-white" :value="employee.endyear" readonly>
+                        </div>
+                    </div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">{{employee.school}}</h5>
+                        <p class="card-text mx-2 my-0">Cấp bậc: {{employee.level}}</p>
+                        <p class="card-text mx-2 my-0">Nghành: {{employee.major}}</p>
+                        <p class="card-text mx-2 my-0">Chuyên nghành: {{employee.skill}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Từ:</span>
+                            <input type="text" class="form-control bg-white" :value="employee.startyear" readonly>    
+                            <span class="input-group-text">Đến:</span>
+                            <input type="text" class="form-control bg-white" :value="employee.endyear" readonly>
+                        </div>
+                    </div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">{{employee.school}}</h5>
+                        <p class="card-text mx-2 my-0">Cấp bậc: {{employee.level}}</p>
+                        <p class="card-text mx-2 my-0">Nghành: {{employee.major}}</p>
+                        <p class="card-text mx-2 my-0">Chuyên nghành: {{employee.skill}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mx-auto d-grid gap-2 mb-3">
+                <button class="btn border-success"><i class="fas fa-plus fa-5x"></i></button>
             </div>
         </div>
         

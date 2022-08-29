@@ -15,13 +15,13 @@
                 <div class="card-body p-md-5 text-black">
                     <h3 class="mb-5 text-uppercase">Đăng kí tài khoản CVID</h3>
                     <div class="row">
-                    <div class="col-md-6 mb-2">
-                        <div class="form-floating form-floating-small small m-0 p-0">
-                        <input @click="focus" type="text" class="form-control form-control-sm m-0 " v-model="name" required/>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                        <input @click="focus" type="text" class="form-control" v-model="name" required/>
                         <label class="form-label" for="form3Example1m">Họ và tên</label>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-2">
+                    <div class="col-md-6 mb-3">
                         <div class="form-floating">
                         <input @click="focus" type="text" class="form-control" minlength="9" v-model="username" required />
                         <label class="form-label">Số điện thoại</label>
@@ -30,46 +30,33 @@
                     </div>
 
                     <div class="row">
-                    <div class="col-md-6 mb-2">
+                    <div class="col-md-6 mb-3">
                         <div class="form-floating">
                         <input @click="focus" type="date" class="form-control" v-model="birthdate" required :max="new Date().toISOString().substr(0, 10)"/>
                         <label class="form-label">Ngày, tháng, năm sinh</label>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-2">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <select @click="focus" class="form-control" v-model="gender" required>
+                                <option value="" disabled>Chọn giới tính</option>
+                                <option value='Nam'>Nam</option>
+                                <option value='Nữ'>Nữ</option>
+                                <option value='Khác'>Khác</option>
+                            </select>
+                            <label class="form-label">Giới tính</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
                         <div class="form-floating">
                         <input @click="focus" type="email" class="form-control" v-model="email" required/>
                         <label class="form-label">Email</label>
                         </div>
                     </div>
                     </div>
-                    <div class="mb-2">
-                        <div class="form-check form-check-inline ms-n4">
-                            <label class="form-check-label" for="inlineRadio1">Giới tính:</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                            <label class="form-check-label" for="inlineRadio1">Nam</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Nữ</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                            <label class="form-check-label" for="inlineRadio3">Khác</label>
-                        </div>
-                    </div>
-                    <div class="mb-2 form-floating">
-                        <select @click="focus" class="form-control" v-model="country" required>
-                            <option value="" disabled>Chọn giới tính</option>
-                            <option value='Việt Nam'>Nam</option>
-                            <option value='Việt Nam'>Nữ</option>
-                            <option value='Việt Nam'>Khác</option>
-                        </select>
-                        <label class="form-label">Giới tính</label>
-                    </div>
-                    <div class="mb-2 form-floating">
+
+                    <div class="mb-3 form-floating">
                         <select @click="focus" class="form-control" v-model="level" required>
                             <option value="" disabled>Chọn cấp bậc</option>
                             <option value="Sơ cấp">Sơ cấp</option>
@@ -80,21 +67,21 @@
                         <label class="form-label">Cấp bậc</label>
                     </div>
                     
-                    <div class="mb-2 form-floating">
+                    <div class="mb-3 form-floating">
                         <select @click="focus" class="form-control" v-model="major" required>
                             <option value="" disabled>Chọn ngành nghề</option>
                             <option v-for="(major, index) in majors" v-if="major.level === level" :key="index" :value="major.name">{{major.name}}</option>     
                         </select>
                         <label class="form-label">Nghành nghề</label>
                     </div>
-                    <div class="mb-2 form-floating" v-if="level != 'Sơ cấp'">
+                    <div class="mb-3 form-floating" v-if="level != 'Sơ cấp'">
                         <select @click="focus" class="form-control" v-model="skill" required>
                             <option value="" disabled>Chọn chuyên nghành</option>
                             <option v-for="skill in major_.skills" :value='skill'>{{skill}}</option>
                         </select>
                         <label class="form-label">Chuyên nghành</label>
                     </div>
-                    <div class="mb-2 form-floating">
+                    <div class="mb-3 form-floating">
                         <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="school">
                         <label class="form-label">Trường</label> 
                         <ul class="dropdown-menu w-100 overflow-auto" aria-labelledby="dropdownMenuSchool" :style="{maxHeight: '400px'}">
@@ -102,20 +89,20 @@
                         </ul>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input @click="focus" type="number" class="form-control" required v-model="startyear"/>
                                 <label class="form-label">Năm nhập học:</label>
                             </div>
                         </div>   
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input @click="focus" type="number" class="form-control" required v-model="endyear"/>
                                 <label class="form-label">Năm tốt nghiệp</label>
                             </div>
                         </div>   
                     </div>
-                    <div class="mb-2 form-floating">
+                    <div class="mb-3 form-floating">
                         <div class="dropdown form-floating">
                             <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" v-model="position">
                             <label class="form-label">Chức danh/ Chuyên môn</label>
@@ -124,7 +111,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="mb-2 form-floating">
+                    <div class="mb-3 form-floating">
                         <select @click="focus" class="form-control" v-model="country" required>
                             <option value="" disabled>Chọn quốc gia</option>
                             <option value='Việt Nam'>Việt Nam</option>
@@ -132,7 +119,7 @@
                         <label class="form-label">Quốc gia</label>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <select @click="focus" class="form-control" v-model="province" required>
                                     <option value="" disabled>Chọn tỉnh/thành phố</option>
@@ -141,7 +128,7 @@
                                 <label class="form-label">Tỉnh/Thành phố</label>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <select @click="focus" class="form-control" v-model="district" required>
                                     <option value="" disabled>Chọn quận/huyện</option>
@@ -150,7 +137,7 @@
                                 <label class="form-label">Quận/Huyện</label>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <select @click="focus" class="form-control" v-model="ward" required>
                                     <option value="" disabled>Chọn phường/xã</option>
@@ -159,20 +146,20 @@
                                 <label class="form-label">Phường/Xã</label>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-2 small">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input @click="focus" type="text" class="form-control" v-model="address" required/>
                                 <label class="form-label">Số nhà, tên đường</label>
                             </div>
                         </div>          
-                        <div class="col-md-6 mb-2">
+                        <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input @click="focus" type="password" class="form-control" v-model="password" required minlength="6"/>
                                 <label class="form-label">Mật khẩu</label>
                             </div>
                         </div>   
-                        <div class="col-md-6 mb-2">
-                            <div class="form-floating small">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
                                 <input @click="focus" type="password" class="form-control" v-model="password2" minlength="6" required/>
                                 <label class="form-label">Nhập lại mật khẩu</label>
                             </div>
@@ -180,7 +167,7 @@
                     </div>
                     <div class="d-flex justify-content-end pt-3">
                     <!-- <button type="button" class="btn btn-light btn-lg">Reset all</button> -->
-                    <button type="button" class="btn btn-primary btn-lg ms-2" @click="handleSubmit">Submit form</button>
+                    <button type="button" class="btn btn-primary btn-lg ms-2" @click="handleSubmit">Đăng kí</button>
                     </div>
 
                 </div>
@@ -201,6 +188,7 @@
                 name : "",
                 username : "",
                 birthdate : "",
+                gender: "",
                 level : "",
                 email : "",
                 country: "",
@@ -241,6 +229,7 @@
                     name : this.name,
                     username : this.username,
                     birthdate : this.birthdate,
+                    gender: this.gender,
                     level : this.level,
                     school: this.school,
                     startyear: this.startyear,
