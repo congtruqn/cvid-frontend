@@ -15,74 +15,74 @@
             </div>
         </div>
         <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệp làm việc</h4>
-        <div class="card border-success mt-3" v-for="(compa, index1) in companies">
+        <div class="card border-success mt-3" v-for="(company, index1) in skillWorking">
             <div class="card-header border-success position-relative">
                 <div class="row g-3 align-items-center">
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Công ty {{index1+1}}</span>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" v-model="company.name">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Từ</span>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" v-model="company.from">
                         <span class="input-group-text">Đến</span>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" v-model="company.to">
                     </div>
                 </div>
                 </div>
-                <button class="btn position-absolute top-0 start-100 translate-middle" @click="delCompany(index1)"><i class="fas fa-times-circle text-danger fa-lg"></i></button>
+                <button class="btn position-absolute top-0 start-100 translate-middle" @click="delSkillWorking(index1)"><i class="fas fa-times-circle text-danger fa-lg"></i></button>
             </div>
             <div class="card-body text-success">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Chức danh công việc</span>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" v-model="company.title">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Mô tả công việc</span>
-                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                        <textarea class="form-control" aria-label="With textarea" v-model="company.detail"></textarea>
                     </div>
                     </div>
 
-                    <div class="col-md-6" v-for="(posi, index2) in compa.position">
+                    <div class="col-md-6" v-for="(element, index2) in company.process">
                         <div class="card border-success mb-3">
                             <div class="card-header bg-transparent border-success position-relative">
                                 Quá trình làm việc
-                                <button class="btn position-absolute top-0 start-100 translate-middle" @click="delPosition(index1, index2)">
+                                <button class="btn position-absolute top-0 start-100 translate-middle" @click="delProcess(index1, index2)">
                                     <i class="fas fa-times-circle text-danger fa-lg"></i>
                                 </button>
                             </div>
                             <div class="card-body text-success">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
-                                    <input type="text" class="form-control">
+                                    <input type="month" class="form-control" v-model="element.from">
                                     <span class="input-group-text">Đến</span>
-                                    <input type="text" class="form-control">
+                                    <input type="month" class="form-control" v-model="element.to">
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Công việc</span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="element.work">
                                     
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Chức danh công việc</span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="element.title">
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Địa chỉ</span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="element.address">
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Kết quả</span>
-                                    <select class="form-select" id="inputGroupSelect01">
+                                    <select class="form-select" v-model="element.result">
                                         <option selected disabled>Chọn...</option>
                                         <option value="1">Hoàn thành</option>
                                         <option value="0">Không hoàn thành</option>
@@ -93,11 +93,11 @@
                         </div>
                     </div>
                     <div class="col-md-6 me-auto d-grid gap-2 mb-3">
-                        <button class="btn border-success" @click="addPosition(index1)"><i class="fas fa-plus fa-5x"></i></button>
+                        <button class="btn border-success" @click="addProcess(index1)"><i class="fas fa-plus fa-5x"></i></button>
                     </div>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Lý do nghỉ việc</span>
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select class="form-select" v-model="company.living">
                             <option selected disabled>Chọn...</option>
                             <option value="1">Đúng quy định</option>
                             <option value="0">Tự nghỉ</option>
@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="button" @click="addCompany()">Thêm công ty</button>
+            <button class="btn btn-primary" type="button" @click="addSkillWorking()">Thêm công ty</button>
         </div>
         <h5 class="text-primary m-2">Kết quả đánh giá</h5>
         <ul class="list-group">
@@ -138,13 +138,13 @@
                         <p class="card-text mx-2 my-1">Nghành: {{employee.major}}</p>
                         <p class="card-text mx-2 my-1">Chuyên nghành: {{employee.skill}}</p>
                         <div class="row mb-2">
-                            <label for="colFormLabelSm" class="mx-2 col-sm-3 col-form-label col-form-label-sm">Điểm:</label>
+                            <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Điểm:</label>
                             <div class="col-sm-8">
                                 <input class="form-control form-control-sm">
                             </div>
                         </div> 
                         <div class="row mb-2">
-                            <label for="colFormLabelSm" class="mx-2 col-sm-3 col-form-label col-form-label-sm">Xếp loại:</label>
+                            <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Xếp loại:</label>
                             <div class="col-sm-8">
                                 <input class="form-control form-control-sm">
                             </div>
@@ -153,28 +153,28 @@
                 </div>
             </div>
           
-            <div class="col-md-6" v-for="(degree, index) in degrees">
+            <div class="col-md-6" v-for="(ele, index) in skillEducation">
                 <div class="card border-primary mb-3">
                     <div class="card-header">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text">Từ:</span>
-                            <input type="text" class="form-control" >    
+                            <input type="text" class="form-control" v-model="ele.from">    
                             <span class="input-group-text">Đến:</span>
-                            <input type="text" class="form-control bg-white">
+                            <input type="text" class="form-control bg-white" v-model="ele.to">
                         </div>
-                        <button class="btn position-absolute top-0 start-100 translate-middle" @click="delDegree(index)">
+                        <button class="btn position-absolute top-0 start-100 translate-middle" @click="delSkillEducation(index)">
                             <i class="fas fa-times-circle text-danger fa-lg"></i>
                         </button>
                     </div>
                     <div class="card-body">
-                        <input type="text" class="form-control form-control-sm mb-2 dropdown-toggle" :id="'dropdownSchool'+index" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="degree.school" placeholder="Tên trường">
+                        <input type="text" class="form-control form-control-sm mb-2 dropdown-toggle" :id="'dropdownSchool'+index" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="ele.school" placeholder="Tên trường">
                         <ul class="dropdown-menu w-100 overflow-auto" :aria-labelledby="'dropdownSchool'+index" :style="{maxHeight: '400px'}">
-                            <li v-for="ele in filteredSchool(degree.school)"  @click="degree.school=ele.name"><a class="dropdown-item">{{ele.name}}</a></li>
+                            <li v-for="school in filteredSchool(ele.school)"  @click="ele.school=school.name"><a class="dropdown-item">{{ele.name}}</a></li>
                         </ul>
                         <div class="row mb-2">
-                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Cấp bậc:</label>
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Cấp bậc:</label>
                             <div class="col-sm-8">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="degree.level" @change="degree.major=''">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.level" @change="ele.major=''">
                                     <option value="" disabled>Chọn cấp bậc</option>
                                     <option value="Sơ cấp">Sơ cấp</option>
                                     <option value="Trung cấp">Trung cấp</option>
@@ -184,76 +184,76 @@
                             </div>
                         </div> 
                         <div class="row mb-2">
-                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nghành:</label>
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Nghành:</label>
                             <div class="col-sm-8">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="degree.major" required @change="degree.skill=''">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.major" @change="ele.skill=''">
                                     <option value="" disabled>Chọn ngành nghề</option>
-                                    <option v-for="major in majors" v-if="major.level == degree.level" :value="major.name">{{major.name}}</option>   
+                                    <option v-for="major in majors" v-if="major.level == ele.level" :value="major.name">{{major.name}}</option>   
                                 </select>
                             </div>
                         </div> 
                         <div class="row mb-2">
-                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Chuyên nghành:</label>
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Chuyên nghành:</label>
                             <div class="col-sm-8">
                                 <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <option value="" disabled>Chọn chuyên nghành</option>
-                                    <option v-for="skill in skillList(degree.level, degree.major)" :value="skill">{{skill}}</option>   
+                                    <option v-for="skill in skillList(ele.level, ele.major)" :value="skill">{{skill}}</option>   
                                 </select>
                             </div>
                         </div> 
                         <div class="row mb-2">
-                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Điểm:</label>
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Điểm:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm">
+                                <input class="form-control form-control-sm" v-model="ele.point">
                             </div>
                         </div> 
                         <div class="row mb-2">
-                            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Xếp loại:</label>
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Xếp loại:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm">
+                                <input class="form-control form-control-sm" v-model="ele.rating">
                             </div>
                         </div> 
                     </div>
                 </div>
             </div>
             <div class="col-md-6 me-auto d-grid gap-2 mb-3">
-                <button class="btn border-success" @click="addDegree"><i class="fas fa-plus fa-5x"></i></button>
+                <button class="btn border-success" @click="addSkillEducation"><i class="fas fa-plus fa-5x"></i></button>
             </div>
         </div>
         <h4 class="text-primary mt-2 text-decoration-underline">Các khoá đào tạo ngắn hạn</h4>
-        <div class="card mb-3" v-for="a in 1">
+        <div class="card mb-3" v-for="(ele, index) in shortTraining">
             <div class="card-body">
-                <button class="btn position-absolute top-0 start-100 translate-middle">
+                <button class="btn position-absolute top-0 start-100 translate-middle" @click="delShortTraining(index)">
                     <i class="fas fa-times-circle text-danger fa-lg"></i>
                 </button>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="input-group input-group-sm mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Từ</label>
-                            <input type="text" class="form-control">
+                            <label class="input-group-text">Từ</label>
+                            <input type="text" class="form-control" v-model="ele.from">
                         </div>
                         <div class="input-group input-group-sm mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Đến</label>
-                            <input type="text" class="form-control">
+                            <label class="input-group-text">Đến</label>
+                            <input type="text" class="form-control" v-model="ele.to">
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="input-group input-group-sm mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Chứng chỉ đại được</label>
-                            <input type="text" class="form-control">
+                            <label class="input-group-text">Chứng chỉ đại được</label>
+                            <input type="text" class="form-control" v-model="ele.name">
                         </div>
                         <div class="input-group input-group-sm mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Đơn vị tổ chức</label>
-                            <input type="text" class="form-control">
+                            <label class="input-group-text">Đơn vị tổ chức</label>
+                            <input type="text" class="form-control" v-model="ele.place">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="me-auto d-grid gap-2 mb-3">
-            <button class="btn border-success"><i class="fas fa-plus fa-3x"></i></button>
+            <button class="btn border-success" @click="addShortTraining()"><i class="fas fa-plus fa-3x"></i></button>
         </div>
-        <h4 class="text-primary mt-2 text-decoration-underline">Khả năng ngoại ngữ</h4>
+        <h4 class="text-primary mt-2 text-decoration-underline">Khả năng ngoại ngữ và vi tính</h4>
         <table class="table table-bordered border-primary text-center">
             <thead>
                 <tr>
@@ -270,27 +270,27 @@
             <tbody>
                 <tr>
                     <th scope="row">Nghe</th>
-                    <td v-for="index in 4"><input type="radio" name="listening" :value="index"></td>
+                    <td v-for="point in 4"><input type="radio" v-model="skillEnglish.listening" :value="point"></td>
                     
                 </tr>
                 <tr>
                     <th scope="row">Nói</th>
-                    <td v-for="index in 4"><input type="radio" name="speaking" :value="index"></td>
+                    <td v-for="point in 4"><input type="radio" v-model="skillEnglish.speaking" :value="point"></td>
                 </tr>
                 <tr>
                     <th scope="row">Đọc</th>
-                    <td v-for="index in 4"><input type="radio" name="reading" :value="index"></td>
+                    <td v-for="point in 4"><input type="radio" v-model="skillEnglish.reading" :value="point"></td>
                 </tr>
                 <tr>
                     <th scope="row">Viết</th>
-                    <td v-for="index in 4"><input type="radio" name="writing" :value="index"></td>
+                    <td v-for="point in 4"><input type="radio" v-model="skillEnglish.writing" :value="point"></td>
                 </tr>
             </tbody>
         </table>
-        <table class="table table-bordered border-primary text-center">
+        <table class="table table-bordered border-primary text-center" v-for="skill in skillLanguage">
             <thead>
                 <tr>
-                    <th colspan="5"><input type="text" class="form-control text-center text-primary h5 fs-5" placeholder="Tên ngoại ngữ"></th>
+                    <th colspan="5"><input type="text" class="form-control text-center text-primary h5 fs-5" placeholder="Tên ngoại ngữ" v-model="skill.name"></th>
                 </tr>
                 <tr>
                     <th scope="col">Kĩ năng</th>
@@ -303,34 +303,94 @@
             <tbody>
                 <tr>
                     <th scope="row">Nghe</th>
-                    <td v-for="index in 4"><input type="radio" name="listening" :value="index"></td>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.listening" :value="point"></td>
                     
                 </tr>
                 <tr>
                     <th scope="row">Nói</th>
-                    <td v-for="index in 4"><input type="radio" name="speaking" :value="index"></td>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.speaking" :value="point"></td>
                 </tr>
                 <tr>
                     <th scope="row">Đọc</th>
-                    <td v-for="index in 4"><input type="radio" name="reading" :value="index"></td>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.reading" :value="point"></td>
                 </tr>
                 <tr>
                     <th scope="row">Viết</th>
-                    <td v-for="index in 4"><input type="radio" name="writing" :value="index"></td>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.writing" :value="point"></td>
                 </tr>
             </tbody>
         </table>
         <div class="me-auto d-grid gap-2 mb-3">
-            <button class="btn border-success"><i class="fas fa-plus fa-3x"></i></button>
+            <button class="btn border-success" @click="addSkillLanguage()"><i class="fas fa-plus fa-3x"></i></button>
         </div>
 
         <table class="table table-bordered border-primary text-center">
             <thead>
                 <tr>
-                    <th colspan="5"><h5 class="text-primary m-1">Khả năng Tin học</h5></th>
+                    <th colspan="8"><h5 class="text-primary m-1">Khả năng vi tính</h5></th>
                 </tr>
                 <tr>
+                    <th scope="col">Đánh giá</th>
                     <th scope="col">World</th>
+                    <th scope="col">Excel</th>
+                    <th scope="col">Powerpoint</th>
+                    <th scope="col">Visio</th>
+                    <th scope="col">Puplisher</th>
+                    <th scope="col">Internet</th>
+                    <th scope="col">Phần mền khác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Giỏi</th>
+                    <td><input type="radio" v-model="skillComputer.word" value="1"></td>
+                    <td><input type="radio" v-model="skillComputer.excel" value="1"></td>
+                    <td><input type="radio" v-model="skillComputer.powerpoint" value="1"></td>
+                    <td><input type="radio" v-model="skillComputer.visio" value="1"></td>
+                    <td><input type="radio" v-model="skillComputer.puplisher" value="1"></td>
+                    <td><input type="radio" v-model="skillComputer.internet" value="1"></td>
+                    <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[0]">
+                    
+                </tr>
+                <tr>
+                    <th scope="row">Tốt</th>
+                    <td><input type="radio" v-model="skillComputer.word" value="2"></td>
+                    <td><input type="radio" v-model="skillComputer.excel" value="2"></td>
+                    <td><input type="radio" v-model="skillComputer.powerpoint" value="2"></td>
+                    <td><input type="radio" v-model="skillComputer.visio" value="2"></td>
+                    <td><input type="radio" v-model="skillComputer.puplisher" value="2"></td>
+                    <td><input type="radio" v-model="skillComputer.internet" value="2"></td>
+                    <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[1]">
+                </tr>
+                <tr>
+                    <th scope="row">Bình thường</th>
+                    <td><input type="radio" v-model="skillComputer.word" value="3"></td>
+                    <td><input type="radio" v-model="skillComputer.excel" value="3"></td>
+                    <td><input type="radio" v-model="skillComputer.powerpoint" value="3"></td>
+                    <td><input type="radio" v-model="skillComputer.visio" value="3"></td>
+                    <td><input type="radio" v-model="skillComputer.puplisher" value="3"></td>
+                    <td><input type="radio" v-model="skillComputer.internet" value="3"></td>
+                    <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[2]">
+                </tr>
+                <tr>
+                    <th scope="row">Cơ bản</th>
+                    <td><input type="radio" v-model="skillComputer.word" value="4"></td>
+                    <td><input type="radio" v-model="skillComputer.excel" value="4"></td>
+                    <td><input type="radio" v-model="skillComputer.powerpoint" value="4"></td>
+                    <td><input type="radio" v-model="skillComputer.visio" value="4"></td>
+                    <td><input type="radio" v-model="skillComputer.puplisher" value="4"></td>
+                    <td><input type="radio" v-model="skillComputer.internet" value="4"></td>
+                    <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[3]">
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered border-primary text-center">
+            <thead>
+                <tr>
+                    <th colspan="7"><h5 class="text-primary m-1">Kỹ năng khác</h5></th>
+                </tr>
+                <tr>
+                    <th scope="col">Tên kỹ năng</th>
                     <th scope="col">Giỏi</th>
                     <th scope="col">Tốt</th>
                     <th scope="col">Bình thường</th>
@@ -338,23 +398,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Nghe</th>
-                    <td v-for="index in 4"><input type="radio" name="listening" :value="index"></td>
-                    
+                <tr v-for="skill in skillOther">
+                    <th scope="row"><input type="text" class="form-control form-control-sm" v-model="skill.name"></th>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.point" :value="point"></td>
+
                 </tr>
                 <tr>
-                    <th scope="row">Nói</th>
-                    <td v-for="index in 4"><input type="radio" name="speaking" :value="index"></td>
+                    <th colspan="5">
+                        <div class="me-auto d-grid gap-2">
+                            <button class="btn border-success p-1" @click="addSkillOther()"><i class="fas fa-plus fa-2x"></i></button>
+                        </div>
+                    </th>
                 </tr>
-                <tr>
-                    <th scope="row">Đọc</th>
-                    <td v-for="index in 4"><input type="radio" name="reading" :value="index"></td>
-                </tr>
-                <tr>
-                    <th scope="row">Viết</th>
-                    <td v-for="index in 4"><input type="radio" name="writing" :value="index"></td>
-                </tr>
+                
             </tbody>
         </table>
         <div class="d-grid gap-2 col-6 mx-auto my-5">
@@ -378,8 +434,64 @@
                 }],
                 skills: [{
                     name: '',
+                    point: '',
+                }],
+                skillWorking: [{
+                    name: '',
+                    from: '',
+                    to: '',
+                    title: '',
+                    detail: '',
+                    living: '',
+                    process: [{
+                        from: '',
+                        to: '',
+                        work: '',
+                        title: '',
+                        address: '',
+                        result: ''
+                    }]
+
+                }],
+                skillEducation: [{
                     school: '',
-                    year: '',
+                    level: '',
+                    major: '',
+                    skill: '',
+                    point: '',
+                    rating: ''
+                }],
+                shortTraining: [{
+                    from: '',
+                    to: '',
+                    name: '',
+                    place: ''
+                }],
+                skillEnglish: {
+                    listening: 0,
+                    reading: 0,
+                    writing: 0,
+                    speaking: 0,
+                },
+                skillLanguage: [{
+                    name: '',
+                    listening: 0,
+                    reading: 0,
+                    writing: 0,
+                    speaking: 0,
+                }],
+                skillComputer: {
+                    world: 0,
+                    excel: 0,
+                    powerpoint: 0,
+                    visio: 0,
+                    puplisher: 0,
+                    internet: 0,
+                    other: ['1', '2', '3', '4'],
+                },
+                skillOther: [{
+                    name: '',
+                    point: 0
                 }],
                 companies: [{
                     name: '',
@@ -450,32 +562,82 @@
             delSkill(){
                 this.skills.pop();
             },
-            addCompany(){
-                this.companies.push({
+     
+     
+
+            delProcess(index1, index2){
+                this.skillWorking[index1].process.splice(index2, 1);
+            },
+
+            addProcess(index){
+                this.skillWorking[index].process.push({
+                    from: '',
+                    to: '',
+                    work: '',
+                    title: '',
+                    address: '',
+                    result: ''
+                })
+            },
+            delSkillWorking(index){
+                this.skillWorking.splice(index, 1);
+            },
+            addSkillWorking(){
+                this.skillWorking.push({
                     name: '',
-                    position: [{
-                        'from': '',
-                        'to': '',
-                        'name': '',
-                        'position': '',
-                        'address': ''
+                    from: '',
+                    to: '',
+                    title: '',
+                    detail: '',
+                    living: '',
+                    process: [{
+                        from: '',
+                        to: '',
+                        work: '',
+                        title: '',
+                        address: '',
+                        result: ''
                     }]
-                });
+                })
             },
-            delCompany(index){
-                this.companies.splice(index, 1)
+            delSkillEducation(index){
+                this.skillEducation.splice(index, 1);
             },
-            addPosition(index){
-                    this.companies[index].position.push({
-                        'from': '',
-                        'to': '',
-                        'name': '',
-                        'position': '',
-                        'address': ''
-                    });
+            addSkillEducation(){
+                this.skillEducation.push({
+                    school: '',
+                    level: '',
+                    major: '',
+                    skill: '',
+                    point: '',
+                    rating: ''
+                })
             },
-            delPosition(index1, index2){
-                this.companies[index1].position.splice(index2, 1);
+            delShortTraining(index){
+                this.shortTraining.splice(index, 1)
+            },
+            addShortTraining(){
+                this.shortTraining.push({
+                    from: '',
+                    to: '',
+                    name: '',
+                    place: ''
+                })
+            },
+            addSkillLanguage(){
+                this.skillLanguage.push({
+                    'name': '',
+                    'listening': 0,
+                    'reading': 0,
+                    'writing': 0,
+                    'speaking': 0
+                })
+            },
+            addSkillOther(){
+                this.skillOther.push({
+                    'name': '',
+                    'point': 0
+                })
             },
             skillList(level, major){
                 var result = this.majors.filter(function(item){
