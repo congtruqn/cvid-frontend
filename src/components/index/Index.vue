@@ -59,20 +59,28 @@
             </div>
             <div class="card-body">
                 <form class="row g-3" v-on:submit.prevent>
-                    <div class="col-12 col-md-5">
+                    <div class="col-12 col-md-6">
                         <label for="inputState" class="form-label">Chuyên nghành</label>
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly />
+                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly v-model="skill"/>
+                        <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
+                            <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
+                            <li v-for="item in filteredSkill()"  @click="skill=item"><a class="dropdown-item">{{item}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="inputSchool" class="form-label">Môi trường làm việc</label>
+                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false" />
                         
                     </div>
-                    <div class="col-9 col-md-5">
-                        <label for="inputSchool" class="form-label">Công việc mong muốn</label>
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false" />
-                        
+                    <div class="col-12 col-md-4">
+                        <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng</label>
+                        <input type="number" class="form-control" id="inputPoint"  max="10" min="0">
                     </div>
-                    <div class="col-3 col-md-2">
+                    <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Địa điểm</label>
                         <input type="number" class="form-control" id="inputPoint"  max="10" min="0">
                     </div>
+                    
                     <!-- <div class="col-12">
                         <label for="inputAddress2" class="form-label">Address 2</label>
                         <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
@@ -93,7 +101,7 @@
                         <input type="text" class="form-control" id="inputZip">
                     </div> -->
                     <div class="col-12 text-center">
-                        <button type="button" class="btn btn-lg btn-primary">Tìm việc</button>
+                        <button type="button" class="btn btn-lg btn-primary" @click="findJob()">Tìm việc</button>
                     </div>
                 </form>
             </div>
@@ -141,22 +149,60 @@
                 employee: JSON.parse(localStorage.getItem('employee')),
                 position: [],
                 provinces: '',
+                skill: '',
+                searchSkill: '',
+                majors: [],
+            }
+        },
+        methods: {
+            filteredSkill(){
+                var skills = new Set([])
+                this.majors.forEach(element => {
+                    element.skills.forEach(skill => {
+                        if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1)
+                        {
+                            skills.add(skill)
+                        }
+                    })
+                });
+                return skills
+            },
+            findJob(){
+                this.position = []
+                this.$http.post(`${BASE_URL}/employee/findPosition`,{
+                    major: this.employee.major,
+                    skill: this.skill
+                })
+                .then(res => {
+                    res.data.forEach(item => {
+                        item.position.forEach(position => {
+                            if (position.skills.includes(this.skill) && position.status == 1) {
+                                this.position.push(position)
+                            }
+                        })
+                    })
+                })
             }
         },
         created(){
-            this.$http.post(`${BASE_URL}/employee/findPosition`,{
-                major: this.employee.major,
-                skill: this.employee.skill
+            this.skill = this.employee.skill
+            // this.$http.post(`${BASE_URL}/employee/findPosition`,{
+            //     major: this.employee.major,
+            //     skill: this.employee.skill
+            // })
+            // .then(res => {
+            //     res.data.forEach(item => {
+            //         item.position.forEach(position => {
+            //             if ((position.skills.includes(this.employee.skill) || position.majors.includes(this.employee.major)) && position.status == 1) {
+            //                 this.position.push(position)
+            //             }
+            //         })
+            //     })
+            // }) 
+            this.$http.get(`${BASE_URL}/major/list`)
+            .then(response => {
+                this.majors = response.data
             })
-            .then(res => {
-                res.data.forEach(item => {
-                    item.position.forEach(position => {
-                        if ((position.skills.includes(this.employee.skill) || position.majors.includes(this.employee.major)) && position.status == 1) {
-                            this.position.push(position)
-                        }
-                    })
-                })
-            }) 
             // this.$http.get(`${BASE_URL}/province/list`)
             // .then(response => {
             //     this.provinces = response.data;
