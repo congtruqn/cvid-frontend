@@ -331,9 +331,8 @@
                 </tr>
                 <tr>
                     <th scope="col">Đánh giá</th>
-                    <th scope="col">World</th>
+                    <th scope="col">Word</th>
                     <th scope="col">Excel</th>
-                    <th scope="col">Powerpoint</th>
                     <th scope="col">Phần mền khác</th>
                 </tr>
             </thead>
@@ -342,7 +341,6 @@
                     <th scope="row">Giỏi</th>
                     <td><input type="radio" v-model="skillComputer.word" value="1"></td>
                     <td><input type="radio" v-model="skillComputer.excel" value="1"></td>
-                    <td><input type="radio" v-model="skillComputer.powerpoint" value="1"></td>
                     <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[0]">
                     
                 </tr>
@@ -350,21 +348,18 @@
                     <th scope="row">Tốt</th>
                     <td><input type="radio" v-model="skillComputer.word" value="2"></td>
                     <td><input type="radio" v-model="skillComputer.excel" value="2"></td>
-                    <td><input type="radio" v-model="skillComputer.powerpoint" value="2"></td>
                     <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[1]">
                 </tr>
                 <tr>
                     <th scope="row">Bình thường</th>
                     <td><input type="radio" v-model="skillComputer.word" value="3"></td>
                     <td><input type="radio" v-model="skillComputer.excel" value="3"></td>
-                    <td><input type="radio" v-model="skillComputer.powerpoint" value="3"></td>
                     <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[2]">
                 </tr>
                 <tr>
                     <th scope="row">Cơ bản</th>
                     <td><input type="radio" v-model="skillComputer.word" value="4"></td>
                     <td><input type="radio" v-model="skillComputer.excel" value="4"></td>
-                    <td><input type="radio" v-model="skillComputer.powerpoint" value="4"></td>
                     <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[3]">
                 </tr>
             </tbody>
@@ -454,9 +449,8 @@
                     speaking: 0,
                 }],
                 skillComputer: {
-                    world: 0,
+                    word: 0,
                     excel: 0,
-                    powerpoint: 0,
                     other: ['', '', '', ''],
                 },
                 skillOther: [{

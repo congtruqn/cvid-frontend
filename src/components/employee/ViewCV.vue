@@ -1,106 +1,368 @@
 <template>
-    <body>
-        <div class="wrapper mt-lg-5">
-            <div class="sidebar-wrapper">
-                <div class="profile-container">
-                    <img class="profile" src="../../assets/images/user.png" alt="" />
-                    <h1 class="name">{{cv.name}}</h1>
-                    <h3 class="tagline">{{cv.position}}</h3>
-                </div><!--//profile-container-->
-                
-                <div class="contact-container container-block">
-                    <ul class="list-unstyled contact-list">
-
-                        <li class=""><i class="fas fa-calendar"></i> {{new Date(cv.birthdate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'})}}</li>
-                        <li class=""><i class="fas fa-globe"></i><a> Quốc tịch: {{cv.country}}</a></li>
-                        <li class=""><i class="bi bi-geo-alt"></i><a> {{cv.address+', '+cv.ward+', '+cv.district +', '+cv.province}}</a></li>
-                        <!-- <li class=""><i class=""></i><a>Cấp bậc: {{cv.level}}</a></li>
-                        <li class=""><i class=""></i><a >{{cv.skill}}</a></li> -->
-                    </ul>
+  	<div class="container">
+		<h3 class="text-primary d-flex justify-content-center my-4">LÝ LỊCH ỨNG VIÊN</h3>
+        <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="m-1">Họ và tên: {{employee.name}}</p>
+                <p class="m-1">Ngày sinh: {{employee.birthdate}}</p>
+                <p class="m-1">Giới tính: {{employee.gender}}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="m-1">Số điện thoại: {{employee.username}}</p>
+                <p class="m-1">Email: {{employee.email}}</p>
+                <p class="m-1">Địa chỉ: {{employee.address+' '+employee.ward+' '+employee.district+' '+employee.province}}</p>
+            </div>
+        </div>
+		<h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệp làm việc</h4>
+        <div class="card border-success mt-3" v-for="(company, index1) in employee.skillWorking">
+            <div class="card-header border-success position-relative">
+                <div class="row g-3 align-items-center">
+                <div class="col-md-8">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">Công ty {{index1+1}}</span>
+                        <input type="text" class="form-control" v-model="company.name">
+                    </div>
                 </div>
-                <div class="education-container container-block">
-                    <h2 class="container-block-title">Học vấn</h2>
-                    <div class="item">
-                        <h4 class="degree">{{cv.school}}</h4>
-                        <h5 class="meta my-2">Nghành: {{cv.major}}</h5>
-                        <h5 class="meta">Chuyên nghành: {{cv.skill}}</h5>
-                        <h5 class="meta">{{cv.startyear}} - {{cv.endyear}}</h5>
+                <div class="col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">Từ</span>
+                        <input type="month" class="form-control" v-model="company.from">
+                        <span class="input-group-text">Đến</span>
+                        <input type="month" class="form-control" v-model="company.to">
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="card-body text-success">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Chức danh công việc</span>
+                            <input type="text" class="form-control" v-model="company.title">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Mô tả công việc</span>
+                        <textarea class="form-control" aria-label="With textarea" v-model="company.detail"></textarea>
+                    </div>
+                    </div>
+
+                    <div class="col-md-6" v-for="(element, index2) in company.process">
+                        <div class="card border-success mb-3">
+                            <div class="card-header bg-transparent border-success position-relative">
+                                Quá trình làm việc
+                            </div>
+                            <div class="card-body text-success">
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Từ</span>
+                                    <input type="month" class="form-control" v-model="element.from">
+                                    <span class="input-group-text">Đến</span>
+                                    <input type="month" class="form-control" v-model="element.to">
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Công việc</span>
+                                    <input type="text" class="form-control" v-model="element.work">
+                                    
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Chức danh công việc</span>
+                                    <input type="text" class="form-control" v-model="element.title">
+                                
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Địa chỉ</span>
+                                    <input type="text" class="form-control" v-model="element.address">
+                                
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Kết quả</span>
+                                    <select class="form-select" v-model="element.result">
+                                        <option value="" disabled>Chọn...</option>
+                                        <option value="1">Hoàn thành</option>
+                                        <option value="0">Không hoàn thành</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">Lý do nghỉ việc</span>
+                        <select class="form-select" v-model="company.leaving">
+                            <option value="" disabled>Chọn...</option>
+                            <option value="1">Đúng quy định</option>
+                            <option value="0">Tự nghỉ</option>
+                        </select>
                     </div>
                 </div>
             </div>
-            
-            <div class="main-wrapper">
-                <section class="section experiences-section" v-if="cv.degrees.length">
-                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Bằng cấp bổ sung</h2>   
-                    <div class="item" v-for="degree in cv.degrees">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">Tên bằng cấp: {{degree.name}}</h3>
-                                <div class="time">{{degree.year}}</div>
-                            </div><!--//upper-row-->
-                            <div class="company">Mã số chứng chỉ: {{degree.code}}</div>
-                        </div><!--//meta-->
-                        <div class="details">
-                            <p class="m-2">Cấp bậc: {{degree.level}}</p>  
-                            <p class="m-2">Trường: {{degree.school}}</p>  
-                            <p class="m-2">Nghành: {{degree.major}}</p>
-                            <p class="m-2">Chuyên nghành: {{degree.skill}}</p>
-                        </div><!--//details-->
-                    </div><!--//item-->
-                </section>
-
-                <section class="section experiences-section" v-if="cv.skills.length">
-                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Chứng chỉ</h2>   
-                    <div class="item" v-for="skill in cv.skills">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">Tên chứng chỉ: {{skill.name}}</h3>
-                            </div><!--//upper-row-->
-                            <div class="company">Nơi cấp: {{skill.school}}</div>
-                            <div class="company">Ngày hết hạn: {{skill.year}}</div>
-                        </div><!--//meta-->
-                    </div><!--//item-->
-                </section>
-                <section class="section experiences-section" v-if="cv.companies.length">
-                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Quá trình công tác</h2>  
-                    <h6 class="section-title text-danger">Kinh nghiệm làm việc: {{getExperience}} năm</h6> 
-                    <div class="item" v-for="(companie, count1) in cv.companies" :key="count1">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">{{companie.name}}</h3>
+        </div>
+        <h5 class="text-primary m-2">Kết quả đánh giá</h5>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                Tiêu chí
+                <input type="text" class="form-control-plaintext form-control-sm" value="Điểm" :style="{maxWidth: '3rem'}" readonly/>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(ele, index) in criteria" :key="index">
+                 {{index+1+'. '+ele.name}}
+                <input type="number" class="form-control form-control-sm" :style="{maxWidth: '3.5rem'}" v-model="employee.assessment[index]"/>
+            </li>
+        </ul>
+		<h4 class="text-primary mt-2 text-decoration-underline">Quá trình học tập</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Từ:</span>
+                            <input type="text" class="form-control bg-white" :value="employee.startyear" readonly>    
+                            <span class="input-group-text">Đến:</span>
+                            <input type="text" class="form-control bg-white" :value="employee.endyear" readonly>
+                        </div>
+                    </div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">{{employee.school}}</h5>
+                        <p class="card-text mx-2 my-1">Cấp bậc: {{employee.level}}</p>
+                        <p class="card-text mx-2 my-1">Nghành: {{employee.major}}</p>
+                        <p class="card-text mx-2 my-1">Chuyên nghành: {{employee.skill}}</p>
+                        <div class="row mb-2">
+                            <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Điểm:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control form-control-sm">
                             </div>
-                        </div><!--//meta-->
-                        <div class="details" v-for="position in companie.position">
-                            <div class="upper-row">
-                              <span class="m-2">{{position.work}}</span>
-                              <div class="time">Từ {{position.from}} đến {{position.to}}</div>
-                            </div> 
-                            <p class="m-2">{{position.name}}</p>
-                            <p class="m-2">{{position.address}}</p>
-                        </div><!--//details-->
-                        
-                    </div><!--//item-->
-                    <!--//skills-section-->
-                </section>
-                <section class="skills-section section mt-4">
-                  <div class="skillset">     
-                      <h2 class="section-title">Kết quả đánh giá</h2> 
-                      <div class="item" v-for="(item, count2) in criteria" :key="count2">
-                          <h3 class="level-title me-2">{{item.name}}</h3>
-                          <div class="progress level-bar">
-                              <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: cv.assessment[count2]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100">{{cv.assessment[count2]}}</div>
-                          </div>                               
-                      </div><!--//item-->
-                  </div>  
-                </section>
-                
+                        </div> 
+                        <div class="row mb-2">
+                            <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Xếp loại:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control form-control-sm">
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-md-6" v-for="(ele, index) in employee.skillEducation">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Từ:</span>
+                            <input type="month" class="form-control" v-model="ele.from">    
+                            <span class="input-group-text">Đến:</span>
+                            <input type="month" class="form-control bg-white" v-model="ele.to">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="text" class="form-control form-control-sm mb-2 dropdown-toggle" :id="'dropdownSchool'+index" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="ele.school" placeholder="Tên trường">
+                        <ul class="dropdown-menu w-100 overflow-auto" :aria-labelledby="'dropdownSchool'+index" :style="{maxHeight: '400px'}">
+                            <li v-for="school in filteredSchool(ele.school)"  @click="ele.school=school.name"><a class="dropdown-item">{{school.name}}</a></li>
+                        </ul>
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Cấp bậc:</label>
+                            <div class="col-sm-8">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.level" @change="ele.major=''">
+                                    <option value="" disabled>Chọn cấp bậc</option>
+                                    <option value="Sơ cấp">Sơ cấp</option>
+                                    <option value="Trung cấp">Trung cấp</option>
+                                    <option value="Cao đẳng">Cao đẳng</option>
+                                    <option value="Đại học">Đại học</option>
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Nghành:</label>
+                            <div class="col-sm-8">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.major" @change="ele.skill=''">
+                                    <option value="" disabled>Chọn ngành nghề</option>
+                                    <option v-for="major in majors" v-if="major.level == ele.level" :value="major.name">{{major.name}}</option>   
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Chuyên nghành:</label>
+                            <div class="col-sm-8">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="" disabled>Chọn chuyên nghành</option>
+                                    <option v-for="skill in skillList(ele.level, ele.major)" :value="skill">{{skill}}</option>   
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Điểm:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control form-control-sm" v-model="ele.point">
+                            </div>
+                        </div> 
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label col-form-label-sm">Xếp loại:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control form-control-sm" v-model="ele.rating">
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="text-primary mt-2 text-decoration-underline">Các khoá đào tạo ngắn hạn</h4>
+        <div class="card mb-3" v-for="(ele, index) in employee.shortTraining">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text">Từ</label>
+                            <input type="month" class="form-control" v-model="ele.from">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text">Đến</label>
+                            <input type="month" class="form-control" v-model="ele.to">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text">Chứng chỉ đại được</label>
+                            <input type="text" class="form-control" v-model="ele.name">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text">Đơn vị tổ chức</label>
+                            <input type="text" class="form-control" v-model="ele.place">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="text-primary mt-2 text-decoration-underline">Khả năng ngoại ngữ và vi tính</h4>
+        <table class="table table-bordered border-primary text-center">
+            <thead>
+                <tr>
+                    <th colspan="5"><h5 class="text-primary m-1">Khả năng Tiếng Anh</h5></th>
+                </tr>
+                <tr>
+                    <th scope="col">Kĩ năng</th>
+                    <th scope="col">Giỏi</th>
+                    <th scope="col">Tốt</th>
+                    <th scope="col">Bình thường</th>
+                    <th scope="col">Cơ bản</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Nghe</th>
+                    <td v-for="point in 4"><input type="radio" v-model="employee.skillEnglish.listening" :value="point"></td>
                     
-              
+                </tr>
+                <tr>
+                    <th scope="row">Nói</th>
+                    <td v-for="point in 4"><input type="radio" v-model="employee.skillEnglish.speaking" :value="point"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Đọc</th>
+                    <td v-for="point in 4"><input type="radio" v-model="employee.skillEnglish.reading" :value="point"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Viết</th>
+                    <td v-for="point in 4"><input type="radio" v-model="employee.skillEnglish.writing" :value="point"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered border-primary text-center" v-for="skill in employee.skillLanguage">
+            <thead>
+                <tr>
+                    <th colspan="5"><input type="text" class="form-control text-center text-primary h5 fs-5" placeholder="Tên ngoại ngữ" v-model="skill.name"></th>
+                </tr>
+                <tr>
+                    <th scope="col">Kĩ năng</th>
+                    <th scope="col">Giỏi</th>
+                    <th scope="col">Tốt</th>
+                    <th scope="col">Bình thường</th>
+                    <th scope="col">Cơ bản</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Nghe</th>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.listening" :value="point"></td>
+                    
+                </tr>
+                <tr>
+                    <th scope="row">Nói</th>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.speaking" :value="point"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Đọc</th>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.reading" :value="point"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Viết</th>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.writing" :value="point"></td>
+                </tr>
+            </tbody>
+        </table>
+		<table class="table table-bordered border-primary text-center">
+            <thead>
+                <tr>
+                    <th colspan="8"><h5 class="text-primary m-1">Khả năng vi tính</h5></th>
+                </tr>
+                <tr>
+                    <th scope="col">Đánh giá</th>
+                    <th scope="col">World</th>
+                    <th scope="col">Excel</th>
+                    <th scope="col">Phần mền khác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Giỏi</th>
+                    <td><input type="radio" v-model="employee.skillComputer.word" value="1"></td>
+                    <td><input type="radio" v-model="employee.skillComputer.excel" value="1"></td>
+                    <input type="text" class="form-control form-control-sm" v-model="employee.skillComputer.other">
+                    
+                </tr>
+                <tr>
+                    <th scope="row">Tốt</th>
+                    <td><input type="radio" v-model="employee.skillComputer.word" value="2"></td>
+                    <td><input type="radio" v-model="employee.skillComputer.excel" value="2"></td>
+                    <input type="text" class="form-control form-control-sm" v-model="employee.skillComputer.other">
+                </tr>
+                <tr>
+                    <th scope="row">Bình thường</th>
+                    <td><input type="radio" v-model="employee.skillComputer.word" value="3"></td>
+                    <td><input type="radio" v-model="employee.skillComputer.excel" value="3"></td>
+                    <input type="text" class="form-control form-control-sm" v-model="employee.skillComputer.other">
+                </tr>
+                <tr>
+                    <th scope="row">Cơ bản</th>
+                    <td><input type="radio" v-model="employee.skillComputer.word" value="4"></td>
+                    <td><input type="radio" v-model="employee.skillComputer.excel" value="4"></td>
+                    <input type="text" class="form-control form-control-sm" v-model="employee.skillComputer.other">
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered border-primary text-center">
+            <thead>
+                <tr>
+                    <th colspan="7"><h5 class="text-primary m-1">Kỹ năng khác</h5></th>
+                </tr>
+                <tr>
+                    <th scope="col">Tên kỹ năng</th>
+                    <th scope="col">Giỏi</th>
+                    <th scope="col">Tốt</th>
+                    <th scope="col">Bình thường</th>
+                    <th scope="col">Cơ bản</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="skill in employee.skillOther">
+                    <th scope="row"><input type="text" class="form-control form-control-sm" v-model="skill.name"></th>
+                    <td v-for="point in 4"><input type="radio" v-model="skill.point" :value="point"></td>
+
+                </tr>
                 
-                
-            </div><!--//main-body-->
-        </div>            
-    </body>
+            </tbody>
+        </table>
+  
+  	</div>
+
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config')
@@ -108,13 +370,15 @@
         data(){
             return {
                 cv: '',
-                criteria: ''
+                criteria: '',
+				employee: ''
             }
         },
         created(){
             this.$http.get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
             .then(res => {
                 this.cv = res.data;
+				this.employee = res.data;
             }) 
 
             this.$http.get(`${BASE_URL}/criteria/getall`)
@@ -137,286 +401,3 @@
         },
     }
 </script>
-<style scoped>
-    body {
-        font-family: "Roboto", sans-serif;
-        color: #545E6C;
-        background: #f5f5f5;
-        font-size: 14px;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      
-      h1, h2, h3, h4, h5, h6 {
-        font-weight: 700;
-        color: white;
-      }
-      
-      a {
-        color: #3d884d;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-        color: #25532f;
-        -webkit-transition: all 0.4s ease-in-out;
-        -moz-transition: all 0.4s ease-in-out;
-        -ms-transition: all 0.4s ease-in-out;
-        -o-transition: all 0.4s ease-in-out;
-      }
-      a:focus {
-        text-decoration: none;
-      }
-      
-      p {
-        line-height: 1.5;
-      }
-      
-      .wrapper {
-        background: #5BB66F;
-        max-width: 960px;
-        margin: 0 auto;
-        position: relative;
-        -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      
-      .sidebar-wrapper {
-        background: #5BB66F;
-        position: absolute;
-        right: 0;
-        width: 240px;
-        height: 100%;
-        min-height: 800px;
-        color: #fff;
-      }
-      .sidebar-wrapper a {
-        color: #fff;
-      }
-      .sidebar-wrapper .profile-container {
-        padding: 30px;
-        background: rgba(0, 0, 0, 0.2);
-        text-align: center;
-        color: #fff;
-      }
-      .sidebar-wrapper .name {
-        font-size: 32px;
-        font-weight: 900;
-        margin-top: 0;
-        margin-bottom: 10px;
-      }
-      .sidebar-wrapper .tagline {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 16px;
-        font-weight: 400;
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .profile {
-        margin-bottom: 15px;
-      }
-      .sidebar-wrapper .contact-list .svg-inline--fa {
-        margin-right: 5px;
-        font-size: 18px;
-        vertical-align: middle;
-      }
-      .sidebar-wrapper .contact-list li {
-        margin-bottom: 15px;
-      }
-      .sidebar-wrapper .contact-list li:last-child {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .contact-list .email .svg-inline--fa {
-        font-size: 14px;
-      }
-      .sidebar-wrapper .container-block {
-        padding: 30px;
-      }
-      .sidebar-wrapper .container-block-title {
-        text-transform: uppercase;
-        font-size: 16px;
-        font-weight: 700;
-        margin-top: 0;
-        margin-bottom: 15px;
-      }
-      .sidebar-wrapper .degree {
-        font-size: 14px;
-        margin-top: 0;
-        margin-bottom: 5px;
-      }
-      .sidebar-wrapper .education-container .item {
-        margin-bottom: 15px;
-      }
-      .sidebar-wrapper .education-container .item:last-child {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .education-container .meta {
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: 400;
-        margin-bottom: 0px;
-        margin-top: 0;
-        font-size: 14px;
-      }
-      .sidebar-wrapper .education-container .time {
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: 500;
-        margin-bottom: 0px;
-      }
-      .sidebar-wrapper .languages-container .lang-desc {
-        color: rgba(255, 255, 255, 0.6);
-      }
-      .sidebar-wrapper .languages-list {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .languages-list li {
-        margin-bottom: 10px;
-      }
-      .sidebar-wrapper .languages-list li:last-child {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .interests-list {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .interests-list li {
-        margin-bottom: 10px;
-      }
-      .sidebar-wrapper .interests-list li:last-child {
-        margin-bottom: 0;
-      }
-      
-      .main-wrapper {
-        background: #fff;
-        padding: 60px;
-        padding-right: 300px;
-      }
-      .main-wrapper .section-title {
-        text-transform: uppercase;
-        font-size: 20px;
-        font-weight: 500;
-        color: #3d884d;
-        position: relative;
-        margin-top: 0;
-        margin-bottom: 20px;
-      }
-      .main-wrapper .section-title .icon-holder {
-        width: 30px;
-        height: 30px;
-        margin-right: 8px;
-        display: inline-block;
-        color: #fff;
-        -webkit-border-radius: 50%;
-        -moz-border-radius: 50%;
-        -ms-border-radius: 50%;
-        -o-border-radius: 50%;
-        border-radius: 50%;
-        -moz-background-clip: padding;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;
-        background: #3d884d;
-        text-align: center;
-        font-size: 16px;
-        position: relative;
-        top: -4px;
-        padding-top: 5px;
-      }
-      .main-wrapper .section-title .icon-holder .svg-inline--fa {
-        font-size: 14px;
-        margin-top: 6px;
-      }
-      .main-wrapper .section {
-        margin-bottom: 60px;
-      }
-      .main-wrapper .experiences-section .item {
-        margin-bottom: 20px;
-      }
-      .main-wrapper .upper-row {
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 2px;
-      }
-      .main-wrapper .job-title {
-        color: #3F4650;
-        font-size: 16px;
-        margin-top: 0;
-        margin-bottom: 0;
-        font-weight: 500;
-      }
-      .main-wrapper .time {
-        position: absolute;
-        right: 0;
-        top: 0;
-        color: #97AAC3;
-      }
-      .main-wrapper .company {
-        margin: 10px;
-        color: #97AAC3;
-      }
-      .main-wrapper .project-title {
-        font-size: 16px;
-        font-weight: 400;
-        margin-top: 0;
-        margin-bottom: 5px;
-      }
-      .main-wrapper .projects-section .intro {
-        margin-bottom: 30px;
-      }
-      .main-wrapper .projects-section .item {
-        margin-bottom: 15px;
-      }
-      
-      .skillset .item {
-        margin-bottom: 15px;
-        overflow: hidden;
-      }
-      .skillset .level-title {
-        font-size: 14px;
-        margin-top: 0;
-        margin-bottom: 12px;
-        color: #25532f;
-      }
-      .skillset .level-bar {
-        height: 12px;
-        background: #f5f5f5;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        -ms-border-radius: 2px;
-        -o-border-radius: 2px;
-        border-radius: 2px;
-        -moz-background-clip: padding;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;
-      }
-      .skillset .theme-progress-bar {
-        background: #7ec68e;
-      }
-      
-      @media (max-width: 767.98px) {
-        .sidebar-wrapper {
-          position: static;
-          width: inherit;
-        }
-      
-        .main-wrapper {
-          padding: 30px;
-        }
-      
-        .main-wrapper .time {
-          position: static;
-          display: block;
-          margin-top: 5px;
-        }
-      
-        .main-wrapper .upper-row {
-          margin-bottom: 0;
-        }
-      }
-      @media (min-width: 992px) {
-        .skillset .level-title {
-          display: inline-block;
-          float: left;
-          width: 30%;
-          margin-bottom: 0;
-        }
-      }
-</style>
