@@ -27,9 +27,9 @@
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Từ</span>
-                        <input type="text" class="form-control" v-model="company.from">
+                        <input type="month" class="form-control" v-model="company.from">
                         <span class="input-group-text">Đến</span>
-                        <input type="text" class="form-control" v-model="company.to">
+                        <input type="month" class="form-control" v-model="company.to">
                     </div>
                 </div>
                 </div>
@@ -83,7 +83,7 @@
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Kết quả</span>
                                     <select class="form-select" v-model="element.result">
-                                        <option selected disabled>Chọn...</option>
+                                        <option value="" disabled>Chọn...</option>
                                         <option value="1">Hoàn thành</option>
                                         <option value="0">Không hoàn thành</option>
                                     </select>
@@ -97,8 +97,8 @@
                     </div>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Lý do nghỉ việc</span>
-                        <select class="form-select" v-model="company.living">
-                            <option selected disabled>Chọn...</option>
+                        <select class="form-select" v-model="company.leaving">
+                            <option value="" disabled>Chọn...</option>
                             <option value="1">Đúng quy định</option>
                             <option value="0">Tự nghỉ</option>
                         </select>
@@ -117,7 +117,7 @@
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(ele, index) in criteria" :key="index">
                  {{index+1+'. '+ele.name}}
-                <input type="number" class="form-control form-control-sm" :style="{maxWidth: '3.5rem'}"/>
+                <input type="number" class="form-control form-control-sm" :style="{maxWidth: '3.5rem'}" v-model="assessment[index]"/>
             </li>
         </ul>
         <h4 class="text-primary mt-2 text-decoration-underline">Quá trình học tập</h4>
@@ -158,9 +158,9 @@
                     <div class="card-header">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text">Từ:</span>
-                            <input type="text" class="form-control" v-model="ele.from">    
+                            <input type="month" class="form-control" v-model="ele.from">    
                             <span class="input-group-text">Đến:</span>
-                            <input type="text" class="form-control bg-white" v-model="ele.to">
+                            <input type="month" class="form-control bg-white" v-model="ele.to">
                         </div>
                         <button class="btn position-absolute top-0 start-100 translate-middle" @click="delSkillEducation(index)">
                             <i class="fas fa-times-circle text-danger fa-lg"></i>
@@ -169,7 +169,7 @@
                     <div class="card-body">
                         <input type="text" class="form-control form-control-sm mb-2 dropdown-toggle" :id="'dropdownSchool'+index" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="ele.school" placeholder="Tên trường">
                         <ul class="dropdown-menu w-100 overflow-auto" :aria-labelledby="'dropdownSchool'+index" :style="{maxHeight: '400px'}">
-                            <li v-for="school in filteredSchool(ele.school)"  @click="ele.school=school.name"><a class="dropdown-item">{{ele.name}}</a></li>
+                            <li v-for="school in filteredSchool(ele.school)"  @click="ele.school=school.name"><a class="dropdown-item">{{school.name}}</a></li>
                         </ul>
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Cấp bậc:</label>
@@ -230,11 +230,11 @@
                     <div class="col-md-4">
                         <div class="input-group input-group-sm mb-3">
                             <label class="input-group-text">Từ</label>
-                            <input type="text" class="form-control" v-model="ele.from">
+                            <input type="month" class="form-control" v-model="ele.from">
                         </div>
                         <div class="input-group input-group-sm mb-3">
                             <label class="input-group-text">Đến</label>
-                            <input type="text" class="form-control" v-model="ele.to">
+                            <input type="month" class="form-control" v-model="ele.to">
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -334,9 +334,6 @@
                     <th scope="col">World</th>
                     <th scope="col">Excel</th>
                     <th scope="col">Powerpoint</th>
-                    <th scope="col">Visio</th>
-                    <th scope="col">Puplisher</th>
-                    <th scope="col">Internet</th>
                     <th scope="col">Phần mền khác</th>
                 </tr>
             </thead>
@@ -346,9 +343,6 @@
                     <td><input type="radio" v-model="skillComputer.word" value="1"></td>
                     <td><input type="radio" v-model="skillComputer.excel" value="1"></td>
                     <td><input type="radio" v-model="skillComputer.powerpoint" value="1"></td>
-                    <td><input type="radio" v-model="skillComputer.visio" value="1"></td>
-                    <td><input type="radio" v-model="skillComputer.puplisher" value="1"></td>
-                    <td><input type="radio" v-model="skillComputer.internet" value="1"></td>
                     <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[0]">
                     
                 </tr>
@@ -357,9 +351,6 @@
                     <td><input type="radio" v-model="skillComputer.word" value="2"></td>
                     <td><input type="radio" v-model="skillComputer.excel" value="2"></td>
                     <td><input type="radio" v-model="skillComputer.powerpoint" value="2"></td>
-                    <td><input type="radio" v-model="skillComputer.visio" value="2"></td>
-                    <td><input type="radio" v-model="skillComputer.puplisher" value="2"></td>
-                    <td><input type="radio" v-model="skillComputer.internet" value="2"></td>
                     <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[1]">
                 </tr>
                 <tr>
@@ -367,9 +358,6 @@
                     <td><input type="radio" v-model="skillComputer.word" value="3"></td>
                     <td><input type="radio" v-model="skillComputer.excel" value="3"></td>
                     <td><input type="radio" v-model="skillComputer.powerpoint" value="3"></td>
-                    <td><input type="radio" v-model="skillComputer.visio" value="3"></td>
-                    <td><input type="radio" v-model="skillComputer.puplisher" value="3"></td>
-                    <td><input type="radio" v-model="skillComputer.internet" value="3"></td>
                     <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[2]">
                 </tr>
                 <tr>
@@ -377,9 +365,6 @@
                     <td><input type="radio" v-model="skillComputer.word" value="4"></td>
                     <td><input type="radio" v-model="skillComputer.excel" value="4"></td>
                     <td><input type="radio" v-model="skillComputer.powerpoint" value="4"></td>
-                    <td><input type="radio" v-model="skillComputer.visio" value="4"></td>
-                    <td><input type="radio" v-model="skillComputer.puplisher" value="4"></td>
-                    <td><input type="radio" v-model="skillComputer.internet" value="4"></td>
                     <input type="text" class="form-control form-control-sm" v-model="skillComputer.other[3]">
                 </tr>
             </tbody>
@@ -429,7 +414,7 @@
                     to: '',
                     title: '',
                     detail: '',
-                    living: '',
+                    leaving: '',
                     process: [{
                         from: '',
                         to: '',
@@ -438,9 +423,10 @@
                         address: '',
                         result: ''
                     }]
-
                 }],
                 skillEducation: [{
+                    from: '',
+                    to: '',
                     school: '',
                     level: '',
                     major: '',
@@ -471,10 +457,7 @@
                     world: 0,
                     excel: 0,
                     powerpoint: 0,
-                    visio: 0,
-                    puplisher: 0,
-                    internet: 0,
-                    other: ['1', '2', '3', '4'],
+                    other: ['', '', '', ''],
                 },
                 skillOther: [{
                     name: '',
@@ -488,26 +471,40 @@
         },
         methods : {
             handleSubmit(e){
-                e.preventDefault()
+                if (this.checkSkillWorking()){
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Cập nhật thất bại',
+                        text: 'Nhập đủ thông tin kinh nghiệm làm việc',
+                        confirmButtonColor: 'var(--primary)',
+                        confirmButtonText: 'Nhập lại',
+                    });
+                    return
+                }
+                if (this.checkSkillEducation()){
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Cập nhật thất bại',
+                        text: 'Nhập đủ thông tin quá trình học tập',
+                        confirmButtonColor: 'var(--primary)',
+                        confirmButtonText: 'Nhập lại',
+                    });
+                    return
+                }
                 this.$http.post(`${BASE_URL}/employee/createCV`, {
                     id : this.employee._id,
-                    degrees: this.degrees,
-                    skills: this.skills,
-                    companies: this.companies,
+                    skillWorking: this.skillWorking,
+                    skillEducation: this.skillEducation,
+                    shortTraining: this.shortTraining,
+                    skillEnglish: this.skillEnglish,
+                    skillLanguage: this.skillLanguage,
+                    skillComputer: this.skillComputer,
+                    skillOther: this.skillOther,
                     assessment: this.assessment,
-                    
                 })
                 .then(response => {
-                    if (response.data.success){
+                    if (response.data){
                         this.$router.push('/employee')
-                    } else {
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Cập nhật thất bại',
-                            text: `${response.data.message}`,
-                            confirmButtonColor: 'var(--primary)',
-                            confirmButtonText: 'Nhập lại',
-                        });
                     }
                 })
                 .catch(function (error) {
@@ -529,6 +526,29 @@
                     result: ''
                 })
             },
+            checkSkillWorking(){
+                var error = false
+                this.skillWorking.forEach((company, index1) => {
+                    if (company.name != ''){
+                        if (company.from == '') error = true
+                        else if (company.to == '') error = true
+                        else if (company.title == '') error = true
+                        else if (company.detail == '') error = true
+                        else if (company.leaving == '') error = true
+                        company.process.forEach(ele => {
+                            if (ele.from == '') error = true
+                            else if (ele.to == '') error = true
+                            else if (ele.title == '') error = true
+                            else if (ele.work == '') error = true
+                            else if (ele.address == '') error = true
+                            else if (ele.result == '') error = true
+                        })
+                    } else {
+                        this.skillWorking.splice(index1, 1)
+                    }
+                })
+                return error
+            },
             delSkillWorking(index){
                 this.skillWorking.splice(index, 1);
             },
@@ -539,7 +559,7 @@
                     to: '',
                     title: '',
                     detail: '',
-                    living: '',
+                    leaving: '',
                     process: [{
                         from: '',
                         to: '',
@@ -555,6 +575,8 @@
             },
             addSkillEducation(){
                 this.skillEducation.push({
+                    from: '',
+                    to: '',
                     school: '',
                     level: '',
                     major: '',
@@ -562,6 +584,21 @@
                     point: '',
                     rating: ''
                 })
+            },
+            checkSkillEducation(){
+                var error = false
+                this.skillEducation.forEach((edu, idx) => {
+                    if (edu.school != ''){
+                        if (edu.from == '') error = true
+                        if (edu.to == '') error = true
+                        if (edu.level == '') error = true
+                        if (edu.major == '') error = true
+                        if (edu.skill == '') error = true
+                    } else {
+                        this.skillEducation.splice(idx, 1)
+                    }
+                })
+                return error
             },
             delShortTraining(index){
                 this.shortTraining.splice(index, 1)

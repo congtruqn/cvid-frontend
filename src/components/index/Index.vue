@@ -53,7 +53,51 @@
             </div>
         </div>
         <!-- Search End -->
-    
+        <div class="card">
+            <div class="card-header text-center">
+                <h1 class="text-primary">Tìm việc</h1>
+            </div>
+            <div class="card-body">
+                <form class="row g-3" v-on:submit.prevent>
+                    <div class="col-12 col-md-5">
+                        <label for="inputState" class="form-label">Chuyên nghành</label>
+                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly />
+                        
+                    </div>
+                    <div class="col-9 col-md-5">
+                        <label for="inputSchool" class="form-label">Công việc mong muốn</label>
+                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false" />
+                        
+                    </div>
+                    <div class="col-3 col-md-2">
+                        <label for="inputPoint" class="form-label">Địa điểm</label>
+                        <input type="number" class="form-control" id="inputPoint"  max="10" min="0">
+                    </div>
+                    <!-- <div class="col-12">
+                        <label for="inputAddress2" class="form-label">Address 2</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputCity" class="form-label">City</label>
+                        <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputState" class="form-label">State</label>
+                        <select id="inputState" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="inputZip" class="form-label">Zip</label>
+                        <input type="text" class="form-control" id="inputZip">
+                    </div> -->
+                    <div class="col-12 text-center">
+                        <button type="button" class="btn btn-lg btn-primary">Tìm việc</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <!-- Category End -->
                 <!-- Jobs Start -->
         <div class="container-xxl py-5">
@@ -81,8 +125,6 @@
                                     </div>
                                 </a>
                             </div>
-                            
-                            <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
                         </div>
                     </div>
                 </div>
