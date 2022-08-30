@@ -144,7 +144,14 @@
                                     <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>
                             </div>
-
+                            <!-- <div class="form-group mb-3">
+                                <label class="form-label">Chuyên nghành</label>
+                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly v-model="skill"/>
+                                <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
+                                    <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
+                                    <li v-for="item in filteredSkill()"  @click="skill=item"><a class="dropdown-item">{{item}}</a></li>
+                                </ul>
+                            </div> -->
                             <div class="form-group mb-3">
                                 <label for="">Mức lương tối thiểu (triệu đồng)</label>
                                 <input type="number" class="form-control" v-model="position.min_salary" placeholder="Nhập mức lương tối thiểu">

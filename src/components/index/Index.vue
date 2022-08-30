@@ -61,16 +61,22 @@
                 <form class="row g-3" v-on:submit.prevent>
                     <div class="col-12 col-md-6">
                         <label for="inputState" class="form-label">Chuyên nghành</label>
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly v-model="skill"/>
+                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="skill"/>
                         <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
                             <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
                             <li v-for="item in filteredSkill()"  @click="skill=item"><a class="dropdown-item">{{item}}</a></li>
                         </ul>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label for="inputSchool" class="form-label">Môi trường làm việc</label>
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false" />
-                        
+                        <label class="form-label">Môi trường làm việc</label> 
+                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuEnvironment" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="work_environment">
+                        <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuEnvironment" :style="{maxHeight: '400px'}">
+                            <li @click="work_environment='Văn phòng'"><a class="dropdown-item">Văn phòng</a></li>
+                            <li @click="work_environment='Công trường'"><a class="dropdown-item">Công trường</a></li>
+                            <li @click="work_environment='Nhà máy'"><a class="dropdown-item">Nhà máy</a></li>
+                            <li @click="work_environment='Dàn khoan'"><a class="dropdown-item">Dàn khoan</a></li>
+                             
+                        </ul>
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng</label>
@@ -78,7 +84,10 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Địa điểm</label>
-                        <input type="number" class="form-control" id="inputPoint"  max="10" min="0">
+                        <select class="form-control" v-model="province" required>
+                            <option value="" disabled>Chọn tỉnh/thành phố</option>
+                            <option v-for="province in provinces" :value='province'>{{province}}</option>
+                        </select>
                     </div>
                     
                     <!-- <div class="col-12">
@@ -148,9 +157,11 @@
             return {
                 employee: JSON.parse(localStorage.getItem('employee')),
                 position: [],
-                provinces: '',
+                provinces: [],
+                province: '',
                 skill: '',
                 searchSkill: '',
+                work_environment: '',
                 majors: [],
             }
         },
@@ -203,12 +214,11 @@
             .then(response => {
                 this.majors = response.data
             })
-            // this.$http.get(`${BASE_URL}/province/list`)
-            // .then(response => {
-            //     this.provinces = response.data;
-            //     this.provinces = new Set(this.provinces.map(item => item.province))
+            this.$http.get(`${BASE_URL}/province/list`)
+            .then(response => {
+                this.provinces = new Set(response.data.map(item => item.province))
               
-            // })
+            })
             // .catch(function (error) {
             //     console.error(error.response);
             // });
