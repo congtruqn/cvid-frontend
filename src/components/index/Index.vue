@@ -60,7 +60,7 @@
             <div class="card-body">
                 <form class="row g-3" v-on:submit.prevent>
                     <div class="col-12 col-md-6">
-                        <label for="inputState" class="form-label">Chuyên nghành</label>
+                        <label for="inputState" class="form-label">Chuyên nghành mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="skill"/>
                         <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
                             <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
@@ -68,22 +68,31 @@
                         </ul>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label">Môi trường làm việc</label> 
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuEnvironment" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="work_environment">
-                        <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuEnvironment" :style="{maxHeight: '400px'}">
-                            <li @click="work_environment='Văn phòng'"><a class="dropdown-item">Văn phòng</a></li>
-                            <li @click="work_environment='Công trường'"><a class="dropdown-item">Công trường</a></li>
-                            <li @click="work_environment='Nhà máy'"><a class="dropdown-item">Nhà máy</a></li>
-                            <li @click="work_environment='Dàn khoan'"><a class="dropdown-item">Dàn khoan</a></li>
-                             
-                        </ul>
+                        <label class="form-label">Môi trường làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
+                        <select id="inputState" class="form-select" v-model="work_environment">
+                            <option value="" disabled>Chọn ...</option>
+                            <option v-for="item in environments" :value="item.name">{{item.name}}</option>
+                        </select>
                     </div>
                     <div class="col-12 col-md-4">
-                        <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng</label>
-                        <input type="number" class="form-control" id="inputPoint"  max="10" min="0">
+                        <label class="form-label">Lĩnh vực mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
+                        <select id="inputState" class="form-select" v-model="work_industry">
+                            <option value="" disabled>Chọn ...</option>
+                            <option >Dịch vụ</option>
+                            <option >Thương mại</option>
+                            <option >Sản xuất</option>
+                            <option >Kỹ thuật</option>
+                        </select>
                     </div>
                     <div class="col-12 col-md-4">
-                        <label for="inputPoint" class="form-label">Địa điểm</label>
+                        <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
+                        <select id="inputState" class="form-select" v-model="work_industry">
+                            <option value="" disabled>Chọn ...</option>
+                            <option v-for="item in industries" :value="item.name">{{item.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label for="inputPoint" class="form-label">Nơi làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <select class="form-control" v-model="province" required>
                             <option value="" disabled>Chọn tỉnh/thành phố</option>
                             <option v-for="province in provinces" :value='province'>{{province}}</option>
@@ -119,7 +128,6 @@
                 <!-- Jobs Start -->
         <div class="container-xxl py-5">
             <div class="container">
-                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Job Listing</h1>
                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
@@ -152,17 +160,21 @@
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config')
+    
     export default {  
         data(){
             return {
                 employee: JSON.parse(localStorage.getItem('employee')),
                 position: [],
-                provinces: [],
                 province: '',
                 skill: '',
                 searchSkill: '',
                 work_environment: '',
+                work_industry: '',
+
                 majors: [],
+                provinces: [],
+                environments: []
             }
         },
         methods: {
@@ -214,14 +226,25 @@
             .then(response => {
                 this.majors = response.data
             })
+
             this.$http.get(`${BASE_URL}/province/list`)
             .then(response => {
                 this.provinces = new Set(response.data.map(item => item.province))
               
             })
-            // .catch(function (error) {
-            //     console.error(error.response);
-            // });
+            this.$http.get(`${BASE_URL}/industry/getall`)
+            .then(response => {
+                this.industries = response.data
+              
+            })
+            this.$http.get(`${BASE_URL}/environment/getall`)
+            .then(response => {
+                this.environments = response.data
+              
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
         }
     }
   

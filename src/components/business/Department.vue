@@ -79,7 +79,7 @@
                         <form >
                             <div class="form-group mb-3">
                                 <label class="form-label">Phòng ban</label>
-                                <input type="text" class="form-control" v-model="department.name" readonly disabled>
+                                <input type="text" class="form-control bg-white" v-model="department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Tên chức danh công việc <span class="text-danger">*</span></label>
@@ -138,20 +138,30 @@
                             </div>
                             
                             <div class="form-group mb-3">
-                                <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>
+                                <label for="">Nơi làm việc <span class="text-danger">*</span></label>
                                 <select class="form-control" v-model="position.work_location">
                                     <option value="">Chọn địa điểm làm việc</option>
                                     <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>
                             </div>
-                            <!-- <div class="form-group mb-3">
-                                <label class="form-label">Chuyên nghành</label>
-                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly v-model="skill"/>
-                                <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
-                                    <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
-                                    <li v-for="item in filteredSkill()"  @click="skill=item"><a class="dropdown-item">{{item}}</a></li>
-                                </ul>
-                            </div> -->
+                            <div class="form-group mb-3">
+                                <label class="form-label">Lĩnh vực kinh doanh</label> 
+                                <select id="inputState" class="form-select">
+                                    <option value="" disabled>Chọn ...</option>
+                                    <option >Dịch vụ</option>
+                                    <option >Thương mại</option>
+                                    <option >Sản xuất</option>
+                                    <option >Kỹ thuật</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Môi trường làm việc</label> 
+                                <select id="inputState" class="form-select" v-model="work_environment">
+                                    <option value="" disabled>Chọn ...</option>
+                                    <option v-for="item in environments" :value="item.name">{{item.name}}</option>
+                                </select>
+                            </div>
+                            
                             <div class="form-group mb-3">
                                 <label for="">Mức lương tối thiểu (triệu đồng)</label>
                                 <input type="number" class="form-control" v-model="position.min_salary" placeholder="Nhập mức lương tối thiểu">
@@ -192,7 +202,7 @@
                         <form >
                             <div class="form-group mb-3">
                                 <label class="form-label">Phòng ban</label>
-                                <input type="text" class="form-control" :value="department.name" readonly>
+                                <input type="text" class="form-control bg-white" :value="department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Tên chức danh công việc <span class="text-danger">*</span></label>
@@ -249,13 +259,29 @@
                                 <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Địa điểm làm việc <span class="text-danger">*</span></label>
+                                <label for="">Nơi làm việc <span class="text-danger">*</span></label>
                                 <select class="form-control" v-model="position.work_location">
                                     <option value="">Chọn địa điểm làm việc</option>
                                     <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>
                             </div>
-
+                            <div class="form-group mb-3">
+                                <label class="form-label">Lĩnh vực kinh doanh</label> 
+                                <select id="inputState" class="form-select">
+                                    <option value="" disabled>Chọn ...</option>
+                                    <option >Dịch vụ</option>
+                                    <option >Thương mại</option>
+                                    <option >Sản xuất</option>
+                                    <option >Kỹ thuật</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Môi trường làm việc</label> 
+                                <select id="inputState" class="form-select" v-model="work_environment">
+                                    <option value="" disabled>Chọn ...</option>
+                                    <option v-for="item in environments" :value="item.name">{{item.name}}</option>
+                                </select>
+                            </div>
                             <div class="form-group mb-3">
                                 <label for="">Mức lương tối thiểu (triệu đồng)</label>
                                 <input type="number" class="form-control" v-model="position.min_salary" placeholder="Nhập mức lương tối thiểu">
@@ -319,6 +345,7 @@
                 business : JSON.parse(localStorage.getItem('business')),
                 majors: [],
                 position_id: '',
+                environments: [],
                 provinces: [],
                 departments: [],
                 department: {
@@ -535,6 +562,14 @@
             .then(response => {
                 this.majors = response.data
             })
+            this.$http.get(`${BASE_URL}/environment/getall`)
+            .then(response => {
+                this.environments = response.data
+              
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
         },
 
     }
