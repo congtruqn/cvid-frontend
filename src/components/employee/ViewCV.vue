@@ -21,15 +21,15 @@
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Công ty {{index1+1}}</span>
-                        <input type="text" class="form-control" v-model="company.name">
+                        <input type="text" class="form-control bg-white" readonly v-model="company.name">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Từ</span>
-                        <input type="month" class="form-control" v-model="company.from">
+                        <input type="month" class="form-control bg-white" readonly v-model="company.from">
                         <span class="input-group-text">Đến</span>
-                        <input type="month" class="form-control" v-model="company.to">
+                        <input type="month" class="form-control bg-white" readonly v-model="company.to">
                     </div>
                 </div>
                 </div>
@@ -39,13 +39,13 @@
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Chức danh công việc</span>
-                            <input type="text" class="form-control" v-model="company.title">
+                            <input type="text" class="form-control bg-white" readonly v-model="company.title">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Mô tả công việc</span>
-                        <textarea class="form-control" aria-label="With textarea" v-model="company.detail"></textarea>
+                        <textarea class="form-control bg-white" readonly aria-label="With textarea" v-model="company.detail"></textarea>
                     </div>
                     </div>
 
@@ -57,28 +57,28 @@
                             <div class="card-body text-success">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
-                                    <input type="month" class="form-control" v-model="element.from">
+                                    <input type="month" class="form-control bg-white" readonly  v-model="element.from">
                                     <span class="input-group-text">Đến</span>
-                                    <input type="month" class="form-control" v-model="element.to">
+                                    <input type="month" class="form-control bg-white" readonly  v-model="element.to">
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Công việc</span>
-                                    <input type="text" class="form-control" v-model="element.work">
+                                    <input type="text" class="form-control bg-white" readonly  v-model="element.work">
                                     
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Chức danh công việc</span>
-                                    <input type="text" class="form-control" v-model="element.title">
+                                    <input type="text" class="form-control bg-white" readonly  v-model="element.title">
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Địa chỉ</span>
-                                    <input type="text" class="form-control" v-model="element.address">
+                                    <input type="text" class="form-control bg-white" readonly  v-model="element.address">
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Kết quả</span>
-                                    <select class="form-select" v-model="element.result">
+                                    <select class="form-select bg-white" v-model="element.result" disabled>
                                         <option value="" disabled>Chọn...</option>
                                         <option value="1">Hoàn thành</option>
                                         <option value="0">Không hoàn thành</option>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Lý do nghỉ việc</span>
-                        <select class="form-select" v-model="company.leaving">
+                        <select class="form-select bg-white" v-model="company.leaving" disabled>
                             <option value="" disabled>Chọn...</option>
                             <option value="1">Đúng quy định</option>
                             <option value="0">Tự nghỉ</option>
@@ -107,7 +107,7 @@
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(ele, index) in criteria" :key="index">
                  {{index+1+'. '+ele.name}}
-                <input type="number" class="form-control form-control-sm" :style="{maxWidth: '3.5rem'}" v-model="employee.assessment[index]"/>
+                <input type="number" class="form-control form-control-sm bg-white" readonly :style="{maxWidth: '3.5rem'}" v-model="employee.assessment[index]"/>
             </li>
         </ul>
 		<h4 class="text-primary mt-2 text-decoration-underline">Quá trình học tập</h4>
@@ -204,8 +204,8 @@
                 </div>
             </div>
         </div>
-        <h4 class="text-primary mt-2 text-decoration-underline">Các khoá đào tạo ngắn hạn</h4>
-        <div class="card mb-3" v-for="(ele, index) in employee.shortTraining">
+        <h4 class="text-primary mt-2 text-decoration-underline" v-if="employee.shortTraining.length>0">Các khoá đào tạo ngắn hạn</h4>
+        <div class="card mb-3" v-for="(ele, index) in employee.shortTraining" v-if="employee.shortTraining.length>0">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
@@ -248,24 +248,23 @@
             <tbody>
                 <tr>
                     <th scope="row">Nghe</th>
-                    <td v-for="point in 4"><input type="radio" v-model="employee.skillEnglish.listening" :value="point"></td>
-                    
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.listening" :value="point" disabled></td>
                 </tr>
                 <tr>
                     <th scope="row">Nói</th>
-                    <td v-for="point in 4"><input type="radio" v-model="employee.skillEnglish.speaking" :value="point"></td>
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.speaking" :value="point" disabled></td>
                 </tr>
                 <tr>
                     <th scope="row">Đọc</th>
-                    <td v-for="point in 4"><input type="radio" v-model="employee.skillEnglish.reading" :value="point"></td>
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.reading" :value="point" disabled></td>
                 </tr>
                 <tr>
                     <th scope="row">Viết</th>
-                    <td v-for="point in 4"><input type="radio" v-model="employee.skillEnglish.writing" :value="point"></td>
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.writing" :value="point" disabled></td>
                 </tr>
             </tbody>
         </table>
-        <table class="table table-bordered border-primary text-center" v-for="skill in employee.skillLanguage">
+        <table class="table table-bordered border-primary text-center" v-for="skill in employee.skillLanguage" v-if="skill.name!=''">
             <thead>
                 <tr>
                     <th colspan="5"><input type="text" class="form-control text-center text-primary h5 fs-5" placeholder="Tên ngoại ngữ" v-model="skill.name"></th>
@@ -281,20 +280,20 @@
             <tbody>
                 <tr>
                     <th scope="row">Nghe</th>
-                    <td v-for="point in 4"><input type="radio" v-model="skill.listening" :value="point"></td>
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="skill.listening" :value="point"></td>
                     
                 </tr>
                 <tr>
                     <th scope="row">Nói</th>
-                    <td v-for="point in 4"><input type="radio" v-model="skill.speaking" :value="point"></td>
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="skill.speaking" :value="point"></td>
                 </tr>
                 <tr>
                     <th scope="row">Đọc</th>
-                    <td v-for="point in 4"><input type="radio" v-model="skill.reading" :value="point"></td>
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="skill.reading" :value="point"></td>
                 </tr>
                 <tr>
                     <th scope="row">Viết</th>
-                    <td v-for="point in 4"><input type="radio" v-model="skill.writing" :value="point"></td>
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="skill.writing" :value="point"></td>
                 </tr>
             </tbody>
         </table>
@@ -313,32 +312,32 @@
             <tbody>
                 <tr>
                     <th scope="row">Giỏi</th>
-                    <td><input type="radio" v-model="employee.skillComputer.word" value="1"></td>
-                    <td><input type="radio" v-model="employee.skillComputer.excel" value="1"></td>
-                    <input type="text" class="form-control form-control-sm" v-model="employee.skillComputer.other">
+                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="1" disabled></td>
+                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="1" disabled></td>
+                    <input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[0]" disabled>
                     
                 </tr>
                 <tr>
                     <th scope="row">Tốt</th>
-                    <td><input type="radio" v-model="employee.skillComputer.word" value="2"></td>
-                    <td><input type="radio" v-model="employee.skillComputer.excel" value="2"></td>
-                    <input type="text" class="form-control form-control-sm" v-model="employee.skillComputer.other">
+                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="2" disabled></td>
+                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="2" disabled></td>
+                    <input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[1]" disabled>
                 </tr>
                 <tr>
                     <th scope="row">Bình thường</th>
-                    <td><input type="radio" v-model="employee.skillComputer.word" value="3"></td>
-                    <td><input type="radio" v-model="employee.skillComputer.excel" value="3"></td>
-                    <input type="text" class="form-control form-control-sm" v-model="employee.skillComputer.other">
+                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="3" disabled></td>
+                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="3" disabled></td>
+                    <input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[2]" disabled>
                 </tr>
                 <tr>
                     <th scope="row">Cơ bản</th>
-                    <td><input type="radio" v-model="employee.skillComputer.word" value="4"></td>
-                    <td><input type="radio" v-model="employee.skillComputer.excel" value="4"></td>
-                    <input type="text" class="form-control form-control-sm" v-model="employee.skillComputer.other">
+                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="4" disabled></td>
+                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="4" disabled></td>
+                    <input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[3]" disabled>
                 </tr>
             </tbody>
         </table>
-        <table class="table table-bordered border-primary text-center">
+        <table class="table table-bordered border-primary text-center" v-if="employee.skillOther.length>0">
             <thead>
                 <tr>
                     <th colspan="7"><h5 class="text-primary m-1">Kỹ năng khác</h5></th>
@@ -353,8 +352,8 @@
             </thead>
             <tbody>
                 <tr v-for="skill in employee.skillOther">
-                    <th scope="row"><input type="text" class="form-control form-control-sm" v-model="skill.name"></th>
-                    <td v-for="point in 4"><input type="radio" v-model="skill.point" :value="point"></td>
+                    <th scope="row"><input type="text" class="form-control form-control-sm bg-white" v-model="skill.name" readonly></th>
+                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="skill.point" :value="point" disabled></td>
 
                 </tr>
                 
@@ -379,6 +378,7 @@
             .then(res => {
                 this.cv = res.data;
 				this.employee = res.data;
+                console.log(this.employee)
             }) 
 
             this.$http.get(`${BASE_URL}/criteria/getall`)
