@@ -4,10 +4,10 @@
         <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
         <div class="row">
             <div class="col-md-6">
-                <p class="m-1">Họ và tên: {{employee.name}}</p>
+                <p class="m-1">Họ và tên: <span class="fw-bold">{{employee.name}}</span></p>
                 <p class="m-1">Ngày sinh: {{employee.birthdate.split('T')[0]}}</p>
                 <p class="m-1">Giới tính: {{employee.gender}}</p>
-                <p class="m-1">Chức danh: {{employee.position}}</p>
+                <p class="m-1">Chức danh: <span class="fw-bold">{{employee.position}}</span></p>
             </div>
             <div class="col-md-6">
                 <p class="m-1">Số điện thoại: {{employee.username}}</p>
