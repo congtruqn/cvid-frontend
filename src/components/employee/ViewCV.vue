@@ -15,9 +15,13 @@
                 <p class="m-1">Địa chỉ: {{employee.address+' '+employee.ward+' '+employee.district+' '+employee.province}}</p>
             </div>
         </div>
-        <div class="d-flex justify-content-between align-items-center">
-            <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc</h4>
-            <span class="badge bg-primary fs-6 width-auto">Số năm kinh nghiệm: {{getExperience}} năm</span>
+        <div class="row justify-content-between">
+            <div class="col-md-6">
+                <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc</h4>
+            </div>
+            <div class="col-md-6 text-md-end mt-2">
+                <span class="badge bg-primary fs-6">Số năm kinh nghiệm: {{getExperience}} năm</span>
+            </div>
         </div>
         <div class="card border-success mt-3" v-for="(company, index1) in employee.skillWorking">
             <div class="card-header border-success position-relative">
