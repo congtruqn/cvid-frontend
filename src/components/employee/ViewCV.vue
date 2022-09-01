@@ -15,7 +15,14 @@
                 <p class="m-1">Địa chỉ: {{employee.address+' '+employee.ward+' '+employee.district+' '+employee.province}}</p>
             </div>
         </div>
-		<h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc<span class="badge bg-primary ms-5">Số năm kinh nghiệm: {{getExperience}} năm</span></h4>
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc</h4>
+            </div>
+            <div class="col-md-3">
+                <span class="badge bg-primary fs-6">Số năm kinh nghiệm: {{getExperience}} năm</span>
+            </div>
+        </div>
         <div class="card border-success mt-3" v-for="(company, index1) in employee.skillWorking">
             <div class="card-header border-success position-relative">
                 <div class="row g-3 align-items-center">
@@ -53,24 +60,22 @@
                     <div class="col-md-6" v-for="(element, index2) in company.process">
                         <div class="card border-success mb-3">
                             <div class="card-header bg-transparent border-success position-relative">
-                                Quá trình làm việc
-                            </div>
-                            <div class="card-body text-success">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
                                     <input type="month" class="form-control bg-white text-dark" disabled  v-model="element.from">
                                     <span class="input-group-text">Đến</span>
                                     <input type="month" class="form-control bg-white text-dark" disabled  v-model="element.to">
                                 </div>
-                                <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Công việc</span>
-                                    <input type="text" class="form-control bg-white text-dark" disabled  v-model="element.work">
-                                    
-                                </div>
+                            </div>
+                            <div class="card-body text-success">
+                                
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Chức danh công việc</span>
                                     <input type="text" class="form-control bg-white text-dark" disabled  v-model="element.title">
-                                
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Công việc đã thực hiện</span>
+                                    <textarea type="text" class="form-control bg-white text-dark" disabled v-model="element.work"></textarea>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Địa chỉ</span>
@@ -98,9 +103,16 @@
                 Tiêu chí
                 <input type="text" class="form-control-plaintext form-control-sm" value="Điểm" :style="{maxWidth: '3rem'}" disabled/>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(ele, index) in criteria" :key="index">
-                 {{index+1+'. '+ele.name}}
-                <input type="number" class="form-control form-control-sm bg-white text-dark" disabled :style="{maxWidth: '3.5rem'}" v-model="employee.assessment[index]"/>
+            <li class="list-group-item" v-for="(ele, index) in criteria" :key="index">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>{{index+1+'. '+ele.name}} <a data-bs-toggle="collapse" :href="'#collapse'+index" class="link-primary" role="button" aria-expanded="false" :aria-controls="'collapse'+index"><i class="fas fa-question-circle ms-0"></i></a></span>
+                    <input type="number" class="form-control form-control-sm bg-white text-dark" disabled :style="{maxWidth: '3.5rem'}" v-model="employee.assessment[index]"/>
+                </div>
+                <div class="collapse" :id="'collapse'+index">
+                    <ul class="list-group ms-5">
+                        <li class="" v-for="item in ele.detail.split('.,')">{{item}}</li>
+                    </ul>  
+                </div>
             </li>
         </ul>
 		<h4 class="text-primary mt-2 text-decoration-underline">Quá trình học tập</h4>
@@ -120,18 +132,9 @@
                         <p class="card-text mx-2 my-1">Cấp bậc: {{employee.level}}</p>
                         <p class="card-text mx-2 my-1">Nghành: {{employee.major}}</p>
                         <p class="card-text mx-2 my-1">Chuyên nghành: {{employee.skill}}</p>
-                        <div class="row mb-2">
-                            <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Điểm:</label>
-                            <div class="col-sm-8">
-                                <input class="form-control form-control-sm bg-white" disabled>
-                            </div>
-                        </div> 
-                        <div class="row mb-2">
-                            <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Xếp loại:</label>
-                            <div class="col-sm-8">
-                                <input class="form-control form-control-sm bg-white" disabled>
-                            </div>
-                        </div> 
+                        <p class="card-text mx-2 my-1">Điểm:</p>
+                        <p class="card-text mx-2 my-1">Xếp loại: {{employee.rating}}</p>
+                        
                     </div>
                 </div>
             </div>
