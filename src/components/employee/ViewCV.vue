@@ -5,8 +5,9 @@
         <div class="row">
             <div class="col-md-6">
                 <p class="m-1">Họ và tên: {{employee.name}}</p>
-                <p class="m-1">Ngày sinh: {{employee.birthdate}}</p>
+                <p class="m-1">Ngày sinh: {{employee.birthdate.split('T')[0]}}</p>
                 <p class="m-1">Giới tính: {{employee.gender}}</p>
+                <p class="m-1">Chức danh: {{employee.position}}</p>
             </div>
             <div class="col-md-6">
                 <p class="m-1">Số điện thoại: {{employee.username}}</p>
@@ -14,7 +15,7 @@
                 <p class="m-1">Địa chỉ: {{employee.address+' '+employee.ward+' '+employee.district+' '+employee.province}}</p>
             </div>
         </div>
-		<h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc</h4>
+		<h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc<span class="badge bg-primary ms-5">Số năm kinh nghiệm: {{getExperience}} năm</span></h4>
         <div class="card border-success mt-3" v-for="(company, index1) in employee.skillWorking">
             <div class="card-header border-success position-relative">
                 <div class="row g-3 align-items-center">
@@ -381,12 +382,10 @@
         computed: {
           getExperience(){
             var sum = 0
-            if (this.cv.companies){
-              this.cv.companies.filter(function(company){
-                company.position.filter(function(position){
-                  sum += ((new Date(position.to)).getTime()-(new Date(position.from)).getTime())
+            if (this.employee.skillWorking.length > 0){
+              this.employee.skillWorking.filter(function(company){
+                  sum += ((new Date(company.to)).getTime()-(new Date(company.from)).getTime())
                 })
-              })
             }
             return Math.round(sum/15768000000)/2
           }
