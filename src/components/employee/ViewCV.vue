@@ -130,13 +130,13 @@
                         <div class="row mb-2">
                             <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Điểm:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm">
+                                <input class="form-control form-control-sm bg-white" readonly>
                             </div>
                         </div> 
                         <div class="row mb-2">
                             <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Xếp loại:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm">
+                                <input class="form-control form-control-sm bg-white" readonly>
                             </div>
                         </div> 
                     </div>
@@ -191,13 +191,13 @@
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Điểm:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm" v-model="ele.point">
+                                <input class="form-control form-control-sm bg-white" v-model="ele.point" readonly>
                             </div>
                         </div> 
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Xếp loại:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm" v-model="ele.rating">
+                                <input class="form-control form-control-sm bg-white" v-model="ele.rating" readonly>
                             </div>
                         </div> 
                     </div>
