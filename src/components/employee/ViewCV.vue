@@ -28,7 +28,7 @@
                 <div class="row g-3 align-items-center">
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
-                        <span class="input-group-text">Công ty {{index1+1}}</span>
+                        <span class="input-group-text">Nơi làm việc {{index1+1}}</span>
                         <input type="text" class="form-control bg-white text-dark" disabled v-model="company.name">
                     </div>
                 </div>
