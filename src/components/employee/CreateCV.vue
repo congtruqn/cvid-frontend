@@ -620,6 +620,15 @@
                     'point': 0
                 })
             },
+            checkSkillOther(){
+                var index = 0
+                var error = false
+                while (index < this.skillOther.length){
+                    if (this.skillOther.name != ''){
+                        
+                    }
+                }
+            },
             skillList(level, major){
                 var result = this.majors.filter(function(item){
                     return (item.name == major && item.level == level)
