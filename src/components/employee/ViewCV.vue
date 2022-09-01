@@ -56,7 +56,7 @@
                         <textarea class="form-control bg-white text-dark" disabled aria-label="With textarea" v-model="company.detail"></textarea>
                     </div>
                     </div>
-
+                    <h5 class="text-center text-primary">Quá trình làm việc</h5>
                     <div class="col-md-6" v-for="(element, index2) in company.process">
                         <div class="card border-success mb-3">
                             <div class="card-header bg-transparent border-success position-relative">
