@@ -19,7 +19,7 @@
             <div class="col-4">
                 <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc</h4>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 mt-2">
                 <span class="badge bg-primary fs-6">Số năm kinh nghiệm: {{getExperience}} năm</span>
             </div>
         </div>
