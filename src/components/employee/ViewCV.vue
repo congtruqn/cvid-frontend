@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-6">
                 <p class="m-1">Họ và tên: <span class="fw-bold">{{employee.name}}</span></p>
-                <p class="m-1">Ngày sinh: {{employee.birthdate.split('T')[0]}}</p>
+                <p class="m-1">Ngày sinh: {{new Date(employee.birthdate).toLocaleDateString("en-US")}}</p>
                 <p class="m-1">Giới tính: {{employee.gender}}</p>
                 <p class="m-1">Chức danh: <span class="fw-bold">{{employee.position}}</span></p>
             </div>
@@ -23,7 +23,7 @@
                 <span class="badge bg-primary fs-6">Số năm kinh nghiệm: {{getExperience}} năm</span>
             </div>
         </div>
-        <div class="card border-success mt-3" v-for="(company, index1) in employee.skillWorking">
+        <div class="card border-success mt-3" v-for="(company, index1) in employee.skillWorking" v-if="employee.skillWorking.length>0">
             <div class="card-header border-success position-relative">
                 <div class="row g-3 align-items-center">
                 <div class="col-md-8">
@@ -35,9 +35,9 @@
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Từ</span>
-                        <input type="month" class="form-control bg-white text-dark" disabled v-model="company.from">
+                        <input type="text" class="form-control bg-white text-dark" disabled :value="new Date(company.from).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})">
                         <span class="input-group-text">Đến</span>
-                        <input type="month" class="form-control bg-white text-dark" disabled v-model="company.to">
+                        <input type="month" class="form-control bg-white text-dark" disabled :value="new Date(company.to).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})">
                     </div>
                 </div>
                 </div>
@@ -62,9 +62,9 @@
                             <div class="card-header bg-transparent border-success position-relative">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
-                                    <input type="month" class="form-control bg-white text-dark" disabled  v-model="element.from">
+                                    <input type="text" class="form-control bg-white text-dark" disabled  :value="new Date(element.from).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})">
                                     <span class="input-group-text">Đến</span>
-                                    <input type="month" class="form-control bg-white text-dark" disabled  v-model="element.to">
+                                    <input type="text" class="form-control bg-white text-dark" disabled  :value="new Date(element.to).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})">
                                 </div>
                             </div>
                             <div class="card-body text-success">
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Địa chỉ</span>
-                                    <input type="text" class="form-control bg-white text-dark" disabled  v-model="element.address">
+                                    <textarea type="text" class="form-control bg-white text-dark" disabled rows="1" v-model="element.address"></textarea>
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
@@ -200,7 +200,7 @@
                 </div>
             </div>
         </div>
-        <h4 class="text-primary mt-2 text-decoration-underline" v-if="employee.shortTraining.length>0">Các khoá đào tạo ngắn hạn</h4>
+        <h4 class="text-primary mt-2 text-decoration-underline" v-if="employee.shortTraining && employee.shortTraining.length>0">Các khoá đào tạo ngắn hạn</h4>
         <div class="card mb-3" v-for="(ele, index) in employee.shortTraining" v-if="employee.shortTraining.length>0">
             <div class="card-body">
                 <div class="row">
@@ -385,7 +385,7 @@
         computed: {
           getExperience(){
             var sum = 0
-            if (this.employee.skillWorking.length > 0){
+            if (this.employee.skillWorking && this.employee.skillWorking.length > 0){
               this.employee.skillWorking.filter(function(company){
                   sum += ((new Date(company.to)).getTime()-(new Date(company.from)).getTime())
                 })
