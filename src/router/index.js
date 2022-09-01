@@ -11,7 +11,7 @@ let router = new Router({
       component: () => import('@/components/index/Index'),
       meta: {
         guest: true,
-        layout: 'Default'
+        layout: 'Auth'
       }
     },
     {
@@ -80,7 +80,7 @@ let router = new Router({
     {
         path: '/employee',
         name: 'employee',
-        component: () => import('@/components/index/Index'),
+        component: () => import('@/components/employee/Index'),
         meta: {
           guest: true,
           layout: 'Default'
