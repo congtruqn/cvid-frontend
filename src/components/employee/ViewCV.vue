@@ -14,22 +14,22 @@
                 <p class="m-1">Địa chỉ: {{employee.address+' '+employee.ward+' '+employee.district+' '+employee.province}}</p>
             </div>
         </div>
-		<h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệp làm việc</h4>
+		<h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc</h4>
         <div class="card border-success mt-3" v-for="(company, index1) in employee.skillWorking">
             <div class="card-header border-success position-relative">
                 <div class="row g-3 align-items-center">
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Công ty {{index1+1}}</span>
-                        <input type="text" class="form-control bg-white" readonly v-model="company.name">
+                        <input type="text" class="form-control bg-white text-dark" disabled v-model="company.name">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Từ</span>
-                        <input type="month" class="form-control bg-white" readonly v-model="company.from">
+                        <input type="month" class="form-control bg-white text-dark" disabled v-model="company.from">
                         <span class="input-group-text">Đến</span>
-                        <input type="month" class="form-control bg-white" readonly v-model="company.to">
+                        <input type="month" class="form-control bg-white text-dark" disabled v-model="company.to">
                     </div>
                 </div>
                 </div>
@@ -39,13 +39,13 @@
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Chức danh công việc</span>
-                            <input type="text" class="form-control bg-white" readonly v-model="company.title">
+                            <input type="text" class="form-control bg-white text-dark" disabled v-model="company.title">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Mô tả công việc</span>
-                        <textarea class="form-control bg-white" readonly aria-label="With textarea" v-model="company.detail"></textarea>
+                        <textarea class="form-control bg-white text-dark" disabled aria-label="With textarea" v-model="company.detail"></textarea>
                     </div>
                     </div>
 
@@ -57,23 +57,23 @@
                             <div class="card-body text-success">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
-                                    <input type="month" class="form-control bg-white" readonly  v-model="element.from">
+                                    <input type="month" class="form-control bg-white text-dark" disabled  v-model="element.from">
                                     <span class="input-group-text">Đến</span>
-                                    <input type="month" class="form-control bg-white" readonly  v-model="element.to">
+                                    <input type="month" class="form-control bg-white text-dark" disabled  v-model="element.to">
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Công việc</span>
-                                    <input type="text" class="form-control bg-white" readonly  v-model="element.work">
+                                    <input type="text" class="form-control bg-white text-dark" disabled  v-model="element.work">
                                     
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Chức danh công việc</span>
-                                    <input type="text" class="form-control bg-white" readonly  v-model="element.title">
+                                    <input type="text" class="form-control bg-white text-dark" disabled  v-model="element.title">
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Địa chỉ</span>
-                                    <input type="text" class="form-control bg-white" readonly  v-model="element.address">
+                                    <input type="text" class="form-control bg-white text-dark" disabled  v-model="element.address">
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
@@ -103,11 +103,11 @@
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                 Tiêu chí
-                <input type="text" class="form-control-plaintext form-control-sm" value="Điểm" :style="{maxWidth: '3rem'}" readonly/>
+                <input type="text" class="form-control-plaintext form-control-sm" value="Điểm" :style="{maxWidth: '3rem'}" disabled/>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(ele, index) in criteria" :key="index">
                  {{index+1+'. '+ele.name}}
-                <input type="number" class="form-control form-control-sm bg-white" readonly :style="{maxWidth: '3.5rem'}" v-model="employee.assessment[index]"/>
+                <input type="number" class="form-control form-control-sm bg-white text-dark" disabled :style="{maxWidth: '3.5rem'}" v-model="employee.assessment[index]"/>
             </li>
         </ul>
 		<h4 class="text-primary mt-2 text-decoration-underline">Quá trình học tập</h4>
@@ -117,9 +117,9 @@
                     <div class="card-header">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text">Từ:</span>
-                            <input type="text" class="form-control bg-white" :value="employee.startyear" readonly>    
+                            <input type="text" class="form-control bg-white" :value="employee.startyear" disabled>    
                             <span class="input-group-text">Đến:</span>
-                            <input type="text" class="form-control bg-white" :value="employee.endyear" readonly>
+                            <input type="text" class="form-control bg-white" :value="employee.endyear" disabled>
                         </div>
                     </div>
                     <div class="card-body text-primary">
@@ -130,13 +130,13 @@
                         <div class="row mb-2">
                             <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Điểm:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm bg-white" readonly>
+                                <input class="form-control form-control-sm bg-white" disabled>
                             </div>
                         </div> 
                         <div class="row mb-2">
                             <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Xếp loại:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm bg-white" readonly>
+                                <input class="form-control form-control-sm bg-white" disabled>
                             </div>
                         </div> 
                     </div>
@@ -191,13 +191,13 @@
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Điểm:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm bg-white" v-model="ele.point" readonly>
+                                <input class="form-control form-control-sm bg-white" v-model="ele.point" disabled>
                             </div>
                         </div> 
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Xếp loại:</label>
                             <div class="col-sm-8">
-                                <input class="form-control form-control-sm bg-white" v-model="ele.rating" readonly>
+                                <input class="form-control form-control-sm bg-white" v-model="ele.rating" disabled>
                             </div>
                         </div> 
                     </div>
@@ -352,7 +352,7 @@
             </thead>
             <tbody>
                 <tr v-for="skill in employee.skillOther">
-                    <th scope="row"><input type="text" class="form-control form-control-sm bg-white" v-model="skill.name" readonly></th>
+                    <th scope="row"><input type="text" class="form-control form-control-sm bg-white" v-model="skill.name" disabled></th>
                     <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="skill.point" :value="point" disabled></td>
 
                 </tr>

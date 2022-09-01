@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h3 class="text-primary d-flex justify-content-center my-4">TẠO LÝ LỊCH ỨNG VIÊN</h3>
+        <h3 class="text-primary d-flex justify-content-center my-4">TẠO LÝ LỊCH ỨNG VIÊN CVIDPRO</h3>
         <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
         <div class="row">
             <div class="col-md-6">
@@ -14,7 +14,7 @@
                 <p class="m-1">Địa chỉ: {{employee.address+' '+employee.ward+' '+employee.district+' '+employee.province}}</p>
             </div>
         </div>
-        <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệp làm việc</h4>
+        <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc</h4>
         <div class="card border-success mt-3" v-for="(company, index1) in skillWorking">
             <div class="card-header border-success position-relative">
                 <div class="row g-3 align-items-center">
@@ -485,6 +485,7 @@
                     });
                     return
                 }
+                checkSkillOther()
                 this.$http.post(`${BASE_URL}/employee/createCV`, {
                     id : this.employee._id,
                     skillWorking: this.skillWorking,
@@ -622,10 +623,12 @@
             },
             checkSkillOther(){
                 var index = 0
-                var error = false
                 while (index < this.skillOther.length){
                     if (this.skillOther.name != ''){
-                        
+                        index++
+                    }
+                    else {
+                        this.skillOther.splice(index, 1)
                     }
                 }
             },
