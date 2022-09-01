@@ -78,11 +78,7 @@
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Kết quả</span>
-                                    <select class="form-select bg-white" v-model="element.result" disabled>
-                                        <option value="" disabled>Chọn...</option>
-                                        <option value="1">Hoàn thành</option>
-                                        <option value="0">Không hoàn thành</option>
-                                    </select>
+                                    <input type="text" class="form-control bg-white text-dark" disabled :value="element.result==1?'Hoàn thành':'Không hoàn thành'">
                                 </div>
                                 
                             </div>
@@ -90,11 +86,7 @@
                     </div>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Lý do nghỉ việc</span>
-                        <select class="form-select bg-white" v-model="company.leaving" disabled>
-                            <option value="" disabled>Chọn...</option>
-                            <option value="1">Đúng quy định</option>
-                            <option value="0">Tự nghỉ</option>
-                        </select>
+                        <input type="text" class="form-control bg-white text-dark" disabled :value="company.leaving==1?'Đúng quy định':'Tự nghỉ'">
                     </div>
                 </div>
             </div>
