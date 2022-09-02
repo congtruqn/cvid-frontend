@@ -29,16 +29,17 @@
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Nơi làm việc {{index1+1}}</span>
-                        <input type="text" class="form-control bg-white text-dark" disabled v-model="company.name">
+                        <textarea type="text" class="form-control bg-white text-dark" disabled v-model="company.name"></textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Từ</span>
-                        <input type="text" class="form-control bg-white text-dark" disabled :value="new Date(company.from).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})">
+                        <input type="text" class="form-control bg-white text-dark" disabled :value="new Date(company.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})">
                         <span class="input-group-text">Đến</span>
-                        <input type="month" class="form-control bg-white text-dark" disabled :value="new Date(company.to).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})">
+                        <input type="month" class="form-control bg-white text-dark" disabled :value="new Date(company.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})">
                     </div>
+                    
                 </div>
                 </div>
             </div>
@@ -62,9 +63,9 @@
                             <div class="card-header bg-transparent border-success position-relative">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
-                                    <input type="text" class="form-control bg-white text-dark" disabled  :value="new Date(element.from).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})">
+                                    <input type="text" class="form-control bg-white text-dark" disabled  :value="new Date(element.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})">
                                     <span class="input-group-text">Đến</span>
-                                    <input type="text" class="form-control bg-white text-dark" disabled  :value="new Date(element.to).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})">
+                                    <input type="text" class="form-control bg-white text-dark" disabled  :value="new Date(element.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})">
                                 </div>
                             </div>
                             <div class="card-body text-success">
@@ -78,8 +79,8 @@
                                     <textarea type="text" class="form-control bg-white text-dark" disabled v-model="element.work"></textarea>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Địa chỉ</span>
-                                    <textarea type="text" class="form-control bg-white text-dark" disabled rows="1" v-model="element.address"></textarea>
+                                    <span class="input-group-text w-100">Địa chỉ</span>
+                                    <textarea type="text" class="form-control bg-white text-dark" disabled v-model="element.address"></textarea>
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
@@ -233,30 +234,30 @@
                 <tr>
                     <th colspan="5"><h5 class="text-primary m-1">Khả năng Tiếng Anh</h5></th>
                 </tr>
-                <tr>
-                    <th scope="col">Kĩ năng</th>
-                    <th scope="col">Giỏi</th>
-                    <th scope="col">Tốt</th>
-                    <th scope="col">Bình thường</th>
-                    <th scope="col">Cơ bản</th>
+                <tr class="d-flex">
+                    <th class="col-2">Kĩ năng</th>
+                    <th class="col">Giỏi</th>
+                    <th class="col">Tốt</th>
+                    <th class="col">Bình thường</th>
+                    <th class="col">Cơ bản</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Nghe</th>
-                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.listening" :value="point" disabled></td>
+                <tr class="d-flex">
+                    <th class="col-2">Nghe</th>
+                    <td class="col" v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.listening" :value="point" disabled></td>
                 </tr>
-                <tr>
-                    <th scope="row">Nói</th>
-                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.speaking" :value="point" disabled></td>
+                <tr class="d-flex">
+                    <th class="col-2">Nói</th>
+                    <td class="col" v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.speaking" :value="point" disabled></td>
                 </tr>
-                <tr>
-                    <th scope="row">Đọc</th>
-                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.reading" :value="point" disabled></td>
+                <tr class="d-flex">
+                    <th class="col-2">Đọc</th>
+                    <td class="col" v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.reading" :value="point" disabled></td>
                 </tr>
-                <tr>
-                    <th scope="row">Viết</th>
-                    <td v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.writing" :value="point" disabled></td>
+                <tr class="d-flex">
+                    <th class="col-2">Viết</th>
+                    <td class="col" v-for="point in 4"><input class="form-check-input" type="radio" v-model="employee.skillEnglish.writing" :value="point" disabled></td>
                 </tr>
             </tbody>
         </table>
@@ -298,38 +299,38 @@
                 <tr>
                     <th colspan="8"><h5 class="text-primary m-1">Khả năng vi tính</h5></th>
                 </tr>
-                <tr>
-                    <th scope="col">Đánh giá</th>
-                    <th scope="col">World</th>
-                    <th scope="col">Excel</th>
-                    <th scope="col">Phần mền khác</th>
+                <tr class="d-flex">
+                    <th class="col-2">Đánh giá</th>
+                    <th class="col">World</th>
+                    <th class="col">Excel</th>
+                    <th class="col-5">Phần mền khác</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Giỏi</th>
-                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="1" disabled></td>
-                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="1" disabled></td>
-                    <input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[0]" disabled>
+                <tr class="d-flex">
+                    <th class="col-2">Giỏi</th>
+                    <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="1" disabled></td>
+                    <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="1" disabled></td>
+                    <td class="col-5"><input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[0]" disabled></td>
                     
                 </tr>
-                <tr>
-                    <th scope="row">Tốt</th>
-                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="2" disabled></td>
-                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="2" disabled></td>
-                    <input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[1]" disabled>
+                <tr class="d-flex">
+                    <th class="col-2">Tốt</th>
+                    <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="2" disabled></td>
+                    <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="2" disabled></td>
+                    <td class="col-5"><input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[1]" disabled></td>
                 </tr>
-                <tr>
-                    <th scope="row">Bình thường</th>
-                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="3" disabled></td>
-                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="3" disabled></td>
-                    <input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[2]" disabled>
+                <tr class="d-flex">
+                    <th class="col-2">Bình thường</th>
+                    <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="3" disabled></td>
+                    <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="3" disabled></td>
+                    <td class="col-5"><input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[2]" disabled></td>
                 </tr>
-                <tr>
-                    <th scope="row">Cơ bản</th>
-                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="4" disabled></td>
-                    <td><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="4" disabled></td>
-                    <input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[3]" disabled>
+                <tr class="d-flex">
+                    <th class="col-2">Cơ bản</th>
+                    <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="4" disabled></td>
+                    <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="4" disabled></td>
+                    <td class="col-5"><input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[3]" disabled></td>
                 </tr>
             </tbody>
         </table>

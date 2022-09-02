@@ -61,22 +61,22 @@
                 <form class="row g-3" v-on:submit.prevent>
                     <div class="col-12 col-md-6">
                         <label for="inputState" class="form-label">Chuyên nghành mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="employee.jobs.skill"/>
+                        <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="jobs.skill" :disabled="jobs.status==1"/>
                         <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
                             <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
-                            <li v-for="item in filteredSkill()"  @click="skill=item"><a class="dropdown-item">{{item}}</a></li>
+                            <li v-for="item in filteredSkill()"  @click="jobs.skill=item"><a class="dropdown-item">{{item}}</a></li>
                         </ul>
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Môi trường làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
-                        <select id="inputState" class="form-select" v-model="employee.jobs.work_environment">
+                        <select id="inputState" class="form-select" v-model="jobs.work_environment" :disabled="jobs.status==1">
                             <option value="" disabled>Chọn ...</option>
                             <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="form-label">Lĩnh vực mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
-                        <select id="inputState" class="form-select" v-model="employee.jobs.work_industry">
+                        <select id="inputState" class="form-select" v-model="jobs.work_industry" :disabled="jobs.status==1">
                             <option value="" disabled>Chọn ...</option>
                             <option >Dịch vụ</option>
                             <option >Thương mại</option>
@@ -86,14 +86,14 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <select id="inputState" class="form-select" v-model="employee.jobs.work_industry">
+                        <select id="inputState" class="form-select" v-model="jobs.type_business" :disabled="jobs.status==1">
                             <option value="" disabled>Chọn ...</option>
                             <option v-for="item in industries" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Nơi làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <select class="form-control" v-model="employee.jobs.address" required>
+                        <select class="form-control" v-model="jobs.address" :disabled="jobs.status==1">
                             <option value="" disabled>Chọn tỉnh/thành phố</option>
                             <option v-for="province in provinces" :value='province'>{{province}}</option>
                         </select>
@@ -119,7 +119,8 @@
                         <input type="text" class="form-control" id="inputZip">
                     </div> -->
                     <div class="col-12 text-center">
-                        <button type="button" class="btn btn-lg btn-primary" @click="findJob()">Tìm việc</button>
+                        <button type="button" class="btn btn-lg btn-primary" @click="startFindJob()" v-if="jobs.status==0">Tìm việc</button>
+                        <button type="button" class="btn btn-lg btn-primary" @click="endFindJob()" v-if="jobs.status==1">Dừng tìm</button>
                     </div>
                 </form>
             </div>
@@ -160,11 +161,11 @@
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config')
-    
+    var employee = JSON.parse(localStorage.getItem('employee'))
     export default {  
         data(){
             return {
-                employee: JSON.parse(localStorage.getItem('employee')),
+                jobs: '',
                 position: [],
                 province: '',
                 skill: '',
@@ -173,7 +174,8 @@
                 work_industry: '',
                 majors: [],
                 provinces: [],
-                environments: []
+                environments: [],
+                industries: []
             }
         },
         methods: {
@@ -189,38 +191,40 @@
                 });
                 return skills
             },
-            findJob(){
+            startFindJob(){
                 this.position = []
                 this.$http.post(`${BASE_URL}/employee/findPosition`,{
-                    major: this.employee.major,
-                    skill: this.skill
+                    skill: this.jobs.skill
                 })
                 .then(res => {
                     res.data.forEach(item => {
                         item.position.forEach(position => {
-                            if (position.skills.includes(this.skill) && position.status == 1) {
+                            if (position.skills.includes(this.jobs.skill) && position.status == 1) {
                                 this.position.push(position)
                             }
                         })
                     })
+                    this.jobs.status = 1
                 })
+            },
+            endFindJob(){
+                this.position = []
+                this.jobs.status = 0
             }
         },
         created(){
-            this.skill = this.employee.skill
-            // this.$http.post(`${BASE_URL}/employee/findPosition`,{
-            //     major: this.employee.major,
-            //     skill: this.employee.skill
-            // })
-            // .then(res => {
-            //     res.data.forEach(item => {
-            //         item.position.forEach(position => {
-            //             if ((position.skills.includes(this.employee.skill) || position.majors.includes(this.employee.major)) && position.status == 1) {
-            //                 this.position.push(position)
-            //             }
-            //         })
-            //     })
-            // }) 
+            if (!employee.jobs){
+                this.jobs = {
+                    skill: employee.skill,
+                    address: employee.province,
+                    work_industry: '',
+                    work_environment: '',
+                    type_business: '',
+                    status: 0
+                }
+            } else {
+                this.jobs = employee.jobs
+            }
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data
