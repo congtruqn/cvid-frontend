@@ -77,40 +77,8 @@
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text w-100">Công việc đã thực hiện</span>
-                                    <textarea class="form-control fs-6 bg-white" disabled v-model="element.work" style></textarea>
+                                    <textarea class="form-control fs-6 bg-white text-dark" disabled v-model="element.work"></textarea>
                                     <!-- <span class="border p-1 bg-white col">{{element.work}}</span> -->
-                                </div>
-                                <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text w-100">Địa chỉ</span>
-                                    <span class="border p-1 bg-white col">{{element.address}}</span>
-                                </div>
-                                <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Kết quả</span>
-                                    <span class="border p-1 bg-white col">{{element.result==1?'Hoàn thành':'Không hoàn thành'}}</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6" v-for="(element, index2) in company.process">
-                        <div class="card border-success mb-3">
-                            <div class="card-header bg-transparent border-success position-relative">
-                                <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Từ</span>
-                                    <span class="border p-1 bg-white col">{{new Date(element.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
-                                    <span class="input-group-text">Đến</span>
-                                    <span class="border p-1 bg-white col">{{new Date(element.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
-                                </div>
-                            </div>
-                            <div class="card-body text-success">
-                                
-                                <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text w-100">Chức danh công việc</span>
-                                    <span class="border p-1 bg-white col">{{element.title}}</span>
-                                </div>
-                                <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text w-100">Công việc đã thực hiện</span>
-                                    <span class="border p-1 bg-white col">{{element.work}}</span>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text w-100">Địa chỉ</span>
