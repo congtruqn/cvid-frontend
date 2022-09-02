@@ -29,17 +29,16 @@
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Nơi làm việc {{index1+1}}</span>
-                        <span class="border p-1">{{company.name}}</span>
-                        <!-- <p class="form-control bg-white text-dark">{{company.name}}</p> -->
-                        <!-- <textarea type="text" class="form-control bg-white text-dark" disabled v-model="company.name"></textarea> -->
+                        <span class="border p-1 bg-white col">{{company.name}}</span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Từ</span>
-                        <input type="text" class="form-control bg-white text-dark" disabled :value="new Date(company.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})">
+                        <span class="border p-1 bg-white col">{{new Date(company.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
                         <span class="input-group-text">Đến</span>
-                        <input type="month" class="form-control bg-white text-dark" disabled :value="new Date(company.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})">
+                        <span class="border p-1 bg-white col">{{new Date(company.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
+
                     </div>
                     
                 </div>
@@ -50,44 +49,43 @@
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Chức danh công việc</span>
-                            <input type="text" class="form-control bg-white text-dark" disabled v-model="company.title">
+                            <span class="border p-1 bg-white col">{{company.title}}</span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Mô tả công việc</span>
-                        <textarea class="form-control bg-white text-dark" disabled aria-label="With textarea" v-model="company.detail"></textarea>
+                        <span class="border p-1 bg-white col">{{company.detail}}</span>
                     </div>
                     </div>
                     <h5 class="text-primary">Quá trình làm việc</h5>
-                    <div class="col-md-12" v-for="(element, index2) in company.process">
+                    <div class="col-md-6" v-for="(element, index2) in company.process">
                         <div class="card border-success mb-3">
                             <div class="card-header bg-transparent border-success position-relative">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
-                                    <input type="text" class="form-control bg-white text-dark" disabled  :value="new Date(element.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})">
+                                    <span class="border p-1 bg-white col">{{new Date(element.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
                                     <span class="input-group-text">Đến</span>
-                                    <input type="text" class="form-control bg-white text-dark" disabled  :value="new Date(element.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})">
+                                    <span class="border p-1 bg-white col">{{new Date(element.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
                                 </div>
                             </div>
                             <div class="card-body text-success">
                                 
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text w-100">Chức danh công việc</span>
-                                    <input type="text" class="form-control bg-white text-dark" disabled  v-model="element.title">
+                                    <span class="border p-1 bg-white col">{{element.title}}</span>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text w-100">Công việc đã thực hiện</span>
-                                    <textarea type="text" class="form-control bg-white text-dark" disabled v-model="element.work"></textarea>
+                                    <span class="border p-1 bg-white col">{{element.work}}</span>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text w-100">Địa chỉ</span>
-                                    <textarea type="text" class="form-control bg-white text-dark" disabled v-model="element.address"></textarea>
-                                
+                                    <span class="border p-1 bg-white col">{{element.address}}</span>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Kết quả</span>
-                                    <input type="text" class="form-control bg-white text-dark" disabled :value="element.result==1?'Hoàn thành':'Không hoàn thành'">
+                                    <span class="border p-1 bg-white col">{{element.result==1?'Hoàn thành':'Không hoàn thành'}}</span>
                                 </div>
                                 
                             </div>
@@ -95,7 +93,7 @@
                     </div>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Lý do nghỉ việc</span>
-                        <input type="text" class="form-control bg-white text-dark" disabled :value="company.leaving==1?'Đúng quy định':'Tự nghỉ'">
+                        <span class="border p-1 bg-white col">{{company.leaving==1?'Đúng quy định':'Tự nghỉ'}}</span>
                     </div>
                 </div>
             </div>
