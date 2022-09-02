@@ -61,7 +61,7 @@
                 <form class="row g-3" v-on:submit.prevent>
                     <div class="col-12 col-md-6">
                         <label for="inputState" class="form-label">Chuyên nghành mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="skill"/>
+                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="employee.jobs.skill"/>
                         <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
                             <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
                             <li v-for="item in filteredSkill()"  @click="skill=item"><a class="dropdown-item">{{item}}</a></li>
@@ -69,14 +69,14 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Môi trường làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
-                        <select id="inputState" class="form-select" v-model="work_environment">
+                        <select id="inputState" class="form-select" v-model="employee.jobs.work_environment">
                             <option value="" disabled>Chọn ...</option>
                             <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="form-label">Lĩnh vực mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
-                        <select id="inputState" class="form-select" v-model="work_industry">
+                        <select id="inputState" class="form-select" v-model="employee.jobs.work_industry">
                             <option value="" disabled>Chọn ...</option>
                             <option >Dịch vụ</option>
                             <option >Thương mại</option>
@@ -86,14 +86,14 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <select id="inputState" class="form-select" v-model="work_industry">
+                        <select id="inputState" class="form-select" v-model="employee.jobs.work_industry">
                             <option value="" disabled>Chọn ...</option>
                             <option v-for="item in industries" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Nơi làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <select class="form-control" v-model="province" required>
+                        <select class="form-control" v-model="employee.jobs.address" required>
                             <option value="" disabled>Chọn tỉnh/thành phố</option>
                             <option v-for="province in provinces" :value='province'>{{province}}</option>
                         </select>
@@ -171,7 +171,6 @@
                 searchSkill: '',
                 work_environment: '',
                 work_industry: '',
-
                 majors: [],
                 provinces: [],
                 environments: []

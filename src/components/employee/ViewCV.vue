@@ -56,7 +56,7 @@
                         <textarea class="form-control bg-white text-dark" disabled aria-label="With textarea" v-model="company.detail"></textarea>
                     </div>
                     </div>
-                    <h5 class="text-center text-primary">Quá trình làm việc</h5>
+                    <h5 class="text-primary">Quá trình làm việc</h5>
                     <div class="col-md-6" v-for="(element, index2) in company.process">
                         <div class="card border-success mb-3">
                             <div class="card-header bg-transparent border-success position-relative">
@@ -70,11 +70,11 @@
                             <div class="card-body text-success">
                                 
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Chức danh công việc</span>
+                                    <span class="input-group-text w-100">Chức danh công việc</span>
                                     <input type="text" class="form-control bg-white text-dark" disabled  v-model="element.title">
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Công việc đã thực hiện</span>
+                                    <span class="input-group-text w-100">Công việc đã thực hiện</span>
                                     <textarea type="text" class="form-control bg-white text-dark" disabled v-model="element.work"></textarea>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
