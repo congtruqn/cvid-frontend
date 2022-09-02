@@ -29,7 +29,9 @@
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Nơi làm việc {{index1+1}}</span>
-                        <textarea type="text" class="form-control bg-white text-dark" disabled v-model="company.name"></textarea>
+                        <span class="border p-1">{{company.name}}</span>
+                        <!-- <p class="form-control bg-white text-dark">{{company.name}}</p> -->
+                        <!-- <textarea type="text" class="form-control bg-white text-dark" disabled v-model="company.name"></textarea> -->
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -58,7 +60,7 @@
                     </div>
                     </div>
                     <h5 class="text-primary">Quá trình làm việc</h5>
-                    <div class="col-md-6" v-for="(element, index2) in company.process">
+                    <div class="col-md-12" v-for="(element, index2) in company.process">
                         <div class="card border-success mb-3">
                             <div class="card-header bg-transparent border-success position-relative">
                                 <div class="input-group input-group-sm mb-2">
