@@ -70,31 +70,28 @@
                     <div class="col-12 col-md-6">
                         <label class="form-label">Môi trường làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
                         <select id="inputState" class="form-select" v-model="jobs.work_environment" :disabled="jobs.status==1">
-                            <option value="" disabled>Chọn ...</option>
+                            <option value="">Chọn ...</option>
                             <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="form-label">Lĩnh vực mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
                         <select id="inputState" class="form-select" v-model="jobs.work_industry" :disabled="jobs.status==1">
-                            <option value="" disabled>Chọn ...</option>
-                            <option >Dịch vụ</option>
-                            <option >Thương mại</option>
-                            <option >Sản xuất</option>
-                            <option >Kỹ thuật</option>
+                            <option value="">Chọn ...</option>
+                            <option v-for="item in industries" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <select id="inputState" class="form-select" v-model="jobs.type_business" :disabled="jobs.status==1">
-                            <option value="" disabled>Chọn ...</option>
-                            <option v-for="item in industries" :value="item.name">{{item.name}}</option>
+                            <option value="">Chọn ...</option>
+                            <option v-for="item in type_businesses" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Nơi làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <select class="form-control" v-model="jobs.address" :disabled="jobs.status==1">
-                            <option value="" disabled>Chọn tỉnh/thành phố</option>
+                            <option value="">Chọn tỉnh/thành phố</option>
                             <option v-for="province in provinces" :value='province'>{{province}}</option>
                         </select>
                     </div>
@@ -172,6 +169,7 @@
                 searchSkill: '',
                 work_environment: '',
                 work_industry: '',
+                type_businesses: [],
                 majors: [],
                 provinces: [],
                 environments: [],
@@ -193,17 +191,11 @@
             },
             startFindJob(){
                 this.position = []
-                this.$http.post(`${BASE_URL}/employee/findPosition`,{
-                    skill: this.jobs.skill
+                this.$http.post(`${BASE_URL}/employee/findJob`,{
+                    job: this.jobs
                 })
                 .then(res => {
-                    res.data.forEach(item => {
-                        item.position.forEach(position => {
-                            if (position.skills.includes(this.jobs.skill) && position.status == 1) {
-                                this.position.push(position)
-                            }
-                        })
-                    })
+                    this.position = res.data
                     this.jobs.status = 1
                 })
             },
@@ -233,6 +225,11 @@
             this.$http.get(`${BASE_URL}/province/list`)
             .then(response => {
                 this.provinces = new Set(response.data.map(item => item.province))
+              
+            })
+            this.$http.get(`${BASE_URL}/typebusiness/getall`)
+            .then(response => {
+                this.type_businesses = response.data
               
             })
             this.$http.get(`${BASE_URL}/industry/getall`)

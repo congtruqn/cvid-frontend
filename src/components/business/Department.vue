@@ -146,17 +146,14 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Lĩnh vực kinh doanh</label> 
-                                <select id="inputState" class="form-select">
+                                <select class="form-select" v-model="position.work_industry">
                                     <option value="" disabled>Chọn ...</option>
-                                    <option >Dịch vụ</option>
-                                    <option >Thương mại</option>
-                                    <option >Sản xuất</option>
-                                    <option >Kỹ thuật</option>
+                                    <option v-for="item in industries" :value="item.name">{{item.name}}</option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Môi trường làm việc</label> 
-                                <select id="inputState" class="form-select" v-model="work_environment">
+                                <select class="form-select" v-model="position.work_environment">
                                     <option value="" disabled>Chọn ...</option>
                                     <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                                 </select>
@@ -267,17 +264,14 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Lĩnh vực kinh doanh</label> 
-                                <select id="inputState" class="form-select">
+                                <select class="form-select" v-model="position.work_industry">
                                     <option value="" disabled>Chọn ...</option>
-                                    <option >Dịch vụ</option>
-                                    <option >Thương mại</option>
-                                    <option >Sản xuất</option>
-                                    <option >Kỹ thuật</option>
+                                    <option v-for="item in industries" :value="item.name">{{item.name}}</option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Môi trường làm việc</label> 
-                                <select id="inputState" class="form-select" v-model="work_environment">
+                                <select class="form-select" v-model="position.work_environment">
                                     <option value="" disabled>Chọn ...</option>
                                     <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                                 </select>
@@ -346,6 +340,7 @@
                 majors: [],
                 position_id: '',
                 environments: [],
+                industries: [],
                 provinces: [],
                 departments: [],
                 department: {
@@ -362,6 +357,8 @@
                     skills: [],
                     description: "",
                     work_location: "",
+                    work_industry: "",
+                    work_environment: "",
                     amount: 1,
                     min_salary: 0,
                     max_salary: 0,
@@ -466,6 +463,8 @@
                     amount: 1,
                     description: "",
                     work_location: "",
+                    work_industry: "",
+                    work_environment: "",
                     min_salary: 0,
                     max_salary: 0,
                     requirements: "",
@@ -561,6 +560,11 @@
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data
+            })
+            this.$http.get(`${BASE_URL}/industry/getall`)
+            .then(response => {
+                this.industries = response.data
+              
             })
             this.$http.get(`${BASE_URL}/environment/getall`)
             .then(response => {
