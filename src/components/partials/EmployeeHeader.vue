@@ -48,13 +48,13 @@
                     token: token
                 })
                 .then(res => {
-                    if (res.data.code == 200 && res.data.user.type == 4){
+                    if (res.data.user.type == 4){
                         localStorage.setItem('employee', JSON.stringify(res.data.user))
-                    } else if (res.data.code != 200){
-                        localStorage.removeItem('employee')
+                        console.log(res.data.user)
                     }
                 })
                 .catch(function (error) {
+                    localStorage.removeItem('employee')
                     console.error(error.response);
                 });
             } 
