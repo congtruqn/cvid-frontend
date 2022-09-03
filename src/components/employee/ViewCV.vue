@@ -103,7 +103,7 @@
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                 Tiêu chí
-                <input type="text" class="form-control-plaintext form-control-sm" value="Điểm" :style="{maxWidth: '3rem'}" disabled/>
+                <input type="text" class="form-control-plaintext form-control-sm text-dark" value="Điểm" :style="{maxWidth: '3rem'}" disabled/>
             </li>
             <li class="list-group-item" v-for="(ele, index) in criteria" :key="index">
                 <div class="d-flex justify-content-between align-items-center">
@@ -312,26 +312,26 @@
                     <th class="col-2">Giỏi</th>
                     <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="1" disabled></td>
                     <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="1" disabled></td>
-                    <td class="col-5"><input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[0]" disabled></td>
+                    <td class="col-5">{{employee.skillComputer.other[0]}}</td>
                     
                 </tr>
                 <tr class="d-flex">
                     <th class="col-2">Tốt</th>
                     <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="2" disabled></td>
                     <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="2" disabled></td>
-                    <td class="col-5"><input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[1]" disabled></td>
+                    <td class="col-5">{{employee.skillComputer.other[1]}}</td>
                 </tr>
                 <tr class="d-flex">
                     <th class="col-2">Bình thường</th>
                     <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="3" disabled></td>
                     <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="3" disabled></td>
-                    <td class="col-5"><input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[2]" disabled></td>
+                    <td class="col-5">{{employee.skillComputer.other[2]}}</td>
                 </tr>
                 <tr class="d-flex">
                     <th class="col-2">Cơ bản</th>
                     <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.word" value="4" disabled></td>
                     <td class="col"><input class="form-check-input" type="radio" v-model="employee.skillComputer.excel" value="4" disabled></td>
-                    <td class="col-5"><input type="text" class="form-control form-control-sm bg-white" v-model="employee.skillComputer.other[3]" disabled></td>
+                    <td class="col-5">{{employee.skillComputer.other[3]}}</td>
                 </tr>
             </tbody>
         </table>
