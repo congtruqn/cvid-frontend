@@ -1,6 +1,7 @@
 <template>
-<div>
-    <table class="table">
+<div class="table-responsive-xxl">
+    <table class="table table-sm caption-top" style="minWidth: 1000px">
+        <caption>Danh sách người tìm việc</caption>
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -16,6 +17,12 @@
                 <td>{{item.name}}</td>
                 <td>{{item.username}}</td>
                 <td>{{item.email}}</td>
+                <td>
+                    <a :href="'/employee/cvid/'+item._id" target="_blank" class="btn btn-sm text-primary"><i class="fas fa-eye"></i></a>
+                    <button class="btn btn-sm" ><i class="fas fa-pen"></i></button>
+                    <button class="btn btn-sm text-danger" @click="deleteEmployee(item._id)"><i class="fas fa-trash"></i></button>
+                </td>
+                
             </tr>
         </tbody>
     </table>
@@ -30,6 +37,25 @@ export default {
         }
     },
     methods: {
+        deleteEmployee(id) {
+            this.$http.post(`${BASE_URL}/admin/delete-employee-by-id`,{
+                token: localStorage.getItem('token'),
+                id: id
+            })
+            .then(res=> {
+                if (res.data.ok == 1){
+                    this.items.forEach((item, index) => {
+                        if (item._id == id){
+                            this.items.splice(index, 1)
+                        }
+                    })
+                }
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+        }
+
      
     },
     created(){

@@ -1,6 +1,6 @@
 <template>
-<div>
-    <table class="table">
+<div class="table-responsive-xxl">
+    <table class="table table-sm caption-top">
         <thead>
             <tr>
                 <th scope="col">#</th>
