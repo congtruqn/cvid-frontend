@@ -12,6 +12,16 @@
                 <a href="/admin/employee/list" class="w3-bar-item w3-button">Người tìm việc</a>
                 <a href="/admin/business/list" class="w3-bar-item w3-button">Nhà tuyển dụng</a>
             </div>
+        </div>
+        <div class="w3-dropdown-hover">
+            <button class="w3-button"><i class="fas fa-user"></i> Thông tin 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block">
+                <a href="/admin/employee/list" class="w3-bar-item w3-button">Loại hình doanh nghiệp</a>
+                <a href="/admin/environment/list" class="w3-bar-item w3-button">Môi trường làm việc</a>
+                <a href="/admin/type-business/list" class="w3-bar-item w3-button">Ngành công nghiệp</a>
+            </div>
         </div> 
         <a href="#" class="w3-bar-item w3-button">Link 3</a>
         <a href="/admin/login" class="w3-bar-item w3-button">Login</a>

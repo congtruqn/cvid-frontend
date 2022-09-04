@@ -27,7 +27,7 @@ const {BASE_URL} =  require('../../utils/config')
                 })
                 .then(response => {
                     localStorage.setItem('token',response.data.token);
-                    this.$router.push('/admin/employee')   
+                    this.$router.push('/admin/employee/list')   
                 })
                 .catch(function (error) {
                     Swal.fire({
