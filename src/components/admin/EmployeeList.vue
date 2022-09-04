@@ -11,8 +11,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in items">
-                <th scope="row">1</th>
+            <tr v-for="(item, index) in items">
+                <th scope="row">{{index+1}}</th>
                 <td>{{item.name}}</td>
                 <td>{{item.username}}</td>
                 <td>{{item.email}}</td>
