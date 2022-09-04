@@ -40,13 +40,7 @@ export default {
             this.items = res.data
         })
         .catch(function (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Có lỗi',
-                text: error.response.data,
-                confirmButtonColor: 'var(--primary)',
-                confirmButtonText: 'Nhập lại',
-            });
+            console.log(error.response.data)
         });
     }
 }
