@@ -159,12 +159,39 @@ let router = new Router({
         }
     },
     {
+        path: '/admin/login',
+        name: 'admin-login',
+        component: () => import('@/components/admin/Login'),
+        meta: {
+            guest: true,
+            layout: 'Admin'
+        }
+    },
+    {
         path: '/add-major',
         name: 'quan-ly-phong-ban',
         component: () => import('@/components/admin/Major'),
         meta: {
             guest: true,
             layout: 'Auth'
+        }
+    },
+    {
+        path: '/admin/employee/list',
+        name: 'admin',
+        component: () => import('@/components/admin/EmployeeList'),
+        meta: {
+            guest: true,
+            layout: 'Admin'
+        }
+    },
+    {
+        path: '/admin/business/list',
+        name: 'admin',
+        component: () => import('@/components/admin/BusinessList'),
+        meta: {
+            guest: true,
+            layout: 'Admin'
         }
     },
 
