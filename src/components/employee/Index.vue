@@ -201,8 +201,14 @@
                 })
             },
             endFindJob(){
-                this.position = []
                 this.job.status = 0
+                this.$http.post(`${BASE_URL}/employee/findJob`,{
+                    id: employee._id,
+                    job: this.job
+                })
+                .then(res => {
+                    this.position = []
+                })
             }
         },
         created(){
