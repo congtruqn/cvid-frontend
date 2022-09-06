@@ -476,7 +476,7 @@
                 let newDepartment = this.department
                 newDepartment.position = this.position
                 this.$http.post(`${BASE_URL}/department/position/edit`, {
-                    department: this.newDepartment
+                    department: newDepartment
                 }).then(res => {
                     Swal.fire({
                         icon: 'success',

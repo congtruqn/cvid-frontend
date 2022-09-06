@@ -82,6 +82,7 @@
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
+                                <p class="card-text text-primary">Thời gian tìm việc: {{cv.job.datetime}}</p>
                                 <a :href="'/business/cvid/'+cv._id+'?position='+position._id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
                                 <span class="m-auto">{{cv.review}}</span>
                                 <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.type == 2" @change="onChange($event, cv)">
