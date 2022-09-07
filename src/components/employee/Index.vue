@@ -70,28 +70,28 @@
                     <div class="col-12 col-md-6">
                         <label class="form-label">Môi trường làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
                         <select id="inputState" class="form-select" v-model="job.work_environment" :disabled="job.status==1">
-                            <option value="">Chọn ...</option>
+                            <option value="">Tất cả môi trường làm việc</option>
                             <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="form-label">Lĩnh vực mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
                         <select id="inputState" class="form-select" v-model="job.work_industry" :disabled="job.status==1">
-                            <option value="">Chọn ...</option>
+                            <option value="">Tất cả lĩnh vực</option>
                             <option v-for="item in industries" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <select id="inputState" class="form-select" v-model="job.type_business" :disabled="job.status==1">
-                            <option value="">Chọn ...</option>
+                            <option value="">Tất cả loại hình</option>
                             <option v-for="item in type_businesses" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputPoint" class="form-label">Nơi làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <select class="form-control" v-model="job.address" :disabled="job.status==1">
-                            <option value="">Chọn tỉnh/thành phố</option>
+                            <option value="">Tất cả tỉnh/thành phố</option>
                             <option v-for="province in provinces" :value='province'>{{province}}</option>
                         </select>
                     </div>
@@ -116,7 +116,7 @@
                         <input type="text" class="form-control" id="inputZip">
                     </div> -->
                     <div class="col-12 text-center">
-                        <button type="button" class="btn btn-lg btn-primary" @click="startFindJob()" v-if="job.status==0">Tìm việc</button>
+                        <button type="button" class="btn btn-lg btn-primary" @click="beforeFindJob()" v-if="job.status==0">Tìm việc</button>
                         <button type="button" class="btn btn-lg btn-primary" @click="endFindJob()" v-if="job.status==1">Dừng tìm</button>
                     </div>
                 </form>
@@ -153,12 +153,51 @@
                 </div>
             </div>
         </div>
+        <button type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="mybutton"></button>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tìm việc ở xa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn đang tìm việc ở tình thành khác với thông tin đăng kí. Vui lòng xác nhận lại một số thông tin sau:
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Chỗ ở nơi làm mới:</label>
+                    <input type="email" class="form-control" placeholder="Nhập chỗ ở mới">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Tình trạng hôn nhân:</label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Chọn tình trạng hôn nhân</option>
+                        <option value="1">Đã kết hôn</option>
+                        <option value="2">Chưa kết hôn</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Phương tiện đi lại:</label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Chọn phương tiện</option>
+                        <option value="1">Phương tiện công cộng</option>
+                        <option value="2">Xe máy</option>
+                        <option value="3">Ô tô</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="startFindJob()">Tìm việc</button>
+            </div>
+            </div>
+        </div>
+        </div>
         <!-- Jobs End -->
     </div>
 </template>
 <script>
     const {BASE_URL} =  require('../../utils/config')
-    var employee = JSON.parse(localStorage.getItem('employee'))
     export default {  
         data(){
             return {
@@ -173,7 +212,8 @@
                 majors: [],
                 provinces: [],
                 environments: [],
-                industries: []
+                industries: [],
+                employee: ''
             }
         },
         methods: {
@@ -189,11 +229,19 @@
                 });
                 return skills
             },
+            beforeFindJob(){
+                if (this.job.address != "" && this.job.address != this.employee.province){
+                    var element = document.getElementById("mybutton");
+                    element.click()
+                } else {
+                    this.startFindJob()
+                }
+            },
             startFindJob(){
                 this.position = []
                 this.job.status = 1
                 this.$http.post(`${BASE_URL}/employee/findJob`,{
-                    id: employee._id,
+                    id: this.employee._id,
                     job: this.job
                 })
                 .then(res => {
@@ -203,7 +251,7 @@
             endFindJob(){
                 this.job.status = 0
                 this.$http.post(`${BASE_URL}/employee/findJob`,{
-                    id: employee._id,
+                    id: this.employee._id,
                     job: this.job
                 })
                 .then(res => {
@@ -216,13 +264,13 @@
                 token: localStorage.getItem('token')
             })
             .then(res => {
-                let user = res.data.user
-                if (user.job){
-                    this.job = user.job
+                this.employee = res.data.user
+                if (this.employee.job){
+                    this.job = this.employee.job
                 } else {
                     this.job = {
-                        skill: user.skill,
-                        address: user.province,
+                        skill: this.employee.skill,
+                        address: this.employee.province,
                         work_industry: '',
                         work_environment: '',
                         type_business: '',

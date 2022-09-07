@@ -54,7 +54,7 @@
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
                                     <input @click="focus" type="text" class="form-control" v-model="address" required disabled/>
-                                    <label class="form-label">Địa chỉ doanh nghiệp</label>
+                                    <label class="form-label">Số và tên đường</label>
                                 </div>
                             </div>        
                         </div>
