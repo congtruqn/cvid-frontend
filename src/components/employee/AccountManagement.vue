@@ -21,17 +21,18 @@
     <div class="card mt-2">
         <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted">Xác thực căn cước công dân </h6>
-            <p>Quét mã qr trên căn cước công dân: <a @click="torch=!torch"><i class="fas fa-qrcode fa-2x m-1"></i></a></p>
+            <p class="card-text p-2 m-0">Quét mã qr trên căn cước công dân: <button @click="cccd=''" class="btn btn-light"><i class="fas fa-qrcode m-1"></i></button></p>
             <p class="card-text p-2 m-0">Số căn cước công dân: {{cccd}}</p>
-            {{error}}
-            <h6></h6>
+            
         </div>
-        <qrcode-stream @init="onInit" @decode="onDecode" :torch="false"></qrcode-stream>
-        <!-- <div class="card-footer bg-white text-end">
-            <a href="#" class="card-link">Đổi email</a>
-            <a href="#" class="card-link">Đổi số điện thoại</a>
-            <a href="#" class="card-link">Đổi mật khẩu</a>
-        </div> -->
+        <qrcode-stream :camera="camera" @init="onInit" @decode="onDecode" v-if="cccd==''">
+            <button @click="switchCamera" class="btn btn-light">
+                <i class="fa-sharp fa-solid fa-camera-rotate"></i>
+            </button>
+            <button @click="cccd = null" class="btn btn-light float-end">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </qrcode-stream>
     </div>
     
 </div>
@@ -48,11 +49,22 @@ export default {
         return {
             employee: JSON.parse(localStorage.getItem('employee')),
             error: '',
-            cccd: '',
-            torch: false
+            cccd: JSON.parse(localStorage.getItem('employee')).cccd,
+            torch: false,
+            camera: 'rear',
         }
     },
     methods: {
+        switchCamera () {
+            switch (this.camera) {
+                case 'front':
+                this.camera = 'rear'
+                break
+                case 'rear':
+                this.camera = 'front'
+                break
+            }
+        },
         async onInit (promise) {
             // show loading indicator
             try {
@@ -69,7 +81,7 @@ export default {
             } else if (error.name === 'NotReadableError') {
                 this.error = "maybe camera is already in use"
             } else if (error.name === 'OverconstrainedError') {
-                this.error = "did you requested the front camera although there is none?"
+                this.camera = "front"
             } else if (error.name === 'StreamApiNotSupportedError') {
                 this.error = "browser seems to be lacking features"
             }
@@ -78,7 +90,9 @@ export default {
             }
         },
         onDecode(decodedString){
-            this.cccd = decodedString
+            if (decodedString.split("|")[0].length != 12){
+                this.cccd = decodedString.split("|")[0]
+            }
         }
     }
 }
