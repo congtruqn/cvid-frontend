@@ -28,16 +28,16 @@
                 <div class="row g-3 align-items-center">
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
-                        <span class="input-group-text">Nơi làm việc {{index1+1}}</span>
-                        <span class="border p-1 bg-white col">{{company.name}}</span>
+                        <span class="input-group-text fw-bold">Nơi làm việc {{index1+1}}</span>
+                        <span class="border p-1 bg-white col fw-bold">{{company.name}}</span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
-                        <span class="input-group-text">Từ</span>
-                        <span class="border p-1 bg-white col">{{new Date(company.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
-                        <span class="input-group-text">Đến</span>
-                        <span class="border p-1 bg-white col">{{new Date(company.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
+                        <span class="input-group-text fw-bold">Từ</span>
+                        <span class="border p-1 bg-white col fw-bold">{{new Date(company.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
+                        <span class="input-group-text fw-bold">Đến</span>
+                        <span class="border p-1 bg-white col fw-bold">{{new Date(company.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
 
                     </div>
                     
@@ -48,53 +48,53 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text">Chức danh công việc</span>
-                            <span class="border p-1 bg-white col">{{company.title}}</span>
+                            <span class="input-group-text fw-bold">Chức danh công việc</span>
+                            <span class="border p-1 bg-white col fw-bold">{{company.title}}</span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Mô tả công việc</span>
-                        <span class="border p-1 bg-white col">{{company.detail}}</span>
+                        <span class="input-group-text fw-bold">Mô tả công việc</span>
+                        <span class="border p-1 bg-white col fw-bold">{{company.detail}}</span>
                     </div>
                     </div>
-                    <h5 class="text-primary">Quá trình làm việc</h5>
+                    <h5 class="text-primary fw-bold">Quá trình làm việc</h5>
                     <div class="col-md-6 mb-3" v-for="(element, index2) in company.process">
                         <div class="card border-success">
                             <div class="card-header bg-transparent border-success position-relative">
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Từ</span>
-                                    <span class="border p-1 bg-white col">{{new Date(element.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
-                                    <span class="input-group-text">Đến</span>
-                                    <span class="border p-1 bg-white col">{{new Date(element.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
+                                    <span class="input-group-text fw-bold">Từ</span>
+                                    <span class="border p-1 bg-white col fw-bold">{{new Date(element.from).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
+                                    <span class="input-group-text fw-bold">Đến</span>
+                                    <span class="border p-1 bg-white col fw-bold">{{new Date(element.to).toLocaleDateString('en-US', {year: 'numeric', month: 'numeric'})}}</span>
                                 </div>
                             </div>
                             <div class="card-body text-success">
                                 
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text w-100">Chức danh công việc</span>
-                                    <span class="border p-1 bg-white col">{{element.title}}</span>
+                                    <span class="input-group-text w-100 fw-bold">Chức danh công việc</span>
+                                    <span class="border p-1 bg-white col fw-bold">{{element.title}}</span>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text w-100">Công việc đã thực hiện</span>
-                                    <textarea class="form-control fs-6 bg-white text-dark" disabled v-model="element.work"></textarea>
+                                    <span class="input-group-text w-100 fw-bold">Công việc đã thực hiện</span>
+                                    <textarea class="form-control bg-white text-reset fs-6 fw-bold" disabled v-model="element.work"></textarea>
                                     <!-- <span class="border p-1 bg-white col">{{element.work}}</span> -->
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text w-100">Địa chỉ</span>
-                                    <span class="border p-1 bg-white col">{{element.address}}</span>
+                                    <span class="input-group-text w-100 fw-bold">Địa chỉ</span>
+                                    <span class="border p-1 bg-white col fw-bold">{{element.address}}</span>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Kết quả</span>
-                                    <span class="border p-1 bg-white col">{{element.result==1?'Hoàn thành':'Không hoàn thành'}}</span>
+                                    <span class="input-group-text fw-bold">Kết quả</span>
+                                    <span class="border p-1 bg-white col fw-bold">{{element.result==1?'Hoàn thành':'Không hoàn thành'}}</span>
                                 </div>
                                 
                             </div>
                         </div>
                     </div>
                     <div class="input-group input-group-sm">
-                        <span class="input-group-text">Lý do nghỉ việc</span>
-                        <span class="border p-1 bg-white col">{{company.leaving==1?'Đúng quy định':'Tự nghỉ'}}</span>
+                        <span class="input-group-text fw-bold">Lý do nghỉ việc</span>
+                        <span class="border p-1 bg-white col fw-bold">{{company.leaving==1?'Đúng quy định':'Tự nghỉ'}}</span>
                     </div>
                 </div>
             </div>

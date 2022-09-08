@@ -542,7 +542,10 @@
             },
         
             delProcess(index1, index2){
-                this.skillWorking[index1].process.splice(index2, 1);
+                if (this.skillWorking[index1].process.length > 1){
+                    this.skillWorking[index1].process.splice(index2, 1);
+                }
+                
             },
 
             addProcess(index){
@@ -597,7 +600,6 @@
                         else if (company.to == '') error = true
                         else if (company.title == '') error = true
                         else if (company.detail == '') error = true
-                        else if (company.leaving == '') error = true
                         company.process.forEach(ele => {
                             if (ele.from == '') error = true
                             else if (ele.to == '') error = true
