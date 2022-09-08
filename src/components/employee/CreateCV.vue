@@ -519,7 +519,7 @@
                     });
                     return
                 }
-                checkSkillOther()
+                this.checkSkillOther()
                 this.$http.post(`${BASE_URL}/employee/createCV`, {
                     id : this.employee._id,
                     skillWorking: this.skillWorking,
