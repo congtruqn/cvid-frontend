@@ -30,7 +30,7 @@
             <button @click="switchCamera" class="btn btn-light">
                 <i class="fa-sharp fa-solid fa-camera-rotate"></i>
             </button>
-            <button @click="cccd = null" class="btn btn-light float-end">
+            <button @click="cccd = null" class="btn btn-light ">
                 <i class="fa-solid fa-x"></i>
             </button>
         </qrcode-stream>
