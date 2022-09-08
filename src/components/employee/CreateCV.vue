@@ -17,10 +17,10 @@
         <h4 class="text-primary mt-2 text-decoration-underline">Kinh nghiệm làm việc</h4>
         <div class="card border-success mt-3" v-for="(company, index1) in skillWorking">
             <div class="card-header border-success position-relative">
-                <div class="row g-3 align-items-center">
+                <div class="row g-3 align-items-center" v-if="company.name !== undefined">
                 <div class="col-md-8">
                     <div class="input-group input-group-sm">
-                        <span class="input-group-text">Công ty {{index1+1}}</span>
+                        <span class="input-group-text">Nơi làm việc {{index1+1}}</span>
                         <input type="text" class="form-control" v-model="company.name">
                     </div>
                 </div>
@@ -29,7 +29,23 @@
                         <span class="input-group-text">Từ</span>
                         <input type="month" class="form-control" v-model="company.from">
                         <span class="input-group-text">Đến</span>
-                        <input type="month" class="form-control" v-model="company.to">
+                        <input :type="company.to=='Hiện tại'?'text':'month'" class="form-control" v-model="company.to">
+                        <div class="form-check form-switch m-1">
+                            <input class="form-check-input" type="checkbox" v-model="company.to" true-value="Hiện tại" false-value="">
+                            <label class="form-check-label">Hiện tại</label>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="row g-3 align-items-center" v-else>
+                    
+                    <div class="col-auto mx-auto">
+                    <div class="input-group input-group-sm">
+                        <span class="my-auto me-3">Thời gian nghỉ</span>
+                        <span class="input-group-text">Từ</span>
+                        <input type="month" class="form-control" v-model="company.from">
+                        <span class="input-group-text">Đến</span>
+                        <input :type="company.to=='Hiện tại'?'text':'month'" class="form-control" v-model="company.to">
                         <div class="form-check form-switch m-1">
                             <input class="form-check-input" type="checkbox" v-model="company.to" true-value="Hiện tại" false-value="">
                             <label class="form-check-label">Hiện tại</label>
@@ -39,7 +55,7 @@
                 </div>
                 <button class="btn position-absolute top-0 start-100 translate-middle" @click="delSkillWorking(index1)"><i class="fas fa-times-circle text-danger fa-lg"></i></button>
             </div>
-            <div class="card-body text-success">
+            <div class="card-body text-success" v-if="company.name !== undefined">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="input-group input-group-sm mb-3">
@@ -67,7 +83,7 @@
                                     <span class="input-group-text">Từ</span>
                                     <input type="month" class="form-control" v-model="element.from">
                                     <span class="input-group-text">Đến</span>
-                                    <input type="month" class="form-control" v-model="element.to">
+                                    <input :type="element.to=='Hiện tại'?'text':'month'" class="form-control" v-model="element.to">
                                     <div class="form-check form-switch m-1">
                                         <input class="form-check-input" type="checkbox" v-model="element.to" true-value="Hiện tại" false-value="">
                                         <label class="form-check-label">Hiện tại</label>
@@ -104,7 +120,7 @@
                     <div class="col-md-6 me-auto d-grid gap-2 mb-3">
                         <button class="btn border-success" @click="addProcess(index1)"><i class="fas fa-plus fa-5x"></i></button>
                     </div>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" v-if="company.to!='Hiện tại'">
                         <span class="input-group-text">Lý do nghỉ việc</span>
                         <select class="form-select" v-model="company.leaving">
                             <option value="" disabled>Chọn...</option>
@@ -116,7 +132,8 @@
             </div>
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="button" @click="addSkillWorking()">Thêm công ty</button>
+            <button class="btn btn-primary" type="button" @click="addSkillWorking()">Thêm nơi làm việc</button>
+            <button class="btn btn-primary" type="button" @click="addBreakTime()">Thêm thời gian nghỉ</button>
         </div>
         <h5 class="text-primary m-2">Kết quả đánh giá</h5>
         <ul class="list-group">
@@ -124,9 +141,17 @@
                 Tiêu chí
                 <input type="text" class="form-control-plaintext form-control-sm" value="Điểm" :style="{maxWidth: '3rem'}" readonly/>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(ele, index) in criteria" :key="index">
-                 {{index+1+'. '+ele.name}}
-                <input type="number" class="form-control form-control-sm" :style="{maxWidth: '3.5rem'}" v-model="assessment[index]"/>
+            
+            <li class="list-group-item" v-for="(ele, index) in criteria" :key="index">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>{{index+1+'. '+ele.name}} <a data-bs-toggle="collapse" :href="'#collapse'+index" class="link-primary" role="button" aria-expanded="false" :aria-controls="'collapse'+index"><i class="fas fa-question-circle ms-0"></i></a></span>
+                    <input type="number" class="form-control form-control-sm" :style="{maxWidth: '3.5rem'}" v-model="assessment[index]"/>
+                </div>
+                <div class="collapse" :id="'collapse'+index">
+                    <ul class="list-group ms-5">
+                        <li class="" v-for="item in ele.detail.split('.,')">{{item}}</li>
+                    </ul>  
+                </div>
             </li>
         </ul>
         <h4 class="text-primary mt-2 text-decoration-underline">Quá trình học tập</h4>
@@ -521,14 +546,48 @@
             },
 
             addProcess(index){
-                this.skillWorking[index].process.push({
-                    from: '',
-                    to: '',
-                    work: '',
-                    title: '',
-                    address: '',
-                    result: ''
-                })
+                let item = this.skillWorking[index].process
+                if (item.length == 0){
+                    this.skillWorking[index].process.push({
+                        from: this.skillWorking[index].from,
+                        to: '',
+                        work: '',
+                        title: '',
+                        address: '',
+                        result: ''
+                    })
+                } else {
+                    item = item[item.length-1]
+                    if (item.to == "Hiện tại"){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'info',
+                            title: 'Quá trình làm việc đã tới thời điểm hiện tại',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        return;
+                    }
+                    if (item.from == "" || item.to == "" || item.work == "" || item.title == "" || item.address == '' || item.result == ""){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'info',
+                            title: 'Nhập đủ thông tin quá trình làm việc trước đó',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        return;
+                    }
+                    this.skillWorking[index].process.push({
+                        from: item[item.length-1].to,
+                        to: '',
+                        work: '',
+                        title: '',
+                        address: '',
+                        result: ''
+                    })
+                }
+                
             },
             checkSkillWorking(){
                 var error = false
@@ -557,25 +616,73 @@
                 this.skillWorking.splice(index, 1);
             },
             addSkillWorking(){
-                this.skillWorking.push({
-                    name: '',
-                    from: '',
-                    to: '',
-                    title: '',
-                    detail: '',
-                    leaving: '',
-                    process: [{
+                if (this.skillWorking.length == 0){
+                    this.skillWorking.push({
+                        name: '',
                         from: '',
                         to: '',
-                        work: '',
                         title: '',
-                        address: '',
-                        result: ''
-                    }]
+                        detail: '',
+                        leaving: '',
+                        process: [{
+                            from: '',
+                            to: '',
+                            work: '',
+                            title: '',
+                            address: '',
+                            result: ''
+                        }]
+                    })
+                } else {
+                    let item = this.skillWorking[this.skillWorking.length-1]
+                    if (item.to == "Hiện tại"){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'info',
+                            title: 'Thời gian làm việc đã tới thời điểm hiện tại',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        return;
+                    }
+                    if (item.from == "" || item.to == "" || item.name == "" || item.title == "" || item.detail == ''){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'info',
+                            title: 'Nhập đủ thông tin nơi làm việc trước đó',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        return;
+                    }
+                    this.skillWorking.push({
+                        name: '',
+                        from: item.to,
+                        to: '',
+                        title: '',
+                        detail: '',
+                        leaving: '',
+                        process: [{
+                            from: '',
+                            to: '',
+                            work: '',
+                            title: '',
+                            address: '',
+                            result: ''
+                        }]
+                    })
+                }
+                
+            },
+            addBreakTime(){
+                this.skillWorking.push({
+                    from: '',
+                    to: ''
                 })
             },
             delSkillEducation(index){
                 this.skillEducation.splice(index, 1);
+                
             },
             addSkillEducation(){
                 this.skillEducation.push({
