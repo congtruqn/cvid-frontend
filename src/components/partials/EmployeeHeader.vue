@@ -17,6 +17,13 @@
                         <a href="/employee/jobs-invited" class="dropdown-item">Lời mời</a>
                     </div>
                 </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Quản lý</a>
+                    <div class="dropdown-menu rounded-0 m-0">
+                        <a href="/employee/quan-ly-tai-khoan" class="dropdown-item">Quản lý tài khoản</a>
+                        <a href="/employee/quan-ly-ho-so" class="dropdown-item">Quản lý hồ sơ</a>
+                    </div>
+                </div>
                 <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu rounded-0 m-0">

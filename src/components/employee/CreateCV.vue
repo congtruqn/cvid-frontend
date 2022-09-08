@@ -579,7 +579,7 @@
                         return;
                     }
                     this.skillWorking[index].process.push({
-                        from: item[item.length-1].to,
+                        from: item.to,
                         to: '',
                         work: '',
                         title: '',

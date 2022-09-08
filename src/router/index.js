@@ -132,6 +132,15 @@ let router = new Router({
         }
     },
     {
+        path: '/employee/quan-ly-tai-khoan',
+        name: 'quan-ly-tai-khoan',
+        component: () => import('@/components/employee/AccountManagement'),
+        meta: {
+            guest: true,
+            layout: 'Default'
+        }
+    },
+    {
         path: '/business/recruit',
         name: 'recruit',
         component: () => import('@/components/business/Recruit'),
