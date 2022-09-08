@@ -90,7 +90,7 @@ export default {
             }
         },
         onDecode(decodedString){
-            if (decodedString.split("|")[0].length != 12){
+            if (decodedString.split("|")[0].length == 12){
                 this.cccd = decodedString.split("|")[0]
             }
         }
