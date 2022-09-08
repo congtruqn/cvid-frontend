@@ -30,6 +30,10 @@
                         <input type="month" class="form-control" v-model="company.from">
                         <span class="input-group-text">Đến</span>
                         <input type="month" class="form-control" v-model="company.to">
+                        <div class="form-check form-switch m-1">
+                            <input class="form-check-input" type="checkbox" v-model="company.to" true-value="Hiện tại" false-value="">
+                            <label class="form-check-label">Hiện tại</label>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -64,7 +68,12 @@
                                     <input type="month" class="form-control" v-model="element.from">
                                     <span class="input-group-text">Đến</span>
                                     <input type="month" class="form-control" v-model="element.to">
+                                    <div class="form-check form-switch m-1">
+                                        <input class="form-check-input" type="checkbox" v-model="element.to" true-value="Hiện tại" false-value="">
+                                        <label class="form-check-label">Hiện tại</label>
+                                    </div>
                                 </div>
+                                
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Công việc</span>
                                     <input type="text" class="form-control" v-model="element.work">
@@ -667,7 +676,7 @@
             this.employee = JSON.parse(localStorage.getItem('employee'))
             this.employee.birthdate = this.employee.birthdate.split('T')[0]
             if (this.employee.point) {
-                this.$router.push('/employee')
+                //this.$router.push('/employee')
             }
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
