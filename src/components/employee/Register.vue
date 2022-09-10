@@ -103,11 +103,12 @@
                         </div>   
                     </div>
                     <div class="mb-3 form-floating">
-                        <div class="dropdown form-floating">
-                            <input type="text" class="form-control dropdown-toggle" placeholder='' id="dropdownposition" data-bs-toggle="dropdown" v-model="position">
+                        <div class="dropdown form-floating">  
+                            <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="jobtitle">
                             <label class="form-label">Chức danh/ Chuyên môn</label>
-                            <ul class="dropdown-menu w-100" aria-labelledby="dropdownposition">
-                                <li v-for="item in major_.position"  @click="position=item"><a class="dropdown-item">{{item}}</a></li>
+                            <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
+                                <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
+                                <li v-for="item in filteredJobTitle"  @click="jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -185,6 +186,7 @@
     export default {  
         data(){
             return {
+                searchJobTitle: "",
                 name : "",
                 username : "",
                 birthdate : "",
@@ -201,7 +203,7 @@
                 endyear: "",
                 major : "",
                 skill : "",
-                position: "",
+                jobtitle: "",
                 password : "",
                 password2 : "",
                 provinces: [],
@@ -210,6 +212,7 @@
                 schools: [],
                 majors: [],
                 major_: [],
+                jobtitles: [],
             }
         },
         computed: {
@@ -219,7 +222,14 @@
                         return true
                     }
                 })
-            }
+            },
+            filteredJobTitle(){
+                return this.jobtitles.filter(element => {
+                    if (element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1){
+                        return true
+                    }
+                }).map(item => item.name);
+            },
         },
         methods : {
             
@@ -236,7 +246,7 @@
                     endyear: this.endyear,
                     major : this.major,
                     skill : this.skill,
-                    position: this.position,
+                    jobtitle: this.jobtitle,
                     email : this.email,
                     country: this.country,
                     province : this.province,
@@ -299,6 +309,11 @@
             });
 
 
+            this.$http.get(`${BASE_URL}/jobtitle/getall`)
+            .then(response => {
+                this.jobtitles = response.data
+            })
+
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data;
@@ -328,7 +343,6 @@
             level(){
                 this.major = "";
                 this.skill = "";
-                this.position = "";
             },
             major(newValue){
                 this.major_ = []

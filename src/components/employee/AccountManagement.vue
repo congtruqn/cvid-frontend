@@ -22,9 +22,7 @@
         <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted">Xác thực căn cước công dân </h6>
             <p class="card-text p-2 m-0">Quét mã qr trên căn cước công dân: <button @click="cccd=''" class="btn btn-light"><i class="fas fa-qrcode m-1"></i></button></p>
-            <p class="card-text p-2 my-2">Số căn cước công dân: {{cccd}} <button class="spinner-border btn ms-4" role="status" v-if="cccd==''"></button></p>
-            
-            
+            <p class="card-text p-2 my-2">Số căn cước công dân: {{cccd}} <button class="spinner-border btn ms-4" role="status" v-if="cccd==''"></button></p>    
         </div>
         <qrcode-stream :camera="camera" @init="onInit" @decode="onDecode" v-if="cccd==''">
             <button @click="switchCamera" class="btn btn-light">

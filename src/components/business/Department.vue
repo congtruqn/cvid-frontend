@@ -82,10 +82,17 @@
                                 <input type="text" class="form-control bg-white" v-model="department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Tên chức danh công việc <span class="text-danger">*</span></label>
+                                <label class="form-label">Tên vị trí công việc <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" v-model="position.name" placeholder=''>
                             </div>
-                           
+                            <div class="form-group mb-3">
+                                <label class="form-label">Tên chức danh <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
+                                <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
+                                    <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
+                                    <li v-for="item in filteredJobTitle"  @click="position.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
+                                </ul>
+                            </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
                                 <input type="text" class="form-control dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels.toString().replaceAll(',', ', ')">
@@ -202,10 +209,17 @@
                                 <input type="text" class="form-control bg-white" :value="department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Tên chức danh công việc <span class="text-danger">*</span></label>
+                                <label class="form-label">Tên vị trí công việc <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" v-model="position.name" placeholder=''>
                             </div>
-                            
+                            <div class="form-group mb-3">
+                                <label class="form-label">Tên chức danh <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
+                                <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
+                                    <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
+                                    <li v-for="item in filteredJobTitle"  @click="position.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
+                                </ul>
+                            </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
                                 <input type="text" class="form-control dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels.toString().replaceAll(',', ', ')">
@@ -336,9 +350,11 @@
         data (){
             return {
                 searchSkill: '',
+                searchJobTitle: '',
                 business : JSON.parse(localStorage.getItem('business')),
                 majors: [],
                 position_id: '',
+                jobtitles: [],
                 environments: [],
                 industries: [],
                 provinces: [],
@@ -352,7 +368,7 @@
                 position: {
                     _id: "",
                     name: "",
-                    vacancy: "",
+                    jobtitle: "",
                     levels: [],
                     skills: [],
                     description: "",
@@ -457,7 +473,7 @@
                 this.position = {
                     _id: "",
                     name: "",
-                    vacancy: "",
+                    jobtitle: "",
                     levels: [],
                     skills: [],
                     amount: 1,
@@ -534,6 +550,13 @@
                 });
                 return this.skills
             },
+            filteredJobTitle(){
+                return this.jobtitles.filter(element => {
+                    if (element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1){
+                        return true
+                    }
+                }).map(item => item.name);
+            },
         },
         created(){
             if (this.business.type==5){
@@ -569,6 +592,14 @@
             this.$http.get(`${BASE_URL}/environment/getall`)
             .then(response => {
                 this.environments = response.data
+              
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
+            this.$http.get(`${BASE_URL}/jobtitle/getall`)
+            .then(response => {
+                this.jobtitles = response.data
               
             })
             .catch(function (error) {

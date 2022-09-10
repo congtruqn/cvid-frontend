@@ -1,65 +1,13 @@
 <template>
     <div>
-        <!-- Carousel Start -->
-        <div class="container-fluid p-0">
-            <div class="">
-                <div class="owl-carousel-item position-relative">
-                    <img class="img-fluid" src="@/assets/images/carousel-1.jpg" alt="">
-                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(43, 57, 64, .5);">
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <div class="col-10 col-lg-8">
-                                    <h1 class="display-3 text-white animated slideInDown mb-4">Find The Perfect Job That You Deserved</h1>
-                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
-                                    <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Search A Job</a>
-                                    <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Find A Talent</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Carousel End -->
-        <!-- Search Start -->
-        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-            <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control border-0" placeholder="Keyword" />
-                            </div>
-                            <!-- <div class="col-md-4">
-                                <select class="form-select border-0">
-                                    <option selected>Category</option>
-                                    <option value="1">Category 1</option>
-                                    <option value="2">Category 2</option>
-                                    <option value="3">Category 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0">
-                                    <option selected>Location</option>
-                                    <option v-for="province in provinces" :value="province">{{province}}</option>
-                                </select>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Search End -->
-        <div class="card">
+        <div class="card mt-4">
             <div class="card-header text-center">
                 <h1 class="text-primary">Tìm việc</h1>
             </div>
             <div class="card-body">
                 <form class="row g-3" v-on:submit.prevent>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-4">
                         <label for="inputState" class="form-label">Chuyên nghành mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="job.skill" :disabled="job.status==1"/>
                         <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
@@ -67,23 +15,31 @@
                             <li v-for="item in filteredSkill()"  @click="job.skill=item"><a class="dropdown-item">{{item}}</a></li>
                         </ul>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-4">
+                        <label for="inputState" class="form-label">Chức danh mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
+                        <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="job.jobtitle" :disabled="job.status==1"/>
+                        <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
+                            <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
+                            <li v-for="item in filteredJobTitle()"  @click="job.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-4">
                         <label class="form-label">Môi trường làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
-                        <select id="inputState" class="form-select" v-model="job.work_environment" :disabled="job.status==1">
+                        <select class="form-select" v-model="job.work_environment" :disabled="job.status==1">
                             <option value="">Tất cả môi trường làm việc</option>
                             <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="form-label">Lĩnh vực mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
-                        <select id="inputState" class="form-select" v-model="job.work_industry" :disabled="job.status==1">
+                        <select class="form-select" v-model="job.work_industry" :disabled="job.status==1">
                             <option value="">Tất cả lĩnh vực</option>
                             <option v-for="item in industries" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
-                        <label for="inputPoint" class="form-label">Loại hình đơn vị tuyển dụng mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <select id="inputState" class="form-select" v-model="job.type_business" :disabled="job.status==1">
+                        <label class="form-label">Loại hình đơn vị tuyển dụng mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
+                        <select class="form-select" v-model="job.type_business" :disabled="job.status==1">
                             <option value="">Tất cả loại hình</option>
                             <option v-for="item in type_businesses" :value="item.name">{{item.name}}</option>
                         </select>
@@ -206,8 +162,11 @@
                 province: '',
                 skill: '',
                 searchSkill: '',
+                searchJobTitle: '',
+                jobtitle: '',
                 work_environment: '',
                 work_industry: '',
+                jobtitles: [],
                 type_businesses: [],
                 majors: [],
                 provinces: [],
@@ -228,6 +187,13 @@
                     })
                 });
                 return skills
+            },
+            filteredJobTitle(){
+                return this.jobtitles.filter(element => {
+                    if (element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1){
+                        return true
+                    }
+                }).map(item => item.name);
             },
             beforeFindJob(){
                 if (this.job.address != "" && this.job.address != this.employee.province){
@@ -271,6 +237,7 @@
                     this.job = {
                         skill: this.employee.skill,
                         address: this.employee.province,
+                        address: this.employee.jobtitle,
                         work_industry: '',
                         work_environment: '',
                         type_business: '',
@@ -299,6 +266,11 @@
             this.$http.get(`${BASE_URL}/industry/getall`)
             .then(response => {
                 this.industries = response.data
+              
+            })
+            this.$http.get(`${BASE_URL}/jobtitle/getall`)
+            .then(response => {
+                this.jobtitles = response.data
               
             })
             this.$http.get(`${BASE_URL}/environment/getall`)
