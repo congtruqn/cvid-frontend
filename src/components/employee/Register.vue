@@ -82,7 +82,7 @@
                         <label class="form-label">Chuyên nghành</label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="school">
+                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" v-model="school">
                         <label class="form-label">Trường</label> 
                         <ul class="dropdown-menu w-100 overflow-auto" aria-labelledby="dropdownMenuSchool" :style="{maxHeight: '400px'}">
                             <li v-for="ele in filteredSchool"  @click="school=ele.name"><a class="dropdown-item">{{ele.name}}</a></li>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="mb-3 form-floating">
                         <div class="dropdown form-floating">  
-                            <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="jobtitle">
+                            <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="jobtitle">
                             <label class="form-label">Chức danh/ Chuyên môn</label>
                             <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
                                 <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>

@@ -9,7 +9,7 @@
                 <form class="row g-3" v-on:submit.prevent>
                     <div class="col-12 col-md-4">
                         <label for="inputState" class="form-label">Chuyên nghành mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="job.skill" :disabled="job.status==1"/>
+                        <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="job.skill" :disabled="job.status==1"/>
                         <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
                             <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
                             <li v-for="item in filteredSkill()"  @click="job.skill=item"><a class="dropdown-item">{{item}}</a></li>
@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <label for="inputState" class="form-label">Chức danh mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="job.jobtitle" :disabled="job.status==1"/>
+                        <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="job.jobtitle" :disabled="job.status==1"/>
                         <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
                             <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
                             <li v-for="item in filteredJobTitle()"  @click="job.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>

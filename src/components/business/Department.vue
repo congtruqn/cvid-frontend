@@ -82,16 +82,16 @@
                                 <input type="text" class="form-control bg-white" v-model="department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Tên vị trí công việc <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" v-model="position.name" placeholder=''>
-                            </div>
-                            <div class="form-group mb-3">
                                 <label class="form-label">Tên chức danh <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
                                 <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
                                     <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
                                     <li v-for="item in filteredJobTitle"  @click="position.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
                                 </ul>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Chức vụ<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" v-model="position.name" placeholder=''>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
@@ -209,16 +209,16 @@
                                 <input type="text" class="form-control bg-white" :value="department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Tên vị trí công việc <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" v-model="position.name" placeholder=''>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Tên chức danh <span class="text-danger">*</span></label>
+                                <label class="form-label">Chức danh công việc <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
                                 <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
                                     <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
                                     <li v-for="item in filteredJobTitle"  @click="position.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
                                 </ul>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Chức vụ <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" v-model="position.name" placeholder=''>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
