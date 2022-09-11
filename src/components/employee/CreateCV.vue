@@ -785,7 +785,7 @@
             this.employee = JSON.parse(localStorage.getItem('employee'))
             this.employee.birthdate = this.employee.birthdate.split('T')[0]
             if (this.employee.point) {
-                //this.$router.push('/employee')
+                this.$router.push('/employee')
             }
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
