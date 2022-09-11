@@ -59,10 +59,12 @@
                     <div class="mb-3 form-floating">
                         <select @click="focus" class="form-control" v-model="level" required>
                             <option value="" disabled>Chọn cấp bậc</option>
+                            <option value="Phổ thông">Phổ thông</option>
                             <option value="Sơ cấp">Sơ cấp</option>
                             <option value="Trung cấp">Trung cấp</option>
                             <option value="Cao đẳng">Cao đẳng</option>
                             <option value="Đại học">Đại học</option>
+                            <option value="Chuyên gia">Chuyên gia</option>
                         </select>
                         <label class="form-label">Cấp bậc</label>
                     </div>
@@ -74,7 +76,7 @@
                         </select>
                         <label class="form-label">Nghành nghề</label>
                     </div>
-                    <div class="mb-3 form-floating" v-if="level != 'Sơ cấp'">
+                    <div class="mb-3 form-floating" v-if="level != 'Sơ cấp' || level != 'Phổ thông'">
                         <select @click="focus" class="form-control" v-model="skill" required>
                             <option value="" disabled>Chọn chuyên nghành</option>
                             <option v-for="skill in major_.skills" :value='skill'>{{skill}}</option>
@@ -102,14 +104,10 @@
                             </div>
                         </div>   
                     </div>
-                    <div class="mb-3 form-floating">
-                        <div class="dropdown form-floating">  
-                            <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="jobtitle">
-                            <label class="form-label">Chức danh/ Chuyên môn</label>
-                            <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
-                                <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
-                                <li v-for="item in filteredJobTitle"  @click="jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
-                            </ul>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input @click="focus" type="texe" class="form-control" required v-model="professionaltitle"/>
+                            <label class="form-label">Chức danh chuyên môn</label>
                         </div>
                     </div>
                     <div class="mb-3 form-floating">
@@ -186,7 +184,6 @@
     export default {  
         data(){
             return {
-                searchJobTitle: "",
                 name : "",
                 username : "",
                 birthdate : "",
@@ -203,7 +200,7 @@
                 endyear: "",
                 major : "",
                 skill : "",
-                jobtitle: "",
+                professionaltitle: "",
                 password : "",
                 password2 : "",
                 provinces: [],
@@ -211,8 +208,7 @@
                 wards: [],
                 schools: [],
                 majors: [],
-                major_: [],
-                jobtitles: [],
+                major_: []
             }
         },
         computed: {
@@ -222,14 +218,7 @@
                         return true
                     }
                 })
-            },
-            filteredJobTitle(){
-                return this.jobtitles.filter(element => {
-                    if (element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1){
-                        return true
-                    }
-                }).map(item => item.name);
-            },
+            }
         },
         methods : {
             
@@ -246,7 +235,7 @@
                     endyear: this.endyear,
                     major : this.major,
                     skill : this.skill,
-                    jobtitle: this.jobtitle,
+                    professionaltitle: this.professionaltitle,
                     email : this.email,
                     country: this.country,
                     province : this.province,
@@ -307,13 +296,6 @@
             .catch(function (error) {
                 console.error(error.response);
             });
-
-
-            this.$http.get(`${BASE_URL}/jobtitle/getall`)
-            .then(response => {
-                this.jobtitles = response.data
-            })
-
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data;

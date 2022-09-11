@@ -82,7 +82,7 @@
                                 <input type="text" class="form-control bg-white" v-model="department.name" readonly>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Tên chức danh <span class="text-danger">*</span></label>
+                                <label class="form-label">Chức danh công việc <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
                                 <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
                                     <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
@@ -91,7 +91,10 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Chức vụ<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" v-model="position.name" placeholder=''>
+                                <select class="form-select" v-model="position.name">
+                                    <option value="" disabled>Chọn ...</option>
+                                    <option v-for="item in positions" :value="item.name">{{item.name}}</option>
+                                </select>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
@@ -140,24 +143,22 @@
                                 </ul>   
                             </div>
                             <div class="form-group mb-3">
-                                <label for="">Số lượng <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
-                            </div>
-                            
-                            <div class="form-group mb-3">
-                                <label for="">Nơi làm việc <span class="text-danger">*</span></label>
-                                <select class="form-control" v-model="position.work_location">
-                                    <option value="">Chọn địa điểm làm việc</option>
-                                    <option v-for="province in provinces" :value="province">{{province}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group mb-3">
                                 <label class="form-label">Lĩnh vực kinh doanh</label> 
                                 <select class="form-select" v-model="position.work_industry">
                                     <option value="" disabled>Chọn ...</option>
                                     <option v-for="item in industries" :value="item.name">{{item.name}}</option>
                                 </select>
                             </div>
+                            
+                            
+                            <div class="form-group mb-3">
+                                <label for="">Nơi làm việc <span class="text-danger">*</span></label>
+                                <select class="form-select" v-model="position.work_location">
+                                    <option value="">Chọn địa điểm làm việc</option>
+                                    <option v-for="province in provinces" :value="province">{{province}}</option>
+                                </select>
+                            </div>
+                            
                             <div class="form-group mb-3">
                                 <label class="form-label">Môi trường làm việc</label> 
                                 <select class="form-select" v-model="position.work_environment">
@@ -165,7 +166,10 @@
                                     <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                                 </select>
                             </div>
-                            
+                            <div class="form-group mb-3">
+                                <label for="">Số lượng <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
+                            </div>
                             <div class="form-group mb-3">
                                 <label for="">Mức lương tối thiểu (triệu đồng)</label>
                                 <input type="number" class="form-control" v-model="position.min_salary" placeholder="Nhập mức lương tối thiểu">
@@ -218,7 +222,10 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Chức vụ <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" v-model="position.name" placeholder=''>
+                                <select class="form-select" v-model="position.name">
+                                    <option value="" disabled>Chọn ...</option>
+                                    <option v-for="item in positions" :value="item.name">{{item.name}}</option>
+                                </select>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
@@ -265,17 +272,7 @@
                                     <li class="" v-for="skill in position.skills">{{skill}}</li>
                                 </ul>   
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="">Số lượng <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="">Nơi làm việc <span class="text-danger">*</span></label>
-                                <select class="form-control" v-model="position.work_location">
-                                    <option value="">Chọn địa điểm làm việc</option>
-                                    <option v-for="province in provinces" :value="province">{{province}}</option>
-                                </select>
-                            </div>
+                            
                             <div class="form-group mb-3">
                                 <label class="form-label">Lĩnh vực kinh doanh</label> 
                                 <select class="form-select" v-model="position.work_industry">
@@ -284,11 +281,23 @@
                                 </select>
                             </div>
                             <div class="form-group mb-3">
+                                <label for="">Nơi làm việc <span class="text-danger">*</span></label>
+                                <select class="form-control" v-model="position.work_location">
+                                    <option value="">Chọn địa điểm làm việc</option>
+                                    <option v-for="province in provinces" :value="province">{{province}}</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group mb-3">
                                 <label class="form-label">Môi trường làm việc</label> 
                                 <select class="form-select" v-model="position.work_environment">
                                     <option value="" disabled>Chọn ...</option>
                                     <option v-for="item in environments" :value="item.name">{{item.name}}</option>
                                 </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="">Số lượng <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Mức lương tối thiểu (triệu đồng)</label>
@@ -357,6 +366,7 @@
                 jobtitles: [],
                 environments: [],
                 industries: [],
+                positions: [],
                 provinces: [],
                 departments: [],
                 department: {
@@ -600,6 +610,14 @@
             this.$http.get(`${BASE_URL}/jobtitle/getall`)
             .then(response => {
                 this.jobtitles = response.data
+              
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
+            this.$http.get(`${BASE_URL}/position/getall`)
+            .then(response => {
+                this.positions = response.data
               
             })
             .catch(function (error) {

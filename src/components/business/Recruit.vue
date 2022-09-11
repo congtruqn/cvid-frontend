@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-9 col-md-5">
                     <label for="inputSchool" class="form-label">Trường</label>
-                    <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false" v-model="searchSchool"/>
+                    <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSchool"/>
                     <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSchool" style="max-height: 400px;">
                         <div class="form-check mx-3" v-for="item in filteredSchool" :key="item._id">
                             <input class="form-check-input" type="checkbox" v-model="school" :value="item.name" :id="'school'+item._id">
@@ -78,10 +78,10 @@
                             <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)" v-if="cv.position_id == position._id">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
-                                <p class="card-text text-primary mb-0">{{cv.position}}</p>
+                                <p class="card-text text-primary mb-0">{{cv.professionaltitle}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
-                                <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
+                                <p class="card-text text-primary mb-0">Chuyên nghành: {{cv.skill}}</p>
                                 <p class="card-text text-primary">Thời gian tìm việc: {{cv.job.datetime}}</p>
                                 <a :href="'/business/cvid/'+cv._id+'?position='+position._id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
                                 <span class="m-auto">{{cv.review}}</span>
@@ -109,7 +109,7 @@
                             <div class="card mb-3" v-for="cv in list_cv" v-if="cv.position_id == position._id">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
-                                <p class="card-text text-primary mb-0">{{cv.position}}</p>
+                                <p class="card-text text-primary mb-0">{{cv.professionaltitle}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>

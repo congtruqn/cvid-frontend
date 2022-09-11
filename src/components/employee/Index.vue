@@ -9,7 +9,7 @@
                 <form class="row g-3" v-on:submit.prevent>
                     <div class="col-12 col-md-4">
                         <label for="inputState" class="form-label">Chuyên nghành mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="job.skill" :disabled="job.status==1"/>
+                        <input type="text" class="form-control dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="job.skill" :disabled="job.status==1"/>
                         <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
                             <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
                             <li v-for="item in filteredSkill()"  @click="job.skill=item"><a class="dropdown-item">{{item}}</a></li>
@@ -22,6 +22,13 @@
                             <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
                             <li v-for="item in filteredJobTitle()"  @click="job.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
                         </ul>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label">Chức vụ <i class="fas fa-question-circle" title="Giải thích"></i></label>
+                        <select class="form-select" v-model="job.position" :disabled="job.status==1">
+                            <option value="">Tất cả chức vụ</option>
+                            <option v-for="item in positions" :value="item.name">{{item.name}}</option>
+                        </select>
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="form-label">Môi trường làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
@@ -85,7 +92,7 @@
                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
-                            <div class="job-item p-4 mb-4" v-for="item in position">
+                            <div class="job-item p-4 mb-4" v-for="item in result">
                                 <a class="row g-4" :href="'/employee/job-detail/'+item._id">
                                     <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="@/assets/images/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
@@ -158,7 +165,7 @@
         data(){
             return {
                 job: '',
-                position: [],
+                result: [],
                 province: '',
                 skill: '',
                 searchSkill: '',
@@ -172,6 +179,7 @@
                 provinces: [],
                 environments: [],
                 industries: [],
+                positions: [],
                 employee: ''
             }
         },
@@ -204,14 +212,14 @@
                 }
             },
             startFindJob(){
-                this.position = []
+                this.result = []
                 this.job.status = 1
                 this.$http.post(`${BASE_URL}/employee/findJob`,{
                     id: this.employee._id,
                     job: this.job
                 })
                 .then(res => {
-                    this.position = res.data
+                    this.result = res.data
                 })
             },
             endFindJob(){
@@ -221,7 +229,7 @@
                     job: this.job
                 })
                 .then(res => {
-                    this.position = []
+                    this.result = []
                 })
             }
         },
@@ -237,10 +245,11 @@
                     this.job = {
                         skill: this.employee.skill,
                         address: this.employee.province,
-                        address: this.employee.jobtitle,
+                        jobtitle: '',
                         work_industry: '',
                         work_environment: '',
                         type_business: '',
+                        position: '',
                         status: 0
                     }
                 }
@@ -266,6 +275,11 @@
             this.$http.get(`${BASE_URL}/industry/getall`)
             .then(response => {
                 this.industries = response.data
+              
+            })
+            this.$http.get(`${BASE_URL}/position/getall`)
+            .then(response => {
+                this.positions = response.data
               
             })
             this.$http.get(`${BASE_URL}/jobtitle/getall`)
