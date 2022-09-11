@@ -6,7 +6,7 @@
                     <div class="d-flex align-items-center mb-5">
                         <img class="flex-shrink-0 img-fluid border rounded" src="../../assets/images/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;">
                         <div class="text-start ps-4">
-                            <h3 class="mb-3">{{position.name}}</h3>
+                            <h3 class="mb-3">{{position.jobtitle}}</h3>
                             <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Thời hạn nộp hồ sơ: {{position.enddate}}</small> -->
                             <!-- <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>New York, USA</span>
                             <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span>

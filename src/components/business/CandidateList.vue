@@ -29,7 +29,7 @@
                     <div class="card-body mx-2">
                         <div class="card mb-2" v-for="position in department.position" v-if="job_list.findIndex(x => x.position_id == position._id) != -1">
                             <div class="card-header">
-                                {{position.name}}
+                                {{position.jobtitle}}
                             </div>
                             <div class="card-body row">
                                 <a :href="'/business/cvid/'+cv._id" target="_blank" class="card-body border col-md-6 mb-1" v-for="cv in job_list" v-if="cv.position_id == position._id">

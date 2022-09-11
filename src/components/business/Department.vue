@@ -9,7 +9,7 @@
                 <h5 class="card-title text-center text-primary" v-if="!department.position.length">Chưa có vị trí</h5>
                 <div class="card mb-2" v-for="position in department.position" :key="position._id">
                     <div class="card-header">
-                        {{position.name}}
+                        {{position.jobtitle}}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive table-responsive-md">

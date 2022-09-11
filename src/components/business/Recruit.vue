@@ -13,7 +13,7 @@
                         <div class="form-check mx-3" v-for="position in position_list" :key="position._id">
                             <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id" :checked="position.status==1" :disabled="position.status==1">
                             <label class="form-check-label" :for="'position'+position._id">
-                                {{position.name}}
+                                {{position.jobtitle}}
                             </label>
                         </div>
                     </ul>
@@ -68,7 +68,7 @@
                     <div class="accordion-item" v-for="(position,id) in position_list" :key="id" v-if="position.status == 1">
                         <h2 class="accordion-header row m-0" :id="'headingRecommend'+id">
                         <button class="accordion-button" :style="{width: '75%'}" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
-                            {{position.name}}
+                            {{position.jobtitle}}
                         </button>
                         <button class="btn btn-sm btn-secondary col-3" @click="stopRecruiting(position._id)">Dừng tuyển</button>
 
@@ -101,7 +101,7 @@
                     <div class="accordion-item" v-for="(position,id) in position_list" :key="id" v-if="position.status == 1">
                         <h2 class="accordion-header row m-0" :id="'headingRecruitment'+id">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecruitment'+id" aria-expanded="true" :aria-controls="'collaoseRecruitment'+id">
-                            {{position.name}}
+                            {{position.jobtitle}}
                         </button>
                         </h2>
                         <div :id="'collaoseRecruitment'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecruitment'+id">
