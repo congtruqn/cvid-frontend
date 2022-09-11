@@ -83,7 +83,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Chức danh công việc <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
+                                <input type="text" class="form-select dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
                                 <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
                                     <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
                                     <li v-for="item in filteredJobTitle"  @click="position.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
@@ -98,7 +98,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
-                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels.toString().replaceAll(',', ', ')">
+                                <input type="text" class="form-select dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels.toString().replaceAll(',', ', ')">
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLevel">
                                     <div class="form-check mx-3">
                                         <input class="form-check-input" type="checkbox" v-model="position.levels" id="level01" value="Sơ cấp">
@@ -128,7 +128,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Chuyên nghành ứng viên <span class="text-danger">*</span></label> 
-                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill2" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSkill">
+                                <input type="text" class="form-select dropdown-toggle" id="dropdownMenuSkill2" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSkill">
                                 {{filteredSkill[0]}}
                                 <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuSkill2">
                                     <div class="form-check mx-3" v-for="(skill, index) in filteredSkill">
@@ -214,7 +214,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Chức danh công việc <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
+                                <input type="text" class="form-select dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" readonly v-model="position.jobtitle"/>
                                 <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
                                     <li class="m-2"><input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm"/></li>
                                     <li v-for="item in filteredJobTitle"  @click="position.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
@@ -229,7 +229,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
-                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels.toString().replaceAll(',', ', ')">
+                                <input type="text" class="form-select dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels.toString().replaceAll(',', ', ')">
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLevel">
                                     <div class="form-check mx-3">
                                         <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv01" value="Sơ cấp">
@@ -259,7 +259,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Chuyên nghành ứng viên <span class="text-danger">*</span></label> 
-                                <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSkill">
+                                <input type="text" class="form-select dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSkill">
                                 <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuSkill">
                                     <div class="form-check mx-3" v-for="(skill, index) in filteredSkill">
                                         <input class="form-check-input" type="checkbox" v-model="position.skills" :id="'0skill'+index" :value="skill">
@@ -282,7 +282,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Nơi làm việc <span class="text-danger">*</span></label>
-                                <select class="form-control" v-model="position.work_location">
+                                <select class="form-select" v-model="position.work_location">
                                     <option value="">Chọn địa điểm làm việc</option>
                                     <option v-for="province in provinces" :value="province">{{province}}</option>
                                 </select>

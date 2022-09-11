@@ -7,8 +7,8 @@
         <div class="card-body">
             <form class="row g-3" v-on:submit.prevent>
                 <div class="col-12 col-md-5">
-                    <label for="inputState" class="form-label">Vị trí tuyển dụng</label>
-                    <input type="text" class="form-control dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly :value="'Đang tuyển '+selected.length+' vị trí'"/>
+                    <label class="form-label">Vị trí tuyển dụng</label>
+                    <input type="text" class="form-select dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly :value="'Đang tuyển '+selected.length+' vị trí'"/>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuPosition">
                         <div class="form-check mx-3" v-for="position in position_list" :key="position._id">
                             <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id" :checked="position.status==1" :disabled="position.status==1">
