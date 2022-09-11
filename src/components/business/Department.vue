@@ -5,7 +5,7 @@
         </button>
         <div class="card mb-3 mx-md-4" v-for="department in departments" :key="department._id">
             <div class="card-body">
-                <h5 class="card-title">{{department.name}}</h5>
+                <h5 class="card-title">{{department.name}} <a @click="copy('http://localhost:8080/business/department/dhfkjchdsfkhvdjsch')" class=""><i class="btn fas fa-link"></i></a></h5>
                 <h5 class="card-title text-center text-primary" v-if="!department.position.length">Chưa có vị trí</h5>
                 <div class="card mb-2" v-for="position in department.position" :key="position._id">
                     <div class="card-header">
@@ -394,6 +394,13 @@
             }
         },
         methods : {
+            copy(text){
+                try {
+                    navigator.clipboard.writeText(text)
+                } catch (e) {
+                    throw e
+                }
+            },
             addDepartment(e){
                 e.preventDefault();
                 if (this.department.name == ''){
