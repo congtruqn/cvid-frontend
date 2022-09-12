@@ -186,6 +186,20 @@
                                 <label for="">Yêu cầu công việc</label>
                                 <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                             </div>
+                            <h5>Tiêu chí đánh giá</h5>
+                            <h6>Chọn tiêu chí đánh giá có sẵn</h6>
+                            <div class="form-check" v-for="item in criteria">
+                                <input class="form-check-input" type="checkbox" v-model="position.criteria" :value="item.name">
+                                <label class="form-check-label">
+                                    {{item.name}}
+                                </label>
+                            </div>
+                            <h6>Thêm tiêu chí đánh giá</h6>
+                            <p class="col" v-for="(ques, index) in position.questions">{{ques}}<a class="float-end btn btn-sm btn-danger" @click="()=>{position.questions.splice(index,1)}"><i class="fas fa-x"></i></a></p>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Nhập tiêu chí" v-model="question">
+                                <button class="btn btn-primary" type="button" @click="()=>{position.questions.push(question)}">Thêm</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -315,6 +329,21 @@
                                 <label for="">Yêu cầu công việc</label>
                                 <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                             </div>
+                            <h5>Tiêu chí đánh giá</h5>
+                            <h6>Chọn tiêu chí đánh giá có sẵn</h6>
+                            <div class="form-check" v-for="item in criteria">
+                                <input class="form-check-input" type="checkbox" v-model="position.criteria" :value="item.name">
+                                <label class="form-check-label">
+                                    {{item.name}}
+                                </label>
+                            </div>
+                            <h6>Thêm tiêu chí đánh giá</h6>
+                            <p class="col" v-for="(ques, index) in position.questions">{{ques}}<a class="float-end btn btn-sm btn-danger" @click="()=>{position.questions.splice(index,1)}"><i class="fas fa-x"></i></a></p>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Nhập tiêu chí" v-model="question">
+                                <button class="btn btn-primary" type="button" @click="()=>{position.questions.push(question)}">Thêm</button>
+                            </div>
+                            
                         </form>
                     </div>
                 </div>
@@ -363,7 +392,9 @@
                 business : JSON.parse(localStorage.getItem('business')),
                 majors: [],
                 position_id: '',
+                question: '',
                 jobtitles: [],
+                criteria: [],
                 environments: [],
                 industries: [],
                 positions: [],
@@ -389,6 +420,8 @@
                     min_salary: 0,
                     max_salary: 0,
                     requirements: "",
+                    questions: [],
+                    criteria: [],
                     status: 0,
                 },
             }
@@ -501,6 +534,8 @@
                     min_salary: 0,
                     max_salary: 0,
                     requirements: "",
+                    questions: [],
+                    criteria: [],
                     status: 0,
                 }
             },
@@ -576,19 +611,11 @@
             },
         },
         created(){
-            if (this.business.type==5){
-                this.$http.get(`${BASE_URL}/department/list/${this.business.username}`).then(res => {
-                    this.departments = res.data
-                }).catch(err => {
-                    console.log(err)
-                })
-            } else if (this.business.type==7){
-                this.$http.get(`${BASE_URL}/department/detail/${this.business.name}`).then(res => {
-                    this.departments = [res.data]
-                }).catch(err => {
-                    console.log(err)
-                })
-            }
+            this.$http.get(`${BASE_URL}/department/list/${this.business.username}`).then(res => {
+                this.departments = res.data
+            }).catch(err => {
+                console.log(err)
+            })
             this.$http.get(`${BASE_URL}/province/list`)
             .then(response => {
                 this.provinces = response.data;
@@ -630,6 +657,12 @@
             .catch(function (error) {
                 console.error(error.response);
             });
+
+            this.$http.get(`${BASE_URL}/criteria/getall`)
+            .then(res => {
+                this.criteria = res.data;
+            })  
+
         },
 
     }
