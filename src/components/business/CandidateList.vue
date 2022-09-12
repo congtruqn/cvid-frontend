@@ -33,7 +33,8 @@
                             </div>
                             <div class="card-body row">
                                 <a :href="'/business/cvid/'+cv._id" target="_blank" class="card-body border col-md-6 mb-1" v-for="cv in job_list" v-if="cv.position_id == position._id">
-                                <h5 class="card-title d-inline">{{cv.name}}<span class="badge bg-secondary float-end">{{cv.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")}} VND</span></h5>
+                                    <!-- <span class="badge bg-secondary float-end">{{cv.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")}} VND</span> -->
+                                <h5 class="card-title d-inline">{{cv.name}}</h5>
                                 <p class="card-text text-primary mb-0">{{cv.position}}</p>
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
@@ -43,7 +44,7 @@
                                 <button type="button" class="btn btn-light me-2 text-primary" @click="(e) => {cancelCVID(cv, e)}">Hủy</button>
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ScheduleModal" @click.prevent="employee_id = cv._id" v-if="!cv.schedule">Đặt lịch phỏng vấn</button>
                                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ScheduleModal" @click.prevent="employee_id = cv._id" v-if="cv.schedule">Thay đổi lịch phỏng vấn</button>
-                                <input type="checkbox" class="form-check-input float-end me-2 p-3" v-model="selected" :value="cv._id" @change="onChange($event, cv.price)">
+                                <input type="checkbox" class="form-check-input float-end me-2 p-3" v-model="selected" :value="cv._id" @change="onChange($event, position, cv)">
                                 <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
                                 </a>
                             </div>
@@ -52,7 +53,7 @@
                 </div>
                 <div class="mt-2 d-flex justify-content-end">
                     <div class="d-flex mb-3">
-                        <a class="p-1 fs-4 me-2"><i class="fw-bold">Tổng:</i> {{totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")}} VNĐ</a>
+                        <a class="p-1 fs-4 me-2"><i class="fw-bold">Tổng:</i> {{calculator.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")}} VNĐ</a>
                         <a class="btn btn-primary" @click="pay">Thanh toán</a>
                     </div>
                     <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Lịch phỏng vấn: Chưa có</small> -->
@@ -148,21 +149,42 @@ const {BASE_URL} =  require('../../utils/config')
                 address: '',
                 contact: '',
                 note: '',
-                totalPrice: 0
+                bill: []
             }
         },
         computed: {
             calculator() {
-                return this.selected.length*100000
+                let price = 0
+                this.bill.forEach((item) => {
+                    item.price_list.forEach((item2, index2) => {
+                        if (index2 < item.quantity_needed){
+                            price += item2
+                        } else {
+                            price += item2/item.quantity_needed
+                        }
+                    })
+                })
+                return price
             },
         },
         methods: {
-            onChange(e, price) {
+            onChange(e, position, cv) {
                 if (e.target.checked == true) {
-                    this.totalPrice += price
+                    let index = this.bill.findIndex(item => item.position_id == position._id);
+                    if (index == -1){
+                        this.bill.push({
+                            position_id: position._id,
+                            quantity_needed: position.amount,
+                            price_list: [cv.price]
+                        })
+                    } else {
+                        this.bill[index].price_list.push(cv.price)
+                    }
                 };
                 if (e.target.checked == false ) {
-                    this.totalPrice -= price
+                    let index1 = this.bill.findIndex(item => item.position_id == position._id);
+                    let index2 = this.bill[index1].price_list.findIndex(item => item == cv.price)
+                    this.bill[index1].price_list.splice(index2, 1);
                 }
             },
             cancelCVID(cv, e){
@@ -296,11 +318,12 @@ const {BASE_URL} =  require('../../utils/config')
                             const job_list = res.data.job_list 
                             let cvid = job_list.map(t1 => ({...t1, ...res.data.cv_list.find(t2 => t2._id == t1.employee_id)}))
                             cvid.forEach(item => {
-                                if (item.type == 1 && item.confirm == 1){
-                                    item.price = 0
-                                    this.job_list.push(item)
-                                } else if (item.type == 2 && item.status == 0){
-                                    item.price = 100000
+                                // if (item.type == 1 && item.confirm == 1){
+                                //     item.price = 0
+                                //     this.job_list.push(item)
+                                // } else 
+                                if (item.type == 2 && item.status == 0){
+                                    item.price = 500000
                                     this.job_list.push(item)
                                 }
                             })
