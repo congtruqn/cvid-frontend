@@ -97,7 +97,7 @@
                                     <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="@/assets/images/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                         <div class="text-start ps-4">
-                                            <h5 class="mb-3">{{item.name}}</h5>
+                                            <h5 class="mb-3">{{item.jobtitle}}</h5>
                                             <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{item.work_location}}</span>
                                             <!-- <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span> -->
                                             <span class="text-truncate me-3">
@@ -241,6 +241,9 @@
                 this.employee = res.data.user
                 if (this.employee.job){
                     this.job = this.employee.job
+                    if (this.job.status == 1){
+                        this.startFindJob()
+                    }
                 } else {
                     this.job = {
                         skill: this.employee.skill,

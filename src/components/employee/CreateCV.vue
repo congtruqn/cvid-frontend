@@ -149,7 +149,7 @@
                 </div>
                 <div class="collapse" :id="'collapse'+index">
                     <ul class="list-group ms-5">
-                        <li class="" v-for="item in ele.detail.split('.,')">{{item}}</li>
+                        <li class="" v-for="item in ele.detail">{{item}}</li>
                     </ul>  
                 </div>
             </li>
@@ -491,7 +491,7 @@
                     name: '',
                     point: 0
                 }],
-                assessment: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                assessment: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                 majors: [],
                 schools: [],
                 criteria: '',

@@ -187,7 +187,7 @@
                                 <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                             </div>
                             <h5>Tiêu chí đánh giá</h5>
-                            <h6>Chọn tiêu chí đánh giá có sẵn</h6>
+                            <h6>Chọn tiêu chí đánh giá đề xuất</h6>
                             <div class="form-check" v-for="item in criteria">
                                 <input class="form-check-input" type="checkbox" v-model="position.criteria" :value="item.name">
                                 <label class="form-check-label">
@@ -330,12 +330,36 @@
                                 <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                             </div>
                             <h5>Tiêu chí đánh giá</h5>
-                            <h6>Chọn tiêu chí đánh giá có sẵn</h6>
+                            <h6>Chọn tiêu chí đánh giá đề xuất</h6>
                             <div class="form-check" v-for="item in criteria">
-                                <input class="form-check-input" type="checkbox" v-model="position.criteria" :value="item.name">
-                                <label class="form-check-label">
-                                    {{item.name}}
-                                </label>
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <label class="h6"> {{item.name}} </label>
+                                    </div>
+                                    <div class="col-3 text-end">
+                                        <label class="h6"> Điểm </label>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center" v-for="item2 in item.detail">
+                                    <div class="col-9">
+                                        <div class="list-group list-group-flush">
+                                            <label class="list-group-item">
+                                                <input class="form-check-input me-1" type="checkbox" value="">
+                                                {{item2}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="form-control form-control-sm form-control-color float-end " type="number" value=""/>
+                                    </div>
+                                </div>
+                                <!-- <div class="list-group list-group-flush">
+                                    <label class="list-group-item" v-for="item2 in item.detail">
+                                        <input class="form-check-input mx-1" type="checkbox" value="">
+                                        {{item2}}
+                                        <input class="form-control form-control-sm form-control-color float-end " type="number" value=""/>
+                                    </label>
+                                </div> -->
                             </div>
                             <h6>Thêm tiêu chí đánh giá</h6>
                             <p class="col" v-for="(ques, index) in position.questions">{{ques}}<a class="float-end btn btn-sm btn-danger" @click="()=>{position.questions.splice(index,1)}"><i class="fas fa-x"></i></a></p>
