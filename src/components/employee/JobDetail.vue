@@ -19,7 +19,7 @@
                         <p>{{position.description}}</p>
                         <h4 class="mb-3">Yêu cầu ứng viên</h4>
                         <ul class="list-unstyled">
-                            <li v-for="item in position.requirements.split('. ')" v-if="item != ''"><i class="fa fa-angle-right text-primary me-2"></i>{{item}}.</li>
+                            <!-- <li v-for="item in position.requirements.split('. ')" v-if="item != ''"><i class="fa fa-angle-right text-primary me-2"></i>{{item}}.</li> -->
                         </ul>
                         <!-- <h4 class="mb-3">Quyền lợi</h4>
                         <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
@@ -31,8 +31,8 @@
                             <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
                         </ul> -->
                     </div>
-                    <div class="col-12" v-if="job.status == 1">
-                        <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="job.type == 0 || !job.type">Apply Now</button>   
+                    <div class="col-12" v-if="job.status != 1">
+                        <button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" v-if="job.type == 0 || !job.type">Ứng tuyển</button>   
                         <button class="btn btn-secondary w-100" type="submit" @click="onCancel" v-else>Hủy</button>
                     </div>
                 </div>
@@ -50,11 +50,88 @@
                             : 'Dưới ' + position.min_salary + ' triệu đồng'}}</p>
                         <p><i class="fa fa-angle-right text-primary me-2"></i>Địa điểm: {{position.work_location}}</p>
                     </div>
-                    <!-- <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: slideInUp;">
+                    <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: slideInUp;">
                         <h4 class="mb-4">Company Detail</h4>
                         <p class="m-0">Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.</p>
-                    </div> -->
+                    </div>
                 </div>
+            </div>
+            
+        </div>
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá sơ bộ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered border-primary">
+                    <thead>
+                        <tr>
+                        <th scope="col">Các yêu cầu</th>
+                        <th scope="col">CVID</th>
+                        <th scope="col">Vị trí tuyển dụng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">Trình độ</th>
+                        <td>{{employee.level}}</td>
+                        <td>{{position.levels.toString().replaceAll(',',', ')}}</td>
+                    
+                        </tr>
+                        <tr>
+                        <th scope="row">Chuyên nghành</th>
+                        <td>{{employee.job.skill}}</td>
+                        <td>{{position.skills.toString().replaceAll(',',', ')}}</td>
+                        
+                        </tr>
+                        <tr>
+                        <th scope="row">Chức danh công việc</th>
+                        <td>{{employee.job.jobtitle}}</td>
+                        <td>{{position.jobtitle}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Chức vụ</th>
+                        <td>{{employee.job.position==''?'Tất cả':employee.job.position}}</td>
+                        <td>{{position.name}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Lĩnh vực làm việc</th>
+                        <td>{{employee.job.work_industry==''?'Tất cả':employee.job.work_industry}}</td>
+                        <td>{{position.work_industry==''?'Tất cả':position.work_industry}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Loại hình đơn vị tuyển dụng</th>
+                        <td>{{employee.job.type_business==''?'Tất cả':employee.job.type_business}}</td>
+                        <td></td>
+                        </tr>
+
+                        <tr>
+                        <th scope="row">Môi trường làm việc</th>
+                        <td>{{employee.job.work_environment==''?'Tất cả':employee.job.work_environment}}</td>
+                        <td>{{position.work_environment==''?'Tất cả':position.work_environment}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Nơi làm việc</th>
+                        <td>{{employee.job.address==''?'Tất cả':employee.job.address}}</td>
+                        <td>{{position.work_location==''?'Tất cả':position.work_location}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Số năm kinh nghiệm</th>
+                        <td></td>
+                        <td></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" @click="onSubmit" data-bs-dismiss="modal">Xác nhận</button>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -66,6 +143,7 @@
         data() {
             return {
                 position: '',
+                employee: JSON.parse(localStorage.getItem('employee')),
                 status: false,
                 job: '',
                 
@@ -78,14 +156,14 @@
                 console.log(err)
             })
             this.$http.post(`${BASE_URL}/job/checkjob`, {
-                employee: JSON.parse(localStorage.getItem('employee'))._id,
+                employee: this.employee._id,
                 position: this.$route.params.id,
             }).then(res => {
                 if (res.data) {
                     this.job = res.data
                 } else {
                     this.job = {
-                        employee_id: JSON.parse(localStorage.getItem('employee'))._id,
+                        employee_id: this.employee._id,
                         position_id: this.$route.params.id,
                     }
                 }
@@ -106,7 +184,7 @@
             },
             onCancel(){
                 this.$http.post(`${BASE_URL}/job/delete`, {
-                    employee: JSON.parse(localStorage.getItem('employee'))._id,
+                    employee: this.employee._id,
                     position: this.$route.params.id,
                     type: 1
                 }).then(res => {
