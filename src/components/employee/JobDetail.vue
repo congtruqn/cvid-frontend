@@ -79,13 +79,13 @@
                         <tr>
                         <th scope="row">Trình độ</th>
                         <td>{{employee.level}}</td>
-                        <td>{{position.levels.toString().replaceAll(',',', ')}}</td>
+                        <td>{{position.levels?position.levels.toString().replaceAll(',',', '):''}}</td>
                     
                         </tr>
                         <tr>
                         <th scope="row">Chuyên nghành</th>
                         <td>{{employee.job.skill}}</td>
-                        <td>{{position.skills.toString().replaceAll(',',', ')}}</td>
+                        <td>{{position.skills?position.skills.toString().replaceAll(',',', '):''}}</td>
                         
                         </tr>
                         <tr>
@@ -127,9 +127,10 @@
                         <tr>
                         <th scope="row" colspan="3"><h5>Tiêu chí đánh giá</h5></th>
                         </tr>
-                        <tr v-for="(item, index) in criteria">
+                        <tr v-for="(item, index) in criteria" v-if="position.criteria[index]" :class="employee.assessment[index]>=position.criteria[index]?'bg-info':'bg-light'">
                         <th scope="row">{{item.name}}</th>
                         <td>{{employee.assessment[index]}}</td>
+                        <td>{{position.criteria[index]}}</td>
                         </tr>
                     </tbody>
                     </table>

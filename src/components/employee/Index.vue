@@ -180,7 +180,7 @@
                 environments: [],
                 industries: [],
                 positions: [],
-                employee: ''
+                employee: JSON.parse(localStorage.getItem('employee'))
             }
         },
         methods: {
@@ -234,11 +234,6 @@
             }
         },
         created(){
-            this.$http.post(`${BASE_URL}/employee/me`,{
-                token: localStorage.getItem('token')
-            })
-            .then(res => {
-                this.employee = res.data.user
                 if (this.employee.job){
                     this.job = this.employee.job
                     if (this.job.status == 1){
@@ -256,10 +251,6 @@
                         status: 0
                     }
                 }
-            })
-            .catch(function (error) {
-                console.error(error.response);
-            });
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data

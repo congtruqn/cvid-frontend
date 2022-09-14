@@ -167,6 +167,10 @@
                                 </select>
                             </div>
                             <div class="form-group mb-3">
+                                <label class="form-label">Yêu cầu kinh nghiệm</label>
+                                <input type="number" class="form-control" v-model="position.experience" placeholder="Nhập số năm kinh nghiệm">
+                            </div>
+                            <div class="form-group mb-3">
                                 <label for="">Số lượng <span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
                             </div>
