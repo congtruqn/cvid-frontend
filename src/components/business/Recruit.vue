@@ -120,7 +120,7 @@
                 <div class="col-md-6 mb-3">
                     <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
                     <div class="accordion" id="accordionRecruitment">
-                    <div class="accordion-item" v-for="(position,id) in position_list" :key="id" v-if="position.status == 1">
+                    <div class="accordion-item" v-for="(position,id) in position_list" :key="id">
                         <h2 class="accordion-header row m-0" :id="'headingRecruitment'+id">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecruitment'+id" aria-expanded="true" :aria-controls="'collaoseRecruitment'+id">
                             {{position.jobtitle}}
