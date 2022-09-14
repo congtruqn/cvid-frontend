@@ -2,16 +2,38 @@
 <div class="container">
     <div class="card mt-4">
         <div class="card-header text-center">
-            Tuyển dụng
+            Đăng tuyển
+        </div>
+        <div class="card-body">
+        <div class="row g-2">
+            <div class="col-12 col-md-6" v-for="position in position_list">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{position.jobtitle}}</h5>
+                        <h6 class="card-subtitle my-2 text-muted">Chức vụ: {{position.name}}</h6>
+                        <p class="card-text my-1">Số lượng: {{position.amount}}</p>
+                        <p class="card-text"><small class="text-muted">Cập nhật lần cuối: {{position.startdate?position.startdate.split('T')[0]:''}}</small></p>
+                        <a href="#" class="btn btn-primary" v-if="position.status==0" @click="publishRecruiting(position._id)">Đăng tuyển</a>
+                        <a href="#" class="btn btn-secondary" v-else @click="stopRecruiting(position._id)">Dừng tuyển</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-header text-center">
+            Tìm ứng viên nhanh
         </div>
         <div class="card-body">
             <form class="row g-3" v-on:submit.prevent>
                 <div class="col-12 col-md-5">
                     <label class="form-label">Vị trí tuyển dụng</label>
-                    <input type="text" class="form-select dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly :value="'Đang tuyển '+selected.length+' vị trí'"/>
+                    <input type="text" class="form-select dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly :value="'Đang tìm '+selected.length+' vị trí'"/>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuPosition">
                         <div class="form-check mx-3" v-for="position in position_list" :key="position._id">
-                            <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id" :checked="position.status==1" :disabled="position.status==1">
+                            <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id">
                             <label class="form-check-label" :for="'position'+position._id">
                                 {{position.jobtitle}}
                             </label>
@@ -54,7 +76,7 @@
                     <input type="text" class="form-control" id="inputZip">
                 </div> -->
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-lg btn-primary" @click="recruit">Đăng tuyển</button>
+                    <button type="button" class="btn btn-lg btn-primary" @click="recruit">Tìm ngay</button>
                 </div>
             </form>
     
@@ -65,12 +87,12 @@
                 <div class="col-md-6 mb-3">
                     <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
                     <div class="accordion" id="accordionRecommend">
-                    <div class="accordion-item" v-for="(position,id) in position_list" :key="id" v-if="position.status == 1">
+                    <div class="accordion-item" v-for="(position,id) in position_list" :key="id">
                         <h2 class="accordion-header row m-0" :id="'headingRecommend'+id">
-                        <button class="accordion-button" :style="{width: '75%'}" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
                             {{position.jobtitle}}
                         </button>
-                        <button class="btn btn-sm btn-secondary col-3" @click="stopRecruiting(position._id)">Dừng tuyển</button>
+                        
 
                         </h2>
                         <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
@@ -204,15 +226,35 @@ export default {
                 return true
             });
         },
-        getNamePosition(id){
-            return this.position_list.find(element => element._id == id).name
+        publishRecruiting(id){
+            this.$http.post(`${BASE_URL}/department/position/publish`,{
+                position_id: id
+            })
+            .then(res => {
+                if (res.data) {
+                    this.position_list.forEach((element, index) => {
+                        if(element._id == id) {
+                            this.position_list[index].status = 1;
+                        }
+                    });
+                }
+            }).catch(err => {
+                console.log(err)
+            })
         },
         stopRecruiting(id){
             this.$http.post(`${BASE_URL}/department/position/stop`,{
                 position_id: id
             })
             .then(res => {
-                if (res.data) window.location.reload();
+                if (res.data) {
+                    this.position_list.forEach((element, index) => {
+                        if(element._id == id) {
+                            this.position_list[index].status = 0;
+                        }
+                    });
+                    console.log('ok')
+                }
             }).catch(err => {
                 console.log(err)
             })

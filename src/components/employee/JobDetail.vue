@@ -121,8 +121,8 @@
                         </tr>
                         <tr>
                         <th scope="row">Số năm kinh nghiệm</th>
-                        <td>{{getExperience()== 0?'Chưa có kinh nghiệm':getExperience()}}</td>
-                        <td>{{position.experience}}</td>
+                        <td>{{getExperience()== 0?'Chưa có kinh nghiệm':getExperience()+' năm'}}</td>
+                        <td>{{position.experience==0?'Không yêu cầu kinh nghiệm':position.experience+' năm'}}</td>
                         </tr>
                         <tr>
                         <th scope="row" colspan="3"><h5>Tiêu chí đánh giá</h5></th>
