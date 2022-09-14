@@ -187,28 +187,32 @@
                                 <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                             </div>
                             <h5>Tiêu chí đánh giá</h5>
-                            <h6>Chọn tiêu chí đánh giá đề xuất</h6>
-                            <div class="form-check" v-for="item in criteria">
-                                <div class="row align-items-center">
-                                    <div class="col-9">
-                                        <label class="h6">{{item.name}}</label>
-                                    </div>
-                                    <div class="col-3 text-end">
-                                        <label class="h6"> Điểm </label>
-                                    </div>
+                            <div class="row align-items-center">
+                                <div class="col-9">
+                                    <label class="h6"><h6>Chọn tiêu chí đánh giá đề xuất</h6></label>
                                 </div>
-                                <div class="row align-items-center" v-for="item2 in item.detail">
+                                <div class="col-3 text-end">
+                                    <label class="h6"> Điểm </label>
+                                </div>
+                            </div>
+                            <div class="form-check" v-for="(item, index) in criteria">
+                                <div class="row align-items-center">
                                     <div class="col-9">
                                         <div class="list-group list-group-flush">
                                             <label class="list-group-item">
-                                                <input class="form-check-input me-1" type="checkbox" value="">
-                                                {{item2}}
+                                                <input class="form-check-input me-1" type="checkbox" :checked="position.criteria[index]">
+                                                {{item.name}} <a data-bs-toggle="collapse" :href="'#collapse'+index" class="link-primary" role="button" aria-expanded="false" :aria-controls="'collapse'+index"><i class="fas fa-question-circle ms-0"></i></a>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-3">
-                                        <input class="form-control form-control-sm form-control-color float-end " type="number" value=""/>
+                                    <div class="col-3 text-end">
+                                        <input class="form-control form-control-sm form-control-color float-end " type="number" v-model="position.criteria[index]"/>
                                     </div>
+                                </div>
+                                <div class="collapse" :id="'collapse'+index">
+                                    <ul class="list-group ms-5">
+                                        <li class="" v-for="item2 in item.detail">{{item2}}</li>
+                                    </ul>  
                                 </div>
                             </div>
                             <h6>Thêm tiêu chí đánh giá</h6>
@@ -327,6 +331,10 @@
                                 </select>
                             </div>
                             <div class="form-group mb-3">
+                                <label class="form-label">Yêu cầu kinh nghiệm</label>
+                                <input type="number" class="form-control" v-model="position.experience" placeholder="Nhập số năm kinh nghiệm">
+                            </div>
+                            <div class="form-group mb-3">
                                 <label for="">Số lượng <span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
                             </div>
@@ -347,28 +355,32 @@
                                 <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                             </div>
                             <h5>Tiêu chí đánh giá</h5>
-                            <h6>Chọn tiêu chí đánh giá đề xuất</h6>
-                            <div class="form-check" v-for="item in criteria">
-                                <div class="row align-items-center">
-                                    <div class="col-9">
-                                        <label class="h6">{{item.name}}</label>
-                                    </div>
-                                    <div class="col-3 text-end">
-                                        <label class="h6"> Điểm </label>
-                                    </div>
+                            <div class="row align-items-center">
+                                <div class="col-9">
+                                    <label class="h6"><h6>Chọn tiêu chí đánh giá đề xuất</h6></label>
                                 </div>
-                                <div class="row align-items-center" v-for="item2 in item.detail">
+                                <div class="col-3 text-end">
+                                    <label class="h6"> Điểm </label>
+                                </div>
+                            </div>
+                            <div class="form-check" v-for="(item, index) in criteria">
+                                <div class="row align-items-center">
                                     <div class="col-9">
                                         <div class="list-group list-group-flush">
                                             <label class="list-group-item">
-                                                <input class="form-check-input me-1" type="checkbox" value="">
-                                                {{item2}}
+                                                <input class="form-check-input me-1" type="checkbox" :checked="position.criteria[index]">
+                                                {{item.name}} <a data-bs-toggle="collapse" :href="'#collapse'+index" class="link-primary" role="button" aria-expanded="false" :aria-controls="'collapse'+index"><i class="fas fa-question-circle ms-0"></i></a>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-3">
-                                        <input class="form-control form-control-sm form-control-color float-end " type="number" value=""/>
+                                    <div class="col-3 text-end">
+                                        <input class="form-control form-control-sm form-control-color float-end " type="number" v-model="position.criteria[index]"/>
                                     </div>
+                                </div>
+                                <div class="collapse" :id="'collapse'+index">
+                                    <ul class="list-group ms-5">
+                                        <li class="" v-for="item2 in item.detail">{{item2}}</li>
+                                    </ul>  
                                 </div>
                             </div>
                             <h6>Thêm tiêu chí đánh giá</h6>
@@ -454,8 +466,8 @@
                     min_salary: 0,
                     max_salary: 0,
                     requirements: "",
-                    questions: [],
-                    criteria: [],
+                    experience: 0,
+                    criteria: new Array(),
                     status: 0,
                 },
             }
@@ -568,8 +580,9 @@
                     min_salary: 0,
                     max_salary: 0,
                     requirements: "",
+                    experience: 0,
                     questions: [],
-                    criteria: [],
+                    criteria: new Array(),
                     status: 0,
                 }
             },

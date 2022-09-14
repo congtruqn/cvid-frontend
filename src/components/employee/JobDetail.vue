@@ -121,8 +121,15 @@
                         </tr>
                         <tr>
                         <th scope="row">Số năm kinh nghiệm</th>
-                        <td></td>
-                        <td></td>
+                        <td>{{getExperience()== 0?'Chưa có kinh nghiệm':getExperience()}}</td>
+                        <td>{{position.experience}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row" colspan="3"><h5>Tiêu chí đánh giá</h5></th>
+                        </tr>
+                        <tr v-for="(item, index) in criteria">
+                        <th scope="row">{{item.name}}</th>
+                        <td>{{employee.assessment[index]}}</td>
                         </tr>
                     </tbody>
                     </table>
@@ -146,15 +153,21 @@
                 employee: JSON.parse(localStorage.getItem('employee')),
                 status: false,
                 job: '',
+                criteria: []
                 
             }
         },
         created(){
-            this.$http.get(`${BASE_URL}/department/position/${this.$route.params.id}`).then(res => {
+            this.$http.get(`${BASE_URL}/department/position/${this.$route.params.id}`)
+            .then(res => {
                 this.position = res.data
             }).catch(err => {
                 console.log(err)
             })
+            this.$http.get(`${BASE_URL}/criteria/getall`)
+            .then(res => {
+                this.criteria = res.data;
+            }) 
             this.$http.post(`${BASE_URL}/job/checkjob`, {
                 employee: this.employee._id,
                 position: this.$route.params.id,
@@ -193,6 +206,15 @@
                 }).catch(err => {
                     console.log(err)
                 })
+            },
+            getExperience(){
+                var sum = 0
+                if (this.employee.skillWorking && this.employee.skillWorking.length > 0){
+                this.employee.skillWorking.filter(function(company){
+                    sum += ((new Date(company.to)).getTime()-(new Date(company.from)).getTime())
+                    })
+                }
+                return Math.round(sum/15768000000)/2
             }
         }
     }
