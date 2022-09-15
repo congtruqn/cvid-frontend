@@ -15,7 +15,12 @@
                         <p class="card-text"><small class="text-muted">Cập nhật lần cuối: {{position.startdate?position.startdate.split('T')[0]:''}}</small></p>
                         <a href="#" class="btn btn-primary" v-if="position.status==0" @click="publishRecruiting(position._id)">Đăng tuyển</a>
                         <a href="#" class="btn btn-secondary" v-else @click="stopRecruiting(position._id)">Dừng tuyển</a>
-                        
+                        <button type="button" class="btn btn-success position-relative">
+                            CV ứng tuyển
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -84,7 +89,7 @@
         <hr>
         <div class="card-body">
             <div class="row g-md-4">
-                <div class="col-md-6 mb-3">
+                <div class="col-12 mb-3">
                     <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
                     <div class="accordion" id="accordionRecommend">
                     <div class="accordion-item" v-for="(position,id) in position_list" :key="id">
@@ -92,11 +97,11 @@
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
                             {{position.jobtitle}}
                         </button>
-                        
+    
 
                         </h2>
                         <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
-                        <div class="accordion-body0">
+                        <div class="accordion-body0 col-md-6">
                             <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)" v-if="cv.position_id == position._id">
                             <div class="card-body">
                                 <h5 class="card-title">{{cv.name}}</h5>
@@ -104,11 +109,95 @@
                                 <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
                                 <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
                                 <p class="card-text text-primary mb-0">Chuyên nghành: {{cv.skill}}</p>
-                                <p class="card-text text-primary">Thời gian tìm việc: {{cv.job.datetime}}</p>
+                                <p class="card-text text-primary">Thời gian tìm việc: {{cv.job.datetime?cv.job.datetime.split('T')[0]:''}}</p>
                                 <a :href="'/business/cvid/'+cv._id+'?position='+position._id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Đánh giá sơ bộ</button>
                                 <span class="m-auto">{{cv.review}}</span>
                                 <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.type == 2" @change="onChange($event, cv)">
                                 <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
+                            </div>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" v-if="position!=''">
+                                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Đánh giá sơ bộ</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-bordered border-primary">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">Các yêu cầu</th>
+                                            <th scope="col">CVID</th>
+                                            <th scope="col">Vị trí tuyển dụng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <th scope="row">Trình độ</th>
+                                            <td>{{cv.level}}</td>
+                                            <td>{{position.levels?position.levels.toString().replaceAll(',',', '):''}}</td>
+                                        
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">Chuyên nghành</th>
+                                            <td>{{cv.job.skill}}</td>
+                                            <td>{{position.skills?position.skills.toString().replaceAll(',',', '):''}}</td>
+                    
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">Chức danh công việc</th>
+                                            <td>{{cv.job.jobtitle}}</td>
+                                            <td>{{position.jobtitle}}</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">Chức vụ</th>
+                                            <td>{{cv.job.position==''?'Tất cả':cv.job.position}}</td>
+                                            <td>{{position.name}}</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">Lĩnh vực làm việc</th>
+                                            <td>{{cv.job.work_industry==''?'Tất cả':cv.job.work_industry}}</td>
+                                            <td>{{position.work_industry==''?'Tất cả':position.work_industry}}</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">Loại hình đơn vị tuyển dụng</th>
+                                            <td>{{cv.job.type_business==''?'Tất cả':cv.job.type_business}}</td>
+                                            <td></td>
+                                            </tr>
+
+                                            <tr>
+                                            <th scope="row">Môi trường làm việc</th>
+                                            <td>{{cv.job.work_environment==''?'Tất cả':cv.job.work_environment}}</td>
+                                            <td>{{position.work_environment==''?'Tất cả':position.work_environment}}</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">Nơi làm việc</th>
+                                            <td>{{cv.job.address==''?'Tất cả':cv.job.address}}</td>
+                                            <td>{{position.work_location==''?'Tất cả':position.work_location}}</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">Số năm kinh nghiệm</th>
+                                            <td>{{getExperience(cv.skillWorking)== 0?'Chưa có kinh nghiệm':getExperience(cv.skillWorking)+' năm'}}</td>
+                                            <td>{{position.experience==0?'Không yêu cầu kinh nghiệm':position.experience+' năm'}}</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row" colspan="3"><h5>Tiêu chí đánh giá</h5></th>
+                                            </tr>
+                                            <tr v-for="(item, index) in criteria" v-if="position.criteria[index]" :class="cv.assessment[index]>=position.criteria[index]?'bg-info':'bg-light'">
+                                            <th scope="row">{{item.name}}</th>
+                                            <td>{{cv.assessment[index]}}</td>
+                                            <td>{{position.criteria[index]}}</td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        <!-- <button type="button" class="btn btn-primary">Xác nhận</button> -->
+                                    </div>
+                                </div>
+                                </div>
                             </div>
                             </div>                        
                         </div>
@@ -117,7 +206,7 @@
                     </div>
                     
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3" v-if="false">
                     <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
                     <div class="accordion" id="accordionRecruitment">
                     <div class="accordion-item" v-for="(position,id) in position_list" :key="id">
@@ -164,6 +253,7 @@ export default {
             schools: [],
             searchSchool: "",
             point: 0,
+            criteria: [],
             list_cv_recommend: [],
             list_cv: []
         }
@@ -292,7 +382,16 @@ export default {
                     console.log(err)
                 })
             }
-},
+        },
+        getExperience(skillWorking){
+            var sum = 0
+            if (skillWorking && skillWorking.length > 0){
+            skillWorking.filter(function(company){
+                sum += ((new Date(company.to)).getTime()-(new Date(company.from)).getTime())
+                })
+            }
+            return Math.round(sum/15768000000)/2
+        }
         
     },
     async created(){
@@ -319,6 +418,10 @@ export default {
         .catch(function (error) {
             console.error(error.response);
         });
+        this.$http.get(`${BASE_URL}/criteria/getall`)
+        .then(res => {
+            this.criteria = res.data;
+        }) 
 
      
     },

@@ -7,7 +7,7 @@
             </div>
             <div class="card-body">
                 <form class="row g-3" v-on:submit.prevent>
-                    <div class="col-12 col-md-4 position-relative">
+                    <div class="col-12 col-md-6 position-relative">
                         <label class="form-label">Chuyên nghành mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="job.skill" :disabled="job.status==1"/>
                         <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
@@ -15,7 +15,7 @@
                             <li v-for="item in filteredSkill()"  @click="job.skill=item"><a class="dropdown-item">{{item}}</a></li>
                         </ul>
                     </div>
-                    <div class="col-12 col-md-4 position-relative">
+                    <div class="col-12 col-md-6 position-relative">
                         <label for="inputState" class="form-label">Chức danh mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <input type="text" class="form-select dropdown-toggle text-dark" id="dropdownMenuJobTitle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="job.jobtitle" :disabled="job.status==1"/>
                         <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuJobTitle" :style="{maxHeight: '400px'}">
@@ -23,14 +23,14 @@
                             <li v-for="item in filteredJobTitle()"  @click="job.jobtitle=item"><a class="dropdown-item">{{item}}</a></li>
                         </ul>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6">
                         <label class="form-label">Chức vụ <i class="fas fa-question-circle" title="Giải thích"></i></label>
                         <select class="form-select" v-model="job.position" :disabled="job.status==1">
                             <option value="">Tất cả chức vụ</option>
                             <option v-for="item in positions" :value="item.name">{{item.name}}</option>
                         </select>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6">
                         <label class="form-label">Môi trường làm việc mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label> 
                         <select class="form-select" v-model="job.work_environment" :disabled="job.status==1">
                             <option value="">Tất cả môi trường làm việc</option>
@@ -92,24 +92,114 @@
                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade show p-0 active">
-                            <div class="job-item p-4 mb-4" v-for="item in result">
-                                <a class="row g-4" :href="'/employee/job-detail/'+item._id">
-                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                            <div class="job-item p-4 mb-4" v-for="position in result">
+                                <a class="row g-4">
+                                    <a class="col-sm-12 col-md-7 d-flex align-items-center" :href="'/employee/job-detail/'+position._id">
                                         <img class="flex-shrink-0 img-fluid border rounded" src="@/assets/images/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
                                         <div class="text-start ps-4">
-                                            <h5 class="mb-3">{{item.jobtitle}}</h5>
-                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{item.work_location}}</span>
+                                            <h5 class="mb-3">{{position.jobtitle}}</h5>
+                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{position.work_location}}</span>
                                             <!-- <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span> -->
                                             <span class="text-truncate me-3">
                                                 <i class="far fa-money-bill-alt text-primary me-2"></i>
-                                                {{item.min_salary == '' && item.max_salary == '' ? 'Lương thỏa thuận' 
-                                                : item.min_salary != '' && item.max_salary != '' ? 'Từ ' + item.min_salary + ' - ' + item.max_salary + ' triệu đồng'
-                                                : item.min_salary == '' && item.max_salary != '' ? 'trên ' + item.min_salary + ' triệu đồng'
-                                                : 'Dưới ' + item.min_salary + ' triệu đồng'}}
+                                                {{position.min_salary == '' && position.max_salary == '' ? 'Lương thỏa thuận' 
+                                                : position.min_salary != '' && position.max_salary != '' ? 'Từ ' + position.min_salary + ' - ' + position.max_salary + ' triệu đồng'
+                                                : position.min_salary == '' && position.max_salary != '' ? 'trên ' + position.min_salary + ' triệu đồng'
+                                                : 'Dưới ' + position.min_salary + ' triệu đồng'}}
                                             </span>
+                                        </div>
+                                    </a>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Đánh giá sơ bộ</button>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Ngày đăng tuyển: {{position.startdate?position.startdate.split('T')[0]:''}}</small>
+                                    </div>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" v-if="position!=''">
+                                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Đánh giá sơ bộ</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-bordered border-primary">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">Các yêu cầu</th>
+                                                    <th scope="col">CVID</th>
+                                                    <th scope="col">Vị trí tuyển dụng</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                    <th scope="row">Trình độ</th>
+                                                    <td>{{employee.level}}</td>
+                                                    <td>{{position.levels?position.levels.toString().replaceAll(',',', '):''}}</td>
+                                                
+                                                    </tr>
+                                                    <tr>
+                                                    <th scope="row">Chuyên nghành</th>
+                                                    <td>{{employee.job.skill}}</td>
+                                                    <td>{{position.skills?position.skills.toString().replaceAll(',',', '):''}}</td>
+                                                    
+                                                    </tr>
+                                                    <tr>
+                                                    <th scope="row">Chức danh công việc</th>
+                                                    <td>{{employee.job.jobtitle}}</td>
+                                                    <td>{{position.jobtitle}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                    <th scope="row">Chức vụ</th>
+                                                    <td>{{employee.job.position==''?'Tất cả':employee.job.position}}</td>
+                                                    <td>{{position.name}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                    <th scope="row">Lĩnh vực làm việc</th>
+                                                    <td>{{employee.job.work_industry==''?'Tất cả':employee.job.work_industry}}</td>
+                                                    <td>{{position.work_industry==''?'Tất cả':position.work_industry}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                    <th scope="row">Loại hình đơn vị tuyển dụng</th>
+                                                    <td>{{employee.job.type_business==''?'Tất cả':employee.job.type_business}}</td>
+                                                    <td></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                    <th scope="row">Môi trường làm việc</th>
+                                                    <td>{{employee.job.work_environment==''?'Tất cả':employee.job.work_environment}}</td>
+                                                    <td>{{position.work_environment==''?'Tất cả':position.work_environment}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                    <th scope="row">Nơi làm việc</th>
+                                                    <td>{{employee.job.address==''?'Tất cả':employee.job.address}}</td>
+                                                    <td>{{position.work_location==''?'Tất cả':position.work_location}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                    <th scope="row">Số năm kinh nghiệm</th>
+                                                    <td>{{getExperience()== 0?'Chưa có kinh nghiệm':getExperience()+' năm'}}</td>
+                                                    <td>{{position.experience==0?'Không yêu cầu kinh nghiệm':position.experience+' năm'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                    <th scope="row" colspan="3"><h5>Tiêu chí đánh giá</h5></th>
+                                                    </tr>
+                                                    <tr v-for="(item, index) in criteria" v-if="position.criteria[index]" :class="employee.assessment[index]>=position.criteria[index]?'bg-info':'bg-light'">
+                                                    <th scope="row">{{item.name}}</th>
+                                                    <td>{{employee.assessment[index]}}</td>
+                                                    <td>{{position.criteria[index]}}</td>
+                                                    </tr>
+                                                </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                <!-- <button type="button" class="btn btn-primary">Xác nhận</button> -->
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </a>
+
                             </div>
                         </div>
                     </div>
@@ -180,6 +270,7 @@
                 environments: [],
                 industries: [],
                 positions: [],
+                criteria: [],
                 employee: JSON.parse(localStorage.getItem('employee'))
             }
         },
@@ -231,9 +322,23 @@
                 .then(res => {
                     this.result = []
                 })
+            },
+            getExperience(){
+                var sum = 0
+                if (this.employee.skillWorking && this.employee.skillWorking.length > 0){
+                this.employee.skillWorking.filter(function(company){
+                    sum += ((new Date(company.to)).getTime()-(new Date(company.from)).getTime())
+                    })
+                }
+                return Math.round(sum/15768000000)/2
             }
         },
         created(){
+            this.$http.post(`${BASE_URL}/employee/me`,{
+                token: localStorage.getItem('token')
+            })
+            .then(res => {
+                this.employee = res.data.user
                 if (this.employee.job){
                     this.job = this.employee.job
                     if (this.job.status == 1){
@@ -251,6 +356,11 @@
                         status: 0
                     }
                 }
+            })
+            .catch(function (error) {
+                console.error(error.response);
+            });
+            
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data
@@ -289,6 +399,10 @@
             .catch(function (error) {
                 console.error(error.response);
             });
+            this.$http.get(`${BASE_URL}/criteria/getall`)
+            .then(res => {
+                this.criteria = res.data;
+            }) 
         }
     }
   
