@@ -37,7 +37,23 @@
                 <a href="/business/recruit" class="nav-item nav-link">Tuyển dụng</a>
                 <a href="/business/candidate" class="nav-item nav-link">Ứng viên</a>
                 <a href="/business/login" class="nav-item nav-link">Login</a>
+                <a href="" @click="logout" class="nav-item nav-link">Đăng xuất</a>
             </div>
         </div>
     </nav>
 </template>
+<script>
+    export default {
+        data(){
+            return {
+            }
+        },
+        methods : {
+            logout(){
+                localStorage.removeItem('business');
+                localStorage.removeItem('token');
+                this.$router.push('/business/login')
+            }
+        }
+    }
+</script>

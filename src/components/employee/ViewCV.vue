@@ -376,7 +376,6 @@
             .then(res => {
                 this.cv = res.data;
 				this.employee = res.data;
-                console.log(this.employee)
             }) 
 
             this.$http.get(`${BASE_URL}/criteria/getall`)
