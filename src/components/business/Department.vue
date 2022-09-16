@@ -1,9 +1,9 @@
 <template>
     <div class="container-fluid">
-        <button v-if="business.type==5" type="button" class="btn btn-primary btn-icon-split ms-5 my-4" data-bs-toggle="modal" data-bs-target="#addDepartment" @click="department.name = ''">
+        <button v-if="!key" type="button" class="btn btn-primary btn-icon-split ms-4 mt-4" data-bs-toggle="modal" data-bs-target="#addDepartment" @click="department.name = ''">
             <i class="fas fa-plus"></i> Thêm phòng ban
         </button>
-        <div class="card mb-3 mx-md-4" v-for="department in departments" :key="department._id">
+        <div class="card m-3 mx-md-4" v-for="department in departments" :key="department._id">
             <div class="card-body">
                 <h5 class="card-title">{{department.name}} <a @click="copy('http://localhost:8080/business/department/dhfkjchdsfkhvdjsch')" class=""><i class="btn fas fa-link"></i></a></h5>
                 <h5 class="card-title text-center text-primary" v-if="!department.position.length">Chưa có vị trí</h5>
@@ -393,7 +393,6 @@
                                 <input type="text" class="form-control" placeholder="Nhập tiêu chí" v-model="question">
                                 <button class="btn btn-primary" type="button" @click="()=>{if(question!='')position.questions.push(question)}">Thêm</button>
                             </div>
-                            
                         </form>
                     </div>
                 </div>
@@ -419,6 +418,10 @@
                         <label class="col-form-label">Tên phòng ban<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" placeholder="Nhập tên phòng ban" v-model="department.name">
                     </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Email<span class="text-danger"></span></label>
+                        <input type="email" class="form-control" placeholder="Nhập email" v-model="department.email">
+                    </div>
                     <hr>
                 </div>
                 <div class="modal-footer">
@@ -439,7 +442,7 @@
             return {
                 searchSkill: '',
                 searchJobTitle: '',
-                business : JSON.parse(localStorage.getItem('business')),
+                business_id: null,
                 majors: [],
                 position_id: '',
                 question: '',
@@ -454,6 +457,7 @@
                     _id: "",
                     name: "",
                     id: "",
+                    email: "",
                     position: "",
                 },
                 position: {
@@ -474,6 +478,7 @@
                     criteria: new Array(),
                     status: 0,
                 },
+                key: null
             }
         },
         methods : {
@@ -497,8 +502,10 @@
                 } else {
                     this.$http.post(`${BASE_URL}/department/new`, {
                         name : this.department.name,
-                        id: this.business.username,
+                        id: this.business_id,
+                        email: this.department.email,
                     }).then(res => {
+                        if (res.data)
                         Swal.fire({
                             icon: 'success',
                             title: 'Thông báo',
@@ -662,57 +669,92 @@
             },
         },
         created(){
-            this.$http.get(`${BASE_URL}/department/list/${this.business.username}`).then(res => {
-                this.departments = res.data
-            }).catch(err => {
-                console.log(err)
-            })
-            this.$http.get(`${BASE_URL}/province/list`)
+            try {
+                this.business_id = JSON.parse(localStorage.getItem('business')).username
+            } catch (err) {
+                this.key = this.$route.query.key
+                if (this.key){
+                    localStorage.setItem('key', this.key)
+                }
+                this.key = localStorage.getItem('key')
+            }
+
+            if (this.business_id) {
+                this.$http.post(`${BASE_URL}/department/list/get-by-id`,{
+                    id: this.business_id
+                }).then(res => {
+                    this.departments = res.data
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else if (this.key) {
+                this.$http.post(`${BASE_URL}/department/list/get-by-key`,{
+                    key: this.key
+                }).then(res => {
+                    if (res.data){
+                        this.departments = res.data
+                        this.business_id = res.data[0].id
+                    } else {
+                        this.key = null
+                    }
+                })
+            }
+
+            this.$http.get(`${BASE_URL}/position/getall`)
             .then(response => {
-                this.provinces = response.data;
-                this.provinces = new Set(this.provinces.map(item => item.province))  
+                this.positions = response.data  
             })
             .catch(function (error) {
-                console.error(error.response);
-            });   
+                console.error(error);
+            });
+
+            this.$http.get(`${BASE_URL}/province/list`)
+            .then(response => {
+                this.provinces = new Set(response.data.map(item => item.province))  
+            })
+            .catch(function (error) {
+                console.error(error);
+            });  
+
             this.$http.get(`${BASE_URL}/major/list`)
             .then(response => {
                 this.majors = response.data
             })
+            .catch(function (error) {
+                console.error(error);
+            });
+
             this.$http.get(`${BASE_URL}/industry/getall`)
             .then(response => {
                 this.industries = response.data
-              
-            })
-            this.$http.get(`${BASE_URL}/environment/getall`)
-            .then(response => {
-                this.environments = response.data
-              
             })
             .catch(function (error) {
-                console.error(error.response);
+                console.error(error);
             });
+
+            this.$http.get(`${BASE_URL}/environment/getall`)
+            .then(response => {
+                this.environments = response.data  
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+
             this.$http.get(`${BASE_URL}/jobtitle/getall`)
             .then(response => {
                 this.jobtitles = response.data
-              
             })
             .catch(function (error) {
-                console.error(error.response);
-            });
-            this.$http.get(`${BASE_URL}/position/getall`)
-            .then(response => {
-                this.positions = response.data
-              
-            })
-            .catch(function (error) {
-                console.error(error.response);
+                console.error(error);
             });
 
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
                 this.criteria = res.data;
             })  
+            .catch(function (error) {
+                console.error(error);
+            });
 
         },
 

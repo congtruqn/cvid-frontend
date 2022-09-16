@@ -9,6 +9,9 @@
             <div class="col-12 col-md-6" v-for="position in position_list">
                 <div class="card">
                     <div class="card-body">
+                        <div class="card-header text-center h5 bg-primary bg-gradient text-white mb-2">
+                            {{position.department_name}}
+                        </div>
                         <h5 class="card-title">{{position.jobtitle}}</h5>
                         <h6 class="card-subtitle my-2 text-muted">Chức vụ: {{position.name}}</h6>
                         <p class="card-text my-1">Số lượng: {{position.amount}}</p>
@@ -33,19 +36,104 @@
         </div>
         <div class="card-body">
             <form class="row g-3" v-on:submit.prevent>
-                <div class="col-12 col-md-5">
-                    <label class="form-label">Vị trí tuyển dụng</label>
-                    <input type="text" class="form-select dropdown-toggle" id="dropdownMenuPosition" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" readonly :value="'Đang tìm '+selected.length+' vị trí'"/>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuPosition">
-                        <div class="form-check mx-3" v-for="position in position_list" :key="position._id">
-                            <input class="form-check-input" type="checkbox" v-model="selected" :value="position._id" :id="'position'+position._id">
-                            <label class="form-check-label" :for="'position'+position._id">
-                                {{position.jobtitle}}
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Vị trí tuyển dụng</label> 
+                    <select class="form-select" v-model='position_id'>
+                        <option value="">Chưa có vị trí</option>
+                        <option v-for="(position, index) in position_list" :value="index">{{position.department_name + ' - ' + position.jobtitle + ' (' + position.name+ ')'}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Chức danh công việc</label> 
+                    <select class="form-select" v-model="position.jobtitle">
+                        <option value="" disabled>Chọn ...</option>
+                        <option v-for="item in jobtitles" :value="item.name">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Chức vụ <span class="text-danger">*</span></label>
+                    <select class="form-select" v-model="position.name">
+                        <option value="" disabled>Chọn ...</option>
+                        <option v-for="item in positions" :value="item.name">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label> 
+                    <input type="text" class="form-select dropdown-toggle" id="dropdownMenuLevel" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="position.levels?position.levels.toString().replaceAll(',', ', '):''" placeholder="Chọn cấp bậc của ứng viên">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLevel">
+                        <div class="form-check mx-3">
+                            <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv01" value="Sơ cấp">
+                            <label class="form-check-label" for="lv01">
+                                Sơ cấp
                             </label>
                         </div>
-                    </ul>
+                        <div class="form-check mx-3">
+                            <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv02" value="Trung cấp">
+                            <label class="form-check-label" for="lv02">
+                                Trung cấp
+                            </label>
+                        </div>
+                        <div class="form-check mx-3">
+                            <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv03" value="Cao đẳng">
+                            <label class="form-check-label" for="lv03">
+                                Cao đẳng
+                            </label>
+                        </div>
+                        <div class="form-check mx-3">
+                            <input class="form-check-input" type="checkbox" v-model="position.levels" id="lv04" value="Đại học">
+                            <label class="form-check-label" for="lv04">
+                                Đại học
+                            </label>
+                        </div>
+                    </ul>          
                 </div>
-                <div class="col-9 col-md-5">
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Chuyên nghành ứng viên <span class="text-danger">*</span></label> 
+                    <input type="text" class="form-select dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSkill" placeholder="Chọn cấp bậc trước">
+                    <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuSkill">
+                        <div class="form-check mx-3" v-for="(skill, index) in filteredSkill">
+                            <input class="form-check-input" type="checkbox" v-model="position.skills" :id="'0skill'+index" :value="skill">
+                            <label class="form-check-label" :for="'0skill'+index">
+                                {{skill}}
+                            </label>
+                        </div>
+                    </ul>  
+                    <ul class="list-group m-2 px-4">
+                        <li class="" v-for="skill in position.skills">{{skill}}</li>
+                    </ul>   
+                </div>
+                
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Lĩnh vực kinh doanh</label> 
+                    <select class="form-select" v-model="position.work_industry">
+                        <option value="" disabled>Chọn ...</option>
+                        <option v-for="item in industries" :value="item.name">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Nơi làm việc <span class="text-danger">*</span></label>
+                    <select class="form-select" v-model="position.work_location">
+                        <option value="">Chọn địa điểm làm việc</option>
+                        <option v-for="province in provinces" :value="province">{{province}}</option>
+                    </select>
+                </div>
+                
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Môi trường làm việc</label> 
+                    <select class="form-select" v-model="position.work_environment">
+                        <option value="" disabled>Chọn ...</option>
+                        <option v-for="item in environments" :value="item.name">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Yêu cầu kinh nghiệm</label>
+                    <input type="number" class="form-control" v-model="position.experience" placeholder="Nhập số năm kinh nghiệm">
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Số lượng <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
+                </div>
+                <!-- <div class="col-12 col-md-6">
                     <label for="inputSchool" class="form-label">Trường</label>
                     <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSchool"/>
                     <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSchool" style="max-height: 400px;">
@@ -57,10 +145,10 @@
                         </div>
                     </ul>
                 </div>
-                <div class="col-3 col-md-2">
+                <div class="col-12 col-md-6">
                     <label for="inputPoint" class="form-label">Điểm CV</label>
                     <input type="number" class="form-control" id="inputPoint" v-model="point" max="10" min="0">
-                </div>
+                </div> -->
                 <!-- <div class="col-12">
                     <label for="inputAddress2" class="form-label">Address 2</label>
                     <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
@@ -245,17 +333,45 @@ const {BASE_URL} =  require('../../utils/config')
 export default {
     data() {
         return {
-            business: JSON.parse(localStorage.getItem('business')),
+            business_id: null,
+            key: null,
             position_list: [],
             cvid: '',
+            position_id: '',
+            position: {
+                name: "",
+                jobtitle: "",
+                levels: [],
+                skills: [],
+                amount: 1,
+                description: "",
+                work_location: "",
+                work_industry: "",
+                work_environment: "",
+                min_salary: 0,
+                max_salary: 0,
+                requirements: "",
+                experience: 0,
+                questions: [],
+                criteria: new Array(),
+                status: 0,
+            },
             selected: [],
             school: [],
             schools: [],
             searchSchool: "",
+            searchSkill: "",
             point: 0,
             criteria: [],
             list_cv_recommend: [],
-            list_cv: []
+            list_cv: [],
+            positions: [],
+            jobtitles: [],
+            environments: [],
+            provinces: [],
+            industries: [],
+            majors: []
+            
         }
     },
     computed: {
@@ -263,6 +379,19 @@ export default {
             return this.schools.filter((school) =>{
                 return school.name.toLowerCase().indexOf(this.searchSchool.toLowerCase()) != -1
             });
+        },
+        filteredSkill(){
+            this.skills = new Set([])
+            this.majors.forEach(element => {
+                if (this.position.levels.includes(element.level)){
+                    element.skills.forEach(skill => {
+                        if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1){
+                            this.skills.add(skill)
+                        } 
+                    })
+                }
+            });
+            return this.skills
         },
     },
     methods: {
@@ -395,35 +524,134 @@ export default {
         
     },
     async created(){
-
-        await this.$http.get(`${BASE_URL}/department/list/${this.business.username}`)
-        .then(res => {
-            res.data.forEach(department =>{
-                department.position.forEach(position => {
-                    this.position_list.push(position)
-                    if (position.status == 1){
-                        this.selected.push(position._id)
-                    }
+        try {
+            this.business_id = JSON.parse(localStorage.getItem('business')).username
+        } catch (err) {
+            this.key = localStorage.getItem('key')
+        }
+        if (this.business_id) {
+            this.$http.post(`${BASE_URL}/department/list/get-by-id`,{
+                id: this.business_id
+            }).then(res => {
+                this.position_list = []
+                res.data.forEach(department =>{
+                    department.position.forEach(position => {
+                        position.department_name = department.name
+                        this.position_list.push(position)
+                    })
                 })
+            }).catch(err => {
+                console.log(err)
             })
-            this.recruit();
-            
-        }).catch(err => {
-            console.log(err)
+        } else if (this.key) {
+            this.$http.post(`${BASE_URL}/department/list/get-by-key`,{
+                key: this.key
+            }).then(res => {
+                if (res.data){
+                    this.business_id = res.data[0].id
+                    this.position_list = []
+                    res.data.forEach(department =>{
+                        department.position.forEach(position => {
+                            position.department_name = department.name
+                            this.position_list.push(position)
+                        })
+                    })
+                }
+            }).catch(err => {
+                console.error(err)
+            })
+        }
+
+        this.$http.get(`${BASE_URL}/position/getall`)
+        .then(response => {
+            this.positions = response.data  
         })
+        .catch(function (error) {
+            console.error(error);
+        });
+
+        this.$http.get(`${BASE_URL}/province/list`)
+        .then(response => {
+            this.provinces = new Set(response.data.map(item => item.province))  
+        })
+        .catch(function (error) {
+            console.error(error);
+        });  
+
+        this.$http.get(`${BASE_URL}/major/list`)
+        .then(response => {
+            this.majors = response.data
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
+        this.$http.get(`${BASE_URL}/industry/getall`)
+        .then(response => {
+            this.industries = response.data
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
+        this.$http.get(`${BASE_URL}/environment/getall`)
+        .then(response => {
+            this.environments = response.data  
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
+        this.$http.get(`${BASE_URL}/jobtitle/getall`)
+        .then(response => {
+            this.jobtitles = response.data
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
         this.$http.get(`${BASE_URL}/school/getall`)
         .then(response => {
             this.schools = response.data;
         })
         .catch(function (error) {
-            console.error(error.response);
+            console.error(error);
         });
+
         this.$http.get(`${BASE_URL}/criteria/getall`)
         .then(res => {
             this.criteria = res.data;
-        }) 
-
-     
+        }).catch(function (error) {
+            console.error(error);
+        });
     },
+    watch: {
+        position_id(newVal){
+            if (newVal === ''){
+                this.position = {
+                    name: "",
+                    jobtitle: "",
+                    levels: [],
+                    skills: [],
+                    amount: 1,
+                    description: "",
+                    work_location: "",
+                    work_industry: "",
+                    work_environment: "",
+                    min_salary: 0,
+                    max_salary: 0,
+                    requirements: "",
+                    experience: 0,
+                    questions: [],
+                    criteria: new Array(),
+                    status: 0,
+                }
+            } else {
+                this.position = this.position_list[newVal]
+            }
+            console.log(this.position)
+            console.log(newVal)
+        }
+    }
 }
 </script>
