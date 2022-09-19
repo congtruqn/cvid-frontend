@@ -6,7 +6,7 @@
         </div>
         <div class="card-body">
         <div class="row g-2">
-            <div class="col-12 col-md-6" v-for="position in position_list">
+            <div class="col-12 col-md-6" v-for="(position, index) in position_list" :key="index">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-header text-center h5 bg-primary bg-gradient text-white mb-2">
@@ -18,12 +18,30 @@
                         <p class="card-text"><small class="text-muted">Cập nhật lần cuối: {{position.startdate?position.startdate.split('T')[0]:''}}</small></p>
                         <a href="#" class="btn btn-primary" v-if="position.status==0" @click="publishRecruiting(position._id)">Đăng tuyển</a>
                         <a href="#" class="btn btn-secondary" v-else @click="stopRecruiting(position._id)">Dừng tuyển</a>
-                        <button type="button" class="btn btn-success position-relative">
+                        <button type="button" class="btn btn-success position-relative" data-bs-toggle="offcanvas" :data-bs-target="'#listCvApplied'+index" :aria-controls="'#listCvApplied'+index">
                             CV ứng tuyển
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                0
+                                {{list_cv_applied.filter(cv => (cv.type == 1 && cv.position_id == position._id)).length}}
                             </span>
                         </button>
+                    </div>
+                </div>
+                <div class="offcanvas offcanvas-end" tabindex="-1" :id="'listCvApplied'+index" :aria-labelledby="'#listCvApplied'+index+'Label'">
+                    <div class="offcanvas-header">
+                        <h5 :id="'listCvApplied'+index+'Label'">CV ứng tuyển</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action text-primary" aria-current="true" v-for="cv in list_cv_applied.filter(cv => (cv.type == 1 && cv.position_id == position._id))">
+                                <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1 ">{{cv.name}}</h5>
+                                <small>3 days ago</small>
+                                </div>
+                                <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                <small>And some small print.</small>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,78 +151,20 @@
                     <label class="form-label">Số lượng <span class="text-danger">*</span></label>
                     <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng">
                 </div>
-                <!-- <div class="col-12 col-md-6">
-                    <label for="inputSchool" class="form-label">Trường</label>
-                    <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSchool"/>
-                    <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuSchool" style="max-height: 400px;">
-                        <div class="form-check mx-3" v-for="item in filteredSchool" :key="item._id">
-                            <input class="form-check-input" type="checkbox" v-model="school" :value="item.name" :id="'school'+item._id">
-                            <label class="form-check-label" :for="'school'+item._id">
-                                {{item.name}}
-                            </label>
-                        </div>
-                    </ul>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label for="inputPoint" class="form-label">Điểm CV</label>
-                    <input type="number" class="form-control" id="inputPoint" v-model="point" max="10" min="0">
-                </div> -->
-                <!-- <div class="col-12">
-                    <label for="inputAddress2" class="form-label">Address 2</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                </div>
-                <div class="col-md-6">
-                    <label for="inputCity" class="form-label">City</label>
-                    <input type="text" class="form-control" id="inputCity">
-                </div>
-                <div class="col-md-4">
-                    <label for="inputState" class="form-label">State</label>
-                    <select id="inputState" class="form-select">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="inputZip" class="form-label">Zip</label>
-                    <input type="text" class="form-control" id="inputZip">
-                </div> -->
                 <div class="col-12 text-center">
                     <button type="button" class="btn btn-lg btn-primary" @click="recruit">Tìm ngay</button>
                 </div>
             </form>
-    
         </div>
-        <hr>
-        <div class="card-body">
-            <div class="row g-md-4">
-                <div class="col-12 mb-3">
-                    <h5 class="text-primary text-center pb-2">CV đề xuất</h5>
-                    <div class="accordion" id="accordionRecommend">
-                    <div class="accordion-item" v-for="(position,id) in position_list" :key="id">
-                        <h2 class="accordion-header row m-0" :id="'headingRecommend'+id">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecommend'+id" aria-expanded="true" :aria-controls="'collaoseRecommend'+id">
-                            {{position.jobtitle}}
-                        </button>
-    
-
-                        </h2>
+          
+                    
+                   
+                        
                         <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
                         <div class="accordion-body0 col-md-6">
                             <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)" v-if="cv.position_id == position._id">
-                            <div class="card-body">
-                                <h5 class="card-title">{{cv.name}}</h5>
-                                <p class="card-text text-primary mb-0">{{cv.professionaltitle}}</p>
-                                <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
-                                <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
-                                <p class="card-text text-primary mb-0">Chuyên nghành: {{cv.skill}}</p>
-                                <p class="card-text text-primary">Thời gian tìm việc: {{cv.job.datetime?cv.job.datetime.split('T')[0]:''}}</p>
-                                <a :href="'/business/cvid/'+cv._id+'?position='+position._id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Đánh giá sơ bộ</button>
-                                <span class="m-auto">{{cv.review}}</span>
-                                <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.type == 2" @change="onChange($event, cv)">
-                                <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
-                            </div>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" v-if="position!=''">
+                            
+                            <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" v-if="position!=''">
                                 <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -283,49 +243,14 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                         <!-- <button type="button" class="btn btn-primary">Xác nhận</button> -->
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            </div>                        
-                        </div>
+                                  
+                           
                         </div>
                     </div>
                     </div>
                     
                 </div>
-                <div class="col-md-6 mb-3" v-if="false">
-                    <h5 class="text-primary text-center pb-2">CV ứng tuyển</h5>
-                    <div class="accordion" id="accordionRecruitment">
-                    <div class="accordion-item" v-for="(position,id) in position_list" :key="id">
-                        <h2 class="accordion-header row m-0" :id="'headingRecruitment'+id">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#collaoseRecruitment'+id" aria-expanded="true" :aria-controls="'collaoseRecruitment'+id">
-                            {{position.jobtitle}}
-                        </button>
-                        </h2>
-                        <div :id="'collaoseRecruitment'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecruitment'+id">
-                        <div class="accordion-body0">
-                            <div class="card mb-3" v-for="cv in list_cv" v-if="cv.position_id == position._id">
-                            <div class="card-body">
-                                <h5 class="card-title">{{cv.name}}</h5>
-                                <p class="card-text text-primary mb-0">{{cv.professionaltitle}}</p>
-                                <p class="card-text text-primary mb-0">Điểm CV: {{cv.point}}/10</p>
-                                <p class="card-text text-primary mb-0">Trường: {{cv.school}}</p>
-                                <p class="card-text text-primary">Chuyên nghành: {{cv.skill}}</p>
-                                <a :href="'/business/cvid/'+cv._id+'?position='+position._id" target="_blank" class="btn btn-primary">Xem chi tiết</a>
-                                <span class="m-auto">{{cv.review}}</span>
-                                <input type="checkbox" class="form-check-input float-end me-2 p-3" :checked="cv.confirm == 1" @change="onChange($event, cv)">
-                                <span class="badge bg-secondary float-end me-2 p-3">{{cv.rating}}</span>
-                            </div>
-                            </div>                        
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                
 </div>
 </template>
 <script>
@@ -364,7 +289,7 @@ export default {
             point: 0,
             criteria: [],
             list_cv_recommend: [],
-            list_cv: [],
+            list_cv_applied: [],
             positions: [],
             jobtitles: [],
             environments: [],
@@ -397,7 +322,7 @@ export default {
     methods: {
         recruit(){
             this.list_cv_recommend = [];
-            this.list_cv = [];
+            this.list_cv_applied = [];
             this.selected.forEach(id => {
                 this.$http.post(`${BASE_URL}/job/getcvidforposition`, {
                     id: id
@@ -406,7 +331,7 @@ export default {
                     let cvid = job_list.map(t1 => ({...t1, ...res.data.cv_list.find(t2 => t2._id == t1.employee_id)}))
                     cvid.forEach(el => {
                         if (el.type == 1){
-                            this.list_cv.push(el)
+                            this.list_cv_applied.push(el)
                         }
                     })
                     this.$http.get(`${BASE_URL}/department/findcvforposition/${id}`, {
@@ -530,7 +455,7 @@ export default {
             this.key = localStorage.getItem('key')
         }
         if (this.business_id) {
-            this.$http.post(`${BASE_URL}/department/list/get-by-id`,{
+            await this.$http.post(`${BASE_URL}/department/list/get-by-id`,{
                 id: this.business_id
             }).then(res => {
                 this.position_list = []
@@ -544,7 +469,7 @@ export default {
                 console.log(err)
             })
         } else if (this.key) {
-            this.$http.post(`${BASE_URL}/department/list/get-by-key`,{
+            await this.$http.post(`${BASE_URL}/department/list/get-by-key`,{
                 key: this.key
             }).then(res => {
                 if (res.data){
@@ -561,6 +486,24 @@ export default {
                 console.error(err)
             })
         }
+
+        this.position_list.forEach(position => {
+            this.$http.post(`${BASE_URL}/job/getcvidforposition`, {
+                id: position._id
+            }).then(res => {
+                const job_list = res.data.job_list 
+                let cvid = job_list.map(t1 => ({...t1, ...res.data.cv_list.find(t2 => t2._id == t1.employee_id)}))
+                cvid.forEach(el => {
+                    if (el.type == 1){
+                        this.list_cv_applied.push(el)
+                    }
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+        })
+    
+
 
         this.$http.get(`${BASE_URL}/position/getall`)
         .then(response => {
