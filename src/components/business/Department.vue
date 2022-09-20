@@ -220,10 +220,33 @@
                                 </div>
                             </div>
                             <h6>Thêm tiêu chí đánh giá</h6>
-                            <p class="col" v-for="(ques, index) in position.questions">{{ques}}<a class="float-end btn btn-sm btn-danger" @click="()=>{position.questions.splice(index,1)}"><i class="fas fa-x"></i></a></p>
-                            <div class="input-group mb-3">
+                            <div class="form-check" v-for="(item, index) in position.questions">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <div class="list-group list-group-flush">
+                                            <label class="list-group-item">
+                                                <a class="btn btn-sm btn-danger me-1 ms-n4 py-0" @click="()=>{position.questions.splice(index,1)}"><i class="fas fa-x"></i></a>
+                                                {{item.name}} <a data-bs-toggle="collapse" :href="'#collapse2'+index" class="link-primary" role="button" aria-expanded="false" :aria-controls="'collapse2'+index"><i class="fas fa-question-circle ms-0"></i></a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 text-end">
+                                        <input class="form-control form-control-sm form-control-color float-end " type="number" v-model="position.questions[index].point"/>
+                                    </div>
+                                </div>
+                                <div class="collapse" :id="'collapse2'+index">
+                                    <ul class="list-group ms-5">
+                                        <li class="" v-for="(item2, index2) in item.detail">{{item2}}<a class="btn btn-sm btn-danger float-end py-0" @click="()=>{position.questions[index].detail.splice(index2, 1)}"><i class="fas fa-x"></i></a></li>
+                                    </ul>  
+                                    <div class="input-group my-2">
+                                        <input type="text" class="form-control" placeholder="Nhập tiêu chí con" v-model="question">
+                                        <button class="btn btn-primary" type="button" @click="()=>{if(question!=''){position.questions[index].detail.push(question);question=''}}">Thêm</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group my-3">
                                 <input type="text" class="form-control" placeholder="Nhập tiêu chí" v-model="question">
-                                <button class="btn btn-primary" type="button" @click="()=>{position.questions.push(question)}">Thêm</button>
+                                <button class="btn btn-primary" type="button" @click="()=>{if(question!=''){position.questions.push({name: question, detail: []})};question=''}">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -388,10 +411,33 @@
                                 </div>
                             </div>
                             <h6>Thêm tiêu chí đánh giá</h6>
-                            <p class="col" v-for="(ques, index) in position.questions">{{ques}}<a class="float-end btn btn-sm btn-danger" @click="()=>{position.questions.splice(index,1)}"><i class="fas fa-x"></i></a></p>
+                            <div class="form-check" v-for="(item, index) in position.questions">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <div class="list-group list-group-flush">
+                                            <label class="list-group-item">
+                                                <a class="btn btn-sm btn-danger me-1 ms-n4 py-0" @click="()=>{position.questions.splice(index,1)}"><i class="fas fa-x"></i></a>
+                                                {{item.name}} <a data-bs-toggle="collapse" :href="'#collapse2'+index" class="link-primary" role="button" aria-expanded="false" :aria-controls="'collapse2'+index"><i class="fas fa-question-circle ms-0"></i></a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 text-end">
+                                        <input class="form-control form-control-sm form-control-color float-end " type="number" v-model="position.questions[index].point"/>
+                                    </div>
+                                </div>
+                                <div class="collapse" :id="'collapse2'+index">
+                                    <ul class="list-group ms-5">
+                                        <li class="" v-for="(item2, index2) in item.detail">{{item2}}<a class="btn btn-sm btn-danger float-end py-0" @click="()=>{position.questions[index].detail.splice(index2, 1)}"><i class="fas fa-x"></i></a></li>
+                                    </ul>  
+                                    <div class="input-group my-2">
+                                        <input type="text" class="form-control" placeholder="Nhập tiêu chí con" v-model="question">
+                                        <button class="btn btn-primary" type="button" @click="()=>{if(question!=''){position.questions[index].detail.push(question);question=''}}">Thêm</button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Nhập tiêu chí" v-model="question">
-                                <button class="btn btn-primary" type="button" @click="()=>{if(question!='')position.questions.push(question)}">Thêm</button>
+                                <button class="btn btn-primary" type="button" @click="()=>{if(question!=''){position.questions.push({name: question, detail: []})};question=''}">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -445,9 +491,9 @@
                 business_id: null,
                 majors: [],
                 position_id: '',
-                question: '',
                 jobtitles: [],
                 criteria: [],
+                question: '',
                 environments: [],
                 industries: [],
                 positions: [],
@@ -475,6 +521,7 @@
                     max_salary: 0,
                     requirements: "",
                     experience: 0,
+                    questions: new Array(),
                     criteria: new Array(),
                     status: 0,
                 },
@@ -592,7 +639,7 @@
                     max_salary: 0,
                     requirements: "",
                     experience: 0,
-                    questions: [],
+                    questions: new Array(),
                     criteria: new Array(),
                     status: 0,
                 }
