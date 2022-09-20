@@ -57,19 +57,6 @@
             </div>
             <div class="card-body text-success" v-if="company.name !== undefined">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text">Chức danh công việc</span>
-                            <input type="text" class="form-control" v-model="company.title">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Mô tả công việc</span>
-                        <textarea class="form-control" aria-label="With textarea" v-model="company.detail"></textarea>
-                    </div>
-                    </div>
-
                     <div class="col-md-6" v-for="(element, index2) in company.process">
                         <div class="card border-success mb-3">
                             <div class="card-header bg-transparent border-success position-relative">
@@ -145,7 +132,9 @@
             <li class="list-group-item" v-for="(ele, index) in criteria" :key="index">
                 <div class="d-flex justify-content-between align-items-center">
                     <span>{{index+1+'. '+ele.name}} <a data-bs-toggle="collapse" :href="'#collapse'+index" class="link-primary" role="button" aria-expanded="false" :aria-controls="'collapse'+index"><i class="fas fa-question-circle ms-0"></i></a></span>
-                    <input type="number" class="form-control form-control-sm" :style="{maxWidth: '3.5rem'}" v-model="assessment[index]"/>
+                    <select class="form-select form-select-sm" :style="{maxWidth: '4rem'}" v-model="assessment[index]">
+                        <option v-for="i in 11" :value="i-1">{{i-1}}</option>
+                    </select>
                 </div>
                 <div class="collapse" :id="'collapse'+index">
                     <ul class="list-group ms-5">
@@ -169,7 +158,6 @@
                     <div class="card-body text-primary">
                         <h5 class="card-title">{{employee.school}}</h5>
                         <p class="card-text mx-2 my-1">Cấp bậc: {{employee.level}}</p>
-                        <p class="card-text mx-2 my-1">Nghành: {{employee.major}}</p>
                         <p class="card-text mx-2 my-1">Chuyên nghành: {{employee.skill}}</p>
                         <div class="row mb-2">
                             <label class="mx-2 col-sm-3 col-form-label col-form-label-sm">Điểm:</label>
@@ -208,31 +196,25 @@
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Cấp bậc:</label>
                             <div class="col-sm-8">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.level" @change="ele.major=''">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.level" @change="ele.skill=''">
                                     <option value="" disabled>Chọn cấp bậc</option>
+                                    <option value="Phổ thông">Phổ thông</option>
                                     <option value="Sơ cấp">Sơ cấp</option>
                                     <option value="Trung cấp">Trung cấp</option>
                                     <option value="Cao đẳng">Cao đẳng</option>
                                     <option value="Đại học">Đại học</option>
-                                </select>
-                            </div>
-                        </div> 
-                        <div class="row mb-2">
-                            <label class="col-sm-4 col-form-label col-form-label-sm">Nghành:</label>
-                            <div class="col-sm-8">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.major" @change="ele.skill=''">
-                                    <option value="" disabled>Chọn ngành nghề</option>
-                                    <option v-for="major in majors" v-if="major.level == ele.level" :value="major.name">{{major.name}}</option>   
+                                    <option value="Chuyên gia">Chuyên gia</option>
                                 </select>
                             </div>
                         </div> 
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Chuyên nghành:</label>
                             <div class="col-sm-8">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <option value="" disabled>Chọn chuyên nghành</option>
-                                    <option v-for="skill in skillList(ele.level, ele.major)" :value="skill">{{skill}}</option>   
-                                </select>
+                                <input type="text" class="form-select form-select-sm dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="ele.skill"/>
+                                <ul class="dropdown-menu overflow-auto col-sm-7" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '300px'}">
+                                    <li class="mx-2"><input type="text" v-model="searchSkill" class="form-control form-control-sm" placeholder="Tìm kiếm"/></li>
+                                    <li v-for="item in filteredSkill(ele.level)"  @click="ele.skill=item"><a class="dropdown-item">{{item}}</a></li>
+                                </ul>
                             </div>
                         </div> 
                         <div class="row mb-2">
@@ -437,12 +419,11 @@
     export default {  
         data(){
             return {
+                searchSkill: "",
                 skillWorking: [{
                     name: '',
                     from: '',
                     to: '',
-                    title: '',
-                    detail: '',
                     leaving: '',
                     process: [{
                         from: '',
@@ -458,7 +439,7 @@
                     to: '',
                     school: '',
                     level: '',
-                    major: '',
+                 
                     skill: '',
                     point: '',
                     rating: ''
@@ -598,8 +579,6 @@
                     if (company.name != ''){
                         if (company.from == '') error = true
                         else if (company.to == '') error = true
-                        else if (company.title == '') error = true
-                        else if (company.detail == '') error = true
                         company.process.forEach(ele => {
                             if (ele.from == '') error = true
                             else if (ele.to == '') error = true
@@ -623,8 +602,6 @@
                         name: '',
                         from: '',
                         to: '',
-                        title: '',
-                        detail: '',
                         leaving: '',
                         process: [{
                             from: '',
@@ -647,7 +624,7 @@
                         })
                         return;
                     }
-                    if (item.from == "" || item.to == "" || item.name == "" || item.title == "" || item.detail == ''){
+                    if (item.from == "" || item.to == "" || item.name == ""){
                         Swal.fire({
                             position: 'top-end',
                             icon: 'info',
@@ -661,8 +638,6 @@
                         name: '',
                         from: item.to,
                         to: '',
-                        title: '',
-                        detail: '',
                         leaving: '',
                         process: [{
                             from: '',
@@ -692,7 +667,6 @@
                     to: '',
                     school: '',
                     level: '',
-                    major: '',
                     skill: '',
                     point: '',
                     rating: ''
@@ -705,7 +679,6 @@
                         if (edu.from == '') error = true
                         if (edu.to == '') error = true
                         if (edu.level == '') error = true
-                        if (edu.major == '') error = true
                         if (edu.skill == '') error = true
                     } else {
                         this.skillEducation.splice(idx, 1)
@@ -750,20 +723,6 @@
                     }
                 }
             },
-            skillList(level, major){
-                var result = this.majors.filter(function(item){
-                    return (item.name == major && item.level == level)
-                })     
-                if (result.length){
-                    return result[0].skills
-                }           
-                return []
-            },
-            majorList(level) {
-                return this.majors.filter(function(item){
-                    return (item.level == level)
-                }).name
-            },
             filteredSchool(key) {
                 return this.schools.filter(school => {
                     if (school.name.toLowerCase().indexOf(key.toLowerCase()) != -1){
@@ -771,15 +730,20 @@
                     }
                 })
             },
-            changePoint(index){
-                if (this.assessment[index] > 10){
-                    this.assessment[index] = 10
-                }
-                else if (this.assessment[index] < 0){
-                    this.assessment[index] = 0
-                }
+            filteredSkill(level){
+                let result = []
+                this.majors.forEach(major => {
+                    if (major.level == level) {
+                        result = major.skills.filter(skill => {
+                            if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1 && (this.searchSkill != '' || level == 'Phổ thông')){
+                                return true
+                            }
+                            return false
+                        })
+                    }
+                })
+                return result
             }
-      
         },
         created(){
             this.employee = JSON.parse(localStorage.getItem('employee'))

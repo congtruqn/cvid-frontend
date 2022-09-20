@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating">
-                            <select @click="focus" class="form-control" v-model="gender" required>
+                            <select @click="focus" class="form-select" v-model="gender" required>
                                 <option value="" disabled>Chọn giới tính</option>
                                 <option value='Nam'>Nam</option>
                                 <option value='Nữ'>Nữ</option>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="mb-3 form-floating">
-                        <select @click="focus" class="form-control" v-model="level" required>
+                        <select @click="focus" class="form-select" v-model="level" required>
                             <option value="" disabled>Chọn cấp bậc</option>
                             <option value="Phổ thông">Phổ thông</option>
                             <option value="Sơ cấp">Sơ cấp</option>
@@ -68,50 +68,51 @@
                         </select>
                         <label class="form-label">Cấp bậc</label>
                     </div>
-                    
+
                     <div class="mb-3 form-floating">
-                        <select @click="focus" class="form-control" v-model="major" required>
-                            <option value="" disabled>Chọn ngành nghề</option>
-                            <option v-for="(major, index) in majors" v-if="major.level === level" :key="index" :value="major.name">{{major.name}}</option>     
-                        </select>
-                        <label class="form-label">Nghành nghề</label>
-                    </div>
-                    <div class="mb-3 form-floating" v-if="level != 'Sơ cấp' || level != 'Phổ thông'">
-                        <select @click="focus" class="form-control" v-model="skill" required>
-                            <option value="" disabled>Chọn chuyên nghành</option>
-                            <option v-for="skill in major_.skills" :value='skill'>{{skill}}</option>
-                        </select>
+                        <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="skill"/>
+                        <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '300px'}">
+                            <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
+                            <li v-for="item in filteredSkill"  @click="skill=item"><a class="dropdown-item">{{item}}</a></li>
+                        </ul>
                         <label class="form-label">Chuyên nghành</label>
                     </div>
                     <div class="mb-3 form-floating">
-                        <input type="text" class="form-control dropdown-toggle" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" v-model="school">
-                        <label class="form-label">Trường</label> 
-                        <ul class="dropdown-menu w-100 overflow-auto" aria-labelledby="dropdownMenuSchool" :style="{maxHeight: '400px'}">
-                            <li v-for="ele in filteredSchool"  @click="school=ele.name"><a class="dropdown-item">{{ele.name}}</a></li>
+                        <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="school"/>
+                        <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSchool" :style="{maxHeight: '300px'}">
+                            <li class="m-2"><input type="text" v-model="searchSchool" class="form-control" placeholder="Tìm kiếm"/></li>
+                            <li v-for="item in filteredSchool"  @click="school=item.name"><a class="dropdown-item">{{item.name}}</a></li>
                         </ul>
+                        <label class="form-label">Trường</label>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
-                                <input @click="focus" type="number" class="form-control" required v-model="startyear"/>
-                                <label class="form-label">Năm nhập học:</label>
+                                <select class="form-select" v-model="startyear">
+                                    <option value="" disabled>Chọn năm bắt đầu</option>
+                                    <option :value="new Date().getFullYear()-i+1" v-for="i in 100">{{new Date().getFullYear()-i+1}}</option>
+                                </select>
+                                <label class="form-label">Năm bắt đầu</label>
                             </div>
                         </div>   
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
-                                <input @click="focus" type="number" class="form-control" required v-model="endyear"/>
+                                <select class="form-select" v-model="endyear">
+                                    <option value="" disabled>Chọn năm bắt đầu</option>
+                                    <option :value="new Date().getFullYear()-i+1" v-for="i in 100">{{new Date().getFullYear() - i + 1}}</option>
+                                </select>
                                 <label class="form-label">Năm tốt nghiệp</label>
                             </div>
                         </div>   
                     </div>
                     <div class="mb-3">
                         <div class="form-floating">
-                            <input @click="focus" type="texe" class="form-control" required v-model="professionaltitle"/>
+                            <input type="texe" class="form-control" required v-model="professionaltitle"/>
                             <label class="form-label">Chức danh chuyên môn</label>
                         </div>
                     </div>
                     <div class="mb-3 form-floating">
-                        <select @click="focus" class="form-control" v-model="country" required>
+                        <select @click="focus" class="form-select" v-model="country" required>
                             <option value="" disabled>Chọn quốc gia</option>
                             <option value='Việt Nam'>Việt Nam</option>
                         </select>
@@ -120,7 +121,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
-                                <select @click="focus" class="form-control" v-model="province" required>
+                                <select @click="focus" class="form-select" v-model="province" required>
                                     <option value="" disabled>Chọn tỉnh/thành phố</option>
                                     <option v-for="province in provinces" :value='province'>{{province}}</option>
                                 </select>
@@ -129,7 +130,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
-                                <select @click="focus" class="form-control" v-model="district" required>
+                                <select @click="focus" class="form-select" v-model="district" required>
                                     <option value="" disabled>Chọn quận/huyện</option>
                                     <option v-for="district in districts" :value='district'>{{district}}</option>
                                 </select>
@@ -138,7 +139,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
-                                <select @click="focus" class="form-control" v-model="ward" required>
+                                <select @click="focus" class="form-select" v-model="ward" required>
                                     <option value="" disabled>Chọn phường/xã</option>
                                     <option v-for="ward in wards" :value='ward'>{{ward}}</option>
                                 </select>
@@ -184,6 +185,8 @@
     export default {  
         data(){
             return {
+                searchSkill: "",
+                searchSchool: "",
                 name : "",
                 username : "",
                 birthdate : "",
@@ -198,7 +201,6 @@
                 school: "",
                 startyear: "",
                 endyear: "",
-                major : "",
                 skill : "",
                 professionaltitle: "",
                 password : "",
@@ -208,16 +210,29 @@
                 wards: [],
                 schools: [],
                 majors: [],
-                major_: []
             }
         },
         computed: {
             filteredSchool(){
                 return this.schools.filter(school => {
-                    if (school.name.toLowerCase().indexOf(this.school.toLowerCase()) != -1){
+                    if (school.name.toLowerCase().indexOf(this.searchSchool.toLowerCase()) != -1 && this.searchSchool != ''){
                         return true
                     }
                 })
+            },
+            filteredSkill(){
+                let result = []
+                this.majors.forEach(major => {
+                    if (major.level == this.level) {
+                        result = major.skills.filter(skill => {
+                            if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1 && (this.searchSkill != '' || this.level == 'Phổ thông')){
+                                return true
+                            }
+                            return false
+                        })
+                    }
+                })
+                return result
             }
         },
         methods : {
@@ -323,18 +338,8 @@
                 this.wards = new Set(this.province_list.filter(item => item.district == newValue).map(item => item.ward))
             },
             level(){
-                this.major = "";
                 this.skill = "";
-            },
-            major(newValue){
-                this.major_ = []
-                this.skill = "";
-                if (this.major && this.level){
-                    this.major_ = this.majors.find(major => major.name === this.major && major.level === this.level);
-                }
-                
             }
-            
         }
     }
 </script>

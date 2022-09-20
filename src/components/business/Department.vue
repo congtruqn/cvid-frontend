@@ -678,7 +678,6 @@
                 }
                 this.key = localStorage.getItem('key')
             }
-
             if (this.business_id) {
                 this.$http.post(`${BASE_URL}/department/list/get-by-id`,{
                     id: this.business_id

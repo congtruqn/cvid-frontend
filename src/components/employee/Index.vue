@@ -279,7 +279,7 @@
                 var skills = new Set([])
                 this.majors.forEach(element => {
                     element.skills.forEach(skill => {
-                        if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1)
+                        if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1 && this.searchSkill != '')
                         {
                             skills.add(skill)
                         }

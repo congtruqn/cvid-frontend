@@ -108,7 +108,7 @@
                 <div class="col-12 col-md-6">
                     <label class="form-label">Chuyên nghành ứng viên <span class="text-danger">*</span></label> 
                     <input type="text" class="form-select dropdown-toggle" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" v-model="searchSkill" placeholder="Chọn cấp bậc trước">
-                    <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuSkill">
+                    <ul class="dropdown-menu col-12 col-md-6 overflow-auto" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '300px'}">
                         <div class="form-check mx-3" v-for="(skill, index) in filteredSkill">
                             <input class="form-check-input" type="checkbox" v-model="position.skills" :id="'0skill'+index" :value="skill">
                             <label class="form-check-label" :for="'0skill'+index">
@@ -160,10 +160,10 @@
                     
                    
                         
-                        <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
+                        <!-- <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
                         <div class="accordion-body0 col-md-6">
                             <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)" v-if="cv.position_id == position._id">
-                            
+                             -->
                             <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" v-if="position!=''">
                                 <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                 <div class="modal-content">
@@ -245,11 +245,29 @@
                                         <!-- <button type="button" class="btn btn-primary">Xác nhận</button> -->
                                   
                            
-                        </div>
+                        <!-- </div>
                     </div>
-                    </div>
+                    </div> -->
                     
+    </div>
+    <div class="row">
+        <div class="col-md-6" v-for="cv in list_cv_recommend">
+        <div class="card mt-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                <img src="../../../src/assets/images/testimonial-1.jpg" class="img-fluid rounded-start w-100 h-100" alt="...">
                 </div>
+                <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{cv.name}}</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
                 
 </div>
 </template>
@@ -322,41 +340,21 @@ export default {
     methods: {
         recruit(){
             this.list_cv_recommend = [];
-            this.list_cv_applied = [];
-            this.selected.forEach(id => {
-                this.$http.post(`${BASE_URL}/job/getcvidforposition`, {
-                    id: id
-                }).then(res => {
-                    const job_list = res.data.job_list 
-                    let cvid = job_list.map(t1 => ({...t1, ...res.data.cv_list.find(t2 => t2._id == t1.employee_id)}))
-                    cvid.forEach(el => {
-                        if (el.type == 1){
-                            this.list_cv_applied.push(el)
-                        }
-                    })
-                    this.$http.get(`${BASE_URL}/department/findcvforposition/${id}`, {
-                    }).then(res => {
-                        let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
-                        cvid_recommend.forEach(el => {
-                            if (el.type != 1){
-                                el.position_id = id
-                                el._id = el.employee_id?el.employee_id:el._id
-                                this.list_cv_recommend.push(el)
-                            }
-                        }) 
-                    }).catch(err => {
-                        console.log(err)
-                    })
-                }).catch(err => {
-                    console.log(err)
-                })
-                this.position_list.forEach((element, index) => {
-                    if(element._id == id) {
-                        this.position_list[index].status = 1;
-                    }
-                });
+            this.$http.post(`${BASE_URL}/department/findcvforposition`,{
+                position: this.position
+            }).then(res => {
+                this.list_cv_recommend = res.data
+                //let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
+                // cvid_recommend.forEach(el => {
+                //     if (el.type != 1){
+                //         el.position_id = id
+                //         el._id = el.employee_id?el.employee_id:el._id
+                //         this.list_cv_recommend.push(el)
+                //     }
+                // }) 
+            }).catch(err => {
+                console.log(err)
             })
-          
         },
         filteredCV(list_cv) {
             if (!list_cv){list_cv = []}
@@ -397,7 +395,6 @@ export default {
                             this.position_list[index].status = 0;
                         }
                     });
-                    console.log('ok')
                 }
             }).catch(err => {
                 console.log(err)
@@ -592,8 +589,6 @@ export default {
             } else {
                 this.position = this.position_list[newVal]
             }
-            console.log(this.position)
-            console.log(newVal)
         }
     }
 }
