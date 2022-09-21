@@ -81,7 +81,7 @@
                         <input @click="()=>{this.$refs.searchSchool.focus()}" type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="school"/>
                         <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSchool" :style="{maxHeight: '300px'}">
                             <li class="m-2"><input ref="searchSchool" type="text" v-model="searchSchool" class="form-control" placeholder="Tìm kiếm"/></li>
-                            <li v-for="item in filteredSchool"  @click="school=item.name"><a class="dropdown-item">{{item.name}}</a></li>
+                            <li v-for="item in filteredSchool"  @click="school=item.name;searchSchool=''"><a class="dropdown-item">{{item.name}}</a></li>
                         </ul>
                         <label for="searchSchool" class="form-label">Trường</label>
                     </div>
@@ -99,7 +99,7 @@
                             <div class="form-floating">
                                 <select class="form-select" v-model="endyear">
                                     <option value="" disabled>Chọn năm tốt nghiệp</option>
-                                    <option :value="new Date().getFullYear()-i+1" v-for="i in 100">{{new Date().getFullYear() - i + 1}}</option>
+                                    <option :value="new Date().getFullYear()-i+1" v-for="i in 100" v-if="startyear==''||new Date().getFullYear() - i + 1>=startyear">{{new Date().getFullYear() - i + 1}}</option>
                                 </select>
                                 <label class="form-label">Năm tốt nghiệp</label>
                             </div>
