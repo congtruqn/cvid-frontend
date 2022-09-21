@@ -73,7 +73,7 @@
                         <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="skill"/>
                         <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '300px'}">
                             <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
-                            <li v-for="item in filteredSkill"  @click="skill=item"><a class="dropdown-item">{{item}}</a></li>
+                            <li v-for="item in filteredSkill"  @click="skill=item;searchSkill=''"><a class="dropdown-item">{{item}}</a></li>
                         </ul>
                         <label class="form-label">Chuyên nghành</label>
                     </div>
