@@ -46,18 +46,6 @@
             </div>
             <div class="card-body text-success">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text fw-bold">Chức danh công việc</span>
-                            <span class="border p-1 bg-white col fw-bold">{{company.title}}</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text fw-bold">Mô tả công việc</span>
-                        <span class="border p-1 bg-white col fw-bold">{{company.detail}}</span>
-                    </div>
-                    </div>
                     <h5 class="text-primary fw-bold">Quá trình làm việc</h5>
                     <div class="col-md-6 mb-3" v-for="(element, index2) in company.process">
                         <div class="card border-success">
