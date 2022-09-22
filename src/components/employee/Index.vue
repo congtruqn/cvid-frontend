@@ -9,11 +9,9 @@
                 <form class="row g-3" v-on:submit.prevent>
                     <div class="col-12 col-md-6 position-relative">
                         <label class="form-label">Chuyên nghành mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
-                        <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="job.skill" :disabled="job.status==1"/>
-                        <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '400px'}">
-                            <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
-                            <li v-for="item in filteredSkill()"  @click="job.skill=item"><a class="dropdown-item">{{item}}</a></li>
-                        </ul>
+                        <select class="form-select" v-model="job.skill" :disabled="job.status==1">
+                            <option v-for="item in skills" :value="item">{{item}}</option>
+                        </select>
                     </div>
                     <div class="col-12 col-md-6 position-relative">
                         <label for="inputState" class="form-label">Chức danh mong muốn <i class="fas fa-question-circle" title="Giải thích"></i></label>
@@ -271,25 +269,14 @@
                 industries: [],
                 positions: [],
                 criteria: [],
+                skills: [],
                 employee: JSON.parse(localStorage.getItem('employee'))
             }
         },
         methods: {
-            filteredSkill(){
-                var skills = new Set([])
-                this.majors.forEach(element => {
-                    element.skills.forEach(skill => {
-                        if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1 && this.searchSkill != '')
-                        {
-                            skills.add(skill)
-                        }
-                    })
-                });
-                return skills
-            },
             filteredJobTitle(){
                 return this.jobtitles.filter(element => {
-                    if (element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1){
+                    if (element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1 && this.searchJobTitle != ''){
                         return true
                     }
                 }).map(item => item.name);
@@ -356,6 +343,16 @@
                         status: 0
                     }
                 }
+                this.skills = new Set([])
+                this.skills.add(this.employee.skill)
+                this.employee.skillWorking.forEach(company => {
+                    company.process.forEach(item => {
+                        this.skills.add(item.skill)
+                    })
+                })
+                this.employee.skillEducation.forEach(item => {
+                    this.skills.add(item.skill)
+                })
             })
             .catch(function (error) {
                 console.error(error.response);
