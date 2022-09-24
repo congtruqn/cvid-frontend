@@ -56,13 +56,12 @@
                         if(response.data.userinfo){
                             localStorage.setItem('token',response.data.token);
                             if (localStorage.getItem('token') != null){
-                                if(this.$route.params.nextUrl != null){
-                                    this.$router.push(this.$route.params.nextUrl)
-                                    this.$router.push('/create-cv')
+                                var user = response.data.userinfo
+                                localStorage.setItem('employee',JSON.stringify(user));
+                                if(user.point){
+                                    this.$router.push('/employee')
                                 }
                                 else {
-                                    var user = response.data.userinfo
-                                    localStorage.setItem('employee',JSON.stringify(user));
                                     this.$router.push('/create-cv')
                                 }
                             }                 

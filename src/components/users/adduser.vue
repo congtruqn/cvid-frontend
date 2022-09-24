@@ -70,7 +70,7 @@
 </template>
 <script>
   const {BASE_URL} =  require('../../utils/config')
-  console.log(BASE_URL)
+
   export default {
     name: 'adduser',
     data(){

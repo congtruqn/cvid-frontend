@@ -167,7 +167,6 @@ const {BASE_URL} =  require('../../utils/config')
                     selected: this.job_list.map((obj) => obj.position_id)
                 }).then(res => {
                     this.position = this.job_list.map(t1 => ({...t1, ...res.data.find(t2 => t2._id === t1.position_id)}))
-                   console.log(this.position)
                 }).catch(err => {
                     console.log(err)
                 })
