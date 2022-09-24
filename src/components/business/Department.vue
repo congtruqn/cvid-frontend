@@ -697,7 +697,7 @@
             filteredSkill(){
                 this.skills = new Set([])
                 this.majors.forEach(element => {
-                    if (this.position.levels.includes(element.level)){
+                    if (this.position.levels.includes(element.level) && this.searchSkill != ''){
                         element.skills.forEach(skill => {
                             if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1){
                                 this.skills.add(skill)
@@ -709,7 +709,7 @@
             },
             filteredJobTitle(){
                 return this.jobtitles.filter(element => {
-                    if (element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1){
+                    if (element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1 && this.searchJobTitle != ''){
                         return true
                     }
                 }).map(item => item.name);

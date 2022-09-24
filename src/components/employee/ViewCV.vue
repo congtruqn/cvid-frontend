@@ -69,6 +69,10 @@
                                     <!-- <span class="border p-1 bg-white col">{{element.work}}</span> -->
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text w-100 fw-bold">Chuyên nghành</span>
+                                    <span class="border p-1 bg-white col fw-bold">{{element.skill}}</span>
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text w-100 fw-bold">Địa chỉ</span>
                                     <span class="border p-1 bg-white col fw-bold">{{element.address}}</span>
                                 </div>
@@ -120,7 +124,6 @@
                     <div class="card-body text-primary">
                         <h5 class="card-title">{{employee.school}}</h5>
                         <p class="card-text mx-2 my-1">Cấp bậc: {{employee.level}}</p>
-                        <p class="card-text mx-2 my-1">Nghành: {{employee.major}}</p>
                         <p class="card-text mx-2 my-1">Chuyên nghành: {{employee.skill}}</p>
                         <p class="card-text mx-2 my-1">Điểm:</p>
                         <p class="card-text mx-2 my-1">Xếp loại: {{employee.rating}}</p>
@@ -140,38 +143,17 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <input type="text" class="form-control form-control-sm mb-2 dropdown-toggle" :id="'dropdownSchool'+index" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false" v-model="ele.school" placeholder="Tên trường">
-                        <ul class="dropdown-menu w-100 overflow-auto" :aria-labelledby="'dropdownSchool'+index" :style="{maxHeight: '400px'}">
-                            <li v-for="school in filteredSchool(ele.school)"  @click="ele.school=school.name"><a class="dropdown-item">{{school.name}}</a></li>
-                        </ul>
+                        <input type="text" class="form-control form-control-sm mb-2 bg-white" v-model="ele.school" disabled>
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Cấp bậc:</label>
                             <div class="col-sm-8">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.level" @change="ele.major=''">
-                                    <option value="" disabled>Chọn cấp bậc</option>
-                                    <option value="Sơ cấp">Sơ cấp</option>
-                                    <option value="Trung cấp">Trung cấp</option>
-                                    <option value="Cao đẳng">Cao đẳng</option>
-                                    <option value="Đại học">Đại học</option>
-                                </select>
-                            </div>
-                        </div> 
-                        <div class="row mb-2">
-                            <label class="col-sm-4 col-form-label col-form-label-sm">Nghành:</label>
-                            <div class="col-sm-8">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="ele.major" @change="ele.skill=''">
-                                    <option value="" disabled>Chọn ngành nghề</option>
-                                    <option v-for="major in majors" v-if="major.level == ele.level" :value="major.name">{{major.name}}</option>   
-                                </select>
+                                <input class="form-control form-control-sm bg-white" v-model="ele.level" disabled>
                             </div>
                         </div> 
                         <div class="row mb-2">
                             <label class="col-sm-4 col-form-label col-form-label-sm">Chuyên nghành:</label>
                             <div class="col-sm-8">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <option value="" disabled>Chọn chuyên nghành</option>
-                                    <option v-for="skill in skillList(ele.level, ele.major)" :value="skill">{{skill}}</option>   
-                                </select>
+                                <input class="form-control form-control-sm bg-white" v-model="ele.skill" disabled>
                             </div>
                         </div> 
                         <div class="row mb-2">
@@ -354,7 +336,6 @@
     export default {  
         data(){
             return {
-                cv: '',
                 criteria: '',
 				employee: ''
             }
@@ -362,8 +343,8 @@
         created(){
             this.$http.get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
             .then(res => {
-                this.cv = res.data;
 				this.employee = res.data;
+                console.log(this.employee.skillEnglish)
             }) 
 
             this.$http.get(`${BASE_URL}/criteria/getall`)

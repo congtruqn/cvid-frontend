@@ -80,12 +80,18 @@
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Công việc</span>
                                     <input type="text" class="form-control" v-model="element.work">
-                                    
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Chức danh công việc</span>
                                     <input type="text" class="form-control" v-model="element.title">
-                                
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Chuyên nghành</span>
+                                    <input type="text" class="form-select dropdown-toggle text-dark" id="dropdownMenuMajor" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="element.skill"/>
+                                    <ul class="dropdown-menu overflow-auto col-auto" aria-labelledby="dropdownMenuMajor" :style="{maxHeight: '300px'}">
+                                        <li class="mx-2 my-1"><input type="text" v-model="searchSkill" class="form-control form-control-sm" placeholder="Tìm kiếm"/></li>
+                                        <li v-for="item in filterSkill"  @click="element.skill=item"><a class="dropdown-item">{{item}}</a></li>
+                                    </ul>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Địa chỉ</span>
@@ -430,6 +436,7 @@
                         to: '',
                         work: '',
                         title: '',
+                        skill: '',
                         address: '',
                         result: ''
                     }]
@@ -476,6 +483,20 @@
                 majors: [],
                 schools: [],
                 criteria: '',
+            }
+        },
+        computed: {
+            filterSkill(){
+                var skills = new Set([])
+                this.majors.forEach(element => {
+                    element.skills.forEach(skill => {
+                        if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1 && this.searchSkill != '')
+                        {
+                            skills.add(skill)
+                        }
+                    })
+                });
+                return skills
             }
         },
         methods : {
@@ -567,6 +588,7 @@
                         to: '',
                         work: '',
                         title: '',
+                        skill: '',
                         address: '',
                         result: ''
                     })
@@ -584,6 +606,7 @@
                             else if (ele.to == '') error = true
                             else if (ele.title == '') error = true
                             else if (ele.work == '') error = true
+                            else if (ele.skill == '') error = true
                             else if (ele.address == '') error = true
                             else if (ele.result == '') error = true
                         })
@@ -608,6 +631,7 @@
                             to: '',
                             work: '',
                             title: '',
+                            skill: '',
                             address: '',
                             result: ''
                         }]
@@ -644,6 +668,7 @@
                             to: '',
                             work: '',
                             title: '',
+                            skill: '',
                             address: '',
                             result: ''
                         }]
@@ -725,7 +750,7 @@
             },
             filteredSchool(key) {
                 return this.schools.filter(school => {
-                    if (school.name.toLowerCase().indexOf(key.toLowerCase()) != -1){
+                    if (school.name.toLowerCase().indexOf(key.toLowerCase()) != -1 && key != ''){
                         return true
                     }
                 })

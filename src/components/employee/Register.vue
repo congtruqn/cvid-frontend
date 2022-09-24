@@ -111,7 +111,7 @@
                             <label class="form-label">Chức danh chuyên môn</label>
                         </div>
                     </div>
-                    <div class="mb-3 form-floating">
+                    <div class="mb-3 form-floating" v-if="false">
                         <select @click="focus" class="form-select" v-model="country" required>
                             <option value="" disabled>Chọn quốc gia</option>
                             <option value='Việt Nam'>Việt Nam</option>
@@ -183,6 +183,7 @@
 
     const {BASE_URL} =  require('../../utils/config')
     export default {  
+        
         data(){
             return {
                 searchSkill: "",

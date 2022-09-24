@@ -1,55 +1,8 @@
 <template>
 <div class="container">
+    
     <div class="card mt-4">
-        <div class="card-header text-center">
-            Đăng tuyển
-        </div>
-        <div class="card-body">
-        <div class="row g-2">
-            <div class="col-12 col-md-6" v-for="(position, index) in position_list" :key="index">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-header text-center h5 bg-primary bg-gradient text-white mb-2">
-                            {{position.department_name}}
-                        </div>
-                        <h5 class="card-title">{{position.jobtitle}}</h5>
-                        <h6 class="card-subtitle my-2 text-muted">Chức vụ: {{position.name}}</h6>
-                        <p class="card-text my-1">Số lượng: {{position.amount}}</p>
-                        <p class="card-text"><small class="text-muted">Cập nhật lần cuối: {{position.startdate?position.startdate.split('T')[0]:''}}</small></p>
-                        <a href="#" class="btn btn-primary" v-if="position.status==0" @click="publishRecruiting(position._id)">Đăng tuyển</a>
-                        <a href="#" class="btn btn-secondary" v-else @click="stopRecruiting(position._id)">Dừng tuyển</a>
-                        <button type="button" class="btn btn-success position-relative" data-bs-toggle="offcanvas" :data-bs-target="'#listCvApplied'+index" :aria-controls="'#listCvApplied'+index">
-                            CV ứng tuyển
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                {{list_cv_applied.filter(cv => (cv.type == 1 && cv.position_id == position._id)).length}}
-                            </span>
-                        </button>
-                    </div>
-                </div>
-                <div class="offcanvas offcanvas-end" tabindex="-1" :id="'listCvApplied'+index" :aria-labelledby="'#listCvApplied'+index+'Label'">
-                    <div class="offcanvas-header">
-                        <h5 :id="'listCvApplied'+index+'Label'">CV ứng tuyển</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action text-primary" aria-current="true" v-for="cv in list_cv_applied.filter(cv => (cv.type == 1 && cv.position_id == position._id))">
-                                <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1 ">{{cv.name}}</h5>
-                                <small>3 days ago</small>
-                                </div>
-                                <p class="mb-1">Some placeholder content in a paragraph.</p>
-                                <small>And some small print.</small>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <div class="card mt-4">
-        <div class="card-header text-center">
+        <div class="card-header text-center h5 bg-info bg-gradient text-white mb-2">
             Tìm ứng viên nhanh
         </div>
         <div class="card-body">
@@ -263,6 +216,54 @@
                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-header text-center h5 bg-info bg-gradient text-white mb-2">
+            Đăng tuyển
+        </div>
+        <div class="card-body">
+        <div class="row g-2">
+            <div class="col-12 col-md-6" v-for="(position, index) in position_list" :key="index">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header text-center h5 bg-primary bg-gradient text-white mb-2">
+                            {{position.department_name}}
+                        </div>
+                        <h5 class="card-title">{{position.jobtitle}}</h5>
+                        <h6 class="card-subtitle my-2 text-muted">Chức vụ: {{position.name}}</h6>
+                        <p class="card-text my-1">Số lượng: {{position.amount}}</p>
+                        <p class="card-text"><small class="text-muted">Cập nhật lần cuối: {{position.startdate?position.startdate.split('T')[0]:''}}</small></p>
+                        <a href="#" class="btn btn-primary" v-if="position.status==0" @click="publishRecruiting(position._id)">Đăng tuyển</a>
+                        <a href="#" class="btn btn-secondary" v-else @click="stopRecruiting(position._id)">Dừng tuyển</a>
+                        <button type="button" class="btn btn-success position-relative" data-bs-toggle="offcanvas" :data-bs-target="'#listCvApplied'+index" :aria-controls="'#listCvApplied'+index">
+                            CV ứng tuyển
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{list_cv_applied.filter(cv => (cv.type == 1 && cv.position_id == position._id)).length}}
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="offcanvas offcanvas-end" tabindex="-1" :id="'listCvApplied'+index" :aria-labelledby="'#listCvApplied'+index+'Label'">
+                    <div class="offcanvas-header">
+                        <h5 :id="'listCvApplied'+index+'Label'">CV ứng tuyển</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action text-primary" aria-current="true" v-for="cv in list_cv_applied.filter(cv => (cv.type == 1 && cv.position_id == position._id))">
+                                <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1 ">{{cv.name}}</h5>
+                                <small>3 days ago</small>
+                                </div>
+                                <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                <small>And some small print.</small>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -10,18 +10,18 @@
                     alt="Sample photo" class="img-fluid"
                     style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
                 </div>
-                <div class="col-xl-6  needs-validation">
+                <div class="col-xl-6 needs-validation">
                 <div class="card-body p-md-5 text-black">
                     <h3 class="mb-5 text-uppercase">Đăng kí tài khoản tuyển dụng</h3>
-                    <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="country" required>
+                    <div class="mb-4 form-floating" v-if="false">
+                        <select @click="focus" class="form-select" v-model="country" required>
                             <option value="" disabled>Chọn quốc gia</option>
                             <option  value="Việt Nam">Việt Nam</option>
                         </select>
                         <label class="form-label">Quốc gia</label>
                     </div>
                     <div class="mb-4 form-floating">
-                        <select @click="focus" class="form-control" v-model="type" required>
+                        <select @click="focus" class="form-select" v-model="type" required>
                             <option value="" disabled>Chọn loại hình tuyển dụng</option>
                             <option value="6">Cá nhân</option>
                             <option value="5">Doanh nghiệp</option>
@@ -34,54 +34,46 @@
                             <label class="form-label">Mã số thuế</label>
                         </div>
                         <div class="mb-4 form-floating">
-                            <input @click="focus" type="text" class="form-control" v-model="name" required disabled>
+                            <input @click="focus" type="text" class="form-control" v-model="name" required >
                             <label class="form-label" >Tên doanh nghiệp</label>
                         </div>
                         <div class="row">
                 
                             <div class="col-md-6 mb-4 form-floating">
-                                <input @click="focus" type="text" class="form-control" v-model="province" required disabled>
+                                <input @click="focus" type="text" class="form-control" v-model="province" required >
                                 <label class="ms-2 form-label">Tỉnh/Thành phố</label>
                             </div>
                             <div class="col-md-6 mb-4 form-floating">
-                                <input @click="focus" type="text" class="form-control" v-model="district" required disabled>
+                                <input @click="focus" type="text" class="form-control" v-model="district" required >
                                 <label class="ms-2 form-label">Chọn quận/huyện</label>
                             </div>
                             <div class="col-md-6 mb-4 form-floating">
-                                <input @click="focus" type="text" class="form-control" v-model="ward" required disabled>
+                                <input @click="focus" type="text" class="form-control" v-model="ward" >
                                 <label class="ms-2 form-label">Chọn phường/xã</label>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-floating">
-                                    <input @click="focus" type="text" class="form-control" v-model="address" required disabled/>
+                                    <input @click="focus" type="text" class="form-control" v-model="address" />
                                     <label class="form-label">Số và tên đường</label>
                                 </div>
                             </div>        
                         </div>
                         <div class="mb-4 form-floating">
-                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replaceAll(',', ', ')">
+                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="industry.toString().replaceAll(',', ', ')">
                             <label class="form-label">Lĩnh vực kinh doanh</label> 
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuField">
-                                <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" v-model="major" id="1" value="Thương mại">
-                                    <label class="form-check-label" for="1">
-                                        Thương mại
-                                    </label>
-                                </div>
-                                <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" v-model="major" id="2" value="Dịch vụ">
-                                    <label class="form-check-label" for="2">
-                                        Dịch vụ
-                                    </label>
-                                </div>
-                                <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" v-model="major" id="3" value="Kỹ thuật">
-                                    <label class="form-check-label" for="3">
-                                        Kỹ thuật
+                            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuField">
+                                <div class="form-check mx-3" v-for="(item, index) in industries">
+                                    <input class="form-check-input" type="checkbox" v-model="industry" :id="'industry'+index" :value="item.name">
+                                    <label class="form-check-label" :for="'industry'+index">
+                                        {{item.name}}
                                     </label>
                                 </div>
                             </ul>
                         </div>
+                        <div class="mb-4 form-floating">
+                            <input type="file" class="form-control" @change="onFileUpload" accept='image/*'/>
+                            <label class="form-label">Giấy phép kinh doanh</label>
+                        </div> 
                     </div>
                     <div v-else>
                         <div class="mb-4 form-floating">
@@ -91,30 +83,6 @@
                         <div class="mb-4 form-floating">
                             <input @click="focus" type="text" class="form-control" v-model="name" required>
                             <label class="form-label">Họ và tên</label>
-                        </div>
-                        <div class="mb-4 form-floating">
-                            <input type="text" class="form-control dropdown-toggle" id="dropdownMenuField" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" :value="major.toString().replaceAll(',', ', ')">
-                            <label class="form-label">Lĩnh vực kinh doanh</label> 
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuField">
-                                <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" v-model="major" id="1" value="Thương mại">
-                                    <label class="form-check-label" for="1">
-                                        Thương mại
-                                    </label>
-                                </div>
-                                <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" v-model="major" id="2" value="Dịch vụ">
-                                    <label class="form-check-label" for="2">
-                                        Dịch vụ
-                                    </label>
-                                </div>
-                                <div class="form-check mx-3">
-                                    <input class="form-check-input" type="checkbox" v-model="major" id="3" value="Kỹ thuật">
-                                    <label class="form-check-label" for="3">
-                                        Kỹ thuật
-                                    </label>
-                                </div>
-                            </ul>
                         </div>
                         <div class="mb-4 form-floating">
                             <select @click="focus" class="form-control" required>
@@ -211,11 +179,13 @@
                 district: "",
                 ward: "",
                 address: "",
-                major: [],
+                industry: [],
+                FILE: null,
                 email : "",
                 password : "",
                 password2 : "",
                 province_list: [],
+                industries: [],
                 provinces: [],
                 districts: [],
                 wards: [],
@@ -262,8 +232,13 @@
                     console.log(error);
                 });  
             },
+            onFileUpload (event) {
+                this.FILE = event.target.files[0]
+            },
             handleSubmit(e){
                 e.preventDefault()
+                const formData = new FormData()
+                formData.append('licenseImage', this.FILE, this.FILE.name)
                 this.$http.post(`${BASE_URL}/business/register`, {
                     type: this.type,
                     name: this.name,
@@ -274,6 +249,8 @@
                     ward: this.ward,
                     address: this.address,
                     email: this.email,
+                    industries: this.industry,
+                    licenseImage: formData,
                     password: this.password,
                     password2: this.password2
                 })
@@ -317,7 +294,15 @@
             })
             .catch(function (error) {
                 console.error(error.response);
-            });      
+            });  
+            this.$http.get(`${BASE_URL}/industry/getall`)
+            .then(response => {
+                this.industries = response.data
+              
+            })   
+            .catch(function (error) {
+                console.error(error.response);
+            });  
             
         },
         watch : {
