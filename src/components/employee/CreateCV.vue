@@ -82,28 +82,30 @@
                                     <input type="text" class="form-control" v-model="element.work">
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Chức danh công việc</span>
-                                    <input type="text" class="form-control" v-model="element.title">
-                                </div>
-                                <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Chuyên nghành</span>
                                     <input type="text" class="form-select dropdown-toggle text-dark" id="dropdownMenuMajor" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="element.skill"/>
                                     <ul class="dropdown-menu overflow-auto col-auto" aria-labelledby="dropdownMenuMajor" :style="{maxHeight: '300px'}">
                                         <li class="mx-2 my-1"><input type="text" v-model="searchSkill" class="form-control form-control-sm" placeholder="Tìm kiếm"/></li>
                                         <li v-for="item in filterSkill"  @click="element.skill=item"><a class="dropdown-item">{{item}}</a></li>
                                     </ul>
+                                </div>  
+                                <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text">Chức danh công việc</span>
+                                    <input type="text" class="form-control" v-model="element.title">
                                 </div>
+                                
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Địa chỉ</span>
                                     <input type="text" class="form-control" v-model="element.address">
                                 
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text">Kết quả</span>
+                                    <span class="input-group-text">Kết quả hoàn thành</span>
                                     <select class="form-select" v-model="element.result">
                                         <option value="" disabled>Chọn...</option>
-                                        <option value="1">Hoàn thành</option>
-                                        <option value="0">Không hoàn thành</option>
+                                        <option value="Trên mức đề ra">Trên mức đề ra</option>
+                                        <option value="Đạt mức đề ra">Đạt mức đề ra</option>
+                                        <option value="Dưới mức đề ra">Dưới mức đề ra</option>
                                     </select>
                                 </div>
                                 
@@ -114,11 +116,12 @@
                         <button class="btn border-success" @click="addProcess(index1)"><i class="fas fa-plus fa-5x"></i></button>
                     </div>
                     <div class="input-group input-group-sm" v-if="company.to!='Hiện tại'">
-                        <span class="input-group-text">Lý do nghỉ việc</span>
+                        <span class="input-group-text">Nghỉ việc</span>
                         <select class="form-select" v-model="company.leaving">
                             <option value="" disabled>Chọn...</option>
-                            <option value="1">Đúng quy định</option>
-                            <option value="0">Tự nghỉ</option>
+                            <option value="Nghỉ theo mong muốn">Nghỉ theo mong muốn</option>
+                            <option value="Nghỉ theo yêu cầu">Nghỉ theo yêu cầu</option>
+                            <option value="Tự nghỉ">Tự nghỉ</option>
                         </select>
                     </div>
                 </div>
@@ -126,7 +129,7 @@
         </div>
         <div class="d-grid gap-2">
             <button class="btn btn-primary" type="button" @click="addSkillWorking()">Thêm nơi làm việc</button>
-            <button class="btn btn-primary" type="button" @click="addBreakTime()">Thêm thời gian nghỉ</button>
+            <button class="btn btn-primary" type="button" @click="addBreakTime()">Thời gian không làm việc</button>
         </div>
         <h5 class="text-primary m-2">Kết quả đánh giá</h5>
         <ul class="list-group">

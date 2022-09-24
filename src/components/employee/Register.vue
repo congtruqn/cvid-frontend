@@ -48,69 +48,6 @@
                         </div>
                     </div>
                     
-                    <div class="mb-3">
-                        <div class="form-floating">
-                        <input @click="focus" type="email" class="form-control" v-model="email" required/>
-                        <label class="form-label">Email</label>
-                        </div>
-                    </div>
-                    </div>
-
-                    <div class="mb-3 form-floating">
-                        <select @click="focus" class="form-select" v-model="level" required>
-                            <option value="" disabled>Chọn cấp bậc</option>
-                            <option value="Phổ thông">Phổ thông</option>
-                            <option value="Sơ cấp">Sơ cấp</option>
-                            <option value="Trung cấp">Trung cấp</option>
-                            <option value="Cao đẳng">Cao đẳng</option>
-                            <option value="Đại học">Đại học</option>
-                            <option value="Chuyên gia">Chuyên gia</option>
-                        </select>
-                        <label class="form-label">Cấp bậc</label>
-                    </div>
-
-                    <div class="mb-3 form-floating">
-                        <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="skill"/>
-                        <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '300px'}">
-                            <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
-                            <li v-for="item in filteredSkill"  @click="skill=item;searchSkill=''"><a class="dropdown-item">{{item}}</a></li>
-                        </ul>
-                        <label class="form-label">Chuyên nghành</label>
-                    </div>
-                    <div class="mb-3 form-floating" v-if="level!='Phổ thông'">
-                        <input @click="()=>{this.$refs.searchSchool.focus()}" type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="school"/>
-                        <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSchool" :style="{maxHeight: '300px'}">
-                            <li class="m-2"><input ref="searchSchool" type="text" v-model="searchSchool" class="form-control" placeholder="Tìm kiếm"/></li>
-                            <li v-for="item in filteredSchool"  @click="school=item.name;searchSchool=''"><a class="dropdown-item">{{item.name}}</a></li>
-                        </ul>
-                        <label for="searchSchool" class="form-label">Trường</label>
-                    </div>
-                    <div class="row" v-if="level!='Phổ thông'">
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" v-model="startyear">
-                                    <option value="" disabled>Chọn năm bắt đầu</option>
-                                    <option :value="new Date().getFullYear()-i+1" v-for="i in 100">{{new Date().getFullYear()-i+1}}</option>
-                                </select>
-                                <label class="form-label">Năm bắt đầu</label>
-                            </div>
-                        </div>   
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" v-model="endyear">
-                                    <option value="" disabled>Chọn năm tốt nghiệp</option>
-                                    <option :value="new Date().getFullYear()-i+10" v-for="i in 100" v-if="startyear==''||new Date().getFullYear() - i + 10>=startyear">{{new Date().getFullYear() - i + 10}}</option>
-                                </select>
-                                <label class="form-label">Năm tốt nghiệp</label>
-                            </div>
-                        </div>   
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-floating">
-                            <input type="texe" class="form-control" required v-model="professionaltitle"/>
-                            <label class="form-label">Chức danh chuyên môn</label>
-                        </div>
-                    </div>
                     <div class="mb-3 form-floating" v-if="false">
                         <select @click="focus" class="form-select" v-model="country" required>
                             <option value="" disabled>Chọn quốc gia</option>
@@ -151,7 +88,79 @@
                                 <input @click="focus" type="text" class="form-control" v-model="address" required/>
                                 <label class="form-label">Số nhà, tên đường</label>
                             </div>
-                        </div>          
+                        </div>         
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <select @click="focus" class="form-select" v-model="level" required>
+                                <option value="" disabled>Chọn cấp bậc</option>
+                                <option value="Phổ thông">Phổ thông</option>
+                                <option value="Sơ cấp">Sơ cấp</option>
+                                <option value="Trung cấp">Trung cấp</option>
+                                <option value="Cao đẳng">Cao đẳng</option>
+                                <option value="Đại học">Đại học</option>
+                                <option value="Chuyên gia">Chuyên gia</option>
+                            </select>
+                            <label class="form-label">Cấp bậc</label>
+                        </div>
+                    </div>
+                    <div class="mb-3" v-if="level!='Phổ thông'">
+                    <div class="form-floating">
+                        <input @click="()=>{this.$refs.searchSchool.focus()}" type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="school"/>
+                        <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSchool" :style="{maxHeight: '300px'}">
+                            <li class="m-2"><input ref="searchSchool" type="text" v-model="searchSchool" class="form-control" placeholder="Tìm kiếm"/></li>
+                            <li v-for="item in filteredSchool"  @click="school=item.name;searchSchool=''"><a class="dropdown-item">{{item.name}}</a></li>
+                        </ul>
+                        <label for="searchSchool" class="form-label">Trường</label>
+                    </div>
+                    </div>
+                    <div class="mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="skill"/>
+                        <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '300px'}">
+                            <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
+                            <li v-for="item in filteredSkill"  @click="skill=item;searchSkill=''"><a class="dropdown-item">{{item}}</a></li>
+                        </ul>
+                        <label class="form-label">Chuyên nghành</label>
+                    </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input type="texe" class="form-control" required v-model="professionaltitle"/>
+                            <label class="form-label">Chức danh chuyên môn</label>
+                        </div>
+                    </div>
+                    <div class="row" v-if="level!='Phổ thông'">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" v-model="startyear">
+                                    <option value="" disabled>Chọn năm bắt đầu</option>
+                                    <option :value="new Date().getFullYear()-i+1" v-for="i in 100">{{new Date().getFullYear()-i+1}}</option>
+                                </select>
+                                <label class="form-label">Năm bắt đầu</label>
+                            </div>
+                        </div>   
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" v-model="endyear">
+                                    <option value="" disabled>Chọn năm tốt nghiệp</option>
+                                    <option :value="new Date().getFullYear()-i+10" v-for="i in 100" v-if="startyear==''||new Date().getFullYear() - i + 10>=startyear">{{new Date().getFullYear() - i + 10}}</option>
+                                </select>
+                                <label class="form-label">Năm tốt nghiệp</label>
+                            </div>
+                        </div>   
+                    </div>
+                    
+                    
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input @click="focus" type="email" class="form-control" v-model="email" required/>
+                            <label class="form-label">Email</label>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input @click="focus" type="password" class="form-control" v-model="password" required minlength="6"/>

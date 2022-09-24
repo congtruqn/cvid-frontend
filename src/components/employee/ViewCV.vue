@@ -64,29 +64,29 @@
                                     <span class="border p-1 bg-white col fw-bold">{{element.title}}</span>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
+                                    <span class="input-group-text w-100 fw-bold">Chuyên nghành</span>
+                                    <span class="border p-1 bg-white col fw-bold">{{element.skill}}</span>
+                                </div>
+                                <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text w-100 fw-bold">Công việc đã thực hiện</span>
                                     <textarea class="form-control bg-white text-reset fs-6 fw-bold" disabled v-model="element.work"></textarea>
                                     <!-- <span class="border p-1 bg-white col">{{element.work}}</span> -->
                                 </div>
-                                <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text w-100 fw-bold">Chuyên nghành</span>
-                                    <span class="border p-1 bg-white col fw-bold">{{element.skill}}</span>
-                                </div>
+                                
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text w-100 fw-bold">Địa chỉ</span>
                                     <span class="border p-1 bg-white col fw-bold">{{element.address}}</span>
                                 </div>
                                 <div class="input-group input-group-sm mb-2">
-                                    <span class="input-group-text fw-bold">Kết quả</span>
-                                    <span class="border p-1 bg-white col fw-bold">{{element.result==1?'Hoàn thành':'Không hoàn thành'}}</span>
+                                    <span class="input-group-text fw-bold">Kết quả hoàn thành</span>
+                                    <span class="border p-1 bg-white col fw-bold">{{element.result}}</span>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text fw-bold">Lý do nghỉ việc</span>
-                        <span class="border p-1 bg-white col fw-bold">{{company.leaving==1?'Đúng quy định':'Tự nghỉ'}}</span>
+                        <span class="border p-1 bg-white col fw-bold">{{company.leaving}}</span>
                     </div>
                 </div>
             </div>

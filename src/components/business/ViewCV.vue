@@ -1,476 +1,727 @@
 <template>
-    <body>
-        <div class="wrapper mt-lg-5">
-            <div class="sidebar-wrapper">
-                <div class="profile-container">
-                    <img class="profile" src="../../assets/images/user.png" alt="" />
-                    <h1 class="name">{{cv.name}}</h1>
-                    <h3 class="tagline">{{cv.position}}</h3>
-                </div><!--//profile-container-->
-                
-                <div class="contact-container container-block">
-                    <ul class="list-unstyled contact-list">
-
-                        <li class=""><i class="fas fa-calendar"></i> {{new Date(cv.birthdate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'})}}</li>
-                        <li class=""><i class="fas fa-globe"></i><a> Quốc tịch: {{cv.country}}</a></li>
-                        <li class=""><i class="bi bi-geo-alt"></i><a> {{cv.address+', '+cv.ward+', '+cv.district +', '+cv.province}}</a></li>
-                        <!-- <li class=""><i class=""></i><a>Cấp bậc: {{cv.level}}</a></li>
-                        <li class=""><i class=""></i><a >{{cv.skill}}</a></li> -->
-                    </ul>
-                </div>
-                <div class="education-container container-block">
-                    <h2 class="container-block-title">Học vấn</h2>
-                    <div class="item">
-                        <h4 class="degree">{{cv.school}}</h4>
-                        <h5 class="meta my-2">Nghành: {{cv.major}}</h5>
-                        <h5 class="meta">Chuyên nghành: {{cv.skill}}</h5>
-                        <h5 class="meta">{{cv.startyear}} - {{cv.endyear}}</h5>
-                    </div>
-                </div>
+  <div class="container">
+    <h3 class="text-primary d-flex justify-content-center my-4">
+      LÝ LỊCH ỨNG VIÊN
+    </h3>
+    <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <p class="m-1">
+          Họ và tên: <span class="fw-bold">{{ employee.name }}</span>
+        </p>
+        <p class="m-1">
+          Ngày sinh:
+          {{ new Date(employee.birthdate).toLocaleDateString("en-US") }}
+        </p>
+        <p class="m-1">Giới tính: {{ employee.gender }}</p>
+        <p class="m-1">
+          Chức danh: <span class="fw-bold">{{ employee.position }}</span>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <p class="m-1">Số điện thoại: {{ employee.username }}</p>
+        <p class="m-1">Email: {{ employee.email }}</p>
+        <p class="m-1">
+          Địa chỉ:
+          {{
+            employee.address +
+            " " +
+            employee.ward +
+            " " +
+            employee.district +
+            " " +
+            employee.province
+          }}
+        </p>
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col-md-6">
+        <h4 class="text-primary mt-2 text-decoration-underline">
+          Kinh nghiệm làm việc
+        </h4>
+      </div>
+      <div class="col-md-6 text-md-end mt-2">
+        <span class="badge bg-primary fs-6"
+          >Số năm kinh nghiệm: {{ getExperience }} năm</span
+        >
+      </div>
+    </div>
+    <div
+      class="card border-success mt-3"
+      v-for="(company, index1) in employee.skillWorking"
+      v-if="employee.skillWorking.length > 0"
+    >
+      <div class="card-header border-success position-relative">
+        <div class="row g-3 align-items-center">
+          <div class="col-md-8">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text fw-bold"
+                >Nơi làm việc {{ index1 + 1 }}</span
+              >
+              <span class="border p-1 bg-white col fw-bold">{{
+                company.name
+              }}</span>
             </div>
-            
-            <div class="main-wrapper">
-                <section class="section experiences-section" v-if="cv.degrees.length" >
-                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Bằng cấp bổ sung</h2>   
-                    <div class="item" v-for="degree in cv.degrees">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">Tên bằng cấp: {{degree.name}}</h3>
-                                <div class="time">{{degree.year}}</div>
-                            </div><!--//upper-row-->
-                            <div class="company">Mã số chứng chỉ: {{degree.code}}</div>
-                        </div><!--//meta-->
-                        <div class="details">
-                            <p class="m-2">Cấp bậc: {{degree.level}}</p>  
-                            <p class="m-2">Trường: {{degree.school}}</p>  
-                            <p class="m-2">Nghành: {{degree.major}}</p>
-                            <p class="m-2">Chuyên nghành: {{degree.skill}}</p>
-                        </div><!--//details-->
-                    </div><!--//item-->
-                </section>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text fw-bold">Từ</span>
+              <span class="border p-1 bg-white col fw-bold">{{
+                new Date(company.from).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "numeric",
+                })
+              }}</span>
+              <span class="input-group-text fw-bold">Đến</span>
+              <span class="border p-1 bg-white col fw-bold">{{
+                new Date(company.to).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "numeric",
+                })
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body text-success">
+        <div class="row">
+          <h5 class="text-primary fw-bold">Quá trình làm việc</h5>
+          <div
+            class="col-md-6 mb-3"
+            v-for="(element, index2) in company.process"
+          >
+            <div class="card border-success">
+              <div
+                class="
+                  card-header
+                  bg-transparent
+                  border-success
+                  position-relative
+                "
+              >
+                <div class="input-group input-group-sm mb-2">
+                  <span class="input-group-text fw-bold">Từ</span>
+                  <span class="border p-1 bg-white col fw-bold">{{
+                    new Date(element.from).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "numeric",
+                    })
+                  }}</span>
+                  <span class="input-group-text fw-bold">Đến</span>
+                  <span class="border p-1 bg-white col fw-bold">{{
+                    new Date(element.to).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "numeric",
+                    })
+                  }}</span>
+                </div>
+              </div>
+              <div class="card-body text-success">
+                <div class="input-group input-group-sm mb-2">
+                  <span class="input-group-text w-100 fw-bold"
+                    >Chức danh công việc</span
+                  >
+                  <span class="border p-1 bg-white col fw-bold">{{
+                    element.title
+                  }}</span>
+                </div>
+                <div class="input-group input-group-sm mb-2">
+                  <span class="input-group-text w-100 fw-bold"
+                    >Chuyên nghành</span
+                  >
+                  <span class="border p-1 bg-white col fw-bold">{{
+                    element.skill
+                  }}</span>
+                </div>
+                <div class="input-group input-group-sm mb-2">
+                  <span class="input-group-text w-100 fw-bold"
+                    >Công việc đã thực hiện</span
+                  >
+                  <textarea
+                    class="form-control bg-white text-reset fs-6 fw-bold"
+                    disabled
+                    v-model="element.work"
+                  ></textarea>
+                  <!-- <span class="border p-1 bg-white col">{{element.work}}</span> -->
+                </div>
 
-                <section class="section experiences-section" v-if="cv.skills.length">
-                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Chứng chỉ</h2>   
-                    <div class="item" v-for="skill in cv.skills">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">Tên chứng chỉ{{skill.name}}</h3>
-                            </div><!--//upper-row-->
-                            <div class="company">Nơi cấp: {{skill.school}}</div>
-                            <div class="company">Ngày hết hạn: {{skill.year}}</div>
-                        </div><!--//meta-->
-                    </div><!--//item-->
-                </section>
-                <section class="section experiences-section" v-if="cv.companies.length">
-                    <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Quá trình công tác</h2>  
-                    <h6 class="section-title text-danger">Kinh nghiệm làm việc: {{getExperience}} năm</h6> 
-                    <div class="item" v-for="(companie, count1) in cv.companies" :key="count1">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">{{companie.name}}</h3>
-                            </div>
-                        </div><!--//meta-->
-                        <div class="details" v-for="position in companie.position">
-                            <div class="upper-row">
-                              <span class="m-2">{{position.work}}</span>
-                              <div class="time">Từ {{position.from}} đến {{position.to}}</div>
-                            </div> 
-                            <p class="m-2">{{position.name}}</p>
-                            <p class="m-2">{{position.address}}</p>
-                        </div><!--//details-->
-                        
-                    </div><!--//item-->
-                    <!--//skills-section-->
-                </section>
-                <section class="skills-section section mt-4">
-                  <div class="skillset">     
-                      <h2 class="section-title">Kết quả đánh giá</h2> 
-                      <div class="item" v-for="(item, count2) in criteria" :key="count2">
-                          <h3 class="level-title me-2">{{item.name}}</h3>
-                          <div class="progress level-bar">
-                              <div class="progress-bar theme-progress-bar" role="progressbar" :style="{width: cv.assessment[count2]+'0%'}" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100">{{cv.assessment[count2]}}</div>
-                          </div>                               
-                      </div><!--//item-->
-                  </div>  
-                </section>
-                <div class="row" v-if="this.$route.query.position">
-                <div class="col-12 col-md-6 mb-3">
-                  <label class="btn btn-secondary btn-sm disabled me-2">Xếp loại: </label>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" v-model="job.rating" type="radio" id="inlineCheckbox1" value="A">
-                    <label class="form-check-label" for="inlineCheckbox1">A</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" v-model="job.rating" type="radio" id="inlineCheckbox2" value="B">
-                    <label class="form-check-label" for="inlineCheckbox2">B</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" v-model="job.rating" type="radio" id="inlineCheckbox3" value="C">
-                    <label class="form-check-label" for="inlineCheckbox3">C</label>
-                  </div>
+                <div class="input-group input-group-sm mb-2">
+                  <span class="input-group-text w-100 fw-bold">Địa chỉ</span>
+                  <span class="border p-1 bg-white col fw-bold">{{
+                    element.address
+                  }}</span>
                 </div>
-                <div class="col-12 col-md-6 mb-3" :style="{maxWidth: '300px'}">
-                  <div class="input-group">
-                    <input type="text" class="form-control form-control-sm" placeholder="Đánh giá" v-model="job.review">
-                    <button class="btn btn-outline-secondary btn-sm" type="button" @click="onSubmit">Lưu</button>
-                  </div>
+                <div class="input-group input-group-sm mb-2">
+                  <span class="input-group-text fw-bold"
+                    >Kết quả hoàn thành</span
+                  >
+                  <span class="border p-1 bg-white col fw-bold">{{
+                    element.result
+                  }}</span>
                 </div>
-                </div>                
-                
-                    
-              
-                
-                
-            </div><!--//main-body-->
-        </div>            
-    </body>
+              </div>
+            </div>
+          </div>
+          <div class="input-group input-group-sm">
+            <span class="input-group-text fw-bold">Lý do nghỉ việc</span>
+            <span class="border p-1 bg-white col fw-bold">{{
+              company.leaving
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h5 class="text-primary m-2">Kết quả đánh giá</h5>
+    <ul class="list-group">
+      <li
+        class="
+          list-group-item
+          d-flex
+          justify-content-between
+          align-items-center
+          bg-light
+        "
+      >
+        Tiêu chí
+        <input
+          type="text"
+          class="form-control-plaintext form-control-sm text-dark"
+          value="Điểm"
+          :style="{ maxWidth: '3rem' }"
+          disabled
+        />
+      </li>
+      <li class="list-group-item" v-for="(ele, index) in criteria" :key="index">
+        <div class="d-flex justify-content-between align-items-center">
+          <span
+            >{{ index + 1 + ". " + ele.name }}
+            <a
+              data-bs-toggle="collapse"
+              :href="'#collapse' + index"
+              class="link-primary"
+              role="button"
+              aria-expanded="false"
+              :aria-controls="'collapse' + index"
+              ><i class="fas fa-question-circle ms-0"></i></a
+          ></span>
+          <input
+            type="number"
+            class="form-control form-control-sm bg-white text-dark"
+            disabled
+            :style="{ maxWidth: '3.5rem' }"
+            v-model="employee.assessment[index]"
+          />
+        </div>
+        <div class="collapse" :id="'collapse' + index">
+          <ul class="list-group ms-5">
+            <li class="" v-for="item in ele.detail">{{ item }}</li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <h4 class="text-primary mt-2 text-decoration-underline">
+      Quá trình học tập
+    </h4>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card border-primary mb-3">
+          <div class="card-header">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text">Từ:</span>
+              <input
+                type="text"
+                class="form-control bg-white"
+                :value="employee.startyear"
+                disabled
+              />
+              <span class="input-group-text">Đến:</span>
+              <input
+                type="text"
+                class="form-control bg-white"
+                :value="employee.endyear"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="card-body text-primary">
+            <h5 class="card-title">{{ employee.school }}</h5>
+            <p class="card-text mx-2 my-1">Cấp bậc: {{ employee.level }}</p>
+            <p class="card-text mx-2 my-1">
+              Chuyên nghành: {{ employee.skill }}
+            </p>
+            <p class="card-text mx-2 my-1">Điểm:</p>
+            <p class="card-text mx-2 my-1">Xếp loại: {{ employee.rating }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" v-for="(ele, index) in employee.skillEducation">
+        <div class="card border-primary mb-3">
+          <div class="card-header">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text">Từ:</span>
+              <input type="month" class="form-control" v-model="ele.from" />
+              <span class="input-group-text">Đến:</span>
+              <input
+                type="month"
+                class="form-control bg-white"
+                v-model="ele.to"
+              />
+            </div>
+          </div>
+          <div class="card-body">
+            <input
+              type="text"
+              class="form-control form-control-sm mb-2 bg-white"
+              v-model="ele.school"
+              disabled
+            />
+            <div class="row mb-2">
+              <label class="col-sm-4 col-form-label col-form-label-sm"
+                >Cấp bậc:</label
+              >
+              <div class="col-sm-8">
+                <input
+                  class="form-control form-control-sm bg-white"
+                  v-model="ele.level"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label class="col-sm-4 col-form-label col-form-label-sm"
+                >Chuyên nghành:</label
+              >
+              <div class="col-sm-8">
+                <input
+                  class="form-control form-control-sm bg-white"
+                  v-model="ele.skill"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label class="col-sm-4 col-form-label col-form-label-sm"
+                >Điểm:</label
+              >
+              <div class="col-sm-8">
+                <input
+                  class="form-control form-control-sm bg-white"
+                  v-model="ele.point"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label class="col-sm-4 col-form-label col-form-label-sm"
+                >Xếp loại:</label
+              >
+              <div class="col-sm-8">
+                <input
+                  class="form-control form-control-sm bg-white"
+                  v-model="ele.rating"
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h4
+      class="text-primary mt-2 text-decoration-underline"
+      v-if="employee.shortTraining && employee.shortTraining.length > 0"
+    >
+      Các khoá đào tạo ngắn hạn
+    </h4>
+    <div
+      class="card mb-3"
+      v-for="(ele, index) in employee.shortTraining"
+      v-if="employee.shortTraining.length > 0"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group input-group-sm mb-3">
+              <label class="input-group-text">Từ</label>
+              <input type="month" class="form-control" v-model="ele.from" />
+            </div>
+            <div class="input-group input-group-sm mb-3">
+              <label class="input-group-text">Đến</label>
+              <input type="month" class="form-control" v-model="ele.to" />
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="input-group input-group-sm mb-3">
+              <label class="input-group-text">Chứng chỉ đại được</label>
+              <input type="text" class="form-control" v-model="ele.name" />
+            </div>
+            <div class="input-group input-group-sm mb-3">
+              <label class="input-group-text">Đơn vị tổ chức</label>
+              <input type="text" class="form-control" v-model="ele.place" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h4 class="text-primary mt-2 text-decoration-underline">
+      Khả năng ngoại ngữ và vi tính
+    </h4>
+    <table class="table table-bordered border-primary text-center">
+      <thead>
+        <tr>
+          <th colspan="5">
+            <h5 class="text-primary m-1">Khả năng Tiếng Anh</h5>
+          </th>
+        </tr>
+        <tr class="d-flex">
+          <th class="col-2">Kĩ năng</th>
+          <th class="col">Giỏi</th>
+          <th class="col">Tốt</th>
+          <th class="col">Bình thường</th>
+          <th class="col">Cơ bản</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="d-flex">
+          <th class="col-2">Nghe</th>
+          <td class="col" v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillEnglish.listening"
+              :value="point"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr class="d-flex">
+          <th class="col-2">Nói</th>
+          <td class="col" v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillEnglish.speaking"
+              :value="point"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr class="d-flex">
+          <th class="col-2">Đọc</th>
+          <td class="col" v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillEnglish.reading"
+              :value="point"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr class="d-flex">
+          <th class="col-2">Viết</th>
+          <td class="col" v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillEnglish.writing"
+              :value="point"
+              disabled
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table
+      class="table table-bordered border-primary text-center"
+      v-for="skill in employee.skillLanguage"
+      v-if="skill.name != ''"
+    >
+      <thead>
+        <tr>
+          <th colspan="5">
+            <input
+              type="text"
+              class="form-control text-center text-primary h5 fs-5"
+              placeholder="Tên ngoại ngữ"
+              v-model="skill.name"
+            />
+          </th>
+        </tr>
+        <tr>
+          <th scope="col">Kĩ năng</th>
+          <th scope="col">Giỏi</th>
+          <th scope="col">Tốt</th>
+          <th scope="col">Bình thường</th>
+          <th scope="col">Cơ bản</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Nghe</th>
+          <td v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="skill.listening"
+              :value="point"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Nói</th>
+          <td v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="skill.speaking"
+              :value="point"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Đọc</th>
+          <td v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="skill.reading"
+              :value="point"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Viết</th>
+          <td v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="skill.writing"
+              :value="point"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered border-primary text-center">
+      <thead>
+        <tr>
+          <th colspan="8">
+            <h5 class="text-primary m-1">Khả năng vi tính</h5>
+          </th>
+        </tr>
+        <tr class="d-flex">
+          <th class="col-2">Đánh giá</th>
+          <th class="col">World</th>
+          <th class="col">Excel</th>
+          <th class="col-5">Phần mền khác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="d-flex">
+          <th class="col-2">Giỏi</th>
+          <td class="col">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillComputer.word"
+              value="1"
+              disabled
+            />
+          </td>
+          <td class="col">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillComputer.excel"
+              value="1"
+              disabled
+            />
+          </td>
+          <td class="col-5">{{ employee.skillComputer.other[0] }}</td>
+        </tr>
+        <tr class="d-flex">
+          <th class="col-2">Tốt</th>
+          <td class="col">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillComputer.word"
+              value="2"
+              disabled
+            />
+          </td>
+          <td class="col">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillComputer.excel"
+              value="2"
+              disabled
+            />
+          </td>
+          <td class="col-5">{{ employee.skillComputer.other[1] }}</td>
+        </tr>
+        <tr class="d-flex">
+          <th class="col-2">Bình thường</th>
+          <td class="col">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillComputer.word"
+              value="3"
+              disabled
+            />
+          </td>
+          <td class="col">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillComputer.excel"
+              value="3"
+              disabled
+            />
+          </td>
+          <td class="col-5">{{ employee.skillComputer.other[2] }}</td>
+        </tr>
+        <tr class="d-flex">
+          <th class="col-2">Cơ bản</th>
+          <td class="col">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillComputer.word"
+              value="4"
+              disabled
+            />
+          </td>
+          <td class="col">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="employee.skillComputer.excel"
+              value="4"
+              disabled
+            />
+          </td>
+          <td class="col-5">{{ employee.skillComputer.other[3] }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table
+      class="table table-bordered border-primary text-center"
+      v-if="employee.skillOther.length > 0"
+    >
+      <thead>
+        <tr>
+          <th colspan="7"><h5 class="text-primary m-1">Kỹ năng khác</h5></th>
+        </tr>
+        <tr>
+          <th scope="col">Tên kỹ năng</th>
+          <th scope="col">Giỏi</th>
+          <th scope="col">Tốt</th>
+          <th scope="col">Bình thường</th>
+          <th scope="col">Cơ bản</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="skill in employee.skillOther">
+          <th scope="row">
+            <input
+              type="text"
+              class="form-control form-control-sm bg-white"
+              v-model="skill.name"
+              disabled
+            />
+          </th>
+          <td v-for="point in 4">
+            <input
+              class="form-check-input"
+              type="radio"
+              v-model="skill.point"
+              :value="point"
+              disabled
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 <script>
-    const {BASE_URL} =  require('../../utils/config')
-    export default {  
-        data(){
-            return {
-                cv: '',
-                criteria: '',
-                job: '',
-                status: false
-            }
-        },
-        created(){
-            this.$http.get(`${BASE_URL}/employee/cvid/${this.$route.params.cvid}`)
-            .then(res => {
-				if (res.data) this.cv = res.data;
-            }) 
+const { BASE_URL } = require("../../utils/config");
+export default {
+  data() {
+    return {
+      criteria: "",
+      employee: "",
+    };
+  },
+  created() {
+    this.$http
+      .get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
+      .then((res) => {
+        this.employee = res.data;
+      });
 
-            this.$http.get(`${BASE_URL}/criteria/getall`)
-            .then(res => {
-                this.criteria = res.data;
-            }) 
-            this.$http.post(`${BASE_URL}/job/checkjob`, {
-                employee: this.$route.params.cvid,
-                position: this.$route.query.position,
-            }).then(res => {
-                if (res.data){
-                  this.job = res.data
-                } else {
-                  this.job = {
-                    employee_id: this.$route.params.cvid,
-                    position_id: this.$route.query.position,
-                    type: 0,
-                    rating: '',
-                    review: '',
-                  }
-                }
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        methods: {
-          onSubmit(){
-            this.$http.post(`${BASE_URL}/job/create`, {
-				job: this.job
-			}).then(res => {
-				this.$router.push('/business/recruit')
-			}).catch(err => {
-				console.log(err)
-			})
-          }
-        },
-        computed: {
-          getExperience(){
-            var sum = 0
-            if (this.cv.companies){
-              this.cv.companies.filter(function(company){
-                company.position.filter(function(position){
-                  sum += ((new Date(position.to)).getTime()-(new Date(position.from)).getTime())
-                })
-              })
-            }
-            return Math.round(sum/15768000000)/2
-          }
-        },
-    }
+    // this.$http
+    //   .post(`${BASE_URL}/job/checkjob`, {
+    //     employee: this.$route.params.cvid,
+    //     position: this.$route.query.position,
+    //   })
+    //   .then((res) => {
+    //     if (res.data) {
+    //       this.job = res.data;
+    //     } else {
+    //       this.job = {
+    //         employee_id: this.$route.params.cvid,
+    //         position_id: this.$route.query.position,
+    //         type: 0,
+    //         rating: "",
+    //         review: "",
+    //       };
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+    this.$http.get(`${BASE_URL}/criteria/getall`).then((res) => {
+      this.criteria = res.data;
+    });
+  },
+  computed: {
+    getExperience() {
+      var sum = 0;
+      if (this.employee.skillWorking && this.employee.skillWorking.length > 0) {
+        this.employee.skillWorking.filter(function (company) {
+          sum +=
+            new Date(company.to).getTime() - new Date(company.from).getTime();
+        });
+      }
+      return Math.round(sum / 15768000000) / 2;
+    },
+  },
+  methods: {
+    onSubmit() {
+      this.$http
+        .post(`${BASE_URL}/job/create`, {
+          job: this.job,
+        })
+        .then((res) => {
+          this.$router.push("/business/recruit");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+};
 </script>
-<style scoped>
-    body {
-        font-family: "Roboto", sans-serif;
-        color: #545E6C;
-        background: #f5f5f5;
-        font-size: 14px;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      
-      h1, h2, h3, h4, h5, h6 {
-        font-weight: 700;
-        color: white;
-      }
-      
-      a {
-        color: #3d884d;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-        color: #25532f;
-        -webkit-transition: all 0.4s ease-in-out;
-        -moz-transition: all 0.4s ease-in-out;
-        -ms-transition: all 0.4s ease-in-out;
-        -o-transition: all 0.4s ease-in-out;
-      }
-      a:focus {
-        text-decoration: none;
-      }
-      
-      p {
-        line-height: 1.5;
-      }
-      
-      .wrapper {
-        background: #5BB66F;
-        max-width: 960px;
-        margin: 0 auto;
-        position: relative;
-        -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      
-      .sidebar-wrapper {
-        background: #5BB66F;
-        position: absolute;
-        right: 0;
-        width: 240px;
-        height: 99%;
-        min-height: 800px;
-        color: #fff;
-      }
-      .sidebar-wrapper a {
-        color: #fff;
-      }
-      .sidebar-wrapper .profile-container {
-        padding: 30px;
-        background: rgba(0, 0, 0, 0.2);
-        text-align: center;
-        color: #fff;
-      }
-      .sidebar-wrapper .name {
-        font-size: 32px;
-        font-weight: 900;
-        margin-top: 0;
-        margin-bottom: 10px;
-      }
-      .sidebar-wrapper .tagline {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 16px;
-        font-weight: 400;
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .profile {
-        margin-bottom: 15px;
-      }
-      .sidebar-wrapper .contact-list .svg-inline--fa {
-        margin-right: 5px;
-        font-size: 18px;
-        vertical-align: middle;
-      }
-      .sidebar-wrapper .contact-list li {
-        margin-bottom: 15px;
-      }
-      .sidebar-wrapper .contact-list li:last-child {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .contact-list .email .svg-inline--fa {
-        font-size: 14px;
-      }
-      .sidebar-wrapper .container-block {
-        padding: 30px;
-      }
-      .sidebar-wrapper .container-block-title {
-        text-transform: uppercase;
-        font-size: 16px;
-        font-weight: 700;
-        margin-top: 0;
-        margin-bottom: 15px;
-      }
-      .sidebar-wrapper .degree {
-        font-size: 14px;
-        margin-top: 0;
-        margin-bottom: 5px;
-      }
-      .sidebar-wrapper .education-container .item {
-        margin-bottom: 15px;
-      }
-      .sidebar-wrapper .education-container .item:last-child {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .education-container .meta {
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: 400;
-        margin-bottom: 0px;
-        margin-top: 0;
-        font-size: 14px;
-      }
-      .sidebar-wrapper .education-container .time {
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: 500;
-        margin-bottom: 0px;
-      }
-      .sidebar-wrapper .languages-container .lang-desc {
-        color: rgba(255, 255, 255, 0.6);
-      }
-      .sidebar-wrapper .languages-list {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .languages-list li {
-        margin-bottom: 10px;
-      }
-      .sidebar-wrapper .languages-list li:last-child {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .interests-list {
-        margin-bottom: 0;
-      }
-      .sidebar-wrapper .interests-list li {
-        margin-bottom: 10px;
-      }
-      .sidebar-wrapper .interests-list li:last-child {
-        margin-bottom: 0;
-      }
-      
-      .main-wrapper {
-        background: #fff;
-        padding: 60px;
-        padding-right: 300px;
-      }
-      .main-wrapper .section-title {
-        text-transform: uppercase;
-        font-size: 20px;
-        font-weight: 500;
-        color: #3d884d;
-        position: relative;
-        margin-top: 0;
-        margin-bottom: 20px;
-      }
-      .main-wrapper .section-title .icon-holder {
-        width: 30px;
-        height: 30px;
-        margin-right: 8px;
-        display: inline-block;
-        color: #fff;
-        -webkit-border-radius: 50%;
-        -moz-border-radius: 50%;
-        -ms-border-radius: 50%;
-        -o-border-radius: 50%;
-        border-radius: 50%;
-        -moz-background-clip: padding;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;
-        background: #3d884d;
-        text-align: center;
-        font-size: 16px;
-        position: relative;
-        top: -4px;
-        padding-top: 5px;
-      }
-      .main-wrapper .section-title .icon-holder .svg-inline--fa {
-        font-size: 14px;
-        margin-top: 6px;
-      }
-      .main-wrapper .section {
-        margin-bottom: 60px;
-      }
-      .main-wrapper .experiences-section .item {
-        margin-bottom: 20px;
-      }
-      .main-wrapper .upper-row {
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 2px;
-      }
-      .main-wrapper .job-title {
-        color: #3F4650;
-        font-size: 16px;
-        margin-top: 0;
-        margin-bottom: 0;
-        font-weight: 500;
-      }
-      .main-wrapper .time {
-        position: absolute;
-        right: 0;
-        top: 0;
-        color: #97AAC3;
-      }
-      .main-wrapper .company {
-        margin: 10px;
-        color: #97AAC3;
-      }
-      .main-wrapper .project-title {
-        font-size: 16px;
-        font-weight: 400;
-        margin-top: 0;
-        margin-bottom: 5px;
-      }
-      .main-wrapper .projects-section .intro {
-        margin-bottom: 30px;
-      }
-      .main-wrapper .projects-section .item {
-        margin-bottom: 15px;
-      }
-      
-      .skillset .item {
-        margin-bottom: 15px;
-        overflow: hidden;
-      }
-      .skillset .level-title {
-        font-size: 14px;
-        margin-top: 0;
-        margin-bottom: 12px;
-        color: #25532f;
-      }
-      .skillset .level-bar {
-        height: 12px;
-        background: #f5f5f5;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        -ms-border-radius: 2px;
-        -o-border-radius: 2px;
-        border-radius: 2px;
-        -moz-background-clip: padding;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;
-      }
-      .skillset .theme-progress-bar {
-        background: #7ec68e;
-      }
-      
-      @media (max-width: 767.98px) {
-        .sidebar-wrapper {
-          position: static;
-          width: inherit;
-        }
-      
-        .main-wrapper {
-          padding: 30px;
-        }
-      
-        .main-wrapper .time {
-          position: static;
-          display: block;
-          margin-top: 5px;
-        }
-      
-        .main-wrapper .upper-row {
-          margin-bottom: 0;
-        }
-      }
-      @media (min-width: 992px) {
-        .skillset .level-title {
-          display: inline-block;
-          float: left;
-          width: 30%;
-          margin-bottom: 0;
-        }
-      }
-</style>
+  
+
+     
+ 
+       
