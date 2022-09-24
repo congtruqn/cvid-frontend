@@ -164,7 +164,6 @@
               <li class="" v-for="skill in position.skills">{{ skill }}</li>
             </ul>
           </div>
-
           <div class="col-12 col-md-6">
             <label class="form-label">Lĩnh vực kinh doanh</label>
             <select class="form-select" v-model="position.work_industry">
@@ -185,7 +184,6 @@
               </option>
             </select>
           </div>
-
           <div class="col-12 col-md-6">
             <label class="form-label">Môi trường làm việc</label>
             <select class="form-select" v-model="position.work_environment">
@@ -215,6 +213,57 @@
               placeholder="Nhập số lượng"
             />
           </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label"
+              >Trường<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-select dropdown-toggle"
+              id="dropdownMenuSchool"
+              data-bs-toggle="dropdown"
+              data-bs-auto-close="outside"
+              aria-expanded="false"
+              v-model="searchSchool"
+              placeholder="Tìm kiếm"
+            />
+            <ul
+              class="dropdown-menu col-12 col-md-6 overflow-auto"
+              aria-labelledby="dropdownMenuSchool"
+              :style="{ maxHeight: '300px' }"
+            >
+              <div
+                class="form-check mx-3"
+                v-for="(item, index) in filteredSchool"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  v-model="school"
+                  :id="'school' + index"
+                  :value="item.name"
+                  
+                />
+                <label class="form-check-label" :for="'school' + index">
+                  {{ item.name }}
+                </label>
+              </div>
+            </ul>
+            <ul class="list-group m-2 px-4">
+              <li class="" v-for="item in school">{{ item }}</li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label"
+              >Điểm CV <span class="text-danger"></span></label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model="position.amount"
+              placeholder="Nhập số lượng"
+            />
+          </div>
           <div class="col-12 text-center">
             <button
               type="button"
@@ -226,7 +275,6 @@
           </div>
         </form>
       </div>
-
       <!-- <div :id="'collaoseRecommend'+id" class="accordion-collapse collapse show" :aria-labelledby="'headingRecommend'+id">
                         <div class="accordion-body0 col-md-6">
                             <div class="card mb-3" v-for="cv in filteredCV(list_cv_recommend)" v-if="cv.position_id == position._id">
@@ -280,7 +328,6 @@
                                             <td>{{cv.job.type_business==''?'Tất cả':cv.job.type_business}}</td>
                                             <td></td>
                                             </tr>
-
                                             <tr>
                                             <th scope="row">Môi trường làm việc</th>
                                             <td>{{cv.job.work_environment==''?'Tất cả':cv.job.work_environment}}</td>
@@ -310,7 +357,6 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                         <!-- <button type="button" class="btn btn-primary">Xác nhận</button> -->
-
       <!-- </div>
                     </div>
                     </div> -->
@@ -485,7 +531,6 @@
                         </div>
                       </div>
                     </div>
-
                     <div
                       class="modal fade"
                       id="exampleModal"
@@ -514,14 +559,13 @@
                               <thead>
                                 <tr>
                                   <th scope="col">Các yêu cầu</th>
-                                  <th scope="col">CVID</th>
                                   <th scope="col">Vị trí tuyển dụng</th>
+                                  <th scope="col">CVID</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr>
                                   <th scope="row">Trình độ</th>
-                                  <td>{{ cv.level }}</td>
                                   <td>
                                     {{
                                       position.levels
@@ -531,10 +575,10 @@
                                         : ""
                                     }}
                                   </td>
+                                  <td>{{ cv.level }}</td>
                                 </tr>
                                 <tr>
                                   <th scope="row">Chuyên nghành</th>
-                                  <td>{{ cv.job.skill }}</td>
                                   <td>
                                     {{
                                       position.skills
@@ -544,6 +588,7 @@
                                         : ""
                                     }}
                                   </td>
+                                  <td>{{ cv.job.skill }}</td>
                                 </tr>
                                 <tr>
                                   <th scope="row">Chức danh công việc</th>
@@ -552,6 +597,7 @@
                                 </tr>
                                 <tr>
                                   <th scope="row">Chức vụ</th>
+                                  <td>{{ position.name }}</td>
                                   <td>
                                     {{
                                       cv.job.position == ""
@@ -559,17 +605,9 @@
                                         : cv.job.position
                                     }}
                                   </td>
-                                  <td>{{ position.name }}</td>
                                 </tr>
                                 <tr>
                                   <th scope="row">Lĩnh vực làm việc</th>
-                                  <td>
-                                    {{
-                                      cv.job.work_industry == ""
-                                        ? "Tất cả"
-                                        : cv.job.work_industry
-                                    }}
-                                  </td>
                                   <td>
                                     {{
                                       position.work_industry == ""
@@ -577,11 +615,19 @@
                                         : position.work_industry
                                     }}
                                   </td>
+                                  <td>
+                                    {{
+                                      cv.job.work_industry == ""
+                                        ? "Tất cả"
+                                        : cv.job.work_industry
+                                    }}
+                                  </td>
                                 </tr>
                                 <tr>
                                   <th scope="row">
                                     Loại hình đơn vị tuyển dụng
                                   </th>
+                                  <td></td>
                                   <td>
                                     {{
                                       cv.job.type_business == ""
@@ -589,18 +635,9 @@
                                         : cv.job.type_business
                                     }}
                                   </td>
-                                  <td></td>
                                 </tr>
-
                                 <tr>
                                   <th scope="row">Môi trường làm việc</th>
-                                  <td>
-                                    {{
-                                      cv.job.work_environment == ""
-                                        ? "Tất cả"
-                                        : cv.job.work_environment
-                                    }}
-                                  </td>
                                   <td>
                                     {{
                                       position.work_environment == ""
@@ -608,16 +645,16 @@
                                         : position.work_environment
                                     }}
                                   </td>
+                                  <td>
+                                    {{
+                                      cv.job.work_environment == ""
+                                        ? "Tất cả"
+                                        : cv.job.work_environment
+                                    }}
+                                  </td>
                                 </tr>
                                 <tr>
                                   <th scope="row">Nơi làm việc</th>
-                                  <td>
-                                    {{
-                                      cv.job.address == ""
-                                        ? "Tất cả"
-                                        : cv.job.address
-                                    }}
-                                  </td>
                                   <td>
                                     {{
                                       position.work_location == ""
@@ -625,21 +662,28 @@
                                         : position.work_location
                                     }}
                                   </td>
+                                  <td>
+                                    {{
+                                      cv.job.address == ""
+                                        ? "Tất cả"
+                                        : cv.job.address
+                                    }}
+                                  </td>
                                 </tr>
                                 <tr>
                                   <th scope="row">Số năm kinh nghiệm</th>
                                   <td>
                                     {{
-                                      getExperience() == 0
-                                        ? "Chưa có kinh nghiệm"
-                                        : getExperience() + " năm"
+                                      position.experience == 0
+                                        ? "Không yêu cầu kinh nghiệm"
+                                        : position.experience + " năm"
                                     }}
                                   </td>
                                   <td>
                                     {{
-                                      position.experience == 0
-                                        ? "Không yêu cầu kinh nghiệm"
-                                        : position.experience + " năm"
+                                      getExperience() == 0
+                                        ? "Chưa có kinh nghiệm"
+                                        : getExperience() + " năm"
                                     }}
                                   </td>
                                 </tr>
@@ -660,8 +704,8 @@
                                   "
                                 >
                                   <th scope="row">{{ item.name }}</th>
-                                  <td>{{ cv.assessment[index] }}</td>
                                   <td>{{ position.criteria[index] }}</td>
+                                  <td>{{ cv.assessment[index] }}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -739,14 +783,14 @@ export default {
       return this.schools.filter((school) => {
         return (
           school.name.toLowerCase().indexOf(this.searchSchool.toLowerCase()) !=
-          -1
+          -1 && this.searchSchool != ''
         );
       });
     },
     filteredSkill() {
       this.skills = new Set([]);
       this.majors.forEach((element) => {
-        if (this.position.levels.includes(element.level)) {
+        if (this.position.levels.includes(element.level) && this.searchSkill != '') {
           element.skills.forEach((skill) => {
             if (
               skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1
@@ -925,7 +969,6 @@ export default {
           console.error(err);
         });
     }
-
     this.position_list.forEach((position) => {
       this.$http
         .post(`${BASE_URL}/job/getcvidforposition`, {
@@ -947,7 +990,6 @@ export default {
           console.log(err);
         });
     });
-
     this.$http
       .get(`${BASE_URL}/position/getall`)
       .then((response) => {
@@ -956,7 +998,6 @@ export default {
       .catch(function (error) {
         console.error(error);
       });
-
     this.$http
       .get(`${BASE_URL}/province/list`)
       .then((response) => {
@@ -965,7 +1006,6 @@ export default {
       .catch(function (error) {
         console.error(error);
       });
-
     this.$http
       .get(`${BASE_URL}/major/list`)
       .then((response) => {
@@ -974,7 +1014,6 @@ export default {
       .catch(function (error) {
         console.error(error);
       });
-
     this.$http
       .get(`${BASE_URL}/industry/getall`)
       .then((response) => {
@@ -983,7 +1022,6 @@ export default {
       .catch(function (error) {
         console.error(error);
       });
-
     this.$http
       .get(`${BASE_URL}/environment/getall`)
       .then((response) => {
@@ -992,7 +1030,6 @@ export default {
       .catch(function (error) {
         console.error(error);
       });
-
     this.$http
       .get(`${BASE_URL}/jobtitle/getall`)
       .then((response) => {
@@ -1001,7 +1038,6 @@ export default {
       .catch(function (error) {
         console.error(error);
       });
-
     this.$http
       .get(`${BASE_URL}/school/getall`)
       .then((response) => {
@@ -1010,7 +1046,6 @@ export default {
       .catch(function (error) {
         console.error(error);
       });
-
     this.$http
       .get(`${BASE_URL}/criteria/getall`)
       .then((res) => {
