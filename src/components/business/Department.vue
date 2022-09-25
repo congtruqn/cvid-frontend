@@ -6,7 +6,7 @@
       class="btn btn-primary btn-icon-split ms-4 mt-4"
       data-bs-toggle="modal"
       data-bs-target="#addDepartment"
-      @click="department.name='';department.email='';department._id=''"
+      @click="department.name='';department.email=''"
     >
       <i class="fas fa-plus"></i> Thêm phòng ban
     </button>
@@ -64,6 +64,7 @@
             <button
               type="button"
               class="btn btn-primary"
+              data-bs-dismiss="modal"
               @click="addDepartment"
             >
               Thêm
@@ -135,6 +136,7 @@
             <button
               type="button"
               class="btn btn-primary"
+              data-bs-dismiss="modal"
               @click="editDepartment(department)"
             >
               Lưu
@@ -331,6 +333,18 @@
                         class="form-check-input"
                         type="checkbox"
                         v-model="position.levels"
+                        id="level00"
+                        value="Phổ thông"
+                      />
+                      <label class="form-check-label" for="level00">
+                        Phổ thông
+                      </label>
+                    </div>
+                    <div class="form-check mx-3">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        v-model="position.levels"
                         id="level01"
                         value="Sơ cấp"
                       />
@@ -372,6 +386,18 @@
                       />
                       <label class="form-check-label" for="level04">
                         Đại học
+                      </label>
+                    </div>
+                    <div class="form-check mx-3">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        v-model="position.levels"
+                        id="level05"
+                        value="Chuyên gia"
+                      />
+                      <label class="form-check-label" for="level05">
+                        Chuyên gia
                       </label>
                     </div>
                   </ul>
@@ -784,6 +810,18 @@
                         class="form-check-input"
                         type="checkbox"
                         v-model="position.levels"
+                        id="lv00"
+                        value="Phổ thông"
+                      />
+                      <label class="form-check-label" for="lv00">
+                        Phổ thông
+                      </label>
+                    </div>
+                    <div class="form-check mx-3">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        v-model="position.levels"
                         id="lv01"
                         value="Sơ cấp"
                       />
@@ -825,6 +863,18 @@
                       />
                       <label class="form-check-label" for="lv04">
                         Đại học
+                      </label>
+                    </div>
+                    <div class="form-check mx-3">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        v-model="position.levels"
+                        id="lv05"
+                        value="Chuyên gia"
+                      />
+                      <label class="form-check-label" for="lv05">
+                        Chuyên gia
                       </label>
                     </div>
                   </ul>
@@ -1163,7 +1213,7 @@ export default {
         name: "",
         id: "",
         email: "",
-        position: "",
+        position: [],
       },
       position: {
         _id: "",
@@ -1201,7 +1251,6 @@ export default {
       } else {
         this.$http
           .post(`${BASE_URL}/department/new`, {
-            _id: this.department._id,
             name: this.department.name,
             id: this.business_id,
             email: this.department.email,
@@ -1212,10 +1261,10 @@ export default {
                 icon: "success",
                 title: "Thông báo",
                 text: "Thêm phòng ban thành công",
-                confirmButtonText: "OK",
-                confirmButtonColor: "var(--primary)",
+                showConfirmButton: false,
+                timer: 1500,
               });
-            window.location.reload();
+              this.departments.push(res.data)
           })
           .catch((err) => {
             console.log(err);
@@ -1244,10 +1293,15 @@ export default {
                 icon: "success",
                 title: "Thông báo",
                 text: "Sửa thông tin thành công",
-                confirmButtonText: "OK",
-                confirmButtonColor: "var(--primary)",
+                showConfirmButton: false,
+                timer: 1500,
               });
-            window.location.reload();
+              // this.departments.forEach((item, index) => {
+              //   if(item._id == department._id){
+              //     this.departments[index].name = department.name
+              //     this.departments[index].email = department.email
+              //   }
+              // })
           })
           .catch((err) => {
             console.log(err);

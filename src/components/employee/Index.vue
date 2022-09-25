@@ -61,32 +61,64 @@
             <label class="form-label"
               >Chức vụ <i class="fas fa-question-circle" title="Giải thích"></i
             ></label>
-            <select
-              class="form-select"
-              v-model="job.position"
-              :disabled="job.status == 1"
-            >
-              <option value="">Tất cả chức vụ</option>
-              <option v-for="item in positions" :value="item.name">
-                {{ item.name }}
-              </option>
-            </select>
+            <input
+              type="text"
+              class="form-select dropdown-toggle"
+              id="dropdownMenuPosition"
+              data-bs-toggle="dropdown"
+              data-bs-auto-close="outside"
+              aria-expanded="false"
+              :value="
+                job.position
+                  ? job.position.toString().replaceAll(',', ', ')
+                  : ''
+              "
+              placeholder="Chọn chức vụ"
+            />
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuPosition">
+              <div class="form-check mx-3" v-for="(item, index) in positions">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  v-model="job.position"
+                  :id="'position'+index"
+                  :value="item.name"
+                />
+                <label class="form-check-label" :for="'position'+index"> {{item.name}} </label>
+              </div>
+            </ul>
           </div>
           <div class="col-12 col-md-6">
             <label class="form-label"
               >Môi trường làm việc mong muốn
               <i class="fas fa-question-circle" title="Giải thích"></i
             ></label>
-            <select
-              class="form-select"
-              v-model="job.work_environment"
-              :disabled="job.status == 1"
-            >
-              <option value="">Tất cả môi trường làm việc</option>
-              <option v-for="item in environments" :value="item.name">
-                {{ item.name }}
-              </option>
-            </select>
+            <input
+              type="text"
+              class="form-select dropdown-toggle"
+              id="dropdownMenuEnvironment"
+              data-bs-toggle="dropdown"
+              data-bs-auto-close="outside"
+              aria-expanded="false"
+              :value="
+                job.work_environment
+                  ? job.work_environment.toString().replaceAll(',', ', ')
+                  : ''
+              "
+              placeholder="Chọn môi trường làm việc"
+            />
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuEnvironment">
+              <div class="form-check mx-3" v-for="(item, index) in environments">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  v-model="job.work_environment"
+                  :id="'environment'+index"
+                  :value="item.name"
+                />
+                <label class="form-check-label" :for="'environment'+index"> {{item.name}} </label>
+              </div>
+            </ul>
           </div>
           <div class="col-12 col-md-4">
             <label class="form-label"
@@ -638,7 +670,7 @@ export default {
             work_industry: "",
             work_environment: "",
             type_business: "",
-            position: "",
+            position: [],
             status: 0,
           };
         }
