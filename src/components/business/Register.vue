@@ -479,6 +479,41 @@ export default {
   },
   created() {
     this.$http
+        .get(`${BASE_URL}/admin/test`,)
+        .then((response) => {
+          console.log(response.data[0])
+          response.data.forEach(html => {
+            var htmlObject = document.createElement("div");
+            htmlObject.innerHTML = html;
+            htmlObject = htmlObject.getElementsByTagName("a");
+            console.log(htmlObject)
+            if (htmlObject.length > 0) {
+              htmlObject.forEach(item => {
+                console.log(item)
+              })
+            }
+          })
+
+          
+            // this.name = htmlObject[0].getElementsByTagName("a")[0].innerHTML;
+            // var address = htmlObject[0].getElementsByTagName("p")[0].innerHTML;
+            // this.username = htmlObject[0]
+            //   .getElementsByTagName("p")[0]
+            //   .getElementsByTagName("a")[0].innerHTML;
+            // this.address = "";
+            // address = address.split("Địa chỉ:")[1].trim().split(", ").reverse();
+            // address.forEach((item, index) => {
+            //   if (index == 0) this.province = item;
+            //   else if (index == 1) this.district = item;
+            //   else if (index == 2) this.ward = item;
+            //   else this.address = item + " " + this.address;
+            // });
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    this.$http
       .get(`${BASE_URL}/province/list`)
       .then((response) => {
         this.province_list = response.data;

@@ -55,41 +55,41 @@
                         </select>
                         <label class="form-label">Quốc gia</label>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select @click="focus" class="form-select" v-model="province" required>
-                                    <option value="" disabled>Chọn tỉnh/thành phố</option>
-                                    <option v-for="province in provinces" :value='province'>{{province}}</option>
-                                </select>
-                                <label class="form-label">Tỉnh/Thành phố</label>
-                            </div>
+                 
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <select @click="focus" class="form-select" v-model="province" required>
+                                <option value="" disabled>Chọn tỉnh/thành phố</option>
+                                <option v-for="province in provinces" :value='province'>{{province}}</option>
+                            </select>
+                            <label class="form-label">Tỉnh/Thành phố</label>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select @click="focus" class="form-select" v-model="district" required>
-                                    <option value="" disabled>Chọn quận/huyện</option>
-                                    <option v-for="district in districts" :value='district'>{{district}}</option>
-                                </select>
-                                <label class="form-label">Quận/Huyện</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select @click="focus" class="form-select" v-model="ward" required>
-                                    <option value="" disabled>Chọn phường/xã</option>
-                                    <option v-for="ward in wards" :value='ward'>{{ward}}</option>
-                                </select>
-                                <label class="form-label">Phường/Xã</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="form-floating">
-                                <input @click="focus" type="text" class="form-control" v-model="address" required/>
-                                <label class="form-label">Số nhà, tên đường</label>
-                            </div>
-                        </div>         
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <select @click="focus" class="form-select" v-model="district" required>
+                                <option value="" disabled>Chọn quận/huyện</option>
+                                <option v-for="district in districts" :value='district'>{{district}}</option>
+                            </select>
+                            <label class="form-label">Quận/Huyện</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <select @click="focus" class="form-select" v-model="ward" required>
+                                <option value="" disabled>Chọn phường/xã</option>
+                                <option v-for="ward in wards" :value='ward'>{{ward}}</option>
+                            </select>
+                            <label class="form-label">Phường/Xã</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input @click="focus" type="text" class="form-control" v-model="address" required/>
+                            <label class="form-label">Số nhà, tên đường</label>
+                        </div>
+                    </div>         
+                    
 
                     <div class="mb-3">
                         <div class="form-floating">
@@ -107,20 +107,18 @@
                     </div>
                     <div class="mb-3" v-if="level!='Phổ thông'">
                     <div class="form-floating">
-                        <input @click="()=>{this.$refs.searchSchool.focus()}" type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="school"/>
+                        <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSchool" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" v-model="searchSchool" placeholder="Tìm kiếm"/>
                         <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSchool" :style="{maxHeight: '300px'}">
-                            <li class="m-2"><input ref="searchSchool" type="text" v-model="searchSchool" class="form-control" placeholder="Tìm kiếm"/></li>
-                            <li v-for="item in filteredSchool"  @click="school=item.name;searchSchool=''"><a class="dropdown-item">{{item.name}}</a></li>
+                            <li v-for="item in filteredSchool"  @click="school=item.name;searchSchool=item.name"><a class="dropdown-item">{{item.name}}</a></li>
                         </ul>
                         <label for="searchSchool" class="form-label">Trường</label>
                     </div>
                     </div>
                     <div class="mb-3">
                     <div class="form-floating">
-                        <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" readonly v-model="skill"/>
+                        <input type="text" class="form-select dropdown-toggle text-dark w-100" id="dropdownMenuSkill" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" v-model="searchSkill" placeholder="Tìm kiếm"/>
                         <ul class="dropdown-menu overflow-auto w-100" aria-labelledby="dropdownMenuSkill" :style="{maxHeight: '300px'}">
-                            <li class="m-2"><input type="text" v-model="searchSkill" class="form-control" placeholder="Tìm kiếm"/></li>
-                            <li v-for="item in filteredSkill"  @click="skill=item;searchSkill=''"><a class="dropdown-item">{{item}}</a></li>
+                            <li v-for="item in filteredSkill"  @click="skill=item;searchSkill=item"><a class="dropdown-item">{{item}}</a></li>
                         </ul>
                         <label class="form-label">Chuyên nghành</label>
                     </div>
@@ -155,10 +153,10 @@
                     
                     <div class="mb-3">
                         <div class="form-floating">
-                            <input @click="focus" type="email" class="form-control" v-model="email" required/>
-                            <label class="form-label">Email</label>
-                            </div>
+                        <input @click="focus" type="email" class="form-control" v-model="email" required/>
+                        <label class="form-label">Email</label>
                         </div>
+                    </div>
                     </div> 
                     <div class="row">
                         <div class="col-md-6 mb-3">
