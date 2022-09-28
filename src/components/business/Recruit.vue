@@ -1,5 +1,355 @@
 <template>
   <div class="container">
+        <div class="card mt-4">
+      <div
+        class="card-header text-center h5 bg-info bg-gradient text-white mb-2"
+      >
+        Đăng tuyển
+      </div>
+      <div class="card-body">
+        <div class="row g-2">
+          <div
+            class="col-12 col-md-6"
+            v-for="(position, index) in position_list"
+            :key="index"
+          >
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="
+                    card-header
+                    text-center
+                    h5
+                    bg-primary bg-gradient
+                    text-white
+                    mb-2
+                  "
+                >
+                  {{ position.department_name }}
+                </div>
+                <h5 class="card-title">{{ position.jobtitle }}</h5>
+                <h6 class="card-subtitle my-2 text-muted">
+                  Chức vụ: {{ position.name }}
+                </h6>
+                <p class="card-text my-1">Số lượng: {{ position.amount }}</p>
+                <p class="card-text">
+                  <small class="text-muted"
+                    >Cập nhật lần cuối:
+                    {{
+                      position.startdate ? position.startdate.split("T")[0] : ""
+                    }}</small
+                  >
+                </p>
+                <a
+                  href="#"
+                  class="btn btn-primary"
+                  v-if="position.status == 0"
+                  @click="publishRecruiting(position._id)"
+                  >Đăng tuyển</a
+                >
+                <a
+                  href="#"
+                  class="btn btn-secondary"
+                  v-else
+                  @click="stopRecruiting(position._id)"
+                  >Dừng tuyển</a
+                >
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  
+                >
+                  Tìm CV
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success position-relative"
+                  data-bs-toggle="offcanvas"
+                  :data-bs-target="'#listCvApplied' + index"
+                  :aria-controls="'#listCvApplied' + index"
+                >
+                  CV ứng tuyển
+                  <span
+                    class="
+                      position-absolute
+                      top-0
+                      start-100
+                      translate-middle
+                      badge
+                      rounded-pill
+                      bg-danger
+                    "
+                  >
+                    {{
+                      list_cv_applied.filter(
+                        (cv) => cv.type == 1 && cv.position_id == position._id
+                      ).length
+                    }}
+                  </span>
+                </button>
+                
+              </div>
+            </div>
+            <div
+              class="offcanvas offcanvas-end"
+              tabindex="-1"
+              :id="'listCvApplied' + index"
+              :aria-labelledby="'#listCvApplied' + index + 'Label'"
+            >
+              <div class="offcanvas-header">
+                <h5 :id="'listCvApplied' + index + 'Label'">CV ứng tuyển</h5>
+                <button
+                  type="button"
+                  class="btn-close text-reset"
+                  data-bs-dismiss="offcanvas"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="offcanvas-body">
+                <div class="list-group">
+                  <a
+                    class="list-group-item list-group-item-action text-primary"
+                    aria-current="true"
+                    v-for="cv in list_cv_applied.filter(
+                      (cv) => cv.type == 1 && cv.position_id == position._id
+                    )"
+                  >
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ cv.name }}</h5>
+                      <small>3 days ago</small>
+                    </div>
+                    <!-- <p class="mb-1">Some placeholder content in a paragraph.</p> -->
+                    <!-- <small>And some small print.</small> -->
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="d-grid gap-2">
+                          <a
+                            :href="
+                              '/business/cvid/' +
+                              cv._id +
+                              '?position=' +
+                              position._id
+                            "
+                            target="_blank"
+                            class="btn btn-primary"
+                            type=""
+                            >Xem CV</a
+                          >
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="d-grid gap-2">
+                          <button
+                            class="btn btn-primary"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                          >
+                            Đánh giá sơ bộ
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="modal fade"
+                      id="exampleModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                      v-if="position != ''"
+                    >
+                      <div
+                        class="modal-dialog modal-xl modal-dialog-scrollable"
+                      >
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                              Đánh giá sơ bộ
+                            </h5>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="modal-body">
+                            <table class="table table-bordered border-primary">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Các yêu cầu</th>
+                                  <th scope="col">Vị trí tuyển dụng</th>
+                                  <th scope="col">CVID</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th scope="row">Trình độ</th>
+                                  <td>
+                                    {{
+                                      position.levels
+                                        ? position.levels
+                                            .toString()
+                                            .replaceAll(",", ", ")
+                                        : ""
+                                    }}
+                                  </td>
+                                  <td>{{ cv.level }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Chuyên nghành</th>
+                                  <td>
+                                    {{
+                                      position.skills
+                                        ? position.skills
+                                            .toString()
+                                            .replaceAll(",", ", ")
+                                        : ""
+                                    }}
+                                  </td>
+                                  <td>{{ cv.job.skill }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Chức danh công việc</th>
+                                  <td>{{ cv.job.jobtitle }}</td>
+                                  <td>{{ position.jobtitle }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Chức vụ</th>
+                                  <td>{{ position.name }}</td>
+                                  <td>
+                                    {{
+                                      cv.job.position == ""
+                                        ? "Tất cả"
+                                        : cv.job.position
+                                    }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Lĩnh vực làm việc</th>
+                                  <td>
+                                    {{
+                                      position.work_industry == ""
+                                        ? "Tất cả"
+                                        : position.work_industry
+                                    }}
+                                  </td>
+                                  <td>
+                                    {{
+                                      cv.job.work_industry == ""
+                                        ? "Tất cả"
+                                        : cv.job.work_industry
+                                    }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">
+                                    Loại hình đơn vị tuyển dụng
+                                  </th>
+                                  <td></td>
+                                  <td>
+                                    {{
+                                      cv.job.type_business == ""
+                                        ? "Tất cả"
+                                        : cv.job.type_business
+                                    }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Môi trường làm việc</th>
+                                  <td>
+                                    {{
+                                      position.work_environment == ""
+                                        ? "Tất cả"
+                                        : position.work_environment
+                                    }}
+                                  </td>
+                                  <td>
+                                    {{
+                                      cv.job.work_environment == ""
+                                        ? "Tất cả"
+                                        : cv.job.work_environment
+                                    }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Nơi làm việc</th>
+                                  <td>
+                                    {{
+                                      position.work_location == ""
+                                        ? "Tất cả"
+                                        : position.work_location
+                                    }}
+                                  </td>
+                                  <td>
+                                    {{
+                                      cv.job.address == ""
+                                        ? "Tất cả"
+                                        : cv.job.address
+                                    }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Số năm kinh nghiệm</th>
+                                  <td>
+                                    {{
+                                      position.experience == 0
+                                        ? "Không yêu cầu kinh nghiệm"
+                                        : position.experience + " năm"
+                                    }}
+                                  </td>
+                                  <td>
+                                    {{
+                                      getExperience() == 0
+                                        ? "Chưa có kinh nghiệm"
+                                        : getExperience() + " năm"
+                                    }}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" colspan="3">
+                                    <h5>Tiêu chí đánh giá</h5>
+                                  </th>
+                                </tr>
+                                <tr
+                                  v-for="(item, index) in criteria"
+                                  :key="index"
+                                  v-if="position.criteria[index]"
+                                  :class="
+                                    cv.assessment[index] >=
+                                    position.criteria[index]
+                                      ? 'bg-info'
+                                      : 'bg-light'
+                                  "
+                                >
+                                  <th scope="row">{{ item.name }}</th>
+                                  <td>{{ position.criteria[index] }}</td>
+                                  <td>{{ cv.assessment[index] }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-bs-dismiss="modal"
+                            >
+                              Đóng
+                            </button>
+                            <!-- <button type="button" class="btn btn-primary">Xác nhận</button> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="card mt-4">
       <div
         class="card-header text-center h5 bg-info bg-gradient text-white mb-2"
@@ -389,348 +739,7 @@
         </div>
       </div>
     </div>
-    <div class="card mt-4">
-      <div
-        class="card-header text-center h5 bg-info bg-gradient text-white mb-2"
-      >
-        Đăng tuyển
-      </div>
-      <div class="card-body">
-        <div class="row g-2">
-          <div
-            class="col-12 col-md-6"
-            v-for="(position, index) in position_list"
-            :key="index"
-          >
-            <div class="card">
-              <div class="card-body">
-                <div
-                  class="
-                    card-header
-                    text-center
-                    h5
-                    bg-primary bg-gradient
-                    text-white
-                    mb-2
-                  "
-                >
-                  {{ position.department_name }}
-                </div>
-                <h5 class="card-title">{{ position.jobtitle }}</h5>
-                <h6 class="card-subtitle my-2 text-muted">
-                  Chức vụ: {{ position.name }}
-                </h6>
-                <p class="card-text my-1">Số lượng: {{ position.amount }}</p>
-                <p class="card-text">
-                  <small class="text-muted"
-                    >Cập nhật lần cuối:
-                    {{
-                      position.startdate ? position.startdate.split("T")[0] : ""
-                    }}</small
-                  >
-                </p>
-                <a
-                  href="#"
-                  class="btn btn-primary"
-                  v-if="position.status == 0"
-                  @click="publishRecruiting(position._id)"
-                  >Đăng tuyển</a
-                >
-                <a
-                  href="#"
-                  class="btn btn-secondary"
-                  v-else
-                  @click="stopRecruiting(position._id)"
-                  >Dừng tuyển</a
-                >
-                <button
-                  type="button"
-                  class="btn btn-success position-relative"
-                  data-bs-toggle="offcanvas"
-                  :data-bs-target="'#listCvApplied' + index"
-                  :aria-controls="'#listCvApplied' + index"
-                >
-                  CV ứng tuyển
-                  <span
-                    class="
-                      position-absolute
-                      top-0
-                      start-100
-                      translate-middle
-                      badge
-                      rounded-pill
-                      bg-danger
-                    "
-                  >
-                    {{
-                      list_cv_applied.filter(
-                        (cv) => cv.type == 1 && cv.position_id == position._id
-                      ).length
-                    }}
-                  </span>
-                </button>
-              </div>
-            </div>
-            <div
-              class="offcanvas offcanvas-end"
-              tabindex="-1"
-              :id="'listCvApplied' + index"
-              :aria-labelledby="'#listCvApplied' + index + 'Label'"
-            >
-              <div class="offcanvas-header">
-                <h5 :id="'listCvApplied' + index + 'Label'">CV ứng tuyển</h5>
-                <button
-                  type="button"
-                  class="btn-close text-reset"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="offcanvas-body">
-                <div class="list-group">
-                  <a
-                    class="list-group-item list-group-item-action text-primary"
-                    aria-current="true"
-                    v-for="cv in list_cv_applied.filter(
-                      (cv) => cv.type == 1 && cv.position_id == position._id
-                    )"
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">{{ cv.name }}</h5>
-                      <small>3 days ago</small>
-                    </div>
-                    <!-- <p class="mb-1">Some placeholder content in a paragraph.</p> -->
-                    <!-- <small>And some small print.</small> -->
-                    <div class="row">
-                      <div class="col-6">
-                        <div class="d-grid gap-2">
-                          <a
-                            :href="
-                              '/business/cvid/' +
-                              cv._id +
-                              '?position=' +
-                              position._id
-                            "
-                            target="_blank"
-                            class="btn btn-primary"
-                            type=""
-                            >Xem CV</a
-                          >
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="d-grid gap-2">
-                          <button
-                            class="btn btn-primary"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#exampleModal"
-                          >
-                            Đánh giá sơ bộ
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="exampleModal"
-                      tabindex="-1"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                      v-if="position != ''"
-                    >
-                      <div
-                        class="modal-dialog modal-xl modal-dialog-scrollable"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
-                              Đánh giá sơ bộ
-                            </h5>
-                            <button
-                              type="button"
-                              class="btn-close"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            ></button>
-                          </div>
-                          <div class="modal-body">
-                            <table class="table table-bordered border-primary">
-                              <thead>
-                                <tr>
-                                  <th scope="col">Các yêu cầu</th>
-                                  <th scope="col">Vị trí tuyển dụng</th>
-                                  <th scope="col">CVID</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <th scope="row">Trình độ</th>
-                                  <td>
-                                    {{
-                                      position.levels
-                                        ? position.levels
-                                            .toString()
-                                            .replaceAll(",", ", ")
-                                        : ""
-                                    }}
-                                  </td>
-                                  <td>{{ cv.level }}</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">Chuyên nghành</th>
-                                  <td>
-                                    {{
-                                      position.skills
-                                        ? position.skills
-                                            .toString()
-                                            .replaceAll(",", ", ")
-                                        : ""
-                                    }}
-                                  </td>
-                                  <td>{{ cv.job.skill }}</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">Chức danh công việc</th>
-                                  <td>{{ cv.job.jobtitle }}</td>
-                                  <td>{{ position.jobtitle }}</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">Chức vụ</th>
-                                  <td>{{ position.name }}</td>
-                                  <td>
-                                    {{
-                                      cv.job.position == ""
-                                        ? "Tất cả"
-                                        : cv.job.position
-                                    }}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">Lĩnh vực làm việc</th>
-                                  <td>
-                                    {{
-                                      position.work_industry == ""
-                                        ? "Tất cả"
-                                        : position.work_industry
-                                    }}
-                                  </td>
-                                  <td>
-                                    {{
-                                      cv.job.work_industry == ""
-                                        ? "Tất cả"
-                                        : cv.job.work_industry
-                                    }}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">
-                                    Loại hình đơn vị tuyển dụng
-                                  </th>
-                                  <td></td>
-                                  <td>
-                                    {{
-                                      cv.job.type_business == ""
-                                        ? "Tất cả"
-                                        : cv.job.type_business
-                                    }}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">Môi trường làm việc</th>
-                                  <td>
-                                    {{
-                                      position.work_environment == ""
-                                        ? "Tất cả"
-                                        : position.work_environment
-                                    }}
-                                  </td>
-                                  <td>
-                                    {{
-                                      cv.job.work_environment == ""
-                                        ? "Tất cả"
-                                        : cv.job.work_environment
-                                    }}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">Nơi làm việc</th>
-                                  <td>
-                                    {{
-                                      position.work_location == ""
-                                        ? "Tất cả"
-                                        : position.work_location
-                                    }}
-                                  </td>
-                                  <td>
-                                    {{
-                                      cv.job.address == ""
-                                        ? "Tất cả"
-                                        : cv.job.address
-                                    }}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">Số năm kinh nghiệm</th>
-                                  <td>
-                                    {{
-                                      position.experience == 0
-                                        ? "Không yêu cầu kinh nghiệm"
-                                        : position.experience + " năm"
-                                    }}
-                                  </td>
-                                  <td>
-                                    {{
-                                      getExperience() == 0
-                                        ? "Chưa có kinh nghiệm"
-                                        : getExperience() + " năm"
-                                    }}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row" colspan="3">
-                                    <h5>Tiêu chí đánh giá</h5>
-                                  </th>
-                                </tr>
-                                <tr
-                                  v-for="(item, index) in criteria"
-                                  :key="index"
-                                  v-if="position.criteria[index]"
-                                  :class="
-                                    cv.assessment[index] >=
-                                    position.criteria[index]
-                                      ? 'bg-info'
-                                      : 'bg-light'
-                                  "
-                                >
-                                  <th scope="row">{{ item.name }}</th>
-                                  <td>{{ position.criteria[index] }}</td>
-                                  <td>{{ cv.assessment[index] }}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-bs-dismiss="modal"
-                            >
-                              Đóng
-                            </button>
-                            <!-- <button type="button" class="btn btn-primary">Xác nhận</button> -->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 <script>
@@ -788,6 +797,7 @@ export default {
       });
     },
     filteredSkill() {
+      this.searchSkill = this.searchSkill.trim()
       this.skills = new Set([]);
       this.majors.forEach((element) => {
         if (this.position.levels.includes(element.level) && this.searchSkill != '') {

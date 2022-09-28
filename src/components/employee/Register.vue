@@ -222,6 +222,7 @@
         },
         computed: {
             filteredSchool(){
+                this.searchSchool = this.searchSchool.trim()
                 return this.schools.filter(school => {
                     if (school.name.toLowerCase().indexOf(this.searchSchool.toLowerCase()) != -1 && this.searchSchool != ''){
                         return true
@@ -230,6 +231,7 @@
             },
             filteredSkill(){
                 let result = []
+                this.searchSkill = this.searchSkill.trim()
                 this.majors.forEach(major => {
                     if (major.level == this.level) {
                         result = major.skills.filter(skill => {
