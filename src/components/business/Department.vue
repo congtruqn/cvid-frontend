@@ -259,12 +259,12 @@
             <div class="card-body">
               <form>
                 <div class="form-group mb-3">
-                  <label class="form-label">Phòng ban</label>
+                  <label class="form-label">Phòng ban <span class="text-danger">*</span></label>
                   <input
                     type="text"
-                    class="form-control bg-white"
+                    class="form-control text-dark bg-white"
                     v-model="department.name"
-                    readonly
+                    disabled
                   />
                 </div>
                 <div class="form-group mb-3">
@@ -274,13 +274,14 @@
                   >
                   <input
                     type="text"
-                    class="form-select dropdown-toggle text-dark"
+                    class="form-control dropdown-toggle text-dark bg-white"
                     id="dropdownMenuJobTitle"
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="inside"
                     aria-expanded="false"
                     readonly
                     v-model="position.jobtitle"
+                    disabled
                   />
                   <ul
                     class="dropdown-menu overflow-auto"
@@ -415,6 +416,7 @@
                     data-bs-auto-close="outside"
                     aria-expanded="false"
                     v-model="searchSkill"
+                    placeholder="Tìm kiếm"
                   />
                   {{ filteredSkill[0] }}
                   <ul
@@ -444,7 +446,7 @@
                   </ul>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label">Lĩnh vực kinh doanh</label>
+                  <label class="form-label">Lĩnh vực kinh doanh <span class="text-danger">*</span></label>
                   <select class="form-select" v-model="position.work_industry">
                     <option value="" disabled>Chọn ...</option>
                     <option v-for="item in industries" :value="item.name">
@@ -454,11 +456,11 @@
                 </div>
 
                 <div class="form-group mb-3">
-                  <label for=""
+                  <label class="form-label"
                     >Nơi làm việc <span class="text-danger">*</span></label
                   >
                   <select class="form-select" v-model="position.work_location">
-                    <option value="">Chọn địa điểm làm việc</option>
+                    <option value="">Chọn nơi làm việc</option>
                     <option v-for="province in provinces" :value="province">
                       {{ province }}
                     </option>
@@ -466,7 +468,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                  <label class="form-label">Môi trường làm việc</label>
+                  <label class="form-label">Môi trường làm việc <span class="text-danger">*</span></label>
                   <select
                     class="form-select"
                     v-model="position.work_environment"
@@ -478,7 +480,7 @@
                   </select>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label">Yêu cầu kinh nghiệm</label>
+                  <label class="form-label">Yêu cầu kinh nghiệm <span class="text-danger">*</span></label>
                   <input
                     type="number"
                     class="form-control"
@@ -487,7 +489,7 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label for=""
+                  <label class="form-label"
                     >Số lượng <span class="text-danger">*</span></label
                   >
                   <input
@@ -498,7 +500,7 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label for="">Mức lương tối thiểu (triệu đồng)</label>
+                  <label class="form-label">Mức lương tối thiểu (triệu đồng)</label>
                   <input
                     type="number"
                     class="form-control"
@@ -507,7 +509,7 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label for="">Mức lương tối đa (triệu đồng)</label>
+                  <label class="form-label">Mức lương tối đa (triệu đồng)</label>
                   <input
                     type="number"
                     class="form-control"
@@ -516,19 +518,19 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label for="">Mô tả công việc</label>
+                  <label class="form-label">Mô tả công việc</label>
                   <textarea
-                    cols="30"
-                    rows="10"
+                    
+                    rows="5"
                     class="form-control"
                     v-model="position.description"
                   ></textarea>
                 </div>
                 <div class="form-group mb-3">
-                  <label for="">Yêu cầu công việc</label>
+                  <label class="form-label">Yêu cầu công việc</label>
                   <textarea
-                    cols="30"
-                    rows="10"
+                    
+                    rows="5"
                     class="form-control"
                     v-model="position.requirements"
                   ></textarea>
@@ -739,9 +741,9 @@
                   <label class="form-label">Phòng ban</label>
                   <input
                     type="text"
-                    class="form-control bg-white"
+                    class="form-control bg-white text-dark"
                     :value="department.name"
-                    readonly
+                    disabled
                   />
                 </div>
                 <div class="form-group mb-3">
@@ -756,25 +758,17 @@
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="inside"
                     aria-expanded="false"
-                    readonly
-                    v-model="position.jobtitle"
+                    v-model="searchJobTitle"
+                    placeholder="Tìm kiếm"
                   />
                   <ul
                     class="dropdown-menu overflow-auto"
                     aria-labelledby="dropdownMenuJobTitle"
                     :style="{ maxHeight: '400px' }"
                   >
-                    <li class="m-2">
-                      <input
-                        type="text"
-                        v-model="searchJobTitle"
-                        class="form-control"
-                        placeholder="Tìm kiếm"
-                      />
-                    </li>
                     <li
                       v-for="item in filteredJobTitle"
-                      @click="position.jobtitle = item"
+                      @click="position.jobtitle = item;searchJobTitle = item"
                     >
                       <a class="dropdown-item">{{ item }}</a>
                     </li>
