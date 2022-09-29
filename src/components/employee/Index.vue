@@ -63,7 +63,7 @@
             ></label>
             <input
               type="text"
-              class="form-select dropdown-toggle"
+              class="form-select dropdown-toggle text-dark"
               id="dropdownMenuPosition"
               data-bs-toggle="dropdown"
               data-bs-auto-close="outside"
@@ -73,6 +73,8 @@
                   ? job.position.toString().replaceAll(',', ', ')
                   : ''
               "
+              readonly
+              :disabled="job.status == 1"
               placeholder="Chọn chức vụ"
             />
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuPosition">
@@ -105,6 +107,8 @@
                   ? job.work_environment.toString().replaceAll(',', ', ')
                   : ''
               "
+              readonly
+              :disabled="job.status == 1"
               placeholder="Chọn môi trường làm việc"
             />
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuEnvironment">
