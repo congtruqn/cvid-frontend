@@ -668,7 +668,7 @@ export default {
             address: this.employee.province,
             jobtitle: "",
             work_industry: "",
-            work_environment: "",
+            work_environment: [],
             type_business: "",
             position: [],
             status: 0,

@@ -648,6 +648,9 @@
         </tr>
       </tbody>
     </table>
+    <div class="d-grid gap-2 col-6 mx-auto my-5">
+            <button type="submit" class="btn btn-primary" @click="handleSubmit">Submit</button>
+        </div>
   </div>
 </template>
 <script>
