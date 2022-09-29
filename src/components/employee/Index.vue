@@ -97,7 +97,7 @@
             ></label>
             <input
               type="text"
-              class="form-select dropdown-toggle"
+              class="form-select dropdown-toggle text-dark"
               id="dropdownMenuEnvironment"
               data-bs-toggle="dropdown"
               data-bs-auto-close="outside"
@@ -172,26 +172,6 @@
               </option>
             </select>
           </div>
-
-          <!-- <div class="col-12">
-                        <label for="inputAddress2" class="form-label">Address 2</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputCity" class="form-label">City</label>
-                        <input type="text" class="form-control" id="inputCity">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="inputState" class="form-label">State</label>
-                        <select id="inputState" class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="inputZip" class="form-label">Zip</label>
-                        <input type="text" class="form-control" id="inputZip">
-                    </div> -->
           <div class="col-12 text-center">
             <button
               type="button"

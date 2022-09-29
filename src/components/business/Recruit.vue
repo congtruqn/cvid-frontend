@@ -675,13 +675,20 @@ export default {
       return this.skills;
     },
     filteredJobTitle() {
+      let jobtitles = new Set()
+      this.position_list.forEach(pos => {
+        if (pos.department_name == this.department_name){
+          jobtitles.add(pos.jobtitle)
+        }
+      })
       return this.jobtitles
         .filter((element) => {
           if (
             element.name
               .toLowerCase()
               .indexOf(this.searchJobTitle.toLowerCase()) != -1 &&
-            this.searchJobTitle != ""
+            this.searchJobTitle != "" &&
+            jobtitles.has(element.name) == false
           ) {
             return true;
           }
