@@ -231,11 +231,10 @@
             },
             filteredSkill(){
                 let result = []
-                this.searchSkill = this.searchSkill.trim()
                 this.majors.forEach(major => {
                     if (major.level == this.level) {
                         result = major.skills.filter(skill => {
-                            if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1 && (this.searchSkill != '' || this.level == 'Phổ thông')){
+                            if (skill.toLowerCase().indexOf(this.searchSkill.trim().toLowerCase()) != -1 && (this.searchSkill != '' || this.level == 'Phổ thông')){
                                 return true
                             }
                             return false
