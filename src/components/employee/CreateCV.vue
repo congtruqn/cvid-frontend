@@ -143,12 +143,12 @@
         </button>
       </div>
       <div
-        class="card-body text-success px-0"
+        class="card-body text-success p-0"
         v-if="company.name !== undefined"
       >
         <div class="row">
           <div class="col-md-6" v-for="(element, index2) in company.process">
-            <div class="card border-success mb-3">
+            <div class="card border-success">
               <div
                 class="
                   card-header
@@ -295,7 +295,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 me-auto d-grid gap-2 mb-3">
+          <div class="col-md-6 me-auto d-grid gap-2">
             <button class="btn border-success" @click="addProcess(index1)">
               <i class="fas fa-plus fa-5x"></i>
             </button>
