@@ -69,6 +69,95 @@
                       />
                       <label class="form-label">Họ và tên</label>
                     </div>
+
+                    <div class="mb-4 form-floating">
+                      <input
+                        @click="focus"
+                        type="email"
+                        class="form-control"
+                        v-model="email"
+                        required
+                      />
+                      <label class="form-label">Email</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div class="form-floating">
+                          <input
+                            @click="focus"
+                            type="password"
+                            class="form-control"
+                            v-model="password"
+                            required
+                            minlength="6"
+                          />
+                          <label class="form-label">Mật khẩu</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <div class="form-floating">
+                          <input
+                            @click="focus"
+                            type="password"
+                            class="form-control"
+                            v-model="password2"
+                            minlength="6"
+                            required
+                          />
+                          <label class="form-label">Nhập lại mật khẩu</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-4 form-floating">
+                      <select class="form-select" v-model="type_business">
+                        <option value="" disabled>
+                          Chọn loại hình doanh nghiệp
+                        </option>
+                        <option
+                          v-for="(item, index) in type_businesses"
+                          :value="item.name"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                      <label class="form-label">Loại hình</label>
+                    </div>
+                    <div class="mb-4 form-floating">
+                      <input
+                        type="text"
+                        class="form-control dropdown-toggle"
+                        id="dropdownMenuField"
+                        data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside"
+                        aria-expanded="false"
+                        :value="industry.toString().replaceAll(',', ', ')"
+                      />
+                      <label class="form-label">Lĩnh vực kinh doanh</label>
+                      <ul
+                        class="dropdown-menu w-100"
+                        aria-labelledby="dropdownMenuField"
+                      >
+                        <div
+                          class="form-check mx-3"
+                          v-for="(item, index) in industries"
+                          :key="index"
+                        >
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            v-model="industry"
+                            :id="'industry' + index"
+                            :value="item.name"
+                          />
+                          <label
+                            class="form-check-label"
+                            :for="'industry' + index"
+                          >
+                            {{ item.name }}
+                          </label>
+                        </div>
+                      </ul>
+                    </div>
                     <div class="mb-4 form-floating">
                       <input
                         @blur="getBusiness"
@@ -89,7 +178,7 @@
                       />
                       <label class="form-label">Tên doanh nghiệp</label>
                     </div>
-                    
+
                     <div class="row">
                       <div class="col-md-6 mb-4 form-floating">
                         <input
@@ -134,51 +223,12 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="mb-4 form-floating">
-                      <select class="form-select" v-model="type_business">
-                        <option value="" disabled>
-                          Chọn loại hình doanh nghiệp
-                        </option>
-                        <option v-for="(item, index) in type_businesses" :value="item.name">{{item.name}}</option>
-                        
-                      </select>
-                      <label class="form-label">Loại hình</label>
-                    </div>
-                    <div class="mb-4 form-floating">
-                      <input
-                        type="text"
-                        class="form-control dropdown-toggle"
-                        id="dropdownMenuField"
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        aria-expanded="false"
-                        :value="industry.toString().replaceAll(',', ', ')"
-                      />
-                      <label class="form-label">Lĩnh vực kinh doanh</label>
-                      <ul
-                        class="dropdown-menu w-100"
-                        aria-labelledby="dropdownMenuField"
+                      <input chín type="text" class="form-control" />
+                      <label class="form-label"
+                        >Nghành nghề kinh doanhh chính</label
                       >
-                        <div
-                          class="form-check mx-3"
-                          v-for="(item, index) in industries"
-                          :key="index"
-                        >
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            v-model="industry"
-                            :id="'industry' + index"
-                            :value="item.name"
-                          />
-                          <label
-                            class="form-check-label"
-                            :for="'industry' + index"
-                          >
-                            {{ item.name }}
-                          </label>
-                        </div>
-                      </ul>
                     </div>
                     <div class="mb-4 form-floating">
                       <input
@@ -293,46 +343,46 @@
                         </div>
                       </div>
                     </div>
+                    <div class="mb-4 form-floating">
+                      <input
+                        @click="focus"
+                        type="email"
+                        class="form-control"
+                        v-model="email"
+                        required
+                      />
+                      <label class="form-label">Email</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div class="form-floating">
+                          <input
+                            @click="focus"
+                            type="password"
+                            class="form-control"
+                            v-model="password"
+                            required
+                            minlength="6"
+                          />
+                          <label class="form-label">Mật khẩu</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <div class="form-floating">
+                          <input
+                            @click="focus"
+                            type="password"
+                            class="form-control"
+                            v-model="password2"
+                            minlength="6"
+                            required
+                          />
+                          <label class="form-label">Nhập lại mật khẩu</label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div class="mb-4 form-floating">
-                    <input
-                      @click="focus"
-                      type="email"
-                      class="form-control"
-                      v-model="email"
-                      required
-                    />
-                    <label class="form-label">Email</label>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <div class="form-floating">
-                        <input
-                          @click="focus"
-                          type="password"
-                          class="form-control"
-                          v-model="password"
-                          required
-                          minlength="6"
-                        />
-                        <label class="form-label">Mật khẩu</label>
-                      </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                      <div class="form-floating">
-                        <input
-                          @click="focus"
-                          type="password"
-                          class="form-control"
-                          v-model="password2"
-                          minlength="6"
-                          required
-                        />
-                        <label class="form-label">Nhập lại mật khẩu</label>
-                      </div>
-                    </div>
-                  </div>
                   <div class="d-flex justify-content-end pt-3">
                     <!-- <button type="button" class="btn btn-light btn-lg">Reset all</button> -->
                     <button
@@ -479,40 +529,38 @@ export default {
   },
   created() {
     this.$http
-        .get(`${BASE_URL}/admin/test`,)
-        .then((response) => {
-          console.log(response.data[0])
-          response.data.forEach(html => {
-            var htmlObject = document.createElement("div");
-            htmlObject.innerHTML = html;
-            htmlObject = htmlObject.getElementsByTagName("a");
-            console.log(htmlObject)
-            if (htmlObject.length > 0) {
-              htmlObject.forEach(item => {
-                console.log(item)
-              })
-            }
-          })
-
-          
-            // this.name = htmlObject[0].getElementsByTagName("a")[0].innerHTML;
-            // var address = htmlObject[0].getElementsByTagName("p")[0].innerHTML;
-            // this.username = htmlObject[0]
-            //   .getElementsByTagName("p")[0]
-            //   .getElementsByTagName("a")[0].innerHTML;
-            // this.address = "";
-            // address = address.split("Địa chỉ:")[1].trim().split(", ").reverse();
-            // address.forEach((item, index) => {
-            //   if (index == 0) this.province = item;
-            //   else if (index == 1) this.district = item;
-            //   else if (index == 2) this.ward = item;
-            //   else this.address = item + " " + this.address;
-            // });
-          
-        })
-        .catch(function (error) {
-          console.log(error);
+      .get(`${BASE_URL}/admin/test`)
+      .then((response) => {
+        console.log(response.data[0]);
+        response.data.forEach((html) => {
+          var htmlObject = document.createElement("div");
+          htmlObject.innerHTML = html;
+          htmlObject = htmlObject.getElementsByTagName("a");
+          console.log(htmlObject);
+          if (htmlObject.length > 0) {
+            htmlObject.forEach((item) => {
+              console.log(item);
+            });
+          }
         });
+
+        // this.name = htmlObject[0].getElementsByTagName("a")[0].innerHTML;
+        // var address = htmlObject[0].getElementsByTagName("p")[0].innerHTML;
+        // this.username = htmlObject[0]
+        //   .getElementsByTagName("p")[0]
+        //   .getElementsByTagName("a")[0].innerHTML;
+        // this.address = "";
+        // address = address.split("Địa chỉ:")[1].trim().split(", ").reverse();
+        // address.forEach((item, index) => {
+        //   if (index == 0) this.province = item;
+        //   else if (index == 1) this.district = item;
+        //   else if (index == 2) this.ward = item;
+        //   else this.address = item + " " + this.address;
+        // });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     this.$http
       .get(`${BASE_URL}/province/list`)
       .then((response) => {
@@ -533,13 +581,13 @@ export default {
         console.error(error.response);
       });
     this.$http
-    .get(`${BASE_URL}/typebusiness/getall`)
-    .then((response) => {
-    this.type_businesses = response.data;
-    })
-    .catch(function (error) {
-    console.error(error.response);
-    });
+      .get(`${BASE_URL}/typebusiness/getall`)
+      .then((response) => {
+        this.type_businesses = response.data;
+      })
+      .catch(function (error) {
+        console.error(error.response);
+      });
   },
   watch: {
     province(newValue) {
