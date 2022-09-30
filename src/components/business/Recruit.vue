@@ -479,7 +479,7 @@
             />
           </div>
           <div class="col-12 text-center">
-            <button type="button" class="btn btn-lg btn-primary">
+            <button type="button" class="btn btn-lg btn-primary" @click="getCv(position)">
               Tìm ngay
             </button>
           </div>
@@ -572,7 +572,7 @@
                     </div> -->
     </div>
     <div class="row">
-      <div class="col-md-6" v-for="cv in list_cv_recommend">
+      <div class="col-md-6" v-for="cv in list_cv">
         <div class="card mt-3">
           <div class="row g-0">
             <div class="col-md-4">
@@ -638,6 +638,7 @@ export default {
       criteria: [],
       list_cv_recommend: [],
       list_cv_applied: [],
+      list_cv: [],
       positions: [],
       jobtitles: [],
       environments: [],
@@ -697,6 +698,28 @@ export default {
     },
   },
   methods: {
+    getCv(position) {
+      this.list_cv = [];
+      this.$http
+        .post(`${BASE_URL}/department/findcvforposition`, {
+          position: position,
+        })
+        .then((res) => {
+          this.list_cv = res.data;
+          //let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
+          // cvid_recommend.forEach(el => {
+          //     if (el.type != 1){
+          //         el.position_id = id
+          //         el._id = el.employee_id?el.employee_id:el._id
+          //         this.list_cv_recommend.push(el)
+          //     }
+          // })
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     getCvRecommend(position) {
       this.list_cv_recommend = [];
       this.$http
