@@ -27,10 +27,10 @@
                 <div class="col-md-4">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">Từ</span>
-                        <input type="month" class="form-control" v-model="company.from">
-                        <span class="input-group-text">Đến</span>
-                        <input :type="company.to=='Hiện tại'?'text':'month'" class="form-control" v-model="company.to">
-                        <div class="form-check form-switch m-1">
+                        <input type="month" class="form-control" v-model="company.from" >
+                        <span class="input-group-text" v-if="company.to!='Hiện tại'">Đến</span>
+                        <input type="month" class="form-control" v-if="company.to!='Hiện tại'" v-model="company.to">
+                        <div class="form-check form-switch m-1" v-if="company.to==''||company.to=='Hiện tại'">
                             <input class="form-check-input" type="checkbox" v-model="company.to" true-value="Hiện tại" false-value="">
                             <label class="form-check-label">Hiện tại</label>
                         </div>
@@ -44,8 +44,8 @@
                         <span class="my-auto me-3">Thời gian nghỉ</span>
                         <span class="input-group-text">Từ</span>
                         <input type="month" class="form-control" v-model="company.from">
-                        <span class="input-group-text">Đến</span>
-                        <input :type="company.to=='Hiện tại'?'text':'month'" class="form-control" v-model="company.to">
+                        <span class="input-group-text" v-if="company.to!='Hiện tại'">Đến</span>
+                        <input type="month" class="form-control" v-if="company.to!='Hiện tại'" v-model="company.to">
                         <div class="form-check form-switch m-1">
                             <input class="form-check-input" type="checkbox" v-model="company.to" true-value="Hiện tại" false-value="">
                             <label class="form-check-label">Hiện tại</label>
@@ -68,10 +68,10 @@
                             <div class="card-body text-success">
                                 <div class="input-group input-group-sm mb-2">
                                     <span class="input-group-text">Từ</span>
-                                    <input type="month" class="form-control" v-model="element.from">
-                                    <span class="input-group-text">Đến</span>
-                                    <input :type="element.to=='Hiện tại'?'text':'month'" class="form-control" v-model="element.to">
-                                    <div class="form-check form-switch m-1">
+                                    <input type="month" class="form-control" v-model="element.from" placeholder="mm-yyyy">
+                                    <span class="input-group-text" v-if="element.to!='Hiện tại'">Đến</span>
+                                    <input type="month" class="form-control" v-model="element.to" v-if="element.to!='Hiện tại'">
+                                    <div class="form-check form-switch m-1" v-if="element.to==''||element.to=='Hiện tại'">
                                         <input class="form-check-input" type="checkbox" v-model="element.to" true-value="Hiện tại" false-value="">
                                         <label class="form-check-label">Hiện tại</label>
                                     </div>
@@ -428,6 +428,7 @@
     export default {  
         data(){
             return {
+                employee: "",
                 searchSkill: "",
                 skillWorking: [{
                     name: '',
@@ -555,16 +556,7 @@
 
             addProcess(index){
                 let item = this.skillWorking[index].process
-                if (item.length == 0){
-                    this.skillWorking[index].process.push({
-                        from: this.skillWorking[index].from,
-                        to: '',
-                        work: '',
-                        title: '',
-                        address: '',
-                        result: ''
-                    })
-                } else {
+                
                     item = item[item.length-1]
                     if (item.to == "Hiện tại"){
                         Swal.fire({
@@ -591,11 +583,10 @@
                         to: '',
                         work: '',
                         title: '',
-                        skill: '',
+                        skill: this.employee.skill,
                         address: '',
                         result: ''
                     })
-                }
                 
             },
             checkSkillWorking(){
@@ -634,7 +625,7 @@
                             to: '',
                             work: '',
                             title: '',
-                            skill: '',
+                            skill: this.employee.skill,
                             address: '',
                             result: ''
                         }]
@@ -671,7 +662,7 @@
                             to: '',
                             work: '',
                             title: '',
-                            skill: '',
+                            skill: this.employee.skill,
                             address: '',
                             result: ''
                         }]
@@ -776,6 +767,7 @@
         created(){
             this.employee = JSON.parse(localStorage.getItem('employee'))
             this.employee.birthdate = this.employee.birthdate.split('T')[0]
+            this.skillWorking[0].process[0].skill = this.employee.skill
             this.$http.get(`${BASE_URL}/criteria/getall`)
             .then(res => {
                 this.criteria = res.data;
