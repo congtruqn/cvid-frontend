@@ -1101,8 +1101,8 @@ export default {
         item.to == "" ||
         item.work == "" ||
         item.title == "" ||
-        item.address == "" ||
-        item.result == ""
+        item.skill == "" ||
+        item.address == ""
       ) {
         Swal.fire({
           position: "top-end",
@@ -1117,8 +1117,8 @@ export default {
         from: item.to,
         to: "",
         work: "",
-        title: "",
-        skill: this.employee.skill,
+        title: item.title,
+        skill: item.skill,
         address: "",
         result: "",
       });
@@ -1289,13 +1289,12 @@ export default {
     filteredSkill(key, level) {
       let result = new Set();
       this.majors.forEach((major) => {
-        if (major.level == level || level == "") {
+        if ((major.level == level || level == "") && key != "") {
           result = new Set([
             ...result,
             ...major.skills.filter((skill) => {
               if (
-                skill.toLowerCase().indexOf(key.toLowerCase()) != -1 &&
-                key != ""
+                skill.toLowerCase().indexOf(key.toLowerCase()) != -1
               ) {
                 return true;
               }
@@ -1310,8 +1309,7 @@ export default {
       return this.jobtitles
         .filter((jobtitle) => {
           if (
-            jobtitle.name.toLowerCase().indexOf(key.toLowerCase()) != -1 &&
-            key != ""
+            key != "" && jobtitle.name.toLowerCase().indexOf(key.toLowerCase()) != -1
           ) {
             return true;
           }
