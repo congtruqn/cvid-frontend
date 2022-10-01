@@ -953,6 +953,7 @@ export default {
           name: "",
           from: "",
           to: "",
+          address: "",
           leaving: "",
           process: [
             {
@@ -1089,7 +1090,6 @@ export default {
 
     addProcess(index) {
       let item = this.skillWorking[index].process;
-
       item = item[item.length - 1];
       if (item.to == "Hiện tại") {
         Swal.fire({
@@ -1134,6 +1134,7 @@ export default {
         if (company.name != "") {
           if (company.from == "") error = true;
           else if (company.to == "") error = true;
+          else if (company.address == "") error = true;
           company.process.forEach((ele) => {
             if (ele.from == "") error = true;
             else if (ele.to == "") error = true;
@@ -1178,6 +1179,7 @@ export default {
           from: item.to,
           to: "",
           leaving: "",
+          address: "",
           process: [
             {
               from: "",
