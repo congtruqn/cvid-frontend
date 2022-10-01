@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <h3 class="text-primary d-flex justify-content-center my-4">
+    <h3 class="text-primary d-flex justify-content-center mt-4">
       LÝ LỊCH ỨNG VIÊN (CVIDPRO)
     </h3>
+    <h5 class="text-primary d-flex justify-content-center fst-italic mt-2 text-success">
+      Số CVID: CV{{employee.username.slice(1,10)}}
+    </h5>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
       <div class="col-md-6">
@@ -14,9 +17,7 @@
           {{ new Date(employee.birthdate).toLocaleDateString("en-US") }}
         </p>
         <p class="m-1">Giới tính: {{ employee.gender }}</p>
-        <p class="m-1">
-          Chức danh: <span class="fw-bold">{{ employee.position }}</span>
-        </p>
+       
       </div>
       <div class="col-md-6">
         <p class="m-1">Số điện thoại: {{ employee.username }}</p>
@@ -39,7 +40,7 @@
     <div class="row">
       <div class="col-md-6">
         <p class="m-1">
-          Cấp bậc:{{ employee.level }}
+          Cấp bậc: {{employee.level}}
         </p>
         <p class="m-1">
           Chuyên nghành: {{ employee.skill }}
