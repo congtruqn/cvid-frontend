@@ -31,7 +31,7 @@
       Kinh nghiệm làm việc
     </h4>
     <div
-      class="card border-success mt-3"
+      class="card border-success"
       v-for="(company, index1) in skillWorking"
     >
       <div class="card-header border-success position-relative">
@@ -107,21 +107,52 @@
           </div>
         </div>
         <div class="row g-3 align-items-center" v-else>
-          <div class="col-auto mx-auto">
+          <div class="col-md-3 ms-1">
             <div class="input-group input-group-sm">
-              <span class="my-auto me-3">Thời gian nghỉ</span>
+              <span class="input-group-text">Thời gian nghỉ</span>
+            </div>
+          </div>
+          <div class="col-auto ms-1">
+            <div class="input-group input-group-sm">
               <span class="input-group-text">Từ</span>
-              <input type="month" class="form-control" v-model="company.from" />
+              <input :type="company.from == '' ? 'month' : 'text'" class="form-control" v-model="company.from" 
+              @blur="
+                  () => {
+                    if (company.from != '') {
+                      company.from = new Date(company.from).toLocaleDateString(
+                        'en-US',
+                        {
+                          year: 'numeric',
+                          month: 'short',
+                        }
+                      );
+                    }
+                  }
+                "
+              />
               <span class="input-group-text" v-if="company.to != 'Hiện tại'"
                 >Đến</span
               >
               <input
-                type="month"
+                :type="company.to == '' ? 'month' : 'text'"
                 class="form-control"
                 v-if="company.to != 'Hiện tại'"
                 v-model="company.to"
+                @blur="
+                  () => {
+                    if (company.to != '') {
+                      company.to = new Date(company.to).toLocaleDateString(
+                        'en-US',
+                        {
+                          year: 'numeric',
+                          month: 'short',
+                        }
+                      );
+                    }
+                  }
+                "
               />
-              <div class="form-check form-switch m-1">
+              <div class="form-check form-switch m-1" v-if="company.to == '' || company.to == 'Hiện tại'">
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -242,7 +273,7 @@
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="true"
                     aria-expanded="false"
-                    readonly
+            
                     v-model="element.skill"
                   />
                   <ul
@@ -250,16 +281,8 @@
                     aria-labelledby="dropdownMenuMajor"
                     :style="{ maxHeight: '300px' }"
                   >
-                    <li class="mx-2 my-1">
-                      <input
-                        type="text"
-                        v-model="searchSkill"
-                        class="form-control form-control-sm"
-                        placeholder="Tìm kiếm"
-                      />
-                    </li>
                     <li
-                      v-for="item in filterSkill"
+                      v-for="item in filteredSkill(element.skill, '')"
                       @click="element.skill = item"
                     >
                       <a class="dropdown-item">{{ item }}</a>
@@ -270,9 +293,25 @@
                   <span class="input-group-text">Chức danh công việc</span>
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-select dropdown-toggle text-dark"
+                    id="dropdownMenuJobtitle"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="true"
+                    aria-expanded="false"
                     v-model="element.title"
                   />
+                  <ul
+                    class="dropdown-menu overflow-auto col-auto"
+                    aria-labelledby="dropdownMenuJobtitle"
+                    :style="{ maxHeight: '300px' }"
+                  >
+                    <li
+                      v-for="item in filteredJobtitle(element.title)"
+                      @click="element.title = item"
+                    >
+                      <a class="dropdown-item">{{ item }}</a>
+                    </li>
+                  </ul>
                 </div>
 
                 <div class="input-group input-group-sm mb-2">
@@ -503,7 +542,6 @@
                   data-bs-toggle="dropdown"
                   data-bs-auto-close="true"
                   aria-expanded="false"
-                  readonly
                   v-model="ele.skill"
                 />
                 <ul
@@ -511,21 +549,24 @@
                   aria-labelledby="dropdownMenuSkill"
                   :style="{ maxHeight: '300px' }"
                 >
-                  <li class="mx-2">
-                    <input
-                      type="text"
-                      v-model="searchSkill"
-                      class="form-control form-control-sm"
-                      placeholder="Tìm kiếm"
-                    />
-                  </li>
                   <li
-                    v-for="item in filteredSkill(ele.level)"
+                    v-for="item in filteredSkill(ele.skill, ele.level)"
                     @click="ele.skill = item"
                   >
                     <a class="dropdown-item">{{ item }}</a>
                   </li>
                 </ul>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label class="col-sm-4 col-form-label col-form-label-sm"
+                >Chức danh chuyên môn:</label
+              >
+              <div class="col-sm-8">
+                <input
+                  class="form-control form-control-sm"
+                  v-model="ele.point"
+                />
               </div>
             </div>
             <div class="row mb-2">
@@ -892,6 +933,7 @@ export default {
       assessment: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       majors: [],
       schools: [],
+      jobtitles: [],
       criteria: "",
     };
   },
@@ -1167,23 +1209,43 @@ export default {
         }
       });
     },
-    filteredSkill(level) {
-      let result = [];
+    filteredSkill(key, level) {
+      let result = new Set();
       this.majors.forEach((major) => {
-        if (major.level == level) {
-          result = major.skills.filter((skill) => {
+        if (major.level == level || level=='') {
+          result = new Set([...result, ...major.skills.filter((skill) => {
             if (
-              skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) !=
+              skill.toLowerCase().indexOf(key.toLowerCase()) !=
                 -1 &&
-              (this.searchSkill != "" || level == "Phổ thông")
+              key != ""
             ) {
               return true;
             }
             return false;
-          });
+          })]);
         }
-      });
+      })
       return result;
+    },
+    filteredJobtitle(key) {
+      return this.jobtitles.filter((jobtitle) => {
+        if (
+          jobtitle.name.toLowerCase().indexOf(key.toLowerCase()) != -1 &&
+          key != ""
+        ) {
+          return true;
+        }
+      }).map(el => el.name);;
+    },
+    getExperience(skillWorking) {
+      var sum = 0;
+      if (skillWorking.length > 0) {
+        skillWorking.filter(function (company) {
+          sum +=
+            new Date(company.to).getTime() - new Date(company.from).getTime();
+        });
+      }
+      return Math.round(sum / 15768000000) / 2;
     },
   },
   created() {
@@ -1207,6 +1269,15 @@ export default {
       .get(`${BASE_URL}/school/getall`)
       .then((response) => {
         this.schools = response.data;
+      })
+      .catch(function (error) {
+        console.error(error.response);
+      });
+
+    this.$http
+      .get(`${BASE_URL}/jobtitle/getall`)
+      .then((response) => {
+        this.jobtitles = response.data;
       })
       .catch(function (error) {
         console.error(error.response);
