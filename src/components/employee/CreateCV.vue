@@ -975,6 +975,7 @@
         </tr>
       </tbody>
     </table>
+    <span class="text-danger fw-bold fst-italic"><i class="fas fa-warning"></i> Vui lòng nhập đầy đủ thông tin và chính xác</span>
     <div class="d-grid gap-2 col-6 mx-auto my-5">
       <button type="submit" class="btn btn-primary" @click="handleSubmit">
         Submit
@@ -1354,11 +1355,6 @@ export default {
       var sum = 0;
       if (skillWorking.length > 0) {
         skillWorking.filter(function (company) {
-          let timeTo =
-            company.to == "Hiện tại"
-              ? new Date().getTime()
-              : new Date(company.to).getTime();
-          let timeFrom = new Date(company.from).getTime();
           if (company.process) {
             company.process.forEach((item) => {
               let timeTo =
@@ -1366,7 +1362,10 @@ export default {
                   ? new Date().getTime()
                   : new Date(item.to).getTime();
               let timeFrom = new Date(item.from).getTime();
-              sum += timeTo - timeFrom;
+              if (timeTo && timeFrom) {
+                sum += timeTo - timeFrom;
+                console.log(sum)
+              }
             });
           }
         });
@@ -1376,6 +1375,9 @@ export default {
       if (numberYear) result += `${numberYear} năm`;
       let numberMonth = Math.round((sum % 31536000000) / 2628000000);
       if (numberMonth) result += ` ${numberMonth} tháng`;
+      if (numberYear == 0 && numberMonth == 0){
+        return 'Chưa có kinh nghiệm'
+      }
       return result;
     },
   },
