@@ -355,7 +355,7 @@
       </div>
     </div>
     <div class="d-grid gap-2 mt-1">
-      <h4>Kinh nghiệm làm việc:<span> {{getExperience(skillWorking)}}</span></h4>
+      <h4>Kinh nghiệm làm việc:<span> {{getExperience(skillWorking)}} năm</span></h4>
     </div>
     <div class="d-grid gap-2">
       <button class="btn btn-primary" type="button" @click="addSkillWorking()">
@@ -1244,8 +1244,10 @@ export default {
       var sum = 0;
       if (skillWorking.length > 0) {
         skillWorking.filter(function (company) {
+          let timeTo = company.to=='Hiện tại'?new Date():new Date(company.to).getTime();
+          let timeFrom = new Date(company.from).getTime();
           sum +=
-            new Date(company.to).getTime() - new Date(company.from).getTime();
+            timeTo - timeFrom
         });
       }
       return Math.round(sum / 15768000000) / 2;
