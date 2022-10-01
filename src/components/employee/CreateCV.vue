@@ -58,7 +58,7 @@
               <span class="input-group-text"
                 >Nơi làm việc {{ index1 + 1 }}</span
               >
-              <input type="text" class="form-control" v-model="company.name" />
+              <input type="text" class="form-control" v-model="company.name" @blur="()=>{company.name=company.name.toUpperCase()}"/>
             </div>
           </div>
           <div class="col-md-5">
@@ -216,6 +216,15 @@
         </button>
       </div>
       <div class="card-body text-success p-0" v-if="company.name !== undefined">
+        <div class="input-group input-group-sm ms-3 my-2">
+          <span class="input-group-text col-auto">Địa chỉ</span>
+          <input
+            type="text"
+            class="form-control"
+            v-model="company.address"
+            style="margin-right: 30px"
+          />
+        </div>
         <div class="row">
           <div class="col-md-6" v-for="(element, index2) in company.process">
             <div class="card border-success">
