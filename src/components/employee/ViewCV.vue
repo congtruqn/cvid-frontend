@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h3 class="text-primary d-flex justify-content-center my-4">
-      LÝ LỊCH ỨNG VIÊN
+      LÝ LỊCH ỨNG VIÊN (CVIDPRO)
     </h3>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
@@ -32,6 +32,20 @@
             " " +
             employee.province
           }}
+        </p>
+      </div>
+    </div>
+    <h4 class="text-primary text-decoration-underline">Nền tảng chuyên môn</h4>
+    <div class="row">
+      <div class="col-md-6">
+        <p class="m-1">
+          Cấp bậc:{{ employee.level }}
+        </p>
+        <p class="m-1">
+          Chuyên nghành: {{ employee.skill }}
+        </p>
+        <p class="m-1">
+          Chức danh chuyên môn: {{ employee.professionaltitle }}
         </p>
       </div>
     </div>

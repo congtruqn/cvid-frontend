@@ -562,7 +562,7 @@
               placeholder="Tên trường"
             />
             <ul
-              class="dropdown-menu w-100 overflow-auto"
+              class="dropdown-menu w-100 overflow-auto mx-n1"
               :aria-labelledby="'dropdownSchool' + index"
               :style="{ maxHeight: '400px' }"
             >
