@@ -51,7 +51,7 @@
                 :type="company.from == '' ? 'month' : 'text'"
                 class="form-control"
                 v-model="company.from"
-            
+                :max="company.to==''?'':new Date(company.to).toISOString().slice(0, 7)"
                 @blur="
                   () => {
                     if (company.from != '') {
@@ -75,6 +75,7 @@
                 v-if="company.to != 'Hiện tại'"
                 v-model="company.to"
                 :min="company.from==''?'':new Date(company.from).toISOString().slice(0, 7)"
+                :max="new Date().toISOString().slice(0, 7)"
                 @blur="
                   () => {
                     if (company.to != '') {
@@ -118,6 +119,7 @@
                 :type="company.from == '' ? 'month' : 'text'"
                 class="form-control"
                 v-model="company.from"
+                :max="company.to==''?'':new Date(company.to).toISOString().slice(0, 7)"
                 @blur="
                   () => {
                     if (company.from != '') {
@@ -141,6 +143,7 @@
                 v-if="company.to != 'Hiện tại'"
                 v-model="company.to"
                 :min="company.from==''?'':new Date(company.from).toISOString().slice(0, 7)"
+                :max="new Date().toISOString().slice(0, 7)"
                 @blur="
                   () => {
                     if (company.to != '') {
@@ -207,6 +210,7 @@
                     :type="element.from == '' ? 'month' : 'text'"
                     class="form-control"
                     v-model="element.from"
+                    :max="element.to==''?'':new Date(element.to).toISOString().slice(0, 7)"
                     @blur="
                       () => {
                         if (element.from != '') {
@@ -229,6 +233,7 @@
                     v-model="element.to"
                     v-if="element.to != 'Hiện tại'"
                     :min="element.from==''?'':new Date(element.from).toISOString().slice(0, 7)"
+                    :max="new Date().toISOString().slice(0, 7)"
                     @blur="
                       () => {
                         if (element.to != '') {
@@ -358,7 +363,7 @@
     <div class="d-grid gap-2 mt-1">
       <h4 class="text-danger">
         Số năm kinh nghiệm đến hiện tại:<span>
-          {{ getExperience(skillWorking) }} năm</span
+          {{ getExperience(skillWorking) }}</span
         >
       </h4>
     </div>
@@ -1263,7 +1268,12 @@ export default {
           }
         });
       }
-      return Math.round(sum / 15768000000) / 2;
+      let result = ''
+      let numberYear = Math.floor(sum / 31536000000)
+      if (numberYear) result+=`${numberYear} năm`
+      let numberMonth = Math.round((sum % 31536000000) / 2628000000)
+      if (numberMonth) result+=` ${numberMonth} tháng`
+      return result
     },
   },
   created() {
