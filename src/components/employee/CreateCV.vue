@@ -51,7 +51,11 @@
                 :type="company.from == '' ? 'month' : 'text'"
                 class="form-control"
                 v-model="company.from"
-                :max="new Date(company.to)?'':new Date(company.to).toISOString().slice(0, 7)"
+                :max="
+                  new Date(company.to)
+                    ? ''
+                    : new Date(company.to).toISOString().slice(0, 7)
+                "
                 @blur="
                   () => {
                     if (company.from != '') {
@@ -74,7 +78,11 @@
                 class="form-control"
                 v-if="company.to != 'Hiện tại'"
                 v-model="company.to"
-                :min="company.from==''?'':new Date(company.from).toISOString().slice(0, 7)"
+                :min="
+                  company.from == ''
+                    ? ''
+                    : new Date(company.from).toISOString().slice(0, 7)
+                "
                 :max="new Date().toISOString().slice(0, 7)"
                 @blur="
                   () => {
@@ -119,7 +127,11 @@
                 :type="company.from == '' ? 'month' : 'text'"
                 class="form-control"
                 v-model="company.from"
-                :max="company.to==''?'':new Date(company.to).toISOString().slice(0, 7)"
+                :max="
+                  company.to == ''
+                    ? ''
+                    : new Date(company.to).toISOString().slice(0, 7)
+                "
                 @blur="
                   () => {
                     if (company.from != '') {
@@ -142,7 +154,11 @@
                 class="form-control"
                 v-if="company.to != 'Hiện tại'"
                 v-model="company.to"
-                :min="company.from==''?'':new Date(company.from).toISOString().slice(0, 7)"
+                :min="
+                  company.from == ''
+                    ? ''
+                    : new Date(company.from).toISOString().slice(0, 7)
+                "
                 :max="new Date().toISOString().slice(0, 7)"
                 @blur="
                   () => {
@@ -210,7 +226,20 @@
                     :type="element.from == '' ? 'month' : 'text'"
                     class="form-control"
                     v-model="element.from"
-                    :max="new Date(element.to)?'':new Date(element.to).toISOString().slice(0, 7)"
+                    :min="
+                      company.process[index2 - 1]
+                        ? company.process[index2 - 1].to != ''
+                          ? new Date(company.process[index2 - 1].to)
+                              .toISOString()
+                              .slice(0, 7)
+                          : ''
+                        : ''
+                    "
+                    :max="
+                      new Date(element.to) == 'Invalid Date'
+                        ? ''
+                        : new Date(element.to).toISOString().slice(0, 7)
+                    "
                     @blur="
                       () => {
                         if (element.from != '') {
@@ -232,7 +261,11 @@
                     class="form-control"
                     v-model="element.to"
                     v-if="element.to != 'Hiện tại'"
-                    :min="element.from==''?'':new Date(element.from).toISOString().slice(0, 7)"
+                    :min="
+                      element.from == ''
+                        ? ''
+                        : new Date(element.from).toISOString().slice(0, 7)
+                    "
                     :max="new Date().toISOString().slice(0, 7)"
                     @blur="
                       () => {
@@ -250,7 +283,10 @@
                   />
                   <div
                     class="form-check form-switch m-1"
-                    v-if="(element.to == '' || element.to == 'Hiện tại') && company.to == 'Hiện tại'"
+                    v-if="
+                      (element.to == '' || element.to == 'Hiện tại') &&
+                      company.to == 'Hiện tại'
+                    "
                   >
                     <input
                       class="form-check-input"
@@ -328,7 +364,10 @@
                     v-model="element.address"
                   />
                 </div>
-                <div class="input-group input-group-sm mb-2" v-if="element.to !='Hiện tại'">
+                <div
+                  class="input-group input-group-sm mb-2"
+                  v-if="element.to != 'Hiện tại'"
+                >
                   <span class="input-group-text">Kết quả hoàn thành</span>
                   <select class="form-select" v-model="element.result">
                     <option value="" disabled>Chọn...</option>
@@ -1071,7 +1110,6 @@ export default {
             else if (ele.work == "") error = true;
             else if (ele.skill == "") error = true;
             else if (ele.address == "") error = true;
-            else if (ele.result == "") error = true;
           });
         } else {
           this.skillWorking.splice(index1, 1);
@@ -1264,16 +1302,23 @@ export default {
               : new Date(company.to).getTime();
           let timeFrom = new Date(company.from).getTime();
           if (company.process) {
-            sum += timeTo - timeFrom;
+            company.process.forEach((item) => {
+              let timeTo =
+                item.to == "Hiện tại"
+                  ? new Date().getTime()
+                  : new Date(item.to).getTime();
+              let timeFrom = new Date(item.from).getTime();
+              sum += timeTo - timeFrom;
+            });
           }
         });
       }
-      let result = ''
-      let numberYear = Math.floor(sum / 31536000000)
-      if (numberYear) result+=`${numberYear} năm`
-      let numberMonth = Math.round((sum % 31536000000) / 2628000000)
-      if (numberMonth) result+=` ${numberMonth} tháng`
-      return result
+      let result = "";
+      let numberYear = Math.floor(sum / 31536000000);
+      if (numberYear) result += `${numberYear} năm`;
+      let numberMonth = Math.round((sum % 31536000000) / 2628000000);
+      if (numberMonth) result += ` ${numberMonth} tháng`;
+      return result;
     },
   },
   created() {
