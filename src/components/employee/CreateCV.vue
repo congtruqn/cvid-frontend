@@ -39,7 +39,7 @@
           class="row g-3 align-items-center"
           v-if="company.name !== undefined"
         >
-          <div class="col-md-8">
+          <div class="col-md-7">
             <div class="input-group input-group-sm">
               <span class="input-group-text"
                 >Nơi làm việc {{ index1 + 1 }}</span
@@ -47,7 +47,7 @@
               <input type="text" class="form-control" v-model="company.name" />
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <div class="input-group input-group-sm">
               <span class="input-group-text">Từ</span>
               <input
@@ -353,6 +353,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-grid gap-2 mt-1">
+      <h4>Kinh nghiệm làm việc:<span> {{getExperience(skillWorking)}}</span></h4>
     </div>
     <div class="d-grid gap-2">
       <button class="btn btn-primary" type="button" @click="addSkillWorking()">
