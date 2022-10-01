@@ -125,6 +125,7 @@
                   v-model="company.to"
                   true-value="Hiện tại"
                   false-value=""
+                  @click="company.leaving='Đang làm'"
                 />
                 <label class="form-check-label">Hiện tại</label>
               </div>
@@ -1164,7 +1165,7 @@ export default {
           });
           return;
         }
-        if (item.from == "" || item.to == "" || item.name == "" || !this.checkSkillWorking()) {
+        if (item.from == "" || item.to == "" || item.name == "" || this.checkSkillWorking()) {
           Swal.fire({
             position: "top-end",
             icon: "info",
