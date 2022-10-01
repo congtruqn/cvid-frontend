@@ -47,7 +47,7 @@
     <h4 class="text-primary mt-2 text-decoration-underline">
       Kinh nghiệm làm việc
     </h4>
-    <div class="card border-success" v-for="(company, index1) in skillWorking">
+    <div class="card border-success border-2" v-for="(company, index1) in skillWorking">
       <div class="card-header border-success position-relative">
         <div
           class="row g-3 align-items-center"
@@ -130,6 +130,17 @@
               </div>
             </div>
           </div>
+          <div class="col-12">
+<div class="input-group input-group-sm">
+            <span class="input-group-text">Địa chỉ</span>
+            <input
+              type="text"
+              class="form-control"
+              v-model="company.address"
+          
+            />
+          </div>
+          </div>
         </div>
         <div class="row g-3 align-items-center" v-else>
           <div class="col-md-3 ms-1">
@@ -206,6 +217,8 @@
               </div>
             </div>
           </div>
+          
+          
         </div>
         <button
           v-if="index1 != 0"
@@ -216,15 +229,7 @@
         </button>
       </div>
       <div class="card-body text-success p-0" v-if="company.name !== undefined">
-        <div class="input-group input-group-sm ms-3 my-2">
-          <span class="input-group-text col-auto">Địa chỉ</span>
-          <input
-            type="text"
-            class="form-control"
-            v-model="company.address"
-            style="margin-right: 30px"
-          />
-        </div>
+        
         <div class="row">
           <div class="col-md-6" v-for="(element, index2) in company.process">
             <div class="card border-success">
@@ -1119,7 +1124,7 @@ export default {
         work: "",
         title: item.title,
         skill: item.skill,
-        address: "",
+        address: item.address,
         result: "",
       });
     },
@@ -1147,25 +1152,6 @@ export default {
       this.skillWorking.splice(index, 1);
     },
     addSkillWorking() {
-      if (this.skillWorking.length == 0) {
-        this.skillWorking.push({
-          name: "",
-          from: "",
-          to: "",
-          leaving: "",
-          process: [
-            {
-              from: "",
-              to: "",
-              work: "",
-              title: "",
-              skill: this.employee.skill,
-              address: "",
-              result: "",
-            },
-          ],
-        });
-      } else {
         let item = this.skillWorking[this.skillWorking.length - 1];
         if (item.to == "Hiện tại") {
           Swal.fire({
@@ -1177,7 +1163,7 @@ export default {
           });
           return;
         }
-        if (item.from == "" || item.to == "" || item.name == "") {
+        if (item.from == "" || item.to == "" || item.name == "" || !this.checkSkillWorking()) {
           Swal.fire({
             position: "top-end",
             icon: "info",
@@ -1204,7 +1190,6 @@ export default {
             },
           ],
         });
-      }
     },
     addBreakTime() {
       this.skillWorking.push({
