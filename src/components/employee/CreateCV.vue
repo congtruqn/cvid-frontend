@@ -51,7 +51,7 @@
                 :type="company.from == '' ? 'month' : 'text'"
                 class="form-control"
                 v-model="company.from"
-                :max="company.to==''?'':new Date(company.to).toISOString().slice(0, 7)"
+                :max="new Date(company.to)?'':new Date(company.to).toISOString().slice(0, 7)"
                 @blur="
                   () => {
                     if (company.from != '') {
@@ -78,7 +78,7 @@
                 :max="new Date().toISOString().slice(0, 7)"
                 @blur="
                   () => {
-                    if (company.to != '') {
+                    if (company.to != '' && company.to != 'Hiện tại') {
                       company.to = new Date(company.to).toLocaleDateString(
                         'en-US',
                         {
@@ -146,7 +146,7 @@
                 :max="new Date().toISOString().slice(0, 7)"
                 @blur="
                   () => {
-                    if (company.to != '') {
+                    if (company.to != '' && company.to != 'Hiện tại') {
                       company.to = new Date(company.to).toLocaleDateString(
                         'en-US',
                         {
@@ -210,7 +210,7 @@
                     :type="element.from == '' ? 'month' : 'text'"
                     class="form-control"
                     v-model="element.from"
-                    :max="element.to==''?'':new Date(element.to).toISOString().slice(0, 7)"
+                    :max="new Date(element.to)?'':new Date(element.to).toISOString().slice(0, 7)"
                     @blur="
                       () => {
                         if (element.from != '') {
@@ -236,7 +236,7 @@
                     :max="new Date().toISOString().slice(0, 7)"
                     @blur="
                       () => {
-                        if (element.to != '') {
+                        if (element.to != '' && element.to != 'Hiện tại') {
                           element.to = new Date(element.to).toLocaleDateString(
                             'en-US',
                             {
@@ -1260,7 +1260,7 @@ export default {
         skillWorking.filter(function (company) {
           let timeTo =
             company.to == "Hiện tại"
-              ? new Date()
+              ? new Date().getTime()
               : new Date(company.to).getTime();
           let timeFrom = new Date(company.from).getTime();
           if (company.process) {
