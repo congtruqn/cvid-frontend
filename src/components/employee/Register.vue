@@ -222,9 +222,8 @@
         },
         computed: {
             filteredSchool(){
-                this.searchSchool = this.searchSchool.trim()
                 return this.schools.filter(school => {
-                    if (school.name.toLowerCase().indexOf(this.searchSchool.toLowerCase()) != -1 && this.searchSchool != ''){
+                    if (school.name.toLowerCase().indexOf(this.searchSchool.trim().toLowerCase()) != -1 && this.searchSchool != ''){
                         return true
                     }
                 })
