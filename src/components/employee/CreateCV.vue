@@ -250,7 +250,7 @@
                   />
                   <div
                     class="form-check form-switch m-1"
-                    v-if="element.to == '' || element.to == 'Hiện tại'"
+                    v-if="(element.to == '' || element.to == 'Hiện tại') && company.to == 'Hiện tại'"
                   >
                     <input
                       class="form-check-input"
