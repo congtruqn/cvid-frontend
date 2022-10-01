@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <h3 class="text-primary d-flex justify-content-center my-4">
-      TẠO LÝ LỊCH ỨNG VIÊN CVIDPRO
-    </h3>
+    <h4 class="text-primary d-flex justify-content-center mt-4">
+      LÝ LỊCH ỨNG VIÊN (CVIDPRO)
+    </h4>
+    <h5 class="text-primary d-flex justify-content-center fst-italic mt-2 text-success">
+      Số CVID: CV{{employee.username.slice(1,10)}}
+    </h5>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
       <div class="col-auto">
@@ -48,7 +51,7 @@
       Kinh nghiệm làm việc
     </h4>
     <div
-      class="card border-success border-2"
+      class="card border-success border-2 mb-3"
       v-for="(company, index1) in skillWorking"
     >
       <div class="card-header border-success position-relative">
@@ -171,6 +174,7 @@
                     ? ''
                     : new Date(company.to).toISOString().slice(0, 7)
                 "
+                :readonly="company.name == ''"
                 @blur="
                   () => {
                     if (company.from != '') {
@@ -291,6 +295,7 @@
                         }
                       }
                     "
+                    :readonly="company.name == ''"
                   />
                   <span class="input-group-text" v-if="element.to != 'Hiện tại'"
                     >Đến</span
@@ -319,6 +324,7 @@
                         }
                       }
                     "
+                    :readonly="company.name == ''"
                   />
                   <div
                     class="form-check form-switch m-1"
@@ -344,6 +350,7 @@
                     type="text"
                     class="form-control"
                     v-model="element.work"
+                    :readonly="company.name == ''"
                   />
                 </div>
                 <div class="input-group input-group-sm mb-2">
@@ -356,6 +363,7 @@
                     data-bs-auto-close="true"
                     aria-expanded="false"
                     v-model="element.skill"
+                    :disabled="company.name == ''"
                   />
                   <ul
                     class="dropdown-menu overflow-auto col-auto"
@@ -380,6 +388,7 @@
                     data-bs-auto-close="true"
                     aria-expanded="false"
                     v-model="element.title"
+                    :disabled="company.name == ''"
                   />
                   <ul
                     class="dropdown-menu overflow-auto col-auto"
@@ -401,6 +410,7 @@
                     type="text"
                     class="form-control"
                     v-model="element.address"
+                    :disabled="company.name == ''"
                   />
                 </div>
                 <div
@@ -408,7 +418,7 @@
                   v-if="element.to != 'Hiện tại'"
                 >
                   <span class="input-group-text">Kết quả hoàn thành</span>
-                  <select class="form-select" v-model="element.result">
+                  <select class="form-select" v-model="element.result" :disabled="company.name == ''">
                     <option value="" disabled>Chọn...</option>
                     <option value="Trên mức đề ra">Trên mức đề ra</option>
                     <option value="Đạt mức đề ra">Đạt mức đề ra</option>
@@ -450,15 +460,19 @@
       </h4>
     </div>
     <div class="d-grid gap-2">
-      <button class="btn btn-primary" type="button" @click="addSkillWorking()">
+      <button
+        class="btn btn-primary mb-1"
+        type="button"
+        @click="addSkillWorking()"
+      >
         Thêm nơi làm việc
       </button>
       <button class="btn btn-primary" type="button" @click="addBreakTime()">
         Thời gian không làm việc
       </button>
     </div>
-    <h5 class="text-primary m-2">Kết quả đánh giá</h5>
-    <ul class="list-group">
+    <!-- <h5 class="text-primary m-2">Kết quả đánh giá</h5> -->
+    <ul class="list-group mt-4">
       <li
         class="
           list-group-item
@@ -468,7 +482,7 @@
           bg-light
         "
       >
-        Tiêu chí
+        <h5 class="text-primary m-2">Tiêu chí và kết quả đánh giá</h5>
         <input
           type="text"
           class="form-control-plaintext form-control-sm"
@@ -536,6 +550,9 @@
             <p class="card-text mx-2 my-1">
               Chuyên nghành: {{ employee.skill }}
             </p>
+            <p class="card-text mx-2 my-1">
+              Chức danh chuyên môn: {{ employee.professionaltitle }}
+            </p>
             <div class="row mb-2">
               <label class="mx-2 col-sm-3 col-form-label col-form-label-sm"
                 >Điểm:</label
@@ -549,7 +566,14 @@
                 >Xếp loại:</label
               >
               <div class="col-sm-8">
-                <input class="form-control form-control-sm" />
+                <select class="form-select form-select-sm" >
+                  <option value="" disabled>Chọn xếp loại</option>
+                  <option value="Xuất sắc">Xuất sắc</option>
+                  <option value="Giỏi">Giỏi</option>
+                  <option value="Khá">Khá</option>
+                  <option value="Trung bình khá">Trung bình khá</option>
+                  <option value="Trung bình">Trung bình</option>
+                </select>
               </div>
             </div>
           </div>
@@ -660,7 +684,7 @@
               <div class="col-sm-8">
                 <input
                   class="form-control form-control-sm"
-                  v-model="ele.point"
+                  v-model="ele.professionaltitle"
                 />
               </div>
             </div>
@@ -670,6 +694,7 @@
               >
               <div class="col-sm-8">
                 <input
+                  type="number"
                   class="form-control form-control-sm"
                   v-model="ele.point"
                 />
@@ -680,10 +705,14 @@
                 >Xếp loại:</label
               >
               <div class="col-sm-8">
-                <input
-                  class="form-control form-control-sm"
-                  v-model="ele.rating"
-                />
+                <select class="form-select form-select-sm" v-model="ele.rating">
+                  <option value="" disabled>Chọn xếp loại</option>
+                  <option value="Xuất sắc">Xuất sắc</option>
+                  <option value="Giỏi">Giỏi</option>
+                  <option value="Khá">Khá</option>
+                  <option value="Trung bình khá">Trung bình khá</option>
+                  <option value="Trung bình">Trung bình</option>
+                </select>
               </div>
             </div>
           </div>
@@ -986,8 +1015,8 @@ export default {
           to: "",
           school: "",
           level: "",
-
           skill: "",
+          professionaltitle: "",
           point: "",
           rating: "",
         },
@@ -1227,6 +1256,7 @@ export default {
         school: "",
         level: "",
         skill: "",
+        professionaltitle: "",
         point: "",
         rating: "",
       });
