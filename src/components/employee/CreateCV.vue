@@ -328,7 +328,7 @@
                     v-model="element.address"
                   />
                 </div>
-                <div class="input-group input-group-sm mb-2">
+                <div class="input-group input-group-sm mb-2" v-if="element.to !='Hiện tại'">
                   <span class="input-group-text">Kết quả hoàn thành</span>
                   <select class="form-select" v-model="element.result">
                     <option value="" disabled>Chọn...</option>
