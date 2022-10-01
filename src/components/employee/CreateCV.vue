@@ -5,15 +5,20 @@
     </h3>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-auto">
         <div class="card" style="max-width: 18rem">
           <img src="@/assets/images/user.png" class="card-img-top" alt="..." />
           <div class="my-1 text-center">
             <!-- <input type="file" class="file" data-browse-on-zone-click="true"/> -->
-            <label for="file-upload" class="badge bg-secondary fs-5">
-    Chọn ảnh
-</label>
-<input id="file-upload" type="file" accept="image/*" class="d-none"/>
+            <label for="file-upload" class="badge bg-secondary fs-6">
+              Chọn ảnh
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              class="d-none"
+            />
           </div>
         </div>
       </div>
