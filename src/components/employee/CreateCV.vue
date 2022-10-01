@@ -17,11 +17,11 @@
           Địa chỉ:
           {{
             employee.address +
-            " " +
+            ", " +
             employee.ward +
-            " " +
+            ", " +
             employee.district +
-            " " +
+            ", " +
             employee.province
           }}
         </p>
@@ -30,10 +30,7 @@
     <h4 class="text-primary mt-2 text-decoration-underline">
       Kinh nghiệm làm việc
     </h4>
-    <div
-      class="card border-success"
-      v-for="(company, index1) in skillWorking"
-    >
+    <div class="card border-success" v-for="(company, index1) in skillWorking">
       <div class="card-header border-success position-relative">
         <div
           class="row g-3 align-items-center"
@@ -54,6 +51,7 @@
                 :type="company.from == '' ? 'month' : 'text'"
                 class="form-control"
                 v-model="company.from"
+            
                 @blur="
                   () => {
                     if (company.from != '') {
@@ -76,6 +74,7 @@
                 class="form-control"
                 v-if="company.to != 'Hiện tại'"
                 v-model="company.to"
+                :min="company.from==''?'':new Date(company.from).toISOString().slice(0, 7)"
                 @blur="
                   () => {
                     if (company.to != '') {
@@ -115,8 +114,11 @@
           <div class="col-auto ms-1">
             <div class="input-group input-group-sm">
               <span class="input-group-text">Từ</span>
-              <input :type="company.from == '' ? 'month' : 'text'" class="form-control" v-model="company.from" 
-              @blur="
+              <input
+                :type="company.from == '' ? 'month' : 'text'"
+                class="form-control"
+                v-model="company.from"
+                @blur="
                   () => {
                     if (company.from != '') {
                       company.from = new Date(company.from).toLocaleDateString(
@@ -138,6 +140,7 @@
                 class="form-control"
                 v-if="company.to != 'Hiện tại'"
                 v-model="company.to"
+                :min="company.from==''?'':new Date(company.from).toISOString().slice(0, 7)"
                 @blur="
                   () => {
                     if (company.to != '') {
@@ -152,7 +155,10 @@
                   }
                 "
               />
-              <div class="form-check form-switch m-1" v-if="company.to == '' || company.to == 'Hiện tại'">
+              <div
+                class="form-check form-switch m-1"
+                v-if="company.to == '' || company.to == 'Hiện tại'"
+              >
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -173,10 +179,7 @@
           <i class="fas fa-times-circle text-danger fa-lg"></i>
         </button>
       </div>
-      <div
-        class="card-body text-success p-0"
-        v-if="company.name !== undefined"
-      >
+      <div class="card-body text-success p-0" v-if="company.name !== undefined">
         <div class="row">
           <div class="col-md-6" v-for="(element, index2) in company.process">
             <div class="card border-success">
@@ -201,23 +204,21 @@
                 <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text">Từ</span>
                   <input
-                  :type="element.from == '' ? 'month' : 'text'"
-                    
+                    :type="element.from == '' ? 'month' : 'text'"
                     class="form-control"
                     v-model="element.from"
                     @blur="
-                  () => {
-                    if (element.from != '') {
-                      element.from = new Date(element.from).toLocaleDateString(
-                        'en-US',
-                        {
-                          year: 'numeric',
-                          month: 'short',
+                      () => {
+                        if (element.from != '') {
+                          element.from = new Date(
+                            element.from
+                          ).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                          });
                         }
-                      );
-                    }
-                  }
-                "
+                      }
+                    "
                   />
                   <span class="input-group-text" v-if="element.to != 'Hiện tại'"
                     >Đến</span
@@ -227,19 +228,20 @@
                     class="form-control"
                     v-model="element.to"
                     v-if="element.to != 'Hiện tại'"
+                    :min="element.from==''?'':new Date(element.from).toISOString().slice(0, 7)"
                     @blur="
-                  () => {
-                    if (element.to != '') {
-                      element.to = new Date(element.to).toLocaleDateString(
-                        'en-US',
-                        {
-                          year: 'numeric',
-                          month: 'short',
+                      () => {
+                        if (element.to != '') {
+                          element.to = new Date(element.to).toLocaleDateString(
+                            'en-US',
+                            {
+                              year: 'numeric',
+                              month: 'short',
+                            }
+                          );
                         }
-                      );
-                    }
-                  }
-                "
+                      }
+                    "
                   />
                   <div
                     class="form-check form-switch m-1"
@@ -273,7 +275,6 @@
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="true"
                     aria-expanded="false"
-            
                     v-model="element.skill"
                   />
                   <ul
@@ -355,7 +356,11 @@
       </div>
     </div>
     <div class="d-grid gap-2 mt-1">
-      <h4>Số năm kinh nghiệm đến hiện tại:<span> {{getExperience(skillWorking)}} năm</span></h4>
+      <h4 class="text-danger">
+        Số năm kinh nghiệm đến hiện tại:<span>
+          {{ getExperience(skillWorking) }} năm</span
+        >
+      </h4>
     </div>
     <div class="d-grid gap-2">
       <button class="btn btn-primary" type="button" @click="addSkillWorking()">
@@ -1215,40 +1220,46 @@ export default {
     filteredSkill(key, level) {
       let result = new Set();
       this.majors.forEach((major) => {
-        if (major.level == level || level=='') {
-          result = new Set([...result, ...major.skills.filter((skill) => {
-            if (
-              skill.toLowerCase().indexOf(key.toLowerCase()) !=
-                -1 &&
-              key != ""
-            ) {
-              return true;
-            }
-            return false;
-          })]);
+        if (major.level == level || level == "") {
+          result = new Set([
+            ...result,
+            ...major.skills.filter((skill) => {
+              if (
+                skill.toLowerCase().indexOf(key.toLowerCase()) != -1 &&
+                key != ""
+              ) {
+                return true;
+              }
+              return false;
+            }),
+          ]);
         }
-      })
+      });
       return result;
     },
     filteredJobtitle(key) {
-      return this.jobtitles.filter((jobtitle) => {
-        if (
-          jobtitle.name.toLowerCase().indexOf(key.toLowerCase()) != -1 &&
-          key != ""
-        ) {
-          return true;
-        }
-      }).map(el => el.name);;
+      return this.jobtitles
+        .filter((jobtitle) => {
+          if (
+            jobtitle.name.toLowerCase().indexOf(key.toLowerCase()) != -1 &&
+            key != ""
+          ) {
+            return true;
+          }
+        })
+        .map((el) => el.name);
     },
     getExperience(skillWorking) {
       var sum = 0;
       if (skillWorking.length > 0) {
         skillWorking.filter(function (company) {
-          let timeTo = company.to=='Hiện tại'?new Date():new Date(company.to).getTime();
+          let timeTo =
+            company.to == "Hiện tại"
+              ? new Date()
+              : new Date(company.to).getTime();
           let timeFrom = new Date(company.from).getTime();
-          if (company.process){
-              sum +=
-            timeTo - timeFrom
+          if (company.process) {
+            sum += timeTo - timeFrom;
           }
         });
       }
