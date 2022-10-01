@@ -47,7 +47,10 @@
     <h4 class="text-primary mt-2 text-decoration-underline">
       Kinh nghiệm làm việc
     </h4>
-    <div class="card border-success border-2" v-for="(company, index1) in skillWorking">
+    <div
+      class="card border-success border-2"
+      v-for="(company, index1) in skillWorking"
+    >
       <div class="card-header border-success position-relative">
         <div
           class="row g-3 align-items-center"
@@ -58,7 +61,16 @@
               <span class="input-group-text"
                 >Nơi làm việc {{ index1 + 1 }}</span
               >
-              <input type="text" class="form-control" v-model="company.name" @blur="()=>{company.name=company.name.toUpperCase()}"/>
+              <input
+                type="text"
+                class="form-control"
+                v-model="company.name"
+                @blur="
+                  () => {
+                    company.name = company.name.toUpperCase();
+                  }
+                "
+              />
             </div>
           </div>
           <div class="col-md-5">
@@ -125,22 +137,20 @@
                   v-model="company.to"
                   true-value="Hiện tại"
                   false-value=""
-                  @click="company.leaving='Đang làm'"
                 />
                 <label class="form-check-label">Hiện tại</label>
               </div>
             </div>
           </div>
           <div class="col-12">
-<div class="input-group input-group-sm">
-            <span class="input-group-text">Địa chỉ</span>
-            <input
-              type="text"
-              class="form-control"
-              v-model="company.address"
-          
-            />
-          </div>
+            <div class="input-group input-group-sm">
+              <span class="input-group-text">Địa chỉ</span>
+              <input
+                type="text"
+                class="form-control"
+                v-model="company.address"
+              />
+            </div>
           </div>
         </div>
         <div class="row g-3 align-items-center" v-else>
@@ -218,8 +228,6 @@
               </div>
             </div>
           </div>
-          
-          
         </div>
         <button
           v-if="index1 != 0"
@@ -230,7 +238,6 @@
         </button>
       </div>
       <div class="card-body text-success p-0" v-if="company.name !== undefined">
-        
         <div class="row">
           <div class="col-md-6" v-for="(element, index2) in company.process">
             <div class="card border-success">
@@ -421,7 +428,11 @@
             v-if="company.to != 'Hiện tại'"
           >
             <span class="input-group-text">Nghỉ việc</span>
-            <select class="form-select" v-model="company.leaving" style="margin-end: 30px;">
+            <select
+              class="form-select"
+              v-model="company.leaving"
+              style="margin-end: 30px"
+            >
               <option value="" disabled>Chọn...</option>
               <option value="Nghỉ theo mong muốn">Nghỉ theo mong muốn</option>
               <option value="Nghỉ theo yêu cầu">Nghỉ theo yêu cầu</option>
@@ -1154,45 +1165,51 @@ export default {
       this.skillWorking.splice(index, 1);
     },
     addSkillWorking() {
-        let item = this.skillWorking[this.skillWorking.length - 1];
-        if (item.to == "Hiện tại") {
-          Swal.fire({
-            position: "top-end",
-            icon: "info",
-            title: "Thời gian làm việc đã tới thời điểm hiện tại",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          return;
-        }
-        if (item.from == "" || item.to == "" || item.name == "" || this.checkSkillWorking()) {
-          Swal.fire({
-            position: "top-end",
-            icon: "info",
-            title: "Nhập đủ thông tin nơi làm việc trước đó",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          return;
-        }
-        this.skillWorking.push({
-          name: "",
-          from: item.to,
-          to: "",
-          leaving: "",
-          address: "",
-          process: [
-            {
-              from: "",
-              to: "",
-              work: "",
-              title: "",
-              skill: this.employee.skill,
-              address: "",
-              result: "",
-            },
-          ],
+      let item = this.skillWorking[this.skillWorking.length - 1];
+      if (item.to == "Hiện tại") {
+        Swal.fire({
+          position: "top-end",
+          icon: "info",
+          title: "Thời gian làm việc đã tới thời điểm hiện tại",
+          showConfirmButton: false,
+          timer: 1500,
         });
+        return;
+      }
+      if (
+        item.from == "" ||
+        item.to == "" ||
+        item.name == "" ||
+        item.leaving == "" ||
+        this.checkSkillWorking()
+      ) {
+        Swal.fire({
+          position: "top-end",
+          icon: "info",
+          title: "Nhập đủ thông tin nơi làm việc trước đó",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+      this.skillWorking.push({
+        name: "",
+        from: item.to,
+        to: "",
+        leaving: "",
+        address: "",
+        process: [
+          {
+            from: "",
+            to: "",
+            work: "",
+            title: "",
+            skill: this.employee.skill,
+            address: "",
+            result: "",
+          },
+        ],
+      });
     },
     addBreakTime() {
       this.skillWorking.push({
@@ -1281,9 +1298,7 @@ export default {
           result = new Set([
             ...result,
             ...major.skills.filter((skill) => {
-              if (
-                skill.toLowerCase().indexOf(key.toLowerCase()) != -1
-              ) {
+              if (skill.toLowerCase().indexOf(key.toLowerCase()) != -1) {
                 return true;
               }
               return false;
@@ -1297,7 +1312,8 @@ export default {
       return this.jobtitles
         .filter((jobtitle) => {
           if (
-            key != "" && jobtitle.name.toLowerCase().indexOf(key.toLowerCase()) != -1
+            key != "" &&
+            jobtitle.name.toLowerCase().indexOf(key.toLowerCase()) != -1
           ) {
             return true;
           }
