@@ -411,11 +411,11 @@
             </button>
           </div>
           <div
-            class="input-group input-group-sm"
+            class="input-group input-group-sm ms-3 my-2"
             v-if="company.to != 'Hiện tại'"
           >
             <span class="input-group-text">Nghỉ việc</span>
-            <select class="form-select" v-model="company.leaving">
+            <select class="form-select" v-model="company.leaving" style="margin-end: 30px;">
               <option value="" disabled>Chọn...</option>
               <option value="Nghỉ theo mong muốn">Nghỉ theo mong muốn</option>
               <option value="Nghỉ theo yêu cầu">Nghỉ theo yêu cầu</option>
