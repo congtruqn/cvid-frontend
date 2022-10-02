@@ -3,8 +3,9 @@
     <h3 class="text-primary d-flex justify-content-center mt-4">
       LÝ LỊCH ỨNG VIÊN (CVIDPRO)
     </h3>
-    <h5 class="text-primary d-flex justify-content-center fst-italic mt-2 text-success">
-      Số CVID: CV{{employee.username.slice(1,10)}}
+    <h5 class="text-primary d-flex justify-content-center mt-2 text-success">
+      Số CVID:
+      <span class="fst-italic"> CV{{ employee.username.slice(1, 10) }}</span>
     </h5>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
@@ -14,25 +15,32 @@
         </p>
         <p class="m-1">
           Ngày sinh:
-          {{ new Date(employee.birthdate).toLocaleDateString("en-US") }}
+          <span class="fw-bold">{{
+            new Date(employee.birthdate).toLocaleDateString("en-US")
+          }}</span>
         </p>
-        <p class="m-1">Giới tính: {{ employee.gender }}</p>
-       
+        <p class="m-1">
+          Giới tính: <span class="fw-bold">{{ employee.gender }}</span>
+        </p>
       </div>
       <div class="col-md-6">
-        <p class="m-1">Số điện thoại: {{ employee.username }}</p>
-        <p class="m-1">Email: {{ employee.email }}</p>
+        <p class="m-1">
+          Số điện thoại: <span class="fw-bold">{{ employee.username }}</span>
+        </p>
+        <p class="m-1">
+          Email: <span class="fw-bold">{{ employee.email }}</span>
+        </p>
         <p class="m-1">
           Địa chỉ:
-          {{
+          <span class="fw-bold">{{
             employee.address +
-            " " +
+            ", " +
             employee.ward +
-            " " +
+            ", " +
             employee.district +
-            " " +
+            ", " +
             employee.province
-          }}
+          }}</span>
         </p>
       </div>
     </div>
@@ -40,13 +48,14 @@
     <div class="row">
       <div class="col-md-6">
         <p class="m-1">
-          Cấp bậc: {{employee.level}}
+          Trình độ: <span class="fw-bold">{{ employee.level }}</span>
         </p>
         <p class="m-1">
-          Chuyên nghành: {{ employee.skill }}
+          Chuyên nghành: <span class="fw-bold">{{ employee.skill }}</span>
         </p>
         <p class="m-1">
-          Chức danh chuyên môn: {{ employee.professionaltitle }}
+          Chức danh chuyên môn:
+          <span class="fw-bold">{{ employee.professionaltitle }}</span>
         </p>
       </div>
     </div>
@@ -69,7 +78,7 @@
     >
       <div class="card-header border-success position-relative">
         <div class="row g-3 align-items-center">
-          <div class="col-md-8">
+          <div class="col-md-7">
             <div class="input-group input-group-sm">
               <span class="input-group-text fw-bold"
                 >Nơi làm việc {{ index1 + 1 }}</span
@@ -79,21 +88,15 @@
               }}</span>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <div class="input-group input-group-sm">
               <span class="input-group-text fw-bold">Từ</span>
               <span class="border p-1 bg-white col fw-bold">{{
-                new Date(company.from).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "numeric",
-                })
+                company.from
               }}</span>
               <span class="input-group-text fw-bold">Đến</span>
               <span class="border p-1 bg-white col fw-bold">{{
-                new Date(company.to).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "numeric",
-                })
+                company.to
               }}</span>
             </div>
           </div>
@@ -118,17 +121,11 @@
                 <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text fw-bold">Từ</span>
                   <span class="border p-1 bg-white col fw-bold">{{
-                    new Date(element.from).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "numeric",
-                    })
+                    element.from
                   }}</span>
                   <span class="input-group-text fw-bold">Đến</span>
                   <span class="border p-1 bg-white col fw-bold">{{
-                    new Date(element.to).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "numeric",
-                    })
+                    element.to
                   }}</span>
                 </div>
               </div>
@@ -160,14 +157,13 @@
                   ></textarea>
                   <!-- <span class="border p-1 bg-white col">{{element.work}}</span> -->
                 </div>
-
                 <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text w-100 fw-bold">Địa chỉ</span>
                   <span class="border p-1 bg-white col fw-bold">{{
                     element.address
                   }}</span>
                 </div>
-                <div class="input-group input-group-sm mb-2">
+                <div class="input-group input-group-sm mb-2" v-if="element.to!='Hiện tại'">
                   <span class="input-group-text fw-bold"
                     >Kết quả hoàn thành</span
                   >
@@ -178,7 +174,7 @@
               </div>
             </div>
           </div>
-          <div class="input-group input-group-sm">
+          <div class="input-group input-group-sm" v-if="company.to!='Hiện tại'">
             <span class="input-group-text fw-bold">Lý do nghỉ việc</span>
             <span class="border p-1 bg-white col fw-bold">{{
               company.leaving
@@ -244,19 +240,19 @@
           <div class="card-header">
             <div class="input-group input-group-sm">
               <span class="input-group-text">Từ:</span>
-              <input
-                type="text"
-                class="form-control bg-white"
-                :value="employee.startyear"
-                disabled
-              />
+              <span class="border p-1 bg-white col">{{
+                new Date(employee.startyear).toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                })
+              }}</span>
               <span class="input-group-text">Đến:</span>
-              <input
-                type="text"
-                class="form-control bg-white"
-                :value="employee.endyear"
-                disabled
-              />
+              <span class="border p-1 bg-white col">{{
+                new Date(employee.endyear).toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                })
+              }}</span>
             </div>
           </div>
           <div class="card-body text-primary">
@@ -270,19 +266,27 @@
           </div>
         </div>
       </div>
-
       <div class="col-md-6" v-for="(ele, index) in employee.skillEducation">
         <div class="card border-primary mb-3">
           <div class="card-header">
             <div class="input-group input-group-sm">
               <span class="input-group-text">Từ:</span>
-              <input type="month" class="form-control" v-model="ele.from" />
+              <span class="border p-1 bg-white col">{{
+                new Date(ele.from).toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                })
+              }}</span>
+              
               <span class="input-group-text">Đến:</span>
-              <input
-                type="month"
-                class="form-control bg-white"
-                v-model="ele.to"
-              />
+              <span class="border p-1 bg-white col">{{
+                new Date(ele.to).toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                })
+              }}</span>
+              
+  
             </div>
           </div>
           <div class="card-body">
@@ -304,16 +308,14 @@
                 />
               </div>
             </div>
-            <div class="row mb-2">
+            <div class="row">
               <label class="col-sm-4 col-form-label col-form-label-sm"
                 >Chuyên nghành:</label
               >
               <div class="col-sm-8">
-                <input
-                  class="form-control form-control-sm bg-white"
-                  v-model="ele.skill"
-                  disabled
-                />
+                <p class="border p-1 bg-white fs-6"><small>{{
+               ele.skill
+              }}</small></p>
               </div>
             </div>
             <div class="row mb-2">
@@ -681,7 +683,6 @@ export default {
         this.employee = res.data;
         console.log(this.employee.skillEnglish);
       });
-
     this.$http.get(`${BASE_URL}/criteria/getall`).then((res) => {
       this.criteria = res.data;
     });

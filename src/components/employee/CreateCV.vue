@@ -27,7 +27,7 @@
       </div>
       <div class="col-md-8">
         <p class="m-1">Họ và tên: {{ employee.name }}</p>
-        <p class="m-1">Ngày sinh: {{ employee.birthdate }}</p>
+        <p class="m-1">Ngày sinh: {{ new Date(employee.birthdate).toLocaleDateString("en-US") }}</p>
         <p class="m-1">Giới tính: {{ employee.gender }}</p>
         <p class="m-1">Số điện thoại: {{ employee.username }}</p>
         <p class="m-1">Email: {{ employee.email }}</p>
@@ -453,8 +453,8 @@
       </div>
     </div>
     <div class="d-grid gap-2 mt-1">
-      <h4 class="text-danger">
-        Số năm kinh nghiệm đến hiện tại:<span>
+      <h4 class="text-primary">
+        Số năm kinh nghiệm đến hiện tại:<span class="text-danger">
           {{ getExperience(skillWorking) }}</span
         >
       </h4>
@@ -1305,7 +1305,7 @@ export default {
     checkSkillOther() {
       var index = 0;
       while (index < this.skillOther.length) {
-        if (this.skillOther.name != "") {
+        if (this.skillOther[index].name != "") {
           index++;
         } else {
           this.skillOther.splice(index, 1);
