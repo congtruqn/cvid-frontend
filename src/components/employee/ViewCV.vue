@@ -80,24 +80,32 @@
         <div class="row">
           <div class="col-12">
             <div class="input-group input-group-sm mb-2">
-              <span class="input-group-text w-100 fw-bold">Nơi làm việc {{index1+1}}</span>
+              <span class="input-group-text w-100 fw-bold"
+                >Nơi làm việc {{ index1 + 1 }}</span
+              >
             </div>
           </div>
           <div class="col-md-6 mt-n2 mb-2">
             <div class="input-group input-group-sm mb-2">
-              <span class="border px-2 py-1 bg-white col fw-bold">{{company.name}}</span>
+              <span class="border px-2 py-1 bg-white col fw-bold">{{
+                company.name
+              }}</span>
             </div>
           </div>
           <div class="col-md-6 mt-n2">
             <div class="input-group input-group-sm mb-2">
               <span class="input-group-text fw-bold">Từ</span>
-              <span class="border p-1 bg-white col fw-bold">{{company.from}}</span>
+              <span class="border p-1 bg-white col fw-bold">{{
+                company.from
+              }}</span>
               <span class="input-group-text fw-bold">Đến</span>
-              <span class="border p-1 bg-white col fw-bold">{{company.to}}</span>
+              <span class="border p-1 bg-white col fw-bold">{{
+                company.to
+              }}</span>
             </div>
           </div>
 
-          <div class="col-12 my-2">
+          <div class="col-12 mb-2">
             <div class="input-group input-group-sm">
               <span class="input-group-text fw-bold w-100">Địa chỉ</span>
               <span class="border px-2 py-1 bg-white col fw-bold">{{
@@ -112,13 +120,7 @@
           <h6 class="text-primary fw-bold text-center">Quá trình làm việc</h6>
           <div class="col-12" v-for="(element, index2) in company.process">
             <div class="card border-success border-start-0 border-end-0">
-              <div
-                class="
-                  card-header
-                  bg-transparent
-                  border-success
-                "
-              >
+              <div class="card-header bg-transparent border-success">
                 <div class="row">
                   <div class="col-12">
                     <div class="input-group input-group-sm mb-2">
@@ -135,7 +137,7 @@
                     </div>
                   </div>
                   <div class="col-md-6 mt-n2">
-                    <div class="input-group input-group-sm mb-2">
+                    <div class="input-group input-group-sm">
                       <span class="input-group-text fw-bold">Từ</span>
                       <span class="border p-1 bg-white col fw-bold">{{
                         element.from
@@ -170,37 +172,36 @@
                       }}</span>
                     </div>
                   </div>
-                </div>
-
-                <div class="input-group input-group-sm mb-2">
-                  <span class="input-group-text w-100 fw-bold"
-                    >Công việc đã thực hiện</span
-                  >
-                  <span class="border p-2 bg-white col fw-bold">{{
-                    element.work
-                  }}</span>
-                  <!-- <textarea
-                    class="form-control bg-white text-reset fs-6 fw-bold"
-                    disabled
-                    v-model="element.work"
-                  ></textarea> -->
-                </div>
-                <div class="input-group input-group-sm mb-2">
-                  <span class="input-group-text fw-bold w-100">Địa chỉ</span>
-                  <span class="border p-1 bg-white col fw-bold">{{
-                    element.address
-                  }}</span>
-                </div>
-                <div
-                  class="input-group input-group-sm mb-2"
-                  v-if="element.to != 'Hiện tại'"
-                >
-                  <span class="input-group-text fw-bold"
-                    >Kết quả hoàn thành</span
-                  >
-                  <span class="border px-2 py-1 bg-white col fw-bold">{{
-                    element.result
-                  }}</span>
+                  <div class="col-12">
+                    <div class="input-group input-group-sm mb-2">
+                      <span class="input-group-text w-100 fw-bold"
+                        >Công việc đã thực hiện</span
+                      >
+                      <span class="border p-2 bg-white col fw-bold">{{
+                        element.work
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="input-group input-group-sm mb-2">
+                      <span class="input-group-text fw-bold w-100"
+                        >Địa chỉ</span
+                      >
+                      <span class="border p-1 bg-white col fw-bold">{{
+                        element.address
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6" v-if="element.to != 'Hiện tại'">
+                    <div class="input-group input-group-sm mb-2">
+                      <span class="input-group-text fw-bold w-100"
+                        >Kết quả hoàn thành</span
+                      >
+                      <span class="border px-2 py-1 bg-white col fw-bold">{{
+                        element.result
+                      }}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -219,8 +220,8 @@
         </div>
       </div>
     </div>
-    <h5 class="text-primary m-2">Kết quả đánh giá</h5>
-    <ul class="list-group">
+    <!-- <h5 class="text-primary m-2">Kết quả đánh giá</h5> -->
+    <ul class="list-group mt-4">
       <li
         class="
           list-group-item
@@ -230,7 +231,7 @@
           bg-light
         "
       >
-        Tiêu chí
+        <h5 class="text-primary m-2">Tiêu chí và kết quả đánh giá</h5>
         <input
           type="text"
           class="form-control-plaintext form-control-sm text-dark"
@@ -252,13 +253,18 @@
               :aria-controls="'collapse' + index"
               ><i class="fas fa-question-circle ms-0"></i></a
           ></span>
-          <input
+          <span
+            class="border px-4 py-1 bg-white"
+            :style="{ maxWidth: '3.5rem' }"
+            >{{ employee.assessment[index] }}</span
+          >
+          <!-- <input
             type="number"
             class="form-control form-control-sm bg-white text-dark"
             disabled
             :style="{ maxWidth: '3.5rem' }"
             v-model="employee.assessment[index]"
-          />
+          /> -->
         </div>
         <div class="collapse" :id="'collapse' + index">
           <ul class="list-group ms-5">
@@ -352,21 +358,29 @@
           <div class="col-md-4">
             <div class="input-group input-group-sm mb-3">
               <label class="input-group-text">Từ</label>
-              <input type="month" class="form-control" v-model="ele.from" />
+              <span class="border px-2 py-1 bg-white col fw-bold">{{
+                ele.from
+              }}</span>
             </div>
             <div class="input-group input-group-sm mb-3">
               <label class="input-group-text">Đến</label>
-              <input type="month" class="form-control" v-model="ele.to" />
+              <span class="border px-2 py-1 bg-white col fw-bold">{{
+                ele.to
+              }}</span>
             </div>
           </div>
           <div class="col-md-8">
             <div class="input-group input-group-sm mb-3">
               <label class="input-group-text">Chứng chỉ đại được</label>
-              <input type="text" class="form-control" v-model="ele.name" />
+              <span class="border px-2 py-1 bg-white col fw-bold">{{
+                ele.name
+              }}</span>
             </div>
             <div class="input-group input-group-sm mb-3">
               <label class="input-group-text">Đơn vị tổ chức</label>
-              <input type="text" class="form-control" v-model="ele.place" />
+              <span class="border px-2 py-1 bg-white col fw-bold">{{
+                ele.place
+              }}</span>
             </div>
           </div>
         </div>
@@ -636,12 +650,7 @@
       <tbody>
         <tr v-for="skill in employee.skillOther">
           <th scope="row">
-            <input
-              type="text"
-              class="form-control form-control-sm bg-white"
-              v-model="skill.name"
-              disabled
-            />
+            <span>{{ skill.name }}</span>
           </th>
           <td v-for="point in 4">
             <input
