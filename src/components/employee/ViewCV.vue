@@ -77,41 +77,30 @@
       v-if="employee.skillWorking.length > 0"
     >
       <div class="card-header border-success border-2">
-        <div class="row g-3 align-items-center mt-1">
-          <div class="col-md-9 mt-1">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text fw-bold w-100"
-                >Nơi làm việc {{ index1 + 1 }}</span
-              >
-              <span class="border p-2 bg-white col fw-bold">{{
-                company.name
-              }}</span>
+        <div class="row">
+          <div class="col-12">
+            <div class="input-group input-group-sm mb-2">
+              <span class="input-group-text w-100 fw-bold">Nơi làm việc {{index1+1}}</span>
             </div>
           </div>
-          <div class="col-md-3 mt-2">
-            <div class="row">
-              <div class="col-md-12 col-6">
-                <div class="input-group input-group-sm mb-1">
-                  <span class="input-group-text fw-bold">Từ</span>
-                  <span class="border p-1 bg-white col fw-bold">{{
-                    company.from
-                  }}</span>
-                </div>
-              </div>
-              <div class="col-md-12 col-6 pt-0 mt-0">
-                <div class="input-group input-group-sm mb-1">
-                  <span class="input-group-text fw-bold">Đến</span>
-                  <span class="border p-1 bg-white col fw-bold">{{
-                    company.to
-                  }}</span>
-                </div>
-              </div>
+          <div class="col-md-6 mt-n2 mb-2">
+            <div class="input-group input-group-sm mb-2">
+              <span class="border px-2 py-1 bg-white col fw-bold">{{company.name}}</span>
             </div>
           </div>
+          <div class="col-md-6 mt-n2">
+            <div class="input-group input-group-sm mb-2">
+              <span class="input-group-text fw-bold">Từ</span>
+              <span class="border p-1 bg-white col fw-bold">{{company.from}}</span>
+              <span class="input-group-text fw-bold">Đến</span>
+              <span class="border p-1 bg-white col fw-bold">{{company.to}}</span>
+            </div>
+          </div>
+
           <div class="col-12 my-2">
             <div class="input-group input-group-sm">
-              <span class="input-group-text fw-bold">Địa chỉ</span>
-              <span class="border p-1 bg-white col fw-bold">{{
+              <span class="input-group-text fw-bold w-100">Địa chỉ</span>
+              <span class="border px-2 py-1 bg-white col fw-bold">{{
                 company.address
               }}</span>
             </div>
@@ -120,7 +109,7 @@
       </div>
       <div class="card-body text-success px-0">
         <div class="row">
-          <h5 class="text-primary fw-bold text-center">Quá trình làm việc</h5>
+          <h6 class="text-primary fw-bold text-center">Quá trình làm việc</h6>
           <div class="col-12" v-for="(element, index2) in company.process">
             <div class="card border-success border-start-0 border-end-0">
               <div
@@ -128,38 +117,33 @@
                   card-header
                   bg-transparent
                   border-success
-                  position-relative
                 "
               >
                 <div class="row">
-                  <div class="col-md-9">
+                  <div class="col-12">
                     <div class="input-group input-group-sm mb-2">
                       <span class="input-group-text w-100 fw-bold"
                         >Chức danh công việc</span
                       >
-                      <span class="border p-2 bg-white col fw-bold">{{
+                    </div>
+                  </div>
+                  <div class="col-md-6 mt-n2 mb-2">
+                    <div class="input-group input-group-sm mb-2">
+                      <span class="border px-2 py-1 bg-white col fw-bold">{{
                         element.title
                       }}</span>
                     </div>
                   </div>
-                  <div class="col-md-3">
-                    <div class="row">
-                      <div class="col-md-12 col-6">
-                        <div class="input-group input-group-sm mb-1">
-                          <span class="input-group-text fw-bold">Từ</span>
-                          <span class="border p-1 bg-white col fw-bold">{{
-                            element.from
-                          }}</span>
-                        </div>
-                      </div>
-                      <div class="col-md-12 col-6 pt-0 mt-0">
-                        <div class="input-group input-group-sm mb-1">
-                          <span class="input-group-text fw-bold">Đến</span>
-                          <span class="border p-1 bg-white col fw-bold">{{
-                            element.to
-                          }}</span>
-                        </div>
-                      </div>
+                  <div class="col-md-6 mt-n2">
+                    <div class="input-group input-group-sm mb-2">
+                      <span class="input-group-text fw-bold">Từ</span>
+                      <span class="border p-1 bg-white col fw-bold">{{
+                        element.from
+                      }}</span>
+                      <span class="input-group-text fw-bold">Đến</span>
+                      <span class="border p-1 bg-white col fw-bold">{{
+                        element.to
+                      }}</span>
                     </div>
                   </div>
                 </div>
@@ -202,7 +186,7 @@
                   ></textarea> -->
                 </div>
                 <div class="input-group input-group-sm mb-2">
-                  <span class="input-group-text fw-bold">Địa chỉ</span>
+                  <span class="input-group-text fw-bold w-100">Địa chỉ</span>
                   <span class="border p-1 bg-white col fw-bold">{{
                     element.address
                   }}</span>
@@ -318,7 +302,11 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" v-for="(ele, index) in employee.skillEducation" :key="index">
+      <div
+        class="col-md-6"
+        v-for="(ele, index) in employee.skillEducation"
+        :key="index"
+      >
         <div class="card border-primary mb-3">
           <div class="card-header">
             <div class="input-group input-group-sm">
@@ -341,10 +329,8 @@
           <div class="card-body text-primary">
             <h5 class="card-title">{{ ele.school }}</h5>
             <p class="card-text mx-2 my-1">Cấp bậc: {{ ele.level }}</p>
-            <p class="card-text mx-2 my-1">
-              Chuyên nghành: {{ ele.skill }}
-            </p>
-            <p class="card-text mx-2 my-1">Điểm: {{ele.point}}</p>
+            <p class="card-text mx-2 my-1">Chuyên nghành: {{ ele.skill }}</p>
+            <p class="card-text mx-2 my-1">Điểm: {{ ele.point }}</p>
             <p class="card-text mx-2 my-1">Xếp loại: {{ ele.rating }}</p>
           </div>
         </div>
