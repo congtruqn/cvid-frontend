@@ -1177,7 +1177,15 @@ export default {
           if (company.from == "") error = true;
           else if (company.to == "") error = true;
           else if (company.address == "") error = true;
-          company.process.forEach((ele) => {
+          company.process.forEach((ele, index2) => {
+            if (index2 == 0){
+              if (ele.from != company.from) error = true
+            } else {
+              if (ele.from != company.process[index2-1].to) error = true
+            }
+            if (index2 == company.process.length -1){
+              if (ele.to != company.to) error = true
+            }
             if (ele.from == "") error = true;
             else if (ele.to == "") error = true;
             else if (ele.title == "") error = true;
