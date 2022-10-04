@@ -48,14 +48,14 @@
     <div class="row">
       <div class="col-md-6">
         <p class="m-1">
-          Trình độ: <span class="fw-bold">{{ employee.level }}</span>
+          Chức danh chuyên môn:
+          <span class="fw-bold">{{ employee.professionaltitle }}</span>
         </p>
         <p class="m-1">
           Chuyên nghành: <span class="fw-bold">{{ employee.skill }}</span>
         </p>
         <p class="m-1">
-          Chức danh chuyên môn:
-          <span class="fw-bold">{{ employee.professionaltitle }}</span>
+          Trình độ: <span class="fw-bold">{{ employee.level }}</span>
         </p>
       </div>
     </div>
@@ -67,49 +67,62 @@
       </div>
       <div class="col-md-6 text-md-end mt-2">
         <span class="badge bg-primary fs-6"
-          >Số năm kinh nghiệm: {{ getExperience }} năm</span
+          >Số năm kinh nghiệm: {{ getExperience }}</span
         >
       </div>
     </div>
     <div
-      class="card border-success mt-3"
+      class="card border-success border-2 mt-3"
       v-for="(company, index1) in employee.skillWorking"
       v-if="employee.skillWorking.length > 0"
     >
-      <div class="card-header border-success position-relative">
-        <div class="row g-3 align-items-center">
-          <div class="col-md-7">
+      <div class="card-header border-success border-2">
+        <div class="row g-3 align-items-center mt-1">
+          <div class="col-md-9 mt-1">
             <div class="input-group input-group-sm">
-              <span class="input-group-text fw-bold"
+              <span class="input-group-text fw-bold w-100"
                 >Nơi làm việc {{ index1 + 1 }}</span
               >
-              <span class="border p-1 bg-white col fw-bold">{{
+              <span class="border p-2 bg-white col fw-bold">{{
                 company.name
               }}</span>
             </div>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-3 mt-2">
+            <div class="row">
+              <div class="col-md-12 col-6">
+                <div class="input-group input-group-sm mb-1">
+                  <span class="input-group-text fw-bold">Từ</span>
+                  <span class="border p-1 bg-white col fw-bold">{{
+                    company.from
+                  }}</span>
+                </div>
+              </div>
+              <div class="col-md-12 col-6 pt-0 mt-0">
+                <div class="input-group input-group-sm mb-1">
+                  <span class="input-group-text fw-bold">Đến</span>
+                  <span class="border p-1 bg-white col fw-bold">{{
+                    company.to
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 my-2">
             <div class="input-group input-group-sm">
-              <span class="input-group-text fw-bold">Từ</span>
+              <span class="input-group-text fw-bold">Địa chỉ</span>
               <span class="border p-1 bg-white col fw-bold">{{
-                company.from
-              }}</span>
-              <span class="input-group-text fw-bold">Đến</span>
-              <span class="border p-1 bg-white col fw-bold">{{
-                company.to
+                company.address
               }}</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="card-body text-success">
+      <div class="card-body text-success px-0">
         <div class="row">
-          <h5 class="text-primary fw-bold">Quá trình làm việc</h5>
-          <div
-            class="col-md-6 mb-3"
-            v-for="(element, index2) in company.process"
-          >
-            <div class="card border-success">
+          <h5 class="text-primary fw-bold text-center">Quá trình làm việc</h5>
+          <div class="col-12" v-for="(element, index2) in company.process">
+            <div class="card border-success border-start-0 border-end-0">
               <div
                 class="
                   card-header
@@ -118,67 +131,106 @@
                   position-relative
                 "
               >
-                <div class="input-group input-group-sm mb-2">
-                  <span class="input-group-text fw-bold">Từ</span>
-                  <span class="border p-1 bg-white col fw-bold">{{
-                    element.from
-                  }}</span>
-                  <span class="input-group-text fw-bold">Đến</span>
-                  <span class="border p-1 bg-white col fw-bold">{{
-                    element.to
-                  }}</span>
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="input-group input-group-sm mb-2">
+                      <span class="input-group-text w-100 fw-bold"
+                        >Chức danh công việc</span
+                      >
+                      <span class="border p-2 bg-white col fw-bold">{{
+                        element.title
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="row">
+                      <div class="col-md-12 col-6">
+                        <div class="input-group input-group-sm mb-1">
+                          <span class="input-group-text fw-bold">Từ</span>
+                          <span class="border p-1 bg-white col fw-bold">{{
+                            element.from
+                          }}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-6 pt-0 mt-0">
+                        <div class="input-group input-group-sm mb-1">
+                          <span class="input-group-text fw-bold">Đến</span>
+                          <span class="border p-1 bg-white col fw-bold">{{
+                            element.to
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="card-body text-success">
-                <div class="input-group input-group-sm mb-2">
-                  <span class="input-group-text w-100 fw-bold"
-                    >Chức danh công việc</span
-                  >
-                  <span class="border p-1 bg-white col fw-bold">{{
-                    element.title
-                  }}</span>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group input-group-sm mb-2">
+                      <span class="input-group-text w-100 fw-bold"
+                        >Chức vụ</span
+                      >
+                      <span class="border p-2 bg-white col fw-bold">{{
+                        element.position
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group input-group-sm mb-2">
+                      <span class="input-group-text w-100 fw-bold"
+                        >Chuyên nghành</span
+                      >
+                      <span class="border p-2 bg-white col fw-bold">{{
+                        element.skill
+                      }}</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="input-group input-group-sm mb-2">
-                  <span class="input-group-text w-100 fw-bold"
-                    >Chuyên nghành</span
-                  >
-                  <span class="border p-1 bg-white col fw-bold">{{
-                    element.skill
-                  }}</span>
-                </div>
+
                 <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text w-100 fw-bold"
                     >Công việc đã thực hiện</span
                   >
-                  <textarea
+                  <span class="border p-2 bg-white col fw-bold">{{
+                    element.work
+                  }}</span>
+                  <!-- <textarea
                     class="form-control bg-white text-reset fs-6 fw-bold"
                     disabled
                     v-model="element.work"
-                  ></textarea>
-                  <!-- <span class="border p-1 bg-white col">{{element.work}}</span> -->
+                  ></textarea> -->
                 </div>
                 <div class="input-group input-group-sm mb-2">
-                  <span class="input-group-text w-100 fw-bold">Địa chỉ</span>
+                  <span class="input-group-text fw-bold">Địa chỉ</span>
                   <span class="border p-1 bg-white col fw-bold">{{
                     element.address
                   }}</span>
                 </div>
-                <div class="input-group input-group-sm mb-2" v-if="element.to!='Hiện tại'">
+                <div
+                  class="input-group input-group-sm mb-2"
+                  v-if="element.to != 'Hiện tại'"
+                >
                   <span class="input-group-text fw-bold"
                     >Kết quả hoàn thành</span
                   >
-                  <span class="border p-1 bg-white col fw-bold">{{
+                  <span class="border px-2 py-1 bg-white col fw-bold small">{{
                     element.result
                   }}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="input-group input-group-sm" v-if="company.to!='Hiện tại'">
-            <span class="input-group-text fw-bold">Lý do nghỉ việc</span>
-            <span class="border p-1 bg-white col fw-bold">{{
-              company.leaving
-            }}</span>
+          <div class="col-12">
+            <div
+              class="input-group input-group-sm px-3 pt-3"
+              v-if="company.to != 'Hiện tại'"
+            >
+              <span class="input-group-text fw-bold">Lý do nghỉ việc</span>
+              <span class="border p-1 bg-white col fw-bold">{{
+                company.leaving
+              }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -240,14 +292,14 @@
           <div class="card-header">
             <div class="input-group input-group-sm">
               <span class="input-group-text">Từ:</span>
-              <span class="border p-1 bg-white col">{{
+              <span class="border p-1 bg-white col text-center">{{
                 new Date(employee.startyear).toLocaleDateString("en-US", {
                   month: "short",
                   year: "numeric",
                 })
               }}</span>
               <span class="input-group-text">Đến:</span>
-              <span class="border p-1 bg-white col">{{
+              <span class="border p-1 bg-white col text-center">{{
                 new Date(employee.endyear).toLocaleDateString("en-US", {
                   month: "short",
                   year: "numeric",
@@ -266,82 +318,34 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" v-for="(ele, index) in employee.skillEducation">
+      <div class="col-md-6" v-for="(ele, index) in employee.skillEducation" :key="index">
         <div class="card border-primary mb-3">
           <div class="card-header">
             <div class="input-group input-group-sm">
               <span class="input-group-text">Từ:</span>
-              <span class="border p-1 bg-white col">{{
+              <span class="border p-1 bg-white col text-center">{{
                 new Date(ele.from).toLocaleDateString("en-US", {
                   month: "short",
                   year: "numeric",
                 })
               }}</span>
-              
               <span class="input-group-text">Đến:</span>
-              <span class="border p-1 bg-white col">{{
+              <span class="border p-1 bg-white col text-center">{{
                 new Date(ele.to).toLocaleDateString("en-US", {
                   month: "short",
                   year: "numeric",
                 })
               }}</span>
-              
-  
             </div>
           </div>
-          <div class="card-body">
-            <input
-              type="text"
-              class="form-control form-control-sm mb-2 bg-white"
-              v-model="ele.school"
-              disabled
-            />
-            <div class="row mb-2">
-              <label class="col-sm-4 col-form-label col-form-label-sm"
-                >Cấp bậc:</label
-              >
-              <div class="col-sm-8">
-                <input
-                  class="form-control form-control-sm bg-white"
-                  v-model="ele.level"
-                  disabled
-                />
-              </div>
-            </div>
-            <div class="row">
-              <label class="col-sm-4 col-form-label col-form-label-sm"
-                >Chuyên nghành:</label
-              >
-              <div class="col-sm-8">
-                <p class="border p-1 bg-white fs-6"><small>{{
-               ele.skill
-              }}</small></p>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <label class="col-sm-4 col-form-label col-form-label-sm"
-                >Điểm:</label
-              >
-              <div class="col-sm-8">
-                <input
-                  class="form-control form-control-sm bg-white"
-                  v-model="ele.point"
-                  disabled
-                />
-              </div>
-            </div>
-            <div class="row mb-2">
-              <label class="col-sm-4 col-form-label col-form-label-sm"
-                >Xếp loại:</label
-              >
-              <div class="col-sm-8">
-                <input
-                  class="form-control form-control-sm bg-white"
-                  v-model="ele.rating"
-                  disabled
-                />
-              </div>
-            </div>
+          <div class="card-body text-primary">
+            <h5 class="card-title">{{ ele.school }}</h5>
+            <p class="card-text mx-2 my-1">Cấp bậc: {{ ele.level }}</p>
+            <p class="card-text mx-2 my-1">
+              Chuyên nghành: {{ ele.skill }}
+            </p>
+            <p class="card-text mx-2 my-1">Điểm: {{ele.point}}</p>
+            <p class="card-text mx-2 my-1">Xếp loại: {{ ele.rating }}</p>
           </div>
         </div>
       </div>
@@ -690,13 +694,31 @@ export default {
   computed: {
     getExperience() {
       var sum = 0;
-      if (this.employee.skillWorking && this.employee.skillWorking.length > 0) {
+      if (this.employee.skillWorking.length > 0) {
         this.employee.skillWorking.filter(function (company) {
-          sum +=
-            new Date(company.to).getTime() - new Date(company.from).getTime();
+          if (company.process) {
+            company.process.forEach((item) => {
+              let timeTo =
+                item.to == "Hiện tại"
+                  ? new Date().getTime()
+                  : new Date(item.to).getTime();
+              let timeFrom = new Date(item.from).getTime();
+              if (timeTo && timeFrom) {
+                sum += timeTo - timeFrom;
+              }
+            });
+          }
         });
       }
-      return Math.round(sum / 15768000000) / 2;
+      let result = "";
+      let numberYear = Math.floor(sum / 31536000000);
+      if (numberYear) result += `${numberYear} năm`;
+      let numberMonth = Math.round((sum % 31536000000) / 2628000000);
+      if (numberMonth) result += ` ${numberMonth} tháng`;
+      if (numberYear == 0 && numberMonth == 0) {
+        return "Chưa có kinh nghiệm";
+      }
+      return result;
     },
   },
 };
