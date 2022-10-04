@@ -214,7 +214,7 @@
                   <span class="input-group-text fw-bold"
                     >Kết quả hoàn thành</span
                   >
-                  <span class="border px-2 py-1 bg-white col fw-bold small">{{
+                  <span class="border px-2 py-1 bg-white col fw-bold">{{
                     element.result
                   }}</span>
                 </div>
