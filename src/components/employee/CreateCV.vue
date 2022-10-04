@@ -1102,6 +1102,7 @@ export default {
         return;
       }
       this.checkSkillOther();
+      this.checkShortTraining();
       this.$http
         .post(`${BASE_URL}/employee/createCV`, {
           id: this.employee._id,
@@ -1294,6 +1295,16 @@ export default {
         name: "",
         place: "",
       });
+    },
+    checkShortTraining(){
+      var index = 0;
+      while (index < this.shortTraining.length) {
+        if (this.shortTraining[index].name != "") {
+          index++;
+        } else {
+          this.shortTraining.splice(index, 1);
+        }
+      }
     },
     addSkillLanguage() {
       this.skillLanguage.push({

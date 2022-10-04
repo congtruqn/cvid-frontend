@@ -7,196 +7,108 @@
         Đăng tuyển
       </div>
       <div class="card-body">
-        <div class="row g-2">
-          <div
-            class="col-12 col-md-6"
-            v-for="(position, index) in position_list"
-            :key="index"
+        <div
+          class="form-check form-switch my-3"
+          v-for="(position, index) in position_list"
+          :key="index"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="position.status"
+            readonly
+            true-value="1"
+            false-value="0"
+          />
+          <label class="form-check-label"
+            >{{ position.jobtitle
+            }}<i data-bs-toggle="modal" :data-bs-target="'#position'+index" class="ms-2 fas fa-circle-exclamation"></i
+          ></label>
+          <button
+            type="button"
+            class="btn btn-sm btn-success position-relative float-end"
+            @click="getCvApplied(position._id)"
           >
-            <div class="card">
+            CV ứng tuyển
+            <span
+              class="
+                position-absolute
+                top-0
+                start-100
+                translate-middle
+                badge
+                rounded-pill
+                bg-danger
+              "
+            >
+              {{
+                list_cv_applied.filter(
+                  (cv) => cv.type == 1 && cv.position_id == position._id
+                ).length
+              }}
+            </span>
+          </button>
+          <button class="btn btn-sm btn-success float-end me-2" @click="getCvRecommend(position)">Tìm CV</button>
+          <div class="modal fade" :id="'position'+index" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Thông tin vị trí tuyển dụng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Phòng ban:</label>
+        <span>{{position.department_name}}</span><br/>
+        <label class="form-label">Chức danh công việc: </label>
+        <span>{{position.jobtitle}}</span><br/>
+        <label class="form-label">Chức vụ: </label>
+        <span>{{position.name}}</span><br/>
+        <label class="form-label">Cấp bậc: </label>
+        <span>{{position.levels.toString().replaceAll(',', ', ')}}</span><br/>
+        <label class="form-label">Chuyên nghành: </label>
+        <span>{{position.skills.toString().replaceAll(',', ', ')}}</span><br/>
+        <label class="form-label">Lĩnh vực kinh doanh: </label>
+        <span>{{position.work_industry}}</span><br/>
+        <label class="form-label">Nơi làm việc: </label>
+        <span>{{position.work_location}}</span><br/>
+        <label class="form-label">Môi trường làm việc: </label>
+        <span>{{position.work_environment}}</span><br/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+      <div class="card-footer bg-transparent">
+        <h5 class="text-primary fw-bold text-center mb-4">Danh sách CV</h5>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-xl-5 g-4">
+          <div class="col" v-for="cv in list_cv">
+            <div class="card h-100">
+              <img
+                src="@/assets/images/user.png"
+                class="card-img-top"
+                alt="..."
+              />
               <div class="card-body">
-                <div
-                  class="
-                    card-header
-                    text-center
-                    h5
-                    bg-primary bg-gradient
-                    text-white
-                    mb-2
-                  "
-                >
-                  {{ position.department_name }}
-                </div>
-                <h5 class="card-title">{{ position.jobtitle }}</h5>
-                <h6 class="card-subtitle my-2 text-muted">
-                  Chức vụ: {{ position.name }}
-                </h6>
-                <p class="card-text my-1">Số lượng: {{ position.amount }}</p>
+                <h5 class="card-title"><a href="">{{cv.name}}</a></h5>
                 <p class="card-text">
-                  <small class="text-muted"
-                    >Cập nhật lần cuối:
-                    {{
-                      position.startdate ? position.startdate.split("T")[0] : ""
-                    }}</small
-                  >
+                  This is a longer card with supporting text below as a natural
+                  lead-in to additional content. This content is a little bit
+                  longer.
                 </p>
-                <a
-                  href="#"
-                  class="btn btn-primary"
-                  v-if="position.status == 0"
-                  @click="publishRecruiting(position._id)"
-                  data-bs-toggle="offcanvas"
-                  :data-bs-target="'#listCvRecommend' + index"
-                  :aria-controls="'#listCvRecommend' + index"
-                  >Đăng tuyển</a
-                >
-                <a
-                  href="#"
-                  class="btn btn-secondary"
-                  v-else
-                  @click="stopRecruiting(position._id)"
-                  >Dừng tuyển</a
-                >
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  @click="getCvRecommend(position)"
-                  data-bs-toggle="offcanvas"
-                  :data-bs-target="'#listCvRecommend' + index"
-                  :aria-controls="'#listCvRecommend' + index"
-                >
-                  Tìm CV
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-success position-relative"
-                  data-bs-toggle="offcanvas"
-                  :data-bs-target="'#listCvApplied' + index"
-                  :aria-controls="'#listCvApplied' + index"
-                >
-                  CV ứng tuyển
-                  <span
-                    class="
-                      position-absolute
-                      top-0
-                      start-100
-                      translate-middle
-                      badge
-                      rounded-pill
-                      bg-danger
-                    "
-                  >
-                    {{
-                      list_cv_applied.filter(
-                        (cv) => cv.type == 1 && cv.position_id == position._id
-                      ).length
-                    }}
-                  </span>
-                </button>
               </div>
-            </div>
-            <div
-              class="offcanvas offcanvas-start"
-              tabindex="-1"
-              :id="'listCvApplied' + index"
-              :aria-labelledby="'#listCvApplied' + index + 'Label'"
-            >
-              <div class="offcanvas-header">
-                <h5 :id="'listCvApplied' + index + 'Label'">CV ứng tuyển</h5>
-                <button
-                  type="button"
-                  class="btn-close text-reset"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="offcanvas-body">
-                <div class="list-group">
-                  <a
-                    class="list-group-item list-group-item-action text-primary"
-                    aria-current="true"
-                    v-for="cv in list_cv_applied.filter(
-                      (cv) => cv.type == 1 && cv.position_id == position._id
-                    )"
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">{{ cv.name }}</h5>
-                      <small>3 days ago</small>
-                    </div>
-                    <!-- <p class="mb-1">Some placeholder content in a paragraph.</p> -->
-                    <!-- <small>And some small print.</small> -->
-                    <div class="row">
-                      <div class="col-6">
-                        <div class="d-grid gap-2">
-                          <a
-                            :href="
-                              '/business/cvid/' +
-                              cv._id +
-                              '?position=' +
-                              position._id
-                            "
-                            target="_blank"
-                            class="btn btn-primary"
-                            type=""
-                            >Xem CV</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div
-              class="offcanvas offcanvas-end"
-              tabindex="-1"
-              :id="'listCvRecommend' + index"
-              :aria-labelledby="'#listCvRecommend' + index + 'Label'"
-            >
-              <div class="offcanvas-header">
-                <h5 :id="'listCvRecommend' + index + 'Label'">CV đề xuất</h5>
-                <button
-                  type="button"
-                  class="btn-close text-reset"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="offcanvas-body">
-                <div class="list-group">
-                  <a
-                    class="list-group-item list-group-item-action text-primary"
-                    aria-current="true"
-                    v-for="cv in list_cv_recommend"
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">{{ cv.name }}</h5>
-                      <small>4 days ago</small>
-                    </div>
-                    <!-- <p class="mb-1">Some placeholder content in a paragraph.</p> -->
-                    <!-- <small>And some small print.</small> -->
-                    <div class="row">
-                      <div class="col-6">
-                        <div class="d-grid gap-2">
-                          <a
-                            :href="'/business/cvid/' + cv._id"
-                            target="_blank"
-                            class="btn btn-primary"
-                            type=""
-                            >Xem CV</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </div>
+              <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="card mt-4">
+    <div class="card mt-4" v-if="false">
       <div
         class="card-header text-center h5 bg-info bg-gradient text-white mb-2"
       >
@@ -479,7 +391,11 @@
             />
           </div>
           <div class="col-12 text-center">
-            <button type="button" class="btn btn-lg btn-primary" @click="getCv(position)">
+            <button
+              type="button"
+              class="btn btn-lg btn-primary"
+              @click="getCv(position)"
+            >
               Tìm ngay
             </button>
           </div>
@@ -571,34 +487,6 @@
                     </div>
                     </div> -->
     </div>
-    <div class="row">
-      <div class="col-md-6" v-for="cv in list_cv">
-        <div class="card mt-3">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img
-                src="../../../src/assets/images/testimonial-1.jpg"
-                class="img-fluid rounded-start w-100 h-100"
-                alt="..."
-              />
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">{{ cv.name }}</h5>
-                <p class="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-                <p class="card-text">
-                  <small class="text-muted">Last updated 3 mins ago</small>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -610,6 +498,7 @@ export default {
       key: null,
       position_list: [],
       department_name: "",
+      position_id: "",
       position: {
         name: "",
         jobtitle: "",
@@ -676,12 +565,12 @@ export default {
       return this.skills;
     },
     filteredJobTitle() {
-      let jobtitles = new Set()
-      this.position_list.forEach(pos => {
-        if (pos.department_name == this.department_name){
-          jobtitles.add(pos.jobtitle)
+      let jobtitles = new Set();
+      this.position_list.forEach((pos) => {
+        if (pos.department_name == this.department_name) {
+          jobtitles.add(pos.jobtitle);
         }
-      })
+      });
       return this.jobtitles
         .filter((element) => {
           if (
@@ -698,7 +587,13 @@ export default {
     },
   },
   methods: {
-    getCv(position) {
+    getCvApplied(position_id) {
+      this.list_cv = [];
+      this.list_cv = this.list_cv_applied.filter(
+        (cv) => cv.position_id == position_id
+      );
+    },
+    getCvRecommend(position) {
       this.list_cv = [];
       this.$http
         .post(`${BASE_URL}/department/findcvforposition`, {
@@ -714,28 +609,7 @@ export default {
           //         this.list_cv_recommend.push(el)
           //     }
           // })
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    getCvRecommend(position) {
-      this.list_cv_recommend = [];
-      this.$http
-        .post(`${BASE_URL}/department/findcvforposition`, {
-          position: position,
-        })
-        .then((res) => {
-          this.list_cv_recommend = res.data;
-          //let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
-          // cvid_recommend.forEach(el => {
-          //     if (el.type != 1){
-          //         el.position_id = id
-          //         el._id = el.employee_id?el.employee_id:el._id
-          //         this.list_cv_recommend.push(el)
-          //     }
-          // })
+          console.log(this.list_cv)
           if (position.status != 1) {
             Swal.fire({
               title: "Bạn có muốn đăng tuyển?",
@@ -749,7 +623,6 @@ export default {
               }
             });
           }
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
