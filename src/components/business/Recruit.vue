@@ -600,7 +600,9 @@ export default {
           position: position,
         })
         .then((res) => {
-          this.list_cv = res.data;
+          this.list_cv = res.data.filter(cv => {
+            return !this.list_cv_applied.find(item => item._id == cv._id)
+          });
           //let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
           // cvid_recommend.forEach(el => {
           //     if (el.type != 1){
@@ -609,6 +611,8 @@ export default {
           //         this.list_cv_recommend.push(el)
           //     }
           // })
+
+          console.log(this.list_cv_applied)
           console.log(this.list_cv)
           if (position.status != 1) {
             Swal.fire({
@@ -775,8 +779,8 @@ export default {
           console.error(err);
         });
     }
-    this.position_list.forEach((position) => {
-      this.$http
+    this.position_list.forEach(async (position) => {
+      await this.$http
         .post(`${BASE_URL}/job/getcvidforposition`, {
           id: position._id,
         })
