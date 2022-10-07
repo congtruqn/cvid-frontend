@@ -157,7 +157,16 @@
               <td class="d-none d-xl-table-cell">{{ cv.job.jobtitle }}</td>
               <td class="d-none d-lg-table-cell">3 năm</td>
               <td>{{ cv.point }}</td>
-              <td><a :href="'/business/cvid/'+cv._id+'?position='+position_id" target="_blank" class="btn btn-sm btn-secondary">Xem CV</a></td>
+              <td>
+                <a
+                  :href="
+                    '/business/cvid/' + cv._id + '?position=' + position_id
+                  "
+                  target="_blank"
+                  class="btn btn-sm btn-secondary"
+                  >Xem CV</a
+                >
+              </td>
             </tr>
           </tbody>
         </table>
@@ -643,14 +652,14 @@ export default {
   },
   methods: {
     getCvApplied(position_id) {
-      this.position_id = position_id
+      this.position_id = position_id;
       this.list_cv = [];
       this.list_cv = this.list_cv_applied.filter(
         (cv) => cv.position_id == position_id
       );
     },
     getCvRecommend(position) {
-      this.position_id = position._id
+      this.position_id = position._id;
       this.list_cv = [];
       this.$http
         .post(`${BASE_URL}/department/findcvforposition`, {
@@ -791,30 +800,8 @@ export default {
     },
   },
   async created() {
-    try {
-      this.business_id = JSON.parse(localStorage.getItem("business")).username;
-    } catch (err) {
-      this.key = localStorage.getItem("key");
-    }
-    if (this.business_id) {
-      await this.$http
-        .post(`${BASE_URL}/department/list/get-by-id`, {
-          id: this.business_id,
-        })
-        .then((res) => {
-          this.position_list = [];
-          res.data.forEach((department) => {
-            this.department_name = department.name;
-            department.position.forEach((position) => {
-              position.department_name = department.name;
-              this.position_list.push(position);
-            });
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else if (this.key) {
+    this.key = localStorage.getItem("key");
+    if (this.key) {
       await this.$http
         .post(`${BASE_URL}/department/list/get-by-key`, {
           key: this.key,

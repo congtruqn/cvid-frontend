@@ -159,7 +159,7 @@ let router = new Router({
             }
         },
         {
-            path: '/business/department',
+            path: '/business/department/:id',
             name: 'department',
             component: () => import('@/components/business/Department'),
             meta: {

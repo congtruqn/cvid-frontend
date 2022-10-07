@@ -1475,27 +1475,8 @@ export default {
     },
   },
   created() {
-    try {
-      this.business_id = JSON.parse(localStorage.getItem("business")).username;
-    } catch (err) {
-      this.key = this.$route.query.key;
-      if (this.key) {
-        localStorage.setItem("key", this.key);
-      }
-      this.key = localStorage.getItem("key");
-    }
-    if (this.business_id) {
-      this.$http
-        .post(`${BASE_URL}/department/list/get-by-id`, {
-          id: this.business_id,
-        })
-        .then((res) => {
-          this.departments = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else if (this.key) {
+    this.key = this.$route.params.id;
+    if (this.key) {
       this.$http
         .post(`${BASE_URL}/department/list/get-by-key`, {
           key: this.key,
