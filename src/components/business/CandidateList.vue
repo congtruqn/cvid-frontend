@@ -307,7 +307,9 @@ const {BASE_URL} =  require('../../utils/config')
             // }).catch(err => {
             //     console.log(err)
             // })
-            await this.$http.get(`${BASE_URL}/department/list/${this.business.username}`)
+            await this.$http.post(`${BASE_URL}/department/list/get-by-id`, {
+                id: this.business.username
+            })
             .then(res => {
                 this.departments = res.data
                 this.departments.forEach(department => {

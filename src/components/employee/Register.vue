@@ -147,7 +147,7 @@
                       <label class="form-label">Cấp bậc</label>
                     </div>
                   </div>
-                  <div class="mb-3" v-if="level != 'Phổ thông'">
+                  <div class="mb-3" v-if="level != 'Phổ thông' && level != 'Sơ cấp'">
                     <div class="form-floating">
                       <input
                         type="text"
@@ -221,7 +221,7 @@
                       <label class="form-label">Chức danh chuyên môn</label>
                     </div>
                   </div>
-                  <div class="row" v-if="level != 'Phổ thông'">
+                  <div class="row" v-if="level != 'Phổ thông' && level != 'Sơ cấp'">
                     <div class="col-md-6 mb-3">
                       <div id="formStartyear" class="form-floating">
                         <input
@@ -389,11 +389,11 @@ export default {
         this.ward==''?this.error.push('Chưa nhập Phường/Xã!'):null
         this.address==''?this.error.push('Chưa nhập địa chỉ!'):null
         this.level==''?this.error.push('Chưa nhập cấp bậc!'):null
-        this.school==''?this.error.push('Chưa nhập trường!'):null
+        // this.school==''?this.error.push('Chưa nhập trường!'):null
         this.skill==''?this.error.push('Chưa nhập chuyên nghành!'):null
         this.professionaltitle==''?this.error.push('Chưa nhập chức danh chuyên môn!'):null
-        this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
-        this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
+        // this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
+        // this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
         this.password==''?this.error.push('Chưa nhập mật khẩu!'):null
         this.password.length<6?this.error.push('Mật khẩu tối thiểu 6 kí tự!'):null
         this.password2!=this.password?this.error.push('Mật khẩu nhập lại không khớp!'):null
