@@ -63,7 +63,7 @@
                                 else {
                                     var user = response.data.userinfo
                                     localStorage.setItem('business',JSON.stringify(user));
-                                    this.$router.push('/business/department')
+                                    this.$router.push('/business')
                                 }
                             }                 
                         }

@@ -87,9 +87,9 @@ let router = new Router({
             }
         },
         {
-            path: '/business/job-list',
+            path: '/business',
             name: 'business',
-            component: () => import('@/components/business/JobList'),
+            component: () => import('@/components/business/Index'),
             meta: {
                 guest: true,
                 layout: 'Business'
