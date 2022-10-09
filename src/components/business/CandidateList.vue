@@ -40,46 +40,50 @@
         </ul>
         <div class="tab-content">
           <div id="tab-1" class="tab-pane fade show p-0 active">
-            <table
-              class="table table-sm table-bordered caption-top"
-              v-for="position in positions"
-            >
-              <caption class="text-center">
-                {{
-                  position.jobtitle
-                }}
-              </caption>
+            <div class="table-responsive-sm">
+            <table class="table table-sm table-bordered caption-top" style="min-width: 600px;">
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Họ và tên</th>
+                  <th scope="col">Phòng ban</th>
+                  <th scope="col">Chức danh</th>
                   <th scope="col">Xếp loại</th>
                   <th scope="col">Đánh giá</th>
                   <th scope="col">Thao tác</th>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  v-for="cv in job_list"
-                  v-if="cv.position_id == position._id"
-                >
+                <tr v-for="cv in job_list" class="align-middle">
                   <th scope="col" class="text-center">
                     <input type="checkbox" />
                   </th>
                   <td>{{ cv.name }}</td>
+                  <td>{{ cv.department_name }}</td>
+                  
+                  <td>{{ cv.job.jobtitle }}</td>
                   <td>{{ cv.rating }}</td>
                   <td>{{ cv.review }}</td>
                   <td>
-                    <button class="btn btn-sm btn-success" data-bs-toggle="modal"
-                        data-bs-target="#ScheduleModal"
-                        @click.prevent="employee_id = cv._id"
-                        v-if="!cv.schedule">Đặt lịch pv</button
+                    <!-- <button
+                      class="btn btn-sm btn-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ScheduleModal"
+                      @click.prevent="employee_id = cv._id"
+                      v-if="!cv.schedule"
                     >
-                    <button class="btn btn-sm btn-success" data-bs-toggle="modal"
-                        data-bs-target="#ScheduleModal"
-                        @click.prevent="employee_id = cv._id"
-                        v-if="cv.schedule">Thay đổi lịch pv</button
-                    ><button
+                      Đặt lịch pv
+                    </button>
+                    <button
+                      class="btn btn-sm btn-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ScheduleModal"
+                      @click.prevent="employee_id = cv._id"
+                      v-if="cv.schedule"
+                    >
+                      Thay đổi lịch pv</button
+                    > -->
+                    <button
                       class="ms-2 btn btn-sm btn-danger"
                       @click="cancelCVID(cv)"
                     >
@@ -89,10 +93,10 @@
                 </tr>
               </tbody>
             </table>
+            </div>
+
             <div class="card mb-3" v-for="position in positions">
-              <h5 class="card-header bg-primary text-white">
-                {{}}
-              </h5>
+              <h5 class="card-header bg-primary text-white">{{}}</h5>
               <div class="card-body mx-2">
                 <div
                   class="card mb-2"
@@ -142,11 +146,7 @@
                       <button
                         type="button"
                         class="btn btn-light me-2 text-primary"
-                        @click="
-                         
-                            cancelCVID(cv)
-                         
-                        "
+                        @click="cancelCVID(cv)"
                       >
                         Hủy
                       </button>
@@ -198,83 +198,60 @@
             </div>
           </div>
           <div id="tab-2" class="tab-pane fade show p-0">
-            <div class="row gy-1">
-              <a
-                :href="'/business/cvid/' + index._id"
-                target="_blank"
-                v-for="index in cvid_list"
-                v-if="index.status == 1"
-                class="job-item px-3 pt-3 mb-2"
-              >
-                <div class="row">
-                  <div class="col-sm-12 col-md-7 d-flex">
-                    <img
-                      class="flex-shrink-0 img-fluid border rounded"
-                      src="img/com-logo-1.jpg"
-                      alt=""
-                      style="width: 80px; height: 80px"
-                    />
-                    <ul class="text-start overflow-auto">
-                      <h5 class="mb-2">{{ index.name }}</h5>
-                      <li class="text-truncate">
-                        Điểm CV: {{ index.point }}/10
-                      </li>
-                      <li class="text-truncate">
-                        <i class="fas fa-phone text-primary me-1"></i>
-                        {{ index.username }}
-                      </li>
-                      <li class="text-truncate">
-                        <i class="fas fa-envelope text-primary me-1"></i
-                        >{{ index.email }}
-                      </li>
-                      <li class="text-truncate">
-                        <i class="fas fa-map-marker text-primary me-1"></i
-                        >{{
-                          index.address +
-                          ", " +
-                          index.ward +
-                          ", " +
-                          index.district +
-                          ", " +
-                          index.province
-                        }}
-                      </li>
-                    </ul>
-                  </div>
-                  <div
-                    class="
-                      col-sm-12 col-md-4
-                      d-flex
-                      flex-column
-                      align-items-start align-items-md-end
-                      justify-content-center
-                    "
-                  >
-                    <div class="d-flex mb-2">
-                      <!-- <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a> -->
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#ScheduleModal"
-                        @click.prevent="employee_id = index._id"
-                      >
-                        Thay đổi lịch phỏng vấn
-                      </button>
-                    </div>
-
-                    <small class="text-truncate"
-                      ><i class="far fa-calendar-alt text-primary me-2"></i>Lịch
-                      phỏng vấn:
-                      {{
-                        index.schedule
-                          ? index.schedule.replace("T", " ")
-                          : "Chưa có"
-                      }}</small
+            <div class="table-responsive-sm">
+            <table class="table table-sm table-bordered caption-top" style="min-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Họ và tên</th>
+                  <th scope="col">Phòng ban</th>
+                  <th scope="col">Chức danh</th>
+                  <th scope="col">Số điện thoại</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="cv in job_list" class="align-middle">
+                  <th scope="col" class="text-center">
+                    <input type="checkbox" />
+                  </th>
+                  <td>{{ cv.name }}</td>
+                  <td>{{ cv.department_name }}</td>
+                  
+                  <td>{{ cv.job.jobtitle }}</td>
+                  <td>{{ cv.username }}</td>
+                  <td>{{ cv.email }}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ScheduleModal"
+                      @click.prevent="employee_id = cv._id"
+                      v-if="!cv.schedule"
                     >
-                  </div>
-                </div>
-              </a>
+                      Đặt lịch pv
+                    </button>
+                    <button
+                      class="btn btn-sm btn-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ScheduleModal"
+                      @click.prevent="employee_id = cv._id"
+                      v-if="cv.schedule"
+                    >
+                      Thay đổi lịch pv</button
+                    >
+                    <button
+                      class="ms-2 btn btn-sm btn-danger"
+                      :disabled="!cv.schedule"
+                      @click="cancelCVID(cv)"
+                    >
+                       Xác nhận
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             </div>
           </div>
         </div>
@@ -366,6 +343,7 @@ export default {
       employee_id: "",
       cvid_list: [],
       job_list: [],
+      list_paid_cv: [],
       selected: [],
       schedule: "",
       phone: "",
@@ -528,16 +506,19 @@ export default {
     },
   },
   async created() {
-    this.key = localStorage.getItem("key");
-    if (this.key) {
+    try {
+      this.business_id = JSON.parse(localStorage.getItem("business")).username;
+    } catch (err) {
+      this.key = localStorage.getItem("key");
+    }
+    if (this.business_id) {
       await this.$http
-        .post(`${BASE_URL}/department/list/get-by-key`, {
-          key: this.key,
+        .post(`${BASE_URL}/department/list/get-by-id`, {
+          id: this.business_id,
         })
         .then((res) => {
-          if (res.data) {
-            this.positions = res.data[0].position;
-            this.positions.forEach((position) => {
+          res.data.forEach((department) => {
+            department.position.forEach((position) => {
               this.$http
                 .post(`${BASE_URL}/job/getcvidforposition`, {
                   id: position._id,
@@ -549,16 +530,56 @@ export default {
                     ...res.data.cv_list.find((t2) => t2._id == t1.employee_id),
                   }));
                   cvid.forEach((item) => {
-                    // if (item.type == 1 && item.confirm == 1){
-                    //     item.price = 0
-                    //     this.job_list.push(item)
-                    // } else
+                    if (item.status == 1){
+                          this.list_paid_cv.push(item)
+                      }
                     if (item.type == 2 && item.status == 0) {
                       item.price = 500000;
+                      item.department_name = department.name;
                       this.job_list.push(item);
                     }
                   });
                 });
+            });
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (this.key) {
+      await this.$http
+        .post(`${BASE_URL}/department/list/get-by-key`, {
+          key: this.key,
+        })
+        .then((res) => {
+          if (res.data) {
+            res.data.forEach((department) => {
+              department.position.forEach((position) => {
+                this.$http
+                  .post(`${BASE_URL}/job/getcvidforposition`, {
+                    id: position._id,
+                  })
+                  .then((res) => {
+                    const job_list = res.data.job_list;
+                    let cvid = job_list.map((t1) => ({
+                      ...t1,
+                      ...res.data.cv_list.find(
+                        (t2) => t2._id == t1.employee_id
+                      ),
+                    }));
+                    cvid.forEach((item) => {
+                      if (item.status == 1){
+                          this.list_paid_cv.push(item)
+                      }
+                      if (item.type == 2 && item.status == 0) {
+                        item.price = 500000;
+                        item.department_name = department.name;
+                        this.job_list.push(item);
+                        console.log(this.job_list)
+                      }
+                    });
+                  });
+              });
             });
           }
         })
@@ -566,25 +587,6 @@ export default {
           console.error(err);
         });
     }
-    // this.$http.post(`${BASE_URL}/job/getforbusiness`, {
-    //     id: JSON.parse(localStorage.getItem('business')).username
-    // }).then(res => {
-    //     res.data.forEach(job =>{
-    //         if (job.type == 2){
-    //             this.job_list.push(job)
-    //         }
-    //     })
-    //     this.$http.post(`${BASE_URL}/employee/list/cvid`, {
-    //         selected: this.job_list.map((obj) => obj.employee_id)
-    //     }).then(res => {
-    //         this.cvid_list = this.job_list.map(t1 => ({...t1, ...res.data.find(t2 => t2._id === t1.employee_id)}))
-    //     }).catch(err => {
-    //         console.log(err)
-    //     })
-
-    // }).catch(err => {
-    //     console.log(err)
-    // })
   },
 };
 </script>
