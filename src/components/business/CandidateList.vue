@@ -40,7 +40,7 @@
         </ul>
         <div class="tab-content">
           <div id="tab-1" class="tab-pane fade show p-0 active">
-            <div class="table-fixed-left">
+            <!-- <div class="table-fixed-left">
               <table>
                 <tr>
                   <th>#</th>
@@ -55,10 +55,12 @@
                   <td>{{ cv.name }}</td>
                 </tr>
               </table>
-            </div>
+            </div> -->
             <div class="table-fixed-right">
               <table>
                 <tr>
+                  <th>#</th>
+                  <th scope="row" class="col-12">Họ và tên</th>
                   <th scope="col">Phòng ban</th>
                   <th scope="col">Chức danh</th>
                   <th scope="col">Xếp loại</th>
@@ -67,6 +69,12 @@
                   <th scope="col">Thao tác</th>
                 </tr>
                 <tr v-for="(cv, index) in list_selected_cv">
+                  <th><input type="checkbox"
+                        class="form-check-input"
+                        v-model="selected"
+                        :value="cv._id"
+                        @change="onChange($event, cv)" /></th>
+                  <td>{{ cv.name }}</td>
                   <td class="col-4">{{ cv.department_name }}</td>
                   <td class="col-4">{{ cv.jobtitle }}</td>
                   <td>{{ cv.rating }}</td>
@@ -629,7 +637,6 @@ export default {
                       }
                     }
                   });
-                  console.log(this.list_selected_cv);
                 });
             });
           });
@@ -665,7 +672,7 @@ export default {
 }
 .table-fixed-right {
   margin-right: 0rem;
-  margin-left: 200px;
+  margin-left: 0px;
   width: auto;
   position: static;
   overflow-x: scroll;
