@@ -43,12 +43,16 @@
             <div class="table-fixed-left">
               <table>
                 <tr>
-                  <th><input type="checkbox"/></th>
+                  <th>#</th>
                   <th scope="row" class="col-12">Họ và tên</th>
                 </tr>
-                <tr v-for="cv in job_list">
-                  <th><input type="checkbox"/></th>
-                  <td>{{cv.name}}</td>
+                <tr v-for="cv in list_selected_cv">
+                  <th><input type="checkbox"
+                        class="form-check-input"
+                        v-model="selected"
+                        :value="cv._id"
+                        @change="onChange($event, cv)" /></th>
+                  <td>{{ cv.name }}</td>
                 </tr>
               </table>
             </div>
@@ -56,20 +60,136 @@
               <table>
                 <tr>
                   <th scope="col">Phòng ban</th>
-                    <th scope="col">Chức danh</th>
-                    <th scope="col">Xếp loại</th>
-                    <th scope="col">Đánh giá</th>
-                    <th scope="col">Thao tác</th>
+                  <th scope="col">Chức danh</th>
+                  <th scope="col">Xếp loại</th>
+                  <th scope="col">Đánh giá</th>
+                  <th scope="col">Lịch phỏng vấn</th>
+                  <th scope="col">Thao tác</th>
                 </tr>
-                <tr v-for="cv in job_list">
-                  <td class="col-4">{{cv.department_name}}</td>
-                  <td class="col-4">{{cv.job.jobtitle}}</td>
-                  <td>{{cv.rating}}</td>
-                  <td class="col-4">{{cv.review}}</td>
-                  <td class="py-0"><button class="btn btn-sm btn-danger py-0">Xóa</button></td>
+                <tr v-for="(cv, index) in list_selected_cv">
+                  <td class="col-4">{{ cv.department_name }}</td>
+                  <td class="col-4">{{ cv.jobtitle }}</td>
+                  <td>{{ cv.rating }}</td>
+                  <td class="col-4">{{ cv.review }}</td>
+                  <td class="">{{ cv.schedule?cv.schedule.split('T')[1]+' '+cv.schedule.split('T')[0]:'' }}</td>
+                  <td class="py-0">
+                    <button
+                      class="btn btn-sm btn-success py-0"
+                      data-bs-toggle="modal"
+                      :data-bs-target="'#ScheduleModal'+index"
+                      @click.prevent="employee_id = cv.employee_id"
+                      v-if="!cv.schedule"
+                    >
+                      Đặt lịch pv
+                    </button>
+                    <button
+                      class="btn btn-sm btn-success py-0"
+                      data-bs-toggle="modal"
+                      :data-bs-target="'#ScheduleModal'+index"
+                      @click.prevent="employee_id = cv._id"
+                      v-if="cv.schedule"
+                    >
+                      Thay đổi lịch pv</button
+                    ><button class="btn btn-sm btn-danger py-0 ms-1" @click="cancelCVID(index)">Xóa</button>
+                  </td>
+                  <div
+                    class="modal fade"
+                    :id="'ScheduleModal' + index"
+                    tabindex="-1"
+                    :aria-labelledby="'ScheduleModalLabel' + index"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5
+                            class="modal-title"
+                            :id="'ScheduleModalLabel' + index"
+                          >
+                            Đặt lịch
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="mb-3">
+                            <label class="form-label">Thời gian:</label>
+                            <input
+                              type="datetime-local"
+                              class="form-control"
+                              v-model="cv.schedule"
+                              :min="new Date().toISOString().substr(0, 16)"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Địa điểm:</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="cv.address"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Người liên hệ:</label>
+                            <input
+                              type="tel"
+                              class="form-control"
+                              v-model="cv.contact"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Số điện thoại:</label>
+                            <input
+                              type="tel"
+                              class="form-control"
+                              v-model="cv.phone"
+                            />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Email:</label>
+                            <input
+                              type="email"
+                              class="form-control"
+                              v-model="cv.email"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleFormControlTextarea1"
+                              >Yêu cầu:</label
+                            >
+                            <textarea
+                              class="form-control"
+                              id="exampleFormControlTextarea1"
+                              rows="3"
+                              v-model="cv.note"
+                            ></textarea>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-dismiss="modal"
+                            @click="setSchedule"
+                          >
+                            Save changes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </tr>
-                
-              
               </table>
             </div>
 
@@ -90,7 +210,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="cv in job_list" class="align-middle">
+                  <tr v-for="(cv, index) in job_list" class="align-middle">
                     <td class="">{{ cv.name }}</td>
                     <td class="">{{ cv.department_name }}</td>
 
@@ -98,24 +218,24 @@
                     <td>{{ cv.rating }}</td>
                     <td>{{ cv.review }}</td>
                     <td>
-                      <!-- <button
-                      class="btn btn-sm btn-success"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ScheduleModal"
-                      @click.prevent="employee_id = cv._id"
-                      v-if="!cv.schedule"
-                    >
-                      Đặt lịch pv
-                    </button>
-                    <button
-                      class="btn btn-sm btn-success"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ScheduleModal"
-                      @click.prevent="employee_id = cv._id"
-                      v-if="cv.schedule"
-                    >
-                      Thay đổi lịch pv</button
-                    > -->
+                      <button
+                        class="btn btn-sm btn-success"
+                        data-bs-toggle="modal"
+                        :data-bs-target="'#ScheduleModal' + index"
+                        @click.prevent="employee_id = cv._id"
+                        v-if="!cv.schedule"
+                      >
+                        Đặt lịch pv
+                      </button>
+                      <button
+                        class="btn btn-sm btn-success"
+                        data-bs-toggle="modal"
+                        :data-bs-target="'#ScheduleModal' + index"
+                        @click.prevent="employee_id = cv._id"
+                        v-if="cv.schedule"
+                      >
+                        Thay đổi lịch pv
+                      </button>
                       <button
                         class="ms-2 btn btn-sm btn-danger"
                         @click="cancelCVID(cv)"
@@ -206,7 +326,7 @@
                         class="form-check-input float-end me-2 p-3"
                         v-model="selected"
                         :value="cv._id"
-                        @change="onChange($event, position, cv)"
+                        
                       />
                       <span class="badge bg-secondary float-end me-2 p-3">{{
                         cv.rating
@@ -216,7 +336,7 @@
                 </div>
               </div>
             </div>
-            <div class="mt-2 d-flex justify-content-end" v-if="false">
+            <div class="mt-2 d-flex justify-content-end">
               <div class="d-flex mb-3">
                 <a class="p-1 fs-4 me-2"
                   ><i class="fw-bold">Tổng:</i>
@@ -292,94 +412,12 @@
           </div>
         </div>
       </div>
-      <div
-        class="modal fade"
-        id="ScheduleModal"
-        tabindex="-1"
-        aria-labelledby="ScheduleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="ScheduleModalLabel">Đặt lịch</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label">Thời gian:</label>
-                <input
-                  type="datetime-local"
-                  class="form-control"
-                  v-model="schedule"
-                  :min="new Date().toISOString().substr(0, 16)"
-                />
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Địa điểm:</label>
-                <input type="text" class="form-control" v-model="address" />
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Người liên hệ:</label>
-                <input type="tel" class="form-control" v-model="contact" />
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Số điện thoại:</label>
-                <input type="tel" class="form-control" v-model="phone" />
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Email:</label>
-                <input type="email" class="form-control" v-model="email" />
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Yêu cầu:</label>
-                <textarea
-                  class="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows="3"
-                  v-model="note"
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-dismiss="modal"
-                @click="setSchedule"
-              >
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 <script>
 const { BASE_URL } = require("../../utils/config");
-$(document).ready(function () {
-  var table = $("#example").DataTable({
-    scrollY: "300px",
-    scrollX: true,
-    scrollCollapse: true,
-    paging: false,
-  });
-  new $.fn.dataTable.FixedColumns(table, { leftColumns: 2 });
-});
+
 export default {
   data() {
     return {
@@ -387,6 +425,7 @@ export default {
       positions: [],
       employee_id: "",
       cvid_list: [],
+      list_selected_cv: [],
       job_list: [],
       list_paid_cv: [],
       selected: [],
@@ -415,15 +454,15 @@ export default {
     },
   },
   methods: {
-    onChange(e, position, cv) {
+    onChange(e, cv) {
       if (e.target.checked == true) {
         let index = this.bill.findIndex(
-          (item) => item.position_id == position._id
+          (item) => item.position_id == cv.position_id
         );
         if (index == -1) {
           this.bill.push({
-            position_id: position._id,
-            quantity_needed: position.amount,
+            position_id: cv.position_id,
+            quantity_needed: cv.amount,
             price_list: [cv.price],
           });
         } else {
@@ -432,7 +471,7 @@ export default {
       }
       if (e.target.checked == false) {
         let index1 = this.bill.findIndex(
-          (item) => item.position_id == position._id
+          (item) => item.position_id == cv.position_id
         );
         let index2 = this.bill[index1].price_list.findIndex(
           (item) => item == cv.price
@@ -440,24 +479,21 @@ export default {
         this.bill[index1].price_list.splice(index2, 1);
       }
     },
-    cancelCVID(cv) {
+    cancelCVID(index) {
+      const cv = this.list_selected_cv[index]
       var job = {
-        employee_id: cv._id,
+        employee_id: cv.employee_id,
         position_id: cv.position_id,
         type: cv.type == 2 ? 0 : cv.type,
         confirm: cv.type == 1 ? 0 : cv.confirm,
       };
-      this.job_list.forEach((el, index) => {
-        if (cv._id == el._id) {
-          this.job_list.splice(index, 1);
-        }
-      });
       this.$http
         .post(`${BASE_URL}/job/create`, {
           job: job,
         })
         .then((res) => {
           if (res.data) {
+            this.list_selected_cv.splice(index, 1);
           }
         })
         .catch((err) => {
@@ -481,14 +517,14 @@ export default {
         });
         return;
       }
-      this.job_list.forEach((item) => {
-        if (item._id == this.employee_id) {
-          item.schedule = this.schedule;
-          item.address = this.address;
-          item.phone = this.phone;
-          item.email = this.email;
-          item.contact = this.contact;
-          item.note = this.note;
+      this.list_selected_cv.forEach((item, index) => {
+        if (item.employee_id == this.employee_id) {
+          list_selected_cv[index].schedule = this.schedule;
+          list_selected_cv[index].address = this.address;
+          list_selected_cv[index].phone = this.phone;
+          list_selected_cv[index].email = this.email;
+          list_selected_cv[index].contact = this.contact;
+          list_selected_cv[index].note = this.note;
         }
       });
       this.schedule = "";
@@ -570,66 +606,36 @@ export default {
                 })
                 .then((res) => {
                   const job_list = res.data.job_list;
-                  let cvid = job_list.map((t1) => ({
-                    ...t1,
-                    ...res.data.cv_list.find((t2) => t2._id == t1.employee_id),
-                  }));
-                  cvid.forEach((item) => {
-                    if (item.status == 1) {
-                      this.list_paid_cv.push(item);
-                    }
-                    if (item.type == 2 && item.status == 0) {
-                      item.price = 500000;
-                      item.department_name = department.name;
-                      this.job_list.push(item);
+                  job_list.forEach((job) => {
+                    if (job.position_id == position._id) {
+                      const cv = res.data.cv_list.find(
+                        (item) => item._id == job.employee_id
+                      );
+                      if (job.status == 1) {
+                        this.list_paid_cv.push({
+                          ...job,
+                          name: cv.name,
+                        });
+                      }
+                      if (job.type == 2 && job.status == 0) {
+                        this.list_selected_cv.push({
+                          ...job,
+                          name: cv.name,
+                          jobtitle: position.jobtitle,
+                          department_name: department.name,
+                          amount: position.amount,
+                          price: 500000
+                        });
+                      }
                     }
                   });
+                  console.log(this.list_selected_cv);
                 });
             });
           });
         })
         .catch((err) => {
           console.log(err);
-        });
-    } else if (this.key) {
-      await this.$http
-        .post(`${BASE_URL}/department/list/get-by-key`, {
-          key: this.key,
-        })
-        .then((res) => {
-          if (res.data) {
-            res.data.forEach((department) => {
-              department.position.forEach((position) => {
-                this.$http
-                  .post(`${BASE_URL}/job/getcvidforposition`, {
-                    id: position._id,
-                  })
-                  .then((res) => {
-                    const job_list = res.data.job_list;
-                    let cvid = job_list.map((t1) => ({
-                      ...t1,
-                      ...res.data.cv_list.find(
-                        (t2) => t2._id == t1.employee_id
-                      ),
-                    }));
-                    cvid.forEach((item) => {
-                      if (item.status == 1) {
-                        this.list_paid_cv.push(item);
-                      }
-                      if (item.type == 2 && item.status == 0) {
-                        item.price = 500000;
-                        item.department_name = department.name;
-                        this.job_list.push(item);
-                        console.log(this.job_list);
-                      }
-                    });
-                  });
-              });
-            });
-          }
-        })
-        .catch((err) => {
-          console.error(err);
         });
     }
   },
