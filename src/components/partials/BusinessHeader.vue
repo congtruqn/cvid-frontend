@@ -72,22 +72,7 @@
             >
           </div>
         </div>
-        <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-            >Ứng viên</a
-          >
-          <div class="dropdown-menu rounded-0 m-0">
-            <a
-              v-for="department in departments"
-              :key="department._id"
-              href="/business/candidate"
-              class="dropdown-item"
-              @click=setLocal(department.key)
-              >{{ department.name}}
-              </a
-            >
-          </div>
-        </div>
+        <a href="/business/candidate" class="nav-item nav-link">Ứng viên</a>
         <a href="/business/login" class="nav-item nav-link">Login</a>
         <a href="" @click="logout" class="nav-item nav-link">Đăng xuất</a>
       </div>

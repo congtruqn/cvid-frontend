@@ -40,51 +40,104 @@
         </ul>
         <div class="tab-content">
           <div id="tab-1" class="tab-pane fade show p-0 active">
-            <!-- <div class="table-fixed-left">
+            <div class="d-block d-md-none">
+              <div class="card" v-for="(cv, index) in list_selected_cv">
+                <div class="card-body">
+                  <h5 class="card-title">{{ cv.name }}<input class="float-end form-check-input"
+                      v-model="selected"
+                      :value="cv._id"
+                      v-if="cv.schedule"
+                      @change="onChange($event, cv)" type="checkbox"/></h5>
+                  <p class="card-text my-1">Phòng ban: {{ cv.department_name }}</p>
+                  <p class="card-text my-1">Chức danh: {{ cv.jobtitle }}</p>
+                  <p class="card-text my-1">Xếp loại: {{ cv.rating }}</p>
+                  <p class="card-text my-1">Đánh giá: {{ cv.review }}</p>
+                  <p class="card-text my-1">
+                    Trạng thái:
+                    {{ cv.confirm == 0 ? "Đã gửi lời mời" : "NLD đã xác nhận" }}
+                  </p>
+                  <p class="card-text">
+                    Lịch phỏng vấn:
+                    {{
+                      cv.schedule
+                        ? cv.schedule.split("T")[1] +
+                          " " +
+                          cv.schedule.split("T")[0]
+                        : ""
+                    }}
+                  </p>
+                  <button
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#ScheduleModal"
+                    @click.prevent="employee_id = cv.employee_id"
+                    v-if="!cv.schedule"
+                  >
+                    Đặt lịch pv
+                  </button>
+                  <button
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#ScheduleModal"
+                    @click.prevent="employee_id = cv.employee_id"
+                    v-if="cv.schedule"
+                  >
+                    Thay đổi lịch pv</button
+                  ><button
+                    class="btn btn-danger ms-1"
+                    @click="cancelCVID(index)"
+                  >
+                    Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-fixed-right d-none d-md-block">
               <table>
                 <tr>
                   <th>#</th>
-                  <th scope="row" class="col-12">Họ và tên</th>
-                </tr>
-                <tr v-for="cv in list_selected_cv">
-                  <th><input type="checkbox"
-                        class="form-check-input"
-                        v-model="selected"
-                        :value="cv._id"
-                        @change="onChange($event, cv)" /></th>
-                  <td>{{ cv.name }}</td>
-                </tr>
-              </table>
-            </div> -->
-            <div class="table-fixed-right">
-              <table>
-                <tr>
-                  <th>#</th>
-                  <th scope="row" class="col-12">Họ và tên</th>
-                  <th scope="col">Phòng ban</th>
-                  <th scope="col">Chức danh</th>
-                  <th scope="col">Xếp loại</th>
-                  <th scope="col">Đánh giá</th>
-                  <th scope="col">Lịch phỏng vấn</th>
-                  <th scope="col">Thao tác</th>
+                  <th scope="col" class="col-2">Họ và tên</th>
+                  <th scope="col" class="col-2">Phòng ban</th>
+                  <th scope="col" class="col-2">Chức danh</th>
+                  <th scope="col" class="col-2">Xếp loại</th>
+                  <th scope="col" class="col-2">Đánh giá</th>
+                  <th scope="col" class="col-2">Trạng thái</th>
+                  <th scope="col" class="col-2">Lịch phỏng vấn</th>
+                  <th scope="col" class="col-2">Thao tác</th>
                 </tr>
                 <tr v-for="(cv, index) in list_selected_cv">
-                  <th><input type="checkbox"
-                        class="form-check-input"
-                        v-model="selected"
-                        :value="cv._id"
-                        @change="onChange($event, cv)" /></th>
+                  <th>
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      v-model="selected"
+                      :value="cv._id"
+                      v-if="cv.schedule"
+                      @change="onChange($event, cv)"
+                    />
+                  </th>
                   <td>{{ cv.name }}</td>
                   <td class="col-4">{{ cv.department_name }}</td>
                   <td class="col-4">{{ cv.jobtitle }}</td>
                   <td>{{ cv.rating }}</td>
                   <td class="col-4">{{ cv.review }}</td>
-                  <td class="">{{ cv.schedule?cv.schedule.split('T')[1]+' '+cv.schedule.split('T')[0]:'' }}</td>
+                  <td class="col-4">
+                    {{ cv.confirm == 0 ? "Đã gửi lời mời" : "NLD đã xác nhận" }}
+                  </td>
+                  <td class="">
+                    {{
+                      cv.schedule
+                        ? cv.schedule.split("T")[1] +
+                          " " +
+                          cv.schedule.split("T")[0]
+                        : ""
+                    }}
+                  </td>
                   <td class="py-0">
                     <button
                       class="btn btn-sm btn-success py-0"
                       data-bs-toggle="modal"
-                      :data-bs-target="'#ScheduleModal'+index"
+                      data-bs-target="#ScheduleModal"
                       @click.prevent="employee_id = cv.employee_id"
                       v-if="!cv.schedule"
                     >
@@ -93,258 +146,23 @@
                     <button
                       class="btn btn-sm btn-success py-0"
                       data-bs-toggle="modal"
-                      :data-bs-target="'#ScheduleModal'+index"
-                      @click.prevent="employee_id = cv._id"
+                      data-bs-target="#ScheduleModal"
+                      @click.prevent="employee_id = cv.employee_id"
                       v-if="cv.schedule"
                     >
                       Thay đổi lịch pv</button
-                    ><button class="btn btn-sm btn-danger py-0 ms-1" @click="cancelCVID(index)">Xóa</button>
+                    ><button
+                      class="btn btn-sm btn-danger py-0 ms-1"
+                      @click="cancelCVID(index)"
+                    >
+                      Xóa
+                    </button>
                   </td>
-                  <div
-                    class="modal fade"
-                    :id="'ScheduleModal' + index"
-                    tabindex="-1"
-                    :aria-labelledby="'ScheduleModalLabel' + index"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5
-                            class="modal-title"
-                            :id="'ScheduleModalLabel' + index"
-                          >
-                            Đặt lịch
-                          </h5>
-                          <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="mb-3">
-                            <label class="form-label">Thời gian:</label>
-                            <input
-                              type="datetime-local"
-                              class="form-control"
-                              v-model="cv.schedule"
-                              :min="new Date().toISOString().substr(0, 16)"
-                            />
-                          </div>
-                          <div class="mb-3">
-                            <label class="form-label">Địa điểm:</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="cv.address"
-                            />
-                          </div>
-                          <div class="mb-3">
-                            <label class="form-label">Người liên hệ:</label>
-                            <input
-                              type="tel"
-                              class="form-control"
-                              v-model="cv.contact"
-                            />
-                          </div>
-                          <div class="mb-3">
-                            <label class="form-label">Số điện thoại:</label>
-                            <input
-                              type="tel"
-                              class="form-control"
-                              v-model="cv.phone"
-                            />
-                          </div>
-                          <div class="mb-3">
-                            <label class="form-label">Email:</label>
-                            <input
-                              type="email"
-                              class="form-control"
-                              v-model="cv.email"
-                            />
-                          </div>
-                          <div class="form-group">
-                            <label for="exampleFormControlTextarea1"
-                              >Yêu cầu:</label
-                            >
-                            <textarea
-                              class="form-control"
-                              id="exampleFormControlTextarea1"
-                              rows="3"
-                              v-model="cv.note"
-                            ></textarea>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button
-                            type="button"
-                            class="btn btn-primary"
-                            data-bs-dismiss="modal"
-                            @click="setSchedule"
-                          >
-                            Save changes
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </tr>
               </table>
             </div>
 
-            <div class="table-responsive-sm" v-if="false">
-              <table
-                id="example"
-                class="table table-sm table-bordered caption-top"
-                style="min-width: 600px"
-              >
-                <thead>
-                  <tr>
-                    <th scope="col" class="">Họ và tên</th>
-                    <th scope="col">Phòng ban</th>
-                    <th scope="col">Chức danh</th>
-                    <th scope="col">Xếp loại</th>
-                    <th scope="col">Đánh giá</th>
-                    <th scope="col">Thao tác</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(cv, index) in job_list" class="align-middle">
-                    <td class="">{{ cv.name }}</td>
-                    <td class="">{{ cv.department_name }}</td>
-
-                    <td>{{ cv.job.jobtitle }}</td>
-                    <td>{{ cv.rating }}</td>
-                    <td>{{ cv.review }}</td>
-                    <td>
-                      <button
-                        class="btn btn-sm btn-success"
-                        data-bs-toggle="modal"
-                        :data-bs-target="'#ScheduleModal' + index"
-                        @click.prevent="employee_id = cv._id"
-                        v-if="!cv.schedule"
-                      >
-                        Đặt lịch pv
-                      </button>
-                      <button
-                        class="btn btn-sm btn-success"
-                        data-bs-toggle="modal"
-                        :data-bs-target="'#ScheduleModal' + index"
-                        @click.prevent="employee_id = cv._id"
-                        v-if="cv.schedule"
-                      >
-                        Thay đổi lịch pv
-                      </button>
-                      <button
-                        class="ms-2 btn btn-sm btn-danger"
-                        @click="cancelCVID(cv)"
-                      >
-                        Hủy
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="card mb-3" v-for="position in positions">
-              <h5 class="card-header bg-primary text-white">{{}}</h5>
-              <div class="card-body mx-2">
-                <div
-                  class="card mb-2"
-                  v-for="position in position"
-                  v-if="
-                    job_list.findIndex((x) => x.position_id == position._id) !=
-                    -1
-                  "
-                >
-                  <div class="card-header">
-                    {{ position.jobtitle }}
-                  </div>
-                  <div class="card-body row">
-                    <a
-                      :href="'/business/cvid/' + cv._id"
-                      target="_blank"
-                      class="card-body border col-md-6 mb-1"
-                      v-for="cv in job_list"
-                      v-if="cv.position_id == position._id"
-                    >
-                      <!-- <span class="badge bg-secondary float-end">{{cv.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")}} VND</span> -->
-                      <h5 class="card-title d-inline">{{ cv.name }}</h5>
-                      <p class="card-text text-primary mb-0">
-                        {{ cv.position }}
-                      </p>
-                      <p class="card-text text-primary mb-0">
-                        Điểm CV: {{ cv.point }}/10
-                      </p>
-                      <p class="card-text text-primary mb-0">
-                        Trường: {{ cv.school }}
-                      </p>
-                      <p class="card-text text-primary mb-0">
-                        Chuyên nghành: {{ cv.skill }}
-                      </p>
-                      <p class="card-text text-primary mb-0">
-                        Đánh giá: {{ cv.review }}
-                      </p>
-                      <p class="card-text text-primary" v-if="cv.schedule">
-                        <i class="far fa-calendar-alt text-primary my-2"></i>
-                        Lịch phỏng vấn:
-                        {{
-                          cv.schedule
-                            ? cv.schedule.replace("T", " ")
-                            : "Chưa có"
-                        }}
-                      </p>
-                      <button
-                        type="button"
-                        class="btn btn-light me-2 text-primary"
-                        @click="cancelCVID(cv)"
-                      >
-                        Hủy
-                      </button>
-                      <button
-                        class="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#ScheduleModal"
-                        @click.prevent="employee_id = cv._id"
-                        v-if="!cv.schedule"
-                      >
-                        Đặt lịch phỏng vấn
-                      </button>
-                      <button
-                        class="btn btn-secondary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#ScheduleModal"
-                        @click.prevent="employee_id = cv._id"
-                        v-if="cv.schedule"
-                      >
-                        Thay đổi lịch phỏng vấn
-                      </button>
-                      <input
-                        type="checkbox"
-                        class="form-check-input float-end me-2 p-3"
-                        v-model="selected"
-                        :value="cv._id"
-                        
-                      />
-                      <span class="badge bg-secondary float-end me-2 p-3">{{
-                        cv.rating
-                      }}</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mt-2 d-flex justify-content-end">
+            <div class="mt-4 d-flex justify-content-end">
               <div class="d-flex mb-3">
                 <a class="p-1 fs-4 me-2"
                   ><i class="fw-bold">Tổng:</i>
@@ -359,64 +177,219 @@
             </div>
           </div>
           <div id="tab-2" class="tab-pane fade show p-0">
-            <div class="table-responsive-sm">
-              <table
-                class="table table-sm table-bordered caption-top"
-                style="min-width: 600px"
-              >
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Họ và tên</th>
-                    <th scope="col">Phòng ban</th>
-                    <th scope="col">Chức danh</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Thao tác</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="cv in job_list" class="align-middle">
-                    <th scope="col" class="text-center">
-                      <input type="checkbox" />
-                    </th>
-                    <td>{{ cv.name }}</td>
-                    <td>{{ cv.department_name }}</td>
-
-                    <td>{{ cv.job.jobtitle }}</td>
-                    <td>{{ cv.username }}</td>
-                    <td>{{ cv.email }}</td>
-                    <td>
-                      <button
-                        class="btn btn-sm btn-success"
-                        data-bs-toggle="modal"
-                        data-bs-target="#ScheduleModal"
-                        @click.prevent="employee_id = cv._id"
-                        v-if="!cv.schedule"
-                      >
-                        Đặt lịch pv
-                      </button>
-                      <button
-                        class="btn btn-sm btn-success"
-                        data-bs-toggle="modal"
-                        data-bs-target="#ScheduleModal"
-                        @click.prevent="employee_id = cv._id"
-                        v-if="cv.schedule"
-                      >
-                        Thay đổi lịch pv
-                      </button>
-                      <button
-                        class="ms-2 btn btn-sm btn-danger"
-                        :disabled="!cv.schedule"
-                        @click="cancelCVID(cv)"
-                      >
-                        Xác nhận
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
+            <div class="d-block d-md-none">
+              <div class="card" v-for="(cv, index) in list_paid_cv">
+                <div class="card-body">
+                  <h5 class="card-title">{{ cv.name }}</h5>
+                  <p class="card-text my-1">Phòng ban: {{ cv.department_name }}</p>
+                  <p class="card-text my-1">Chức danh: {{ cv.jobtitle }}</p>
+                  <p class="card-text my-1">Số điện thoại: {{ cv.phone_cv }}</p>
+                  <p class="card-text my-1">Email: {{ cv.email_cv }}</p>
+                  <p class="card-text my-1">
+                    Trạng thái:
+                    {{ cv.confirm == 0 ? "Đã gửi lời mời" : "NLD đã xác nhận" }}
+                  </p>
+                  <p class="card-text my-1">
+                    Lịch phỏng vấn:
+                    {{
+                      cv.schedule
+                        ? cv.schedule.split("T")[1] +
+                          " " +
+                          cv.schedule.split("T")[0]
+                        : ""
+                    }}
+                  </p>
+                  <div class="row align-content-between my-1">
+                    <div class="col-auto">
+                        <span>Kết quả pv:</span>
+                    </div>
+                    <div class="col">
+<select
+                      class="form-select form-select-sm"
+                      aria-label="Default select example"
+                    >
+                      <option selected>Chọn...</option>
+                      <option value="1">Đạt</option>
+                      <option value="0">Không đạt</option>
+                    </select>
+                    </div>
+                  </div>
+                  
+                    
+                 
+                  <button
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#ScheduleModal"
+                    @click.prevent="employee_id = cv.employee_id"
+                    v-if="!cv.schedule"
+                  >
+                    Đặt lịch pv
+                  </button>
+                  <button
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#ScheduleModal"
+                    @click.prevent="employee_id = cv.employee_id"
+                    v-if="cv.schedule"
+                  >
+                    Thay đổi lịch pv</button
+                  ><button
+                    class="btn btn-danger ms-1"
+                    @click="cancelCVID(index)"
+                  >
+                    Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="table-fixed-right d-none d-md-block">
+              <table>
+                <tr>
+                  <th>#</th>
+                  <th scope="col" class="col-2">Họ và tên</th>
+                  <th scope="col" class="col-2">Phòng ban</th>
+                  <th scope="col" class="col-2">Chức danh</th>
+                  <th scope="col" class="col-2">Số điện thoại</th>
+                  <th scope="col" class="col-2">Email</th>
+                  <th scope="col" class="col-2">Trạng thái</th>
+                  <th scope="col" class="col-2">Lịch pv</th>
+                  <th scope="col" class="col-2">Kết quả pv</th>
+                  <th scope="col" class="col-2">Thao tác</th>
+                </tr>
+                <tr v-for="(cv, index) in list_paid_cv">
+                  <th>
+                    {{ index + 1 }}
+                  </th>
+                  <td>{{ cv.name }}</td>
+                  <td class="col-4">{{ cv.department_name }}</td>
+                  <td class="col-4">{{ cv.jobtitle }}</td>
+                  <td>{{ cv.phone_cv }}</td>
+                  <td class="col-4">{{ cv.email_cv }}</td>
+                  <td class="col-4">
+                    {{ cv.confirm == 0 ? "Đã gửi lịch pv" : "NLD đã xác nhận" }}
+                  </td>
+                  <td class="">
+                    {{
+                      cv.schedule
+                        ? cv.schedule.split("T")[1] +
+                          " " +
+                          cv.schedule.split("T")[0]
+                        : ""
+                    }}
+                  </td>
+                  <td class="">
+                    <select
+                      class="form-select form-select-sm"
+                      aria-label="Default select example"
+                      style="width: 150px"
+                    >
+                      <option selected>Chọn...</option>
+                      <option value="1">Đạt</option>
+                      <option value="0">Không đạt</option>
+                    </select>
+                  </td>
+                  <td class="py-0" v-if="cv.confirm == 0">
+                    <button
+                      class="btn btn-sm btn-success py-0"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ScheduleModal"
+                      @click.prevent="employee_id = cv.employee_id"
+                      v-if="!cv.schedule"
+                    >
+                      Đặt lịch pv
+                    </button>
+                    <button
+                      class="btn btn-sm btn-success py-0"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ScheduleModal"
+                      @click.prevent="employee_id = cv.employee_id"
+                      v-if="cv.schedule"
+                    >
+                      Thay đổi lịch pv
+                    </button>
+                    <button class="btn btn-sm btn-success py-0">
+                      Cập nhật
+                    </button>
+                  </td>
+                </tr>
               </table>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="ScheduleModal"
+      tabindex="-1"
+      aria-labelledby="ScheduleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ScheduleModalLabel">Đặt lịch</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Thời gian:</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                v-model="schedule"
+                :min="new Date().toISOString().substr(0, 16)"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Địa điểm:</label>
+              <input type="text" class="form-control" v-model="address" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Người liên hệ:</label>
+              <input type="tel" class="form-control" v-model="contact" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Số điện thoại:</label>
+              <input type="tel" class="form-control" v-model="phone" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email:</label>
+              <input type="email" class="form-control" v-model="email" />
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Yêu cầu:</label>
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                v-model="note"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="setSchedule"
+            >
+              Save changes
+            </button>
           </div>
         </div>
       </div>
@@ -488,7 +461,7 @@ export default {
       }
     },
     cancelCVID(index) {
-      const cv = this.list_selected_cv[index]
+      const cv = this.list_selected_cv[index];
       var job = {
         employee_id: cv.employee_id,
         position_id: cv.position_id,
@@ -527,15 +500,15 @@ export default {
       }
       this.list_selected_cv.forEach((item, index) => {
         if (item.employee_id == this.employee_id) {
-          list_selected_cv[index].schedule = this.schedule;
-          list_selected_cv[index].address = this.address;
-          list_selected_cv[index].phone = this.phone;
-          list_selected_cv[index].email = this.email;
-          list_selected_cv[index].contact = this.contact;
-          list_selected_cv[index].note = this.note;
+          this.list_selected_cv[index].schedule = this.schedule;
+          this.list_selected_cv[index].address = this.address;
+          this.list_selected_cv[index].phone = this.phone;
+          this.list_selected_cv[index].email = this.email;
+          this.list_selected_cv[index].contact = this.contact;
+          this.list_selected_cv[index].note = this.note;
+          this.schedule = "";
         }
       });
-      this.schedule = "";
     },
     pay() {
       if (this.selected.length == 0) {
@@ -549,49 +522,39 @@ export default {
         return;
       }
       var item = [];
-      this.job_list.forEach((el) => {
-        if (this.selected.includes(el._id) && el.schedule) {
+      this.list_selected_cv.forEach((el) => {
+        if (this.selected.includes(el._id)) {
           item.push(el);
         }
       });
 
-      if (item.length < this.selected.length) {
-        Swal.fire({
-          icon: "info",
-          title: "Thất bại",
-          text: "Vui lòng đặt lịch phỏng vấn cho ứng viên",
-          // confirmButtonColor: 'var(--light)',
-          confirmButtonText: "Quay lại",
-        });
-      } else {
-        Swal.fire({
-          icon: "warning",
-          title: "Xác nhận thanh toán",
-          // text: 'Vui lòng chọn ứng viên',
-          confirmButtonColor: "var(--primary)",
-          showCancelButton: true,
-          confirmButtonText: "Xác nhận",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.$http
-              .post(`${BASE_URL}/job/pay`, {
-                job_list: item,
-              })
-              .then((res) => {
-                Swal.fire({
-                  icon: "success",
-                  title: "Thanh toán thành công",
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-                window.location.reload();
-              })
-              .catch((err) => {
-                console.log(err);
+      Swal.fire({
+        icon: "warning",
+        title: "Xác nhận thanh toán",
+        // text: 'Vui lòng chọn ứng viên',
+        confirmButtonColor: "var(--primary)",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$http
+            .post(`${BASE_URL}/job/pay`, {
+              job_list: item,
+            })
+            .then((res) => {
+              Swal.fire({
+                icon: "success",
+                title: "Thanh toán thành công",
+                showConfirmButton: false,
+                timer: 1500,
               });
-          }
-        });
-      }
+              window.location.reload();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
     },
   },
   async created() {
@@ -623,6 +586,10 @@ export default {
                         this.list_paid_cv.push({
                           ...job,
                           name: cv.name,
+                          department_name: department.name,
+                          jobtitle: position.jobtitle,
+                          phone_cv: cv.username,
+                          email_cv: cv.email,
                         });
                       }
                       if (job.type == 2 && job.status == 0) {
@@ -632,7 +599,7 @@ export default {
                           jobtitle: position.jobtitle,
                           department_name: department.name,
                           amount: position.amount,
-                          price: 500000
+                          price: 500000,
                         });
                       }
                     }
