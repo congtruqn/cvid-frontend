@@ -104,17 +104,11 @@
                   <th scope="col" class="col-2">Trạng thái</th>
                   <th scope="col" class="col-2">Lịch phỏng vấn</th>
                   <th scope="col" class="col-2">Thao tác</th>
+                  <th scope="col" class="col-2">Chọn</th>
                 </tr>
                 <tr v-for="(cv, index) in list_selected_cv">
                   <th>
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      v-model="selected"
-                      :value="cv._id"
-                      v-if="cv.schedule"
-                      @change="onChange($event, cv)"
-                    />
+                    {{index+1}}
                   </th>
                   <td>{{ cv.name }}</td>
                   <td class="col-4">{{ cv.department_name }}</td>
@@ -158,6 +152,14 @@
                       Xóa
                     </button>
                   </td>
+                  <td><input
+                      type="checkbox"
+                      class="form-check-input mx-2"
+                      v-model="selected"
+                      :value="cv._id"
+                      v-if="cv.schedule"
+                      @change="onChange($event, cv)"
+                    /></td>
                 </tr>
               </table>
             </div>
@@ -235,10 +237,10 @@
                   >
                     Thay đổi lịch pv</button
                   ><button
-                    class="btn btn-danger ms-1"
-                    @click="cancelCVID(index)"
+                    class="btn btn-success ms-1"
+                    
                   >
-                    Xóa
+                    Cập nhật
                   </button>
                 </div>
               </div>
@@ -250,10 +252,9 @@
                   <th scope="col" class="col-2">Họ và tên</th>
                   <th scope="col" class="col-2">Phòng ban</th>
                   <th scope="col" class="col-2">Chức danh</th>
-                  <th scope="col" class="col-2">Số điện thoại</th>
-                  <th scope="col" class="col-2">Email</th>
+                  <th scope="col" class="col-2">Thông tin liên hệ</th>
                   <th scope="col" class="col-2">Trạng thái</th>
-                  <th scope="col" class="col-2">Lịch pv</th>
+                  <th scope="col" class="col-2">Lịch phỏng vấn</th>
                   <th scope="col" class="col-2">Kết quả pv</th>
                   <th scope="col" class="col-2">Thao tác</th>
                 </tr>
@@ -264,25 +265,32 @@
                   <td>{{ cv.name }}</td>
                   <td class="col-4">{{ cv.department_name }}</td>
                   <td class="col-4">{{ cv.jobtitle }}</td>
-                  <td>{{ cv.phone_cv }}</td>
-                  <td class="col-4">{{ cv.email_cv }}</td>
+                  <td><button class="btn btn-sm btn-success py-0">Xem thông tin</button></td>
                   <td class="col-4">
                     {{ cv.confirm == 0 ? "Đã gửi lịch pv" : "NLD đã xác nhận" }}
                   </td>
-                  <td class="">
-                    {{
+                  <td class="" v-if="cv.confirm == 0">
+                    <button
+                      class="btn btn-sm py-0"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ScheduleModal"
+                      @click.prevent="employee_id = cv.employee_id"
+                      v-if="cv.schedule"
+                    >
+                      {{
                       cv.schedule
                         ? cv.schedule.split("T")[1] +
                           " " +
                           cv.schedule.split("T")[0]
                         : ""
                     }}
+                    </button>
                   </td>
                   <td class="">
                     <select
                       class="form-select form-select-sm"
                       aria-label="Default select example"
-                      style="width: 150px"
+                      style="width: 150px" :disabled="cv.confirm==0"
                     >
                       <option selected>Chọn...</option>
                       <option value="1">Đạt</option>
@@ -290,24 +298,7 @@
                     </select>
                   </td>
                   <td class="py-0" v-if="cv.confirm == 0">
-                    <button
-                      class="btn btn-sm btn-success py-0"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ScheduleModal"
-                      @click.prevent="employee_id = cv.employee_id"
-                      v-if="!cv.schedule"
-                    >
-                      Đặt lịch pv
-                    </button>
-                    <button
-                      class="btn btn-sm btn-success py-0"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ScheduleModal"
-                      @click.prevent="employee_id = cv.employee_id"
-                      v-if="cv.schedule"
-                    >
-                      Thay đổi lịch pv
-                    </button>
+                    
                     <button class="btn btn-sm btn-success py-0">
                       Cập nhật
                     </button>
@@ -649,5 +640,10 @@ export default {
 .table-fixed-right td,
 .table-fixed-right th {
   padding: 5px 10px;
+}
+
+.table-fixed-right::-webkit-scrollbar { 
+  width: 0 !important;
+  display: none; 
 }
 </style>
