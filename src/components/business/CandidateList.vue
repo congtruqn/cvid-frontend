@@ -29,7 +29,7 @@
               data-bs-toggle="pill"
               href="#tab-2"
             >
-              <h6 class="mt-n1 mb-0">Đã thanh toán</h6>
+              <h6 class="mt-n1 mb-0">Danh sách phỏng vấn</h6>
             </a>
           </li>
           <!-- <li class="nav-item">
@@ -105,8 +105,8 @@
                 <tr>
                   <th>#</th>
                   <th scope="col" class="col-2">Họ và tên</th>
-                  <th scope="col" class="col-2">Phòng ban</th>
-                  <th scope="col" class="col-2">Chức danh</th>
+                  <th scope="col" class="col-2">Phòng ban tuyển dụng</th>
+                  <th scope="col" class="col-2">Chức danh ứng viên</th>
                   <th scope="col" class="col-2">Xếp loại</th>
                   <th scope="col" class="col-2">Đánh giá</th>
                   <th scope="col" class="col-2">Trạng thái</th>
@@ -120,7 +120,7 @@
                   </th>
                   <td>{{ cv.name }}</td>
                   <td class="col-4">{{ cv.department_name }}</td>
-                  <td class="col-4">{{ cv.jobtitle }}</td>
+                  <td class="cl-2">{{ cv.jobtitle }}</td>
                   <td>{{ cv.rating }}</td>
                   <td class="col-4">{{ cv.review }}</td>
                   <td class="col-4">
@@ -255,12 +255,12 @@
                 <tr>
                   <th>#</th>
                   <th scope="col" class="col-2">Họ và tên</th>
-                  <th scope="col" class="col-2">Phòng ban</th>
-                  <th scope="col" class="col-2">Chức danh</th>
+                  <th scope="col" class="col-2">Phòng ban tuyển dụng</th>
+                  <th scope="col" class="col-2">Chức danh công việc</th>
                   <th scope="col" class="col-2">Thông tin liên hệ</th>
                   <th scope="col" class="col-2">Trạng thái</th>
                   <th scope="col" class="col-2">Lịch phỏng vấn</th>
-                  <th scope="col" class="col-2">Kết quả pv</th>
+                  <th scope="col" class="col-2">Kết quả</th>
                   <th scope="col" class="col-2">Thao tác</th>
                 </tr>
                 <tr v-for="(cv, index) in list_paid_cv">

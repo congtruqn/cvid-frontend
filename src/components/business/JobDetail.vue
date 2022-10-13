@@ -19,6 +19,9 @@
                         <p>{{position.description}}</p>
                         <h4 class="mb-3">Yêu cầu ứng viên</h4>
                         <ul class="list-unstyled">
+                            <li v-for="item in position.skills><i class="fa fa-angle-right text-primary me-2"></i>{{item}}.</li>
+                        </ul>
+                        <ul class="list-unstyled">
                             <li v-for="item in position.requirements.split('. ')" v-if="item != ''"><i class="fa fa-angle-right text-primary me-2"></i>{{item}}.</li>
                         </ul>
                         <!-- <h4 class="mb-3">Quyền lợi</h4>

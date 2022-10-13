@@ -7,29 +7,28 @@
                         <img class="flex-shrink-0 img-fluid border rounded" src="../../assets/images/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;">
                         <div class="text-start ps-4">
                             <h3 class="mb-3">{{position.jobtitle}}</h3>
-                            <!-- <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Thời hạn nộp hồ sơ: {{position.enddate}}</small> -->
-                            <!-- <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>New York, USA</span>
-                            <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span>
+                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Thời gian đăng tuyển: {{position.startdate?position.startdate.split('T')[0]:''}}</small>
+                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{position.work_location}}</span>
+                            <!-- <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span>
                             <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$123 - $456</span> -->
                         </div>
                     </div>
 
                     <div class="mb-5">
                         <h4 class="mb-3">Mô tả công việc</h4>
-                        <p>{{position.description}}</p>
+                        <p style="white-space: pre-line;">{{ position.description }}</p>
                         <h4 class="mb-3">Yêu cầu ứng viên</h4>
+                        <h6>Cấp bậc ứng viên:</h6>
                         <ul class="list-unstyled">
-                            <!-- <li v-for="item in position.requirements.split('. ')" v-if="item != ''"><i class="fa fa-angle-right text-primary me-2"></i>{{item}}.</li> -->
+                            <li v-for="item in position.levels"><i class="fa fa-angle-right text-primary me-2"></i>{{item}}.</li>
                         </ul>
-                        <!-- <h4 class="mb-3">Quyền lợi</h4>
-                        <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
+                        <h6>Chuyên nghành:</h6>
                         <ul class="list-unstyled">
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
-                        </ul> -->
+                            <li v-for="item in position.skills"><i class="fa fa-angle-right text-primary me-2"></i>{{item}}.</li>
+                        </ul>
+                        <h6>Kinh nghiệm: {{position.experience}} năm</h6>
+                        <p style="white-space: pre-line;">{{ position.requirements }}</p>
+                        
                     </div>
                     <div class="col-12" v-if="job.status != 1">
                         <button class="btn btn-primary w-100" type="submit" @click="onSubmit" v-if="job.type == 0 || !job.type">Ứng tuyển</button>   
@@ -40,7 +39,7 @@
                 <div class="col-lg-4">
                     <div class="bg-light rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: slideInUp;">
                         <h4 class="mb-4">Job Summery</h4>
-                        <!-- <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: 01 Jan, 2045</p> -->
+                        <p><i class="fa fa-angle-right text-primary me-2"></i>Chức vụ: {{position.name}}</p>
                         <p><i class="fa fa-angle-right text-primary me-2"></i>Số lượng: {{position.amount}} vị trí</p>
                         <!-- <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: Full Time</p> -->
                         <p><i class="fa fa-angle-right text-primary me-2"></i>Mức lương:
@@ -49,6 +48,7 @@
                             : position.min_salary == '' && position.max_salary != '' ? 'trên ' + position.min_salary + ' triệu đồng'
                             : 'Dưới ' + position.min_salary + ' triệu đồng'}}</p>
                         <p><i class="fa fa-angle-right text-primary me-2"></i>Địa điểm: {{position.work_location}}</p>
+                        <p><i class="fa fa-angle-right text-primary me-2"></i>Môi trường làm việc: {{position.work_environment}}</p>
                     </div>
                     <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: slideInUp;">
                         <h4 class="mb-4">Company Detail</h4>
