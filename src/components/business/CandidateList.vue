@@ -43,12 +43,20 @@
             <div class="d-block d-md-none">
               <div class="card" v-for="(cv, index) in list_selected_cv">
                 <div class="card-body">
-                  <h5 class="card-title">{{ cv.name }}<input class="float-end form-check-input"
+                  <h5 class="card-title">
+                    {{ cv.name
+                    }}<input
+                      class="float-end form-check-input"
                       v-model="selected"
                       :value="cv._id"
                       v-if="cv.schedule"
-                      @change="onChange($event, cv)" type="checkbox"/></h5>
-                  <p class="card-text my-1">Phòng ban: {{ cv.department_name }}</p>
+                      @change="onChange($event, cv)"
+                      type="checkbox"
+                    />
+                  </h5>
+                  <p class="card-text my-1">
+                    Phòng ban: {{ cv.department_name }}
+                  </p>
                   <p class="card-text my-1">Chức danh: {{ cv.jobtitle }}</p>
                   <p class="card-text my-1">Xếp loại: {{ cv.rating }}</p>
                   <p class="card-text my-1">Đánh giá: {{ cv.review }}</p>
@@ -108,7 +116,7 @@
                 </tr>
                 <tr v-for="(cv, index) in list_selected_cv">
                   <th>
-                    {{index+1}}
+                    {{ index + 1 }}
                   </th>
                   <td>{{ cv.name }}</td>
                   <td class="col-4">{{ cv.department_name }}</td>
@@ -152,14 +160,16 @@
                       Xóa
                     </button>
                   </td>
-                  <td><input
+                  <td>
+                    <input
                       type="checkbox"
                       class="form-check-input mx-2"
                       v-model="selected"
                       :value="cv._id"
                       v-if="cv.schedule"
                       @change="onChange($event, cv)"
-                    /></td>
+                    />
+                  </td>
                 </tr>
               </table>
             </div>
@@ -183,7 +193,9 @@
               <div class="card" v-for="(cv, index) in list_paid_cv">
                 <div class="card-body">
                   <h5 class="card-title">{{ cv.name }}</h5>
-                  <p class="card-text my-1">Phòng ban: {{ cv.department_name }}</p>
+                  <p class="card-text my-1">
+                    Phòng ban: {{ cv.department_name }}
+                  </p>
                   <p class="card-text my-1">Chức danh: {{ cv.jobtitle }}</p>
                   <p class="card-text my-1">Số điện thoại: {{ cv.phone_cv }}</p>
                   <p class="card-text my-1">Email: {{ cv.email_cv }}</p>
@@ -203,22 +215,20 @@
                   </p>
                   <div class="row align-content-between my-1">
                     <div class="col-auto">
-                        <span>Kết quả pv:</span>
+                      <span>Kết quả pv:</span>
                     </div>
                     <div class="col">
-<select
-                      class="form-select form-select-sm"
-                      aria-label="Default select example"
-                    >
-                      <option selected>Chọn...</option>
-                      <option value="1">Đạt</option>
-                      <option value="0">Không đạt</option>
-                    </select>
+                      <select
+                        class="form-select form-select-sm"
+                        aria-label="Default select example"
+                      >
+                        <option selected>Chọn...</option>
+                        <option value="1">Đạt</option>
+                        <option value="0">Không đạt</option>
+                      </select>
                     </div>
                   </div>
-                  
-                    
-                 
+
                   <button
                     class="btn btn-success"
                     data-bs-toggle="modal"
@@ -236,12 +246,7 @@
                     v-if="cv.schedule"
                   >
                     Thay đổi lịch pv</button
-                  ><button
-                    class="btn btn-success ms-1"
-                    
-                  >
-                    Cập nhật
-                  </button>
+                  ><button class="btn btn-success ms-1">Cập nhật</button>
                 </div>
               </div>
             </div>
@@ -265,7 +270,17 @@
                   <td>{{ cv.name }}</td>
                   <td class="col-4">{{ cv.department_name }}</td>
                   <td class="col-4">{{ cv.jobtitle }}</td>
-                  <td><button class="btn btn-sm btn-success py-0">Xem thông tin</button></td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-success py-0"
+                      data-bs-toggle="modal"
+                      :data-bs-target="'#inforModal'+index"
+                    >
+                      Xem thông tin
+                    </button>
+                  </td>
+
+                  
                   <td class="col-4">
                     {{ cv.confirm == 0 ? "Đã gửi lịch pv" : "NLD đã xác nhận" }}
                   </td>
@@ -278,19 +293,20 @@
                       v-if="cv.schedule"
                     >
                       {{
-                      cv.schedule
-                        ? cv.schedule.split("T")[1] +
-                          " " +
-                          cv.schedule.split("T")[0]
-                        : ""
-                    }}
+                        cv.schedule
+                          ? cv.schedule.split("T")[1] +
+                            " " +
+                            cv.schedule.split("T")[0]
+                          : ""
+                      }}
                     </button>
                   </td>
                   <td class="">
                     <select
                       class="form-select form-select-sm"
                       aria-label="Default select example"
-                      style="width: 150px" :disabled="cv.confirm==0"
+                      style="width: 150px"
+                      :disabled="cv.confirm == 0"
                     >
                       <option selected>Chọn...</option>
                       <option value="1">Đạt</option>
@@ -298,11 +314,47 @@
                     </select>
                   </td>
                   <td class="py-0" v-if="cv.confirm == 0">
-                    
                     <button class="btn btn-sm btn-success py-0">
                       Cập nhật
                     </button>
                   </td>
+                  <!-- Modal -->
+                  <div
+                    class="modal fade"
+                    :id="'inforModal'+index"
+                    tabindex="-1"
+                    :aria-labelledby="'inforModalLabel'+index"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" :id="'inforModalLabel'+index">
+                            Thông tin liên hệ
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          <p class="card-text my-1">Email: {{ cv.email_cv }}</p>
+                          <p class="card-text my-1">Số điện thoại: {{ cv.phone_cv }}</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </tr>
               </table>
             </div>
@@ -642,8 +694,8 @@ export default {
   padding: 5px 10px;
 }
 
-.table-fixed-right::-webkit-scrollbar { 
+.table-fixed-right::-webkit-scrollbar {
   width: 0 !important;
-  display: none; 
+  display: none;
 }
 </style>
