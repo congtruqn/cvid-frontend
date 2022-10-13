@@ -655,7 +655,7 @@ export default {
       this.position_id = position_id;
       this.list_cv = [];
       this.list_cv = this.list_cv_applied.filter(
-        (cv) => cv.position_id == position_id
+        (cv) => (cv.position_id == position_id && cv.type == 1)
       );
     },
     getCvRecommend(position) {
@@ -667,7 +667,8 @@ export default {
         })
         .then((res) => {
           this.list_cv = res.data.filter((cv) => {
-            return !this.list_cv_applied.find((item) => item._id == cv._id);
+            console.log(!this.list_cv_applied.find((item) => item.employee_id == cv._id))
+            return !this.list_cv_applied.find((item) => item.employee_id == cv._id);
           });
           //let cvid_recommend = res.data.map(t1 => ({...t1, ...job_list.find(t2 => t2.employee_id == t1._id)}))
           // cvid_recommend.forEach(el => {
@@ -678,8 +679,6 @@ export default {
           //     }
           // })
 
-          console.log(this.list_cv_applied);
-          console.log(this.list_cv);
           if (position.status != 1) {
             Swal.fire({
               title: "Bạn có muốn đăng tuyển?",
@@ -835,7 +834,7 @@ export default {
             ...res.data.cv_list.find((t2) => t2._id == t1.employee_id),
           }));
           cvid.forEach((el) => {
-            if (el.type == 1) {
+            if (el.type != 0){
               this.list_cv_applied.push(el);
             }
           });

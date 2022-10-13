@@ -339,9 +339,10 @@
                             aria-label="Close"
                           ></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body overflow-auto">
                           <p class="card-text my-1">Email: {{ cv.email_cv }}</p>
                           <p class="card-text my-1">Số điện thoại: {{ cv.phone_cv }}</p>
+                          <p class="car-text my-1 text-break">Địa chỉ: {{ cv.address_cv }}</p>
                         </div>
                         <div class="modal-footer">
                           <button
@@ -633,6 +634,7 @@ export default {
                           jobtitle: position.jobtitle,
                           phone_cv: cv.username,
                           email_cv: cv.email,
+                          address_cv: cv.address + ', ' + cv.ward + ', ' + cv.district + ', ' + cv.province
                         });
                       }
                       if (job.type == 2 && job.status == 0) {
