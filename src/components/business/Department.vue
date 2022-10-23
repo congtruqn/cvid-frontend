@@ -6,7 +6,10 @@
       class="btn btn-primary btn-icon-split ms-4 mt-4"
       data-bs-toggle="modal"
       data-bs-target="#addDepartment"
-      @click="department.name='';department.email=''"
+      @click="
+        department.name = '';
+        department.email = '';
+      "
     >
       <i class="fas fa-plus"></i> Thêm phòng ban
     </button>
@@ -80,71 +83,81 @@
     >
       <div class="card-body">
         <h5 class="card-title">
-          {{ department.name }} <button type="button" data-bs-toggle="modal" :data-bs-target="'#editDepartment'+department._id" class="bg-transparent border-0"><i class="btn fas fa-pen mb-1"></i></button>
+          {{ department.name }}
+          <button
+            type="button"
+            data-bs-toggle="modal"
+            :data-bs-target="'#editDepartment' + department._id"
+            class="bg-transparent border-0"
+          >
+            <i class="btn fas fa-pen mb-1"></i>
+          </button>
         </h5>
         <div
-      class="modal fade"
-      :id="'editDepartment'+department._id"
-      tabindex="-1"
-      aria-labelledby="editDepartmentLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editDepartmentLabel">Sửa thông tin phòng ban</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="col-form-label"
-                >Tên phòng ban<span class="text-danger">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Nhập tên phòng ban"
-                v-model="department.name"
-              />
+          class="modal fade"
+          :id="'editDepartment' + department._id"
+          tabindex="-1"
+          aria-labelledby="editDepartmentLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editDepartmentLabel">
+                  Sửa thông tin phòng ban
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label class="col-form-label"
+                    >Tên phòng ban<span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nhập tên phòng ban"
+                    v-model="department.name"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="col-form-label"
+                    >Email<span class="text-danger"></span
+                  ></label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Nhập email"
+                    v-model="department.email"
+                  />
+                </div>
+                <hr />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Đóng
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  @click="editDepartment(department)"
+                >
+                  Lưu
+                </button>
+              </div>
             </div>
-            <div class="mb-3">
-              <label class="col-form-label"
-                >Email<span class="text-danger"></span
-              ></label>
-              <input
-                type="email"
-                class="form-control"
-                placeholder="Nhập email"
-                v-model="department.email"
-              />
-            </div>
-            <hr />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Đóng
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              @click="editDepartment(department)"
-            >
-              Lưu
-            </button>
           </div>
         </div>
-      </div>
-    </div>
         <h5
           class="card-title text-center text-primary"
           v-if="!department.position.length"
@@ -259,7 +272,9 @@
             <div class="card-body">
               <form>
                 <div class="form-group mb-3">
-                  <label class="form-label">Phòng ban <span class="text-danger">*</span></label>
+                  <label class="form-label"
+                    >Phòng ban <span class="text-danger">*</span></label
+                  >
                   <input
                     type="text"
                     class="form-control text-dark bg-white"
@@ -446,7 +461,10 @@
                   </ul>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label">Lĩnh vực kinh doanh <span class="text-danger">*</span></label>
+                  <label class="form-label"
+                    >Lĩnh vực kinh doanh
+                    <span class="text-danger">*</span></label
+                  >
                   <select class="form-select" v-model="position.work_industry">
                     <option value="" disabled>Chọn ...</option>
                     <option v-for="item in industries" :value="item.name">
@@ -468,7 +486,10 @@
                 </div>
 
                 <div class="form-group mb-3">
-                  <label class="form-label">Môi trường làm việc <span class="text-danger">*</span></label>
+                  <label class="form-label"
+                    >Môi trường làm việc
+                    <span class="text-danger">*</span></label
+                  >
                   <select
                     class="form-select"
                     v-model="position.work_environment"
@@ -480,7 +501,10 @@
                   </select>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label">Yêu cầu kinh nghiệm <span class="text-danger">*</span></label>
+                  <label class="form-label"
+                    >Yêu cầu kinh nghiệm
+                    <span class="text-danger">*</span></label
+                  >
                   <input
                     type="number"
                     class="form-control"
@@ -500,7 +524,9 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label">Mức lương tối thiểu (triệu đồng)</label>
+                  <label class="form-label"
+                    >Mức lương tối thiểu (triệu đồng)</label
+                  >
                   <input
                     type="number"
                     class="form-control"
@@ -509,7 +535,9 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label">Mức lương tối đa (triệu đồng)</label>
+                  <label class="form-label"
+                    >Mức lương tối đa (triệu đồng)</label
+                  >
                   <input
                     type="number"
                     class="form-control"
@@ -519,17 +547,14 @@
                 </div>
                 <div class="form-group mb-3">
                   <label class="form-label">Mô tả công việc</label>
-                  <textarea
-                    
-                    rows="5"
-                    class="form-control"
+                  <vue-editor
                     v-model="position.description"
-                  ></textarea>
+                  >
+                  </vue-editor>
                 </div>
                 <div class="form-group mb-3">
                   <label class="form-label">Yêu cầu công việc</label>
                   <textarea
-                    
                     rows="5"
                     class="form-control"
                     v-model="position.requirements"
@@ -768,7 +793,10 @@
                   >
                     <li
                       v-for="item in filteredJobTitle"
-                      @click="position.jobtitle = item;searchJobTitle = item"
+                      @click="
+                        position.jobtitle = item;
+                        searchJobTitle = item;
+                      "
                     >
                       <a class="dropdown-item">{{ item }}</a>
                     </li>
@@ -987,12 +1015,10 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="">Mô tả công việc</label>
-                  <textarea
-                    cols="30"
-                    rows="10"
-                    class="form-control"
+                  <vue-editor
                     v-model="position.description"
-                  ></textarea>
+                  >
+                  </vue-editor>
                 </div>
                 <div class="form-group mb-3">
                   <label for="">Yêu cầu công việc</label>
@@ -1258,15 +1284,15 @@ export default {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              this.departments.push(res.data)
+            this.departments.push(res.data);
           })
           .catch((err) => {
             console.log(err);
           });
       }
     },
-    editDepartment(department){
-       if (department.name == "") {
+    editDepartment(department) {
+      if (department.name == "") {
         Swal.fire({
           icon: "info",
           title: "Thông báo",
@@ -1290,12 +1316,12 @@ export default {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              // this.departments.forEach((item, index) => {
-              //   if(item._id == department._id){
-              //     this.departments[index].name = department.name
-              //     this.departments[index].email = department.email
-              //   }
-              // })
+            // this.departments.forEach((item, index) => {
+            //   if(item._id == department._id){
+            //     this.departments[index].name = department.name
+            //     this.departments[index].email = department.email
+            //   }
+            // })
           })
           .catch((err) => {
             console.log(err);
