@@ -16,7 +16,7 @@
 
                     <div class="mb-5">
                         <h4 class="mb-3">Mô tả công việc</h4>
-                        <p style="white-space: pre-line;">{{ position.description }}</p>
+                        <p v-html="position.description"></p>
                         <h4 class="mb-3">Yêu cầu ứng viên</h4>
                         <h6>Cấp bậc ứng viên:</h6>
                         <ul class="list-unstyled">
