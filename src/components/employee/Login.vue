@@ -58,7 +58,7 @@
                             if (localStorage.getItem('token') != null){
                                 var user = response.data.userinfo
                                 localStorage.setItem('employee',JSON.stringify(user));
-                                if(user.point){
+                                if(user.approved == 1){
                                     this.$router.push('/employee')
                                 }
                                 else {

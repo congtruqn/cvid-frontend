@@ -1,30 +1,55 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="/index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
-            <h1 class="m-0 text-primary">JobEntry</h1>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="/employee" class="nav-item nav-link active">Home</a>
-                <a :href="'/employee/cvid/'+cvid" class="nav-item nav-link">CVID</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Việc làm</a>
-                    <div class="dropdown-menu rounded-0 m-0">
-                        <a href="/employee/jobs-sent" class="dropdown-item">Đã nộp</a>
-                        <a href="/employee/jobs-invited" class="dropdown-item">Lời mời</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Quản lý</a>
-                    <div class="dropdown-menu rounded-0 m-0">
-                        <a href="/employee/quan-ly-tai-khoan" class="dropdown-item">Quản lý tài khoản</a>
-                        <a href="/employee/quan-ly-ho-so" class="dropdown-item">Quản lý hồ sơ</a>
-                    </div>
-                </div>
-                <!-- <div class="nav-item dropdown">
+  <nav
+    class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0"
+  >
+    <a
+      href="/index.html"
+      class="
+        navbar-brand
+        d-flex
+        align-items-center
+        text-center
+        py-0
+        px-4 px-lg-5
+      "
+    >
+      <h1 class="m-0 text-primary">JobEntry</h1>
+    </a>
+    <button
+      type="button"
+      class="navbar-toggler me-4"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarCollapse"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav ms-auto p-4 p-lg-0">
+        <a href="/employee" class="nav-item nav-link active">Home</a>
+        <a :href="'/employee/cvid/' + cvid" class="nav-item nav-link">CVID</a>
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+            >Việc làm</a
+          >
+          <div class="dropdown-menu rounded-0 m-0">
+            <a href="/employee/jobs-sent" class="dropdown-item">Đã nộp</a>
+            <a href="/employee/jobs-invited" class="dropdown-item">Lời mời</a>
+          </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+            >Quản lý</a
+          >
+          <div class="dropdown-menu rounded-0 m-0">
+            <a href="/employee/quan-ly-tai-khoan" class="dropdown-item"
+              >Quản lý tài khoản</a
+            >
+            <a href="/employee/quan-ly-ho-so" class="dropdown-item"
+              >Quản lý hồ sơ</a
+            >
+          </div>
+        </div>
+        <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu rounded-0 m-0">
                         <a href="category.html" class="dropdown-item">Job Category</a>
@@ -33,38 +58,44 @@
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>-->
-                <a href="/employee/login" class="nav-item nav-link">Login</a> 
-            </div>
-            <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
-    </nav>
+        <a href="/employee/login" class="nav-item nav-link">Login</a>
+      </div>
+      <a
+        href=""
+        class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block"
+        >Post A Job<i class="fa fa-arrow-right ms-3"></i
+      ></a>
+    </div>
+  </nav>
 </template>
 <script>
-    const {BASE_URL} =  require('../../utils/config')
-    const token= localStorage.getItem('token')
-    
-    export default {  
-        data(){
-            return {
-                cvid: JSON.parse(localStorage.getItem('employee'))._id
-            }
-        },
-        created(){
-            if (token){
-                this.$http.post(`${BASE_URL}/employee/me`,{
-                    token: token
-                })
-                .then(res => {
-                    if (res.data.user.type == 4){
-                        localStorage.setItem('employee', JSON.stringify(res.data.user))
-                        console.log(res.data.user)
-                    }
-                })
-                .catch(function (error) {
-                    localStorage.removeItem('employee')
-                    console.error(error.response);
-                });
-            } 
-        }
+const { BASE_URL } = require("../../utils/config");
+const token = localStorage.getItem("token");
+
+export default {
+  data() {
+    return {
+      cvid: JSON.parse(localStorage.getItem("employee"))._id,
+    };
+  },
+  created() {
+    if (token) {
+      this.$http
+        .get(`${BASE_URL}/employee/me`, {
+          headers: {
+            Authorization: `Basic ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          if (res.data) {
+            this.cvid = res.data._id
+          }
+        })
+        .catch(function (error) {
+          localStorage.clear();
+          console.error(error);
+        });
     }
+  },
+};
 </script>

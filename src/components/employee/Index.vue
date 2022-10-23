@@ -83,10 +83,12 @@
                   class="form-check-input"
                   type="checkbox"
                   v-model="job.position"
-                  :id="'position'+index"
+                  :id="'position' + index"
                   :value="item.name"
                 />
-                <label class="form-check-label" :for="'position'+index"> {{item.name}} </label>
+                <label class="form-check-label" :for="'position' + index">
+                  {{ item.name }}
+                </label>
               </div>
             </ul>
           </div>
@@ -112,15 +114,20 @@
               placeholder="Chọn môi trường làm việc"
             />
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuEnvironment">
-              <div class="form-check mx-3" v-for="(item, index) in environments">
+              <div
+                class="form-check mx-3"
+                v-for="(item, index) in environments"
+              >
                 <input
                   class="form-check-input"
                   type="checkbox"
                   v-model="job.work_environment"
-                  :id="'environment'+index"
+                  :id="'environment' + index"
                   :value="item.name"
                 />
-                <label class="form-check-label" :for="'environment'+index"> {{item.name}} </label>
+                <label class="form-check-label" :for="'environment' + index">
+                  {{ item.name }}
+                </label>
               </div>
             </ul>
           </div>
@@ -636,11 +643,13 @@ export default {
   },
   created() {
     this.$http
-      .post(`${BASE_URL}/employee/me`, {
-        token: localStorage.getItem("token"),
+      .get(`${BASE_URL}/employee/me`, {
+        headers: {
+          Authorization: `Basic ${localStorage.getItem("token")}`,
+        },
       })
       .then((res) => {
-        this.employee = res.data.user;
+        this.employee = res.data;
         if (this.employee.job) {
           this.job = this.employee.job;
           if (this.job.status == 1) {

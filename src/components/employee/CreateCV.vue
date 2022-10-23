@@ -3,8 +3,17 @@
     <h4 class="text-primary d-flex justify-content-center mt-4">
       LÝ LỊCH ỨNG VIÊN (CVIDPRO)
     </h4>
-    <h5 class="text-primary d-flex justify-content-center fst-italic mt-2 text-success">
-      Số CVID: CV{{employee.username.slice(1,10)}}
+    <h5
+      class="
+        text-primary
+        d-flex
+        justify-content-center
+        fst-italic
+        mt-2
+        text-success
+      "
+    >
+      Số CVID: CV{{ employee.username.slice(1, 10) }}
     </h5>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
@@ -27,7 +36,10 @@
       </div>
       <div class="col-md-8">
         <p class="m-1">Họ và tên: {{ employee.name }}</p>
-        <p class="m-1">Ngày sinh: {{ new Date(employee.birthdate).toLocaleDateString("en-US") }}</p>
+        <p class="m-1">
+          Ngày sinh:
+          {{ new Date(employee.birthdate).toLocaleDateString("en-US") }}
+        </p>
         <p class="m-1">Giới tính: {{ employee.gender }}</p>
         <p class="m-1">Số điện thoại: {{ employee.username }}</p>
         <p class="m-1">Email: {{ employee.email }}</p>
@@ -418,7 +430,11 @@
                   v-if="element.to != 'Hiện tại'"
                 >
                   <span class="input-group-text">Kết quả hoàn thành</span>
-                  <select class="form-select" v-model="element.result" :disabled="company.name == ''">
+                  <select
+                    class="form-select"
+                    v-model="element.result"
+                    :disabled="company.name == ''"
+                  >
                     <option value="" disabled>Chọn...</option>
                     <option value="Trên mức đề ra">Trên mức đề ra</option>
                     <option value="Đạt mức đề ra">Đạt mức đề ra</option>
@@ -566,7 +582,7 @@
                 >Xếp loại:</label
               >
               <div class="col-sm-8">
-                <select class="form-select form-select-sm" >
+                <select class="form-select form-select-sm">
                   <option value="" disabled>Chọn xếp loại</option>
                   <option value="Xuất sắc">Xuất sắc</option>
                   <option value="Giỏi">Giỏi</option>
@@ -975,12 +991,24 @@
         </tr>
       </tbody>
     </table>
-    <span class="text-danger fw-bold fst-italic"><i class="fas fa-warning"></i> Vui lòng nhập đầy đủ thông tin và chính xác</span>
+    <span class="text-danger fw-bold fst-italic"
+      ><i class="fas fa-warning"></i> Vui lòng nhập đầy đủ thông tin và chính
+      xác</span
+    >
     <div class="d-grid gap-2 col-6 mx-auto my-5">
       <button type="submit" class="btn btn-primary" @click="handleSubmit">
         Submit
       </button>
     </div>
+    <p
+      class="text-primary"
+      v-if="employee.approved == 1 && employee.point != -1"
+    >
+      CVID của bạn đã được duyệt, bạn có thể sử dụng để ứng tuyển.
+    </p>
+    <p class="text-danger" v-else-if="employee.point != -1">
+      CVID của bạn đang chờ duyệt.
+    </p>
   </div>
 </template>
 <script>
@@ -1117,7 +1145,13 @@ export default {
         })
         .then((response) => {
           if (response.data) {
-            this.$router.push("/employee");
+            Swal.fire({
+              icon: "success",
+              title: "Cập nhật thành công",
+              text: "CVID của bạn sẽ được duyệt trước khi sử dụng để tìm việc",
+              confirmButtonColor: "var(--primary)",
+              confirmButtonText: "Xác nhận",
+            });
           }
         })
         .catch(function (error) {
@@ -1179,13 +1213,13 @@ export default {
           else if (company.to == "") error = true;
           else if (company.address == "") error = true;
           company.process.forEach((ele, index2) => {
-            if (index2 == 0){
-              if (ele.from != company.from) error = true
+            if (index2 == 0) {
+              if (ele.from != company.from) error = true;
             } else {
-              if (ele.from != company.process[index2-1].to) error = true
+              if (ele.from != company.process[index2 - 1].to) error = true;
             }
-            if (index2 == company.process.length -1){
-              if (ele.to != company.to) error = true
+            if (index2 == company.process.length - 1) {
+              if (ele.to != company.to) error = true;
             }
             if (ele.from == "") error = true;
             else if (ele.to == "") error = true;
@@ -1296,7 +1330,7 @@ export default {
         place: "",
       });
     },
-    checkShortTraining(){
+    checkShortTraining() {
       var index = 0;
       while (index < this.shortTraining.length) {
         if (this.shortTraining[index].name != "") {
@@ -1383,7 +1417,7 @@ export default {
               let timeFrom = new Date(item.from).getTime();
               if (timeTo && timeFrom) {
                 sum += timeTo - timeFrom;
-                console.log(sum)
+                console.log(sum);
               }
             });
           }
@@ -1394,13 +1428,50 @@ export default {
       if (numberYear) result += `${numberYear} năm`;
       let numberMonth = Math.round((sum % 31536000000) / 2628000000);
       if (numberMonth) result += ` ${numberMonth} tháng`;
-      if (numberYear == 0 && numberMonth == 0){
-        return 'Chưa có kinh nghiệm'
+      if (numberYear == 0 && numberMonth == 0) {
+        return "Chưa có kinh nghiệm";
       }
       return result;
     },
   },
   created() {
+    this.$http
+      .get(`${BASE_URL}/employee/me`, {
+        headers: {
+          Authorization: `Basic ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        let employee = res.data;
+        console.log(employee.skillWorking.length);
+        if (employee.skillWorking.length > 0) {
+          this.skillWorking = employee.skillWorking;
+        }
+        if (employee.skillEducation.length > 0) {
+          this.skillEducation = employee.skillEducation;
+        }
+        if (employee.shortTraining.length > 0) {
+          this.shortTraining = employee.shortTraining;
+        }
+        if (employee.skillLanguage.length > 0) {
+          this.skillLanguage = employee.skillLanguage;
+        }
+        if (employee.skillOther.length > 0) {
+          this.skillOther = employee.skillOther;
+        }
+        if (employee.skillEnglish) {
+          this.skillEnglish = employee.skillEnglish;
+        }
+        if (employee.skillComputer) {
+          this.skillComputer = employee.skillComputer;
+        }
+        if (employee.assessment.length > 0) {
+          this.assessment = employee.assessment;
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
     this.employee = JSON.parse(localStorage.getItem("employee"));
     this.employee.birthdate = this.employee.birthdate.split("T")[0];
     this.skillWorking[0].process[0].skill = this.employee.skill;
