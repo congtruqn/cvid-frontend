@@ -10,8 +10,12 @@ import './assets/css/style.css';
 import './assets/css/owl.carousel.min.css';
 import './assets/css/animate.min.css';
 
+import Vue2Editor from "vue2-editor";
+Vue.use(Vue2Editor);
+
 import VueConfirmDialog from 'vue-confirm-dialog'
 Vue.use(VueConfirmDialog)
+
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 Vue.config.productionTip = false
