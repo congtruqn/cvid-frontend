@@ -23,7 +23,7 @@
                   </h3>
                   <div class="mb-4 form-floating" v-if="false">
                     <select
-                      @click="focus"
+                      
                       class="form-select"
                       v-model="country"
                       required
@@ -35,7 +35,7 @@
                   </div>
                   <div class="mb-4 form-floating">
                     <select
-                      @click="focus"
+                      
                       class="form-select"
                       v-model="type"
                       required
@@ -51,7 +51,7 @@
                   <div v-if="type == 5">
                     <div class="mb-4 form-floating">
                       <input
-                        @click="focus"
+                        
                         type="text"
                         class="form-control"
                         v-model="phone"
@@ -61,10 +61,10 @@
                     </div>
                     <div class="mb-4 form-floating">
                       <input
-                        @click="focus"
+                        
                         type="text"
                         class="form-control"
-                        v-model="Fname"
+                        v-model="deputy"
                         required
                       />
                       <label class="form-label">Họ và tên</label>
@@ -72,7 +72,7 @@
 
                     <div class="mb-4 form-floating">
                       <input
-                        @click="focus"
+                        
                         type="email"
                         class="form-control"
                         v-model="email"
@@ -84,7 +84,7 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                            @click="focus"
+                            
                             type="password"
                             class="form-control"
                             v-model="password"
@@ -97,7 +97,7 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                            @click="focus"
+                            
                             type="password"
                             class="form-control"
                             v-model="password2"
@@ -170,7 +170,7 @@
                     </div>
                     <div class="mb-4 form-floating">
                       <input
-                        @click="focus"
+                        
                         type="text"
                         class="form-control"
                         v-model="name"
@@ -182,7 +182,7 @@
                     <div class="row">
                       <div class="col-md-6 mb-4 form-floating">
                         <input
-                          @click="focus"
+                          
                           type="text"
                           class="form-control"
                           v-model="province"
@@ -192,7 +192,7 @@
                       </div>
                       <div class="col-md-6 mb-4 form-floating">
                         <input
-                          @click="focus"
+                          
                           type="text"
                           class="form-control"
                           v-model="district"
@@ -202,7 +202,7 @@
                       </div>
                       <div class="col-md-6 mb-4 form-floating">
                         <input
-                          @click="focus"
+                          
                           type="text"
                           class="form-control"
                           v-model="ward"
@@ -213,7 +213,7 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                            @click="focus"
+                            
                             type="text"
                             class="form-control"
                             v-model="address"
@@ -234,6 +234,7 @@
                       <input
                         type="file"
                         class="form-control"
+                        ref="file"
                         @change="onFileUpload"
                         accept="image/*"
                       />
@@ -243,7 +244,7 @@
                   <div v-else>
                     <div class="mb-4 form-floating">
                       <input
-                        @click="focus"
+                        
                         type="text"
                         class="form-control"
                         v-model="username"
@@ -253,7 +254,7 @@
                     </div>
                     <div class="mb-4 form-floating">
                       <input
-                        @click="focus"
+                        
                         type="text"
                         class="form-control"
                         v-model="name"
@@ -262,7 +263,7 @@
                       <label class="form-label">Họ và tên</label>
                     </div>
                     <div class="mb-4 form-floating">
-                      <select @click="focus" class="form-select" required>
+                      <select  class="form-select" required>
                         <option value="" selected disabled>
                           Chọn loại hình
                         </option>
@@ -277,7 +278,7 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <select
-                            @click="focus"
+                            
                             class="form-select"
                             v-model="province"
                             required
@@ -298,7 +299,7 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <select
-                            @click="focus"
+                            
                             class="form-select"
                             v-model="district"
                             required
@@ -317,7 +318,7 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <select
-                            @click="focus"
+                            
                             class="form-select"
                             v-model="ward"
                             required
@@ -333,7 +334,6 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                            @click="focus"
                             type="text"
                             class="form-control"
                             v-model="address"
@@ -345,7 +345,6 @@
                     </div>
                     <div class="mb-4 form-floating">
                       <input
-                        @click="focus"
                         type="email"
                         class="form-control"
                         v-model="email"
@@ -357,7 +356,7 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                            @click="focus"
+                         
                             type="password"
                             class="form-control"
                             v-model="password"
@@ -370,7 +369,7 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                            @click="focus"
+                         
                             type="password"
                             class="form-control"
                             v-model="password2"
@@ -410,6 +409,8 @@ export default {
       type: "6",
       name: "",
       username: "",
+      phone: "",
+      deputy: "",
       country: "Việt Nam",
       province: "",
       district: "",
@@ -427,6 +428,7 @@ export default {
       provinces: [],
       districts: [],
       wards: [],
+      
     };
   },
   methods: {
@@ -473,29 +475,47 @@ export default {
           console.log(error);
         });
     },
-    onFileUpload(event) {
-      this.FILE = event.target.files[0];
+    onFileUpload() {
+      this.FILE = this.$refs.file.files[0];
     },
     handleSubmit(e) {
       e.preventDefault();
       const formData = new FormData();
-      formData.append("licenseImage", this.FILE, this.FILE.name);
+      formData.append("file", this.FILE, this.FILE.name);
+      formData.append("type", this.type);
+      formData.append("name", this.name);
+      formData.append("username", this.username);
+      formData.append("country", this.country);
+      formData.append("province", this.province);
+      formData.append("district", this.district);
+      formData.append("ward", this.ward);
+      formData.append("address", this.address);
+      formData.append("email", this.email);
+      formData.append("industries", this.industries);
+      formData.append("password", this.password);
+      formData.append("password2", this.password2);
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const maxSize = 2000000;
+      const tooLagre = this.FILE.size > maxSize;
+      console.log(this.FILE.size, this.FILE.type)
+       if (tooLagre) {
+        alert('File too big (> 1MB)');
+        return;
+      } else if (!allowedTypes.includes(this.FILE.type)) {
+        alert('File type is jpg, png, gif');
+        return
+      }  
       this.$http
-        .post(`${BASE_URL}/business/register`, {
-          type: this.type,
-          name: this.name,
-          username: this.username,
-          country: this.country,
-          province: this.province,
-          district: this.district,
-          ward: this.ward,
-          address: this.address,
-          email: this.email,
-          industries: this.industry,
-          licenseImage: formData,
-          password: this.password,
-          password2: this.password2,
-        })
+        .post(
+          `${BASE_URL}/business/register`,
+            formData
+          ,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((response) => {
           if (response.data == "ok") {
             Swal.fire({
@@ -523,44 +543,8 @@ export default {
           console.error(error.response);
         });
     },
-    focus() {
-      // document.querySelectorAll('.needs-validation')[0].classList.add('was-validated')
-    },
   },
   created() {
-    this.$http
-      .get(`${BASE_URL}/admin/test`)
-      .then((response) => {
-        console.log(response.data[0]);
-        response.data.forEach((html) => {
-          var htmlObject = document.createElement("div");
-          htmlObject.innerHTML = html;
-          htmlObject = htmlObject.getElementsByTagName("a");
-          console.log(htmlObject);
-          if (htmlObject.length > 0) {
-            htmlObject.forEach((item) => {
-              console.log(item);
-            });
-          }
-        });
-
-        // this.name = htmlObject[0].getElementsByTagName("a")[0].innerHTML;
-        // var address = htmlObject[0].getElementsByTagName("p")[0].innerHTML;
-        // this.username = htmlObject[0]
-        //   .getElementsByTagName("p")[0]
-        //   .getElementsByTagName("a")[0].innerHTML;
-        // this.address = "";
-        // address = address.split("Địa chỉ:")[1].trim().split(", ").reverse();
-        // address.forEach((item, index) => {
-        //   if (index == 0) this.province = item;
-        //   else if (index == 1) this.district = item;
-        //   else if (index == 2) this.ward = item;
-        //   else this.address = item + " " + this.address;
-        // });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
     this.$http
       .get(`${BASE_URL}/province/list`)
       .then((response) => {
