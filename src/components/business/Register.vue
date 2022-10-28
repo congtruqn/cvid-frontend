@@ -21,25 +21,15 @@
                   <h3 class="mb-5 text-uppercase">
                     Đăng kí tài khoản tuyển dụng
                   </h3>
-                  <div class="mb-4 form-floating" v-if="false">
-                    <select
-                      
-                      class="form-select"
-                      v-model="country"
-                      required
-                    >
+                  <div id="formCountry" class="mb-4 form-floating" v-if="false">
+                    <select class="form-select" v-model="country" required>
                       <option value="" disabled>Chọn quốc gia</option>
                       <option value="Việt Nam">Việt Nam</option>
                     </select>
                     <label class="form-label">Quốc gia</label>
                   </div>
                   <div class="mb-4 form-floating">
-                    <select
-                      
-                      class="form-select"
-                      v-model="type"
-                      required
-                    >
+                    <select class="form-select" v-model="type" required>
                       <option value="" disabled>
                         Chọn loại hình tuyển dụng
                       </option>
@@ -51,7 +41,6 @@
                   <div v-if="type == 5">
                     <div class="mb-4 form-floating">
                       <input
-                        
                         type="text"
                         class="form-control"
                         v-model="phone"
@@ -61,7 +50,6 @@
                     </div>
                     <div class="mb-4 form-floating">
                       <input
-                        
                         type="text"
                         class="form-control"
                         v-model="deputy"
@@ -72,7 +60,6 @@
 
                     <div class="mb-4 form-floating">
                       <input
-                        
                         type="email"
                         class="form-control"
                         v-model="email"
@@ -82,9 +69,8 @@
                     </div>
                     <div class="row">
                       <div class="col-md-6 mb-4">
-                        <div class="form-floating">
+                        <div id="formPassword" class="form-floating">
                           <input
-                            
                             type="password"
                             class="form-control"
                             v-model="password"
@@ -97,7 +83,6 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                            
                             type="password"
                             class="form-control"
                             v-model="password2"
@@ -170,7 +155,6 @@
                     </div>
                     <div class="mb-4 form-floating">
                       <input
-                        
                         type="text"
                         class="form-control"
                         v-model="name"
@@ -182,7 +166,6 @@
                     <div class="row">
                       <div class="col-md-6 mb-4 form-floating">
                         <input
-                          
                           type="text"
                           class="form-control"
                           v-model="province"
@@ -192,7 +175,6 @@
                       </div>
                       <div class="col-md-6 mb-4 form-floating">
                         <input
-                          
                           type="text"
                           class="form-control"
                           v-model="district"
@@ -202,7 +184,6 @@
                       </div>
                       <div class="col-md-6 mb-4 form-floating">
                         <input
-                          
                           type="text"
                           class="form-control"
                           v-model="ward"
@@ -211,9 +192,8 @@
                         <label class="ms-2 form-label">Chọn phường/xã</label>
                       </div>
                       <div class="col-md-6 mb-4">
-                        <div class="form-floating">
+                        <div id="formAddress" class="form-floating">
                           <input
-                            
                             type="text"
                             class="form-control"
                             v-model="address"
@@ -230,13 +210,14 @@
                         >Nghành nghề kinh doanhh chính</label
                       >
                     </div>
-                    <div class="mb-4 form-floating">
+                    <div id="formFile" class="mb-4 form-floating">
                       <input
                         type="file"
                         class="form-control"
                         ref="file"
                         @change="onFileUpload"
                         accept="image/*"
+                        required
                       />
                       <label class="form-label">Giấy phép kinh doanh</label>
                     </div>
@@ -244,7 +225,6 @@
                   <div v-else>
                     <div class="mb-4 form-floating">
                       <input
-                        
                         type="text"
                         class="form-control"
                         v-model="username"
@@ -254,7 +234,6 @@
                     </div>
                     <div class="mb-4 form-floating">
                       <input
-                        
                         type="text"
                         class="form-control"
                         v-model="name"
@@ -263,7 +242,7 @@
                       <label class="form-label">Họ và tên</label>
                     </div>
                     <div class="mb-4 form-floating">
-                      <select  class="form-select" required>
+                      <select class="form-select" required>
                         <option value="" selected disabled>
                           Chọn loại hình
                         </option>
@@ -278,7 +257,6 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <select
-                            
                             class="form-select"
                             v-model="province"
                             required
@@ -299,7 +277,6 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <select
-                            
                             class="form-select"
                             v-model="district"
                             required
@@ -317,12 +294,7 @@
                       </div>
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
-                          <select
-                            
-                            class="form-select"
-                            v-model="ward"
-                            required
-                          >
+                          <select class="form-select" v-model="ward" required>
                             <option value="" disabled>Chọn phường/xã</option>
                             <option v-for="ward in wards" :value="ward">
                               {{ ward }}
@@ -332,7 +304,7 @@
                         </div>
                       </div>
                       <div class="col-md-6 mb-4">
-                        <div class="form-floating">
+                        <div id="formAddress" class="form-floating">
                           <input
                             type="text"
                             class="form-control"
@@ -356,7 +328,6 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                         
                             type="password"
                             class="form-control"
                             v-model="password"
@@ -369,7 +340,6 @@
                       <div class="col-md-6 mb-4">
                         <div class="form-floating">
                           <input
-                         
                             type="password"
                             class="form-control"
                             v-model="password2"
@@ -428,7 +398,7 @@ export default {
       provinces: [],
       districts: [],
       wards: [],
-      
+      error: []
     };
   },
   methods: {
@@ -478,8 +448,37 @@ export default {
     onFileUpload() {
       this.FILE = this.$refs.file.files[0];
     },
+    isValid(){
+        this.error = []
+        this.name==''?this.error.push('Chưa nhập họ và tên!'):null
+        this.username==''?this.error.push('Chưa nhập mã số thuế!'):null
+        this.email==''?this.error.push('Chưa nhập email!'):null
+        this.gender==''?this.error.push('Chưa nhập giới tính!'):null
+        this.province==''?this.error.push('Chưa nhập Tỉnh/Thành phố!'):null
+        this.district==''?this.error.push('Chưa nhập Quận/Huyện!'):null
+        this.ward==''?this.error.push('Chưa nhập Phường/Xã!'):null
+        this.address==''?this.error.push('Chưa nhập địa chỉ!'):null
+        this.professionaltitle==''?this.error.push('Chưa nhập chức danh chuyên môn!'):null
+        // this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
+        // this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
+        this.password==''?this.error.push('Chưa nhập mật khẩu!'):null
+        this.password.length<6?this.error.push('Mật khẩu tối thiểu 6 kí tự!'):null
+        this.password2!=this.password?this.error.push('Mật khẩu nhập lại không khớp!'):null
+        this.FILE==null?this.error.push('Chưa chọn giấy phép kinh doanh!'):null
+        return this.error.length>0?false:true
+    },
     handleSubmit(e) {
       e.preventDefault();
+       if (!this.isValid()){
+        Swal.fire({
+              icon: "info",
+              title: "Đăng kí thất bại",
+              text: this.error[0],
+              confirmButtonColor: "var(--primary)",
+              confirmButtonText: "Nhập lại",
+            });
+        return
+      }
       const formData = new FormData();
       formData.append("file", this.FILE, this.FILE.name);
       formData.append("type", this.type);
@@ -497,25 +496,20 @@ export default {
       const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
       const maxSize = 2000000;
       const tooLagre = this.FILE.size > maxSize;
-      console.log(this.FILE.size, this.FILE.type)
-       if (tooLagre) {
-        alert('File too big (> 1MB)');
+      console.log(this.FILE.size, this.FILE.type);
+      if (tooLagre) {
+        alert("File too big (> 1MB)");
         return;
       } else if (!allowedTypes.includes(this.FILE.type)) {
-        alert('File type is jpg, png, gif');
-        return
-      }  
+        alert("File type is jpg, png, gif");
+        return;
+      }
       this.$http
-        .post(
-          `${BASE_URL}/business/register`,
-            formData
-          ,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        .post(`${BASE_URL}/business/register`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
           if (response.data == "ok") {
             Swal.fire({
@@ -574,7 +568,29 @@ export default {
       });
   },
   watch: {
+    name(newValue) {
+      $("#formName").addClass("was-validated");
+    },
+    username() {
+      $("#formPhone").addClass("was-validated");
+    },
+    password() {
+      $("#formPassword").addClass("was-validated");
+    },
+    password2(newValue) {
+      if (newValue != this.password || newValue.length < 6) {
+        $("#password2").addClass("is-invalid");
+        $("#password2").removeClass("is-valid");
+      } else {
+        $("#password2").addClass("is-valid");
+        $("#password2").removeClass("is-invalid");
+      }
+    },
+    country(newValue) {
+      $("#formCountry").addClass("was-validated");
+    },
     province(newValue) {
+      $("#formProvince").addClass("was-validated");
       if (this.type == 5) return;
       this.district = "";
       this.districts = new Set(
@@ -584,6 +600,7 @@ export default {
       );
     },
     district(newValue) {
+      $("#formDistrict").addClass("was-validated");
       if (this.type == 5) return;
       this.ward = "";
       this.wards = new Set(
@@ -592,6 +609,16 @@ export default {
           .map((item) => item.ward)
       );
     },
+    ward() {
+      $("#formWard").addClass("was-validated");
+    },
+    address() {
+      $("#formAddress").addClass("was-validated");
+    },
+    FILE() {
+      $("#formFile").addClass("was-validated");
+    },
+    
   },
 };
 </script>
