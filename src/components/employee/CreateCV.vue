@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-auto">
         <div class="card" style="max-width: 18rem">
-          <img src="@/assets/images/user.png" class="card-img-top" alt="..." />
+          <img :src="image" class="uploading-image" id="imagePre" />
           <div class="my-1 text-center">
             <!-- <input type="file" class="file" data-browse-on-zone-click="true"/> -->
             <label for="file-upload" class="badge bg-secondary fs-6">
@@ -28,7 +28,8 @@
             <input
               id="file-upload"
               type="file"
-              accept="image/*"
+              accept="image/jpeg"
+              @change="uploadImage"
               class="d-none"
             />
           </div>
@@ -1017,7 +1018,7 @@ export default {
   data() {
     return {
       employee: "",
-      searchSkill: "",
+      image: "",
       skillWorking: [
         {
           name: "",
@@ -1106,6 +1107,13 @@ export default {
       });
       return skills;
     },
+    getUrlFile() {
+      if (this.urlFile) {
+        return "'" + this.urlFile + "'";
+      } else {
+        return require("@/assets/images/user.png");
+      }
+    },
   },
   methods: {
     handleSubmit(e) {
@@ -1142,6 +1150,7 @@ export default {
           skillComputer: this.skillComputer,
           skillOther: this.skillOther,
           assessment: this.assessment,
+          image: this.image
         })
         .then((response) => {
           if (response.data) {
@@ -1158,7 +1167,15 @@ export default {
           console.log(error);
         });
     },
-
+    uploadImage(e) {
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = async (e) => {
+        this.image = await e.target.result;
+        document.getElementById("imagePre").src = this.image;
+      };
+    },
     delProcess(index1, index2) {
       if (this.skillWorking[index1].process.length > 1) {
         this.skillWorking[index1].process.splice(index2, 1);
@@ -1443,7 +1460,8 @@ export default {
       })
       .then((res) => {
         let employee = res.data;
-        console.log(employee.skillWorking.length);
+        this.image = employee.image;
+        document.getElementById("imagePre").src = this.image;
         if (employee.skillWorking.length > 0) {
           this.skillWorking = employee.skillWorking;
         }
