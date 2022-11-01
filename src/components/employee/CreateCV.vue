@@ -18,7 +18,7 @@
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
       <div class="col-auto">
-        <div class="card" style="max-width: 18rem">
+        <div class="card" style="max-width: 10rem">
           <img :src="image" class="uploading-image" id="imagePre" />
           <div class="my-1 text-center">
             <!-- <input type="file" class="file" data-browse-on-zone-click="true"/> -->

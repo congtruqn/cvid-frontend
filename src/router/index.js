@@ -60,6 +60,15 @@ let router = new Router({
             }
         },
         {
+            path: '/cvid/:id',
+            name: 'share-cv',
+            component: () => import('@/components/index/CVID'),
+            meta: {
+                guest: true,
+                layout: 'Auth'
+            }
+        },
+        {
             path: '/employee/jobs-invited',
             name: 'createcv',
             component: () => import('@/components/employee/JobsInvited'),
