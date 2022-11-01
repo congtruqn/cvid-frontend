@@ -668,8 +668,8 @@
       </tbody>
     </table>
     <div class="d-grid gap-2 col-6 mx-auto">
-  <button class="btn btn-primary" type="button" @click="count++">{{count==0?'Duyệt lần 1':'Duyệt lần 2'}}</button>
-  <button class="btn btn-primary" type="button" @click="count--" v-if="count!=0">{{count!==0?'Hủy duyệt':''}}</button>
+  <button class="btn btn-primary" type="button" @click="count++" :disabled="count==2">{{count==0?'Duyệt lần 1':'Duyệt lần 2'}}</button>
+  <button class="btn btn-danger" type="button" @click="count--" v-if="count==1">{{'Hủy duyệt'}}</button>
 </div>
   </div>
   
