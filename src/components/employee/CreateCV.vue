@@ -13,26 +13,25 @@
         text-success
       "
     >
-      Số CVID: CV{{ employee.username.slice(1, 10) }}
+      Số CVID: CV{{ employee?employee.username.slice(1, 10):''}}
     </h5>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
       <div class="col-auto">
         <div class="card" style="max-width: 10rem">
-          <img :src="image" class="uploading-image" id="imagePre" />
-          <div class="my-1 text-center">
-            <!-- <input type="file" class="file" data-browse-on-zone-click="true"/> -->
-            <label for="file-upload" class="badge bg-secondary fs-6">
-              Chọn ảnh
-            </label>
-            <input
-              id="file-upload"
-              type="file"
-              accept="image/jpeg"
-              @change="uploadImage"
-              class="d-none"
-            />
-          </div>
+          <img
+            :src="image"
+            class="uploading-image"
+            id="imagePre"
+            @click="selectFile"
+          />
+          <input
+            id="inputFile"
+            type="file"
+            accept="image/jpeg"
+            @change="uploadImage"
+            class="d-none"
+          />
         </div>
       </div>
       <div class="col-md-8">
@@ -1003,7 +1002,7 @@
     </div>
     <p
       class="text-primary"
-      v-if="employee.approved == 1 && employee.point != -1"
+      v-if="employee.approved == 2 && employee.point != -1"
     >
       CVID của bạn đã được duyệt, bạn có thể sử dụng để ứng tuyển.
     </p>
@@ -1107,13 +1106,6 @@ export default {
       });
       return skills;
     },
-    getUrlFile() {
-      if (this.urlFile) {
-        return "'" + this.urlFile + "'";
-      } else {
-        return require("@/assets/images/user.png");
-      }
-    },
   },
   methods: {
     handleSubmit(e) {
@@ -1150,7 +1142,7 @@ export default {
           skillComputer: this.skillComputer,
           skillOther: this.skillOther,
           assessment: this.assessment,
-          image: this.image
+          image: this.image,
         })
         .then((response) => {
           if (response.data) {
@@ -1166,6 +1158,9 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    selectFile() {
+      document.getElementById("inputFile").click();
     },
     uploadImage(e) {
       const image = e.target.files[0];
@@ -1486,13 +1481,12 @@ export default {
         if (employee.assessment.length > 0) {
           this.assessment = employee.assessment;
         }
+        this.employee = employee
+        this.employee.birthdate = employee.birthdate.split("T")[0];
       })
       .catch(function (error) {
         console.error(error);
       });
-    this.employee = JSON.parse(localStorage.getItem("employee"));
-    this.employee.birthdate = this.employee.birthdate.split("T")[0];
-    this.skillWorking[0].process[0].skill = this.employee.skill;
     this.$http.get(`${BASE_URL}/criteria/getall`).then((res) => {
       this.criteria = res.data;
     });

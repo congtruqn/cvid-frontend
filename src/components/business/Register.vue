@@ -52,10 +52,20 @@
                       <input
                         type="text"
                         class="form-control"
-                        v-model="deputy"
+                        v-model="manager"
                         required
                       />
                       <label class="form-label">Họ và tên</label>
+                    </div>
+
+                    <div class="mb-4 form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="position"
+                        required
+                      />
+                      <label class="form-label">Chức vụ</label>
                     </div>
 
                     <div class="mb-4 form-floating">
@@ -214,7 +224,7 @@
                       <input
                         type="file"
                         class="form-control"
-                        ref="file"
+                        id="file-upload"
                         @change="onFileUpload"
                         accept="image/*"
                         required
@@ -380,7 +390,7 @@ export default {
       name: "",
       username: "",
       phone: "",
-      deputy: "",
+      manager: "",
       country: "Việt Nam",
       province: "",
       district: "",
@@ -388,7 +398,7 @@ export default {
       address: "",
       type_business: "",
       industry: [],
-      FILE: null,
+      image: null,
       email: "",
       password: "",
       password2: "",
@@ -445,8 +455,13 @@ export default {
           console.log(error);
         });
     },
-    onFileUpload() {
-      this.FILE = this.$refs.file.files[0];
+    onFileUpload(e) {
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = async (e) => {
+        this.image = await e.target.result;
+      };
     },
     isValid(){
         this.error = []
@@ -464,10 +479,11 @@ export default {
         this.password==''?this.error.push('Chưa nhập mật khẩu!'):null
         this.password.length<6?this.error.push('Mật khẩu tối thiểu 6 kí tự!'):null
         this.password2!=this.password?this.error.push('Mật khẩu nhập lại không khớp!'):null
-        this.FILE==null?this.error.push('Chưa chọn giấy phép kinh doanh!'):null
+        this.image==null?this.error.push('Chưa chọn giấy phép kinh doanh!'):null
         return this.error.length>0?false:true
     },
     handleSubmit(e) {
+      console.log(this.email)
       e.preventDefault();
        if (!this.isValid()){
         Swal.fire({
@@ -479,36 +495,24 @@ export default {
             });
         return
       }
-      const formData = new FormData();
-      formData.append("file", this.FILE, this.FILE.name);
-      formData.append("type", this.type);
-      formData.append("name", this.name);
-      formData.append("username", this.username);
-      formData.append("country", this.country);
-      formData.append("province", this.province);
-      formData.append("district", this.district);
-      formData.append("ward", this.ward);
-      formData.append("address", this.address);
-      formData.append("email", this.email);
-      formData.append("industries", this.industries);
-      formData.append("password", this.password);
-      formData.append("password2", this.password2);
-      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-      const maxSize = 2000000;
-      const tooLagre = this.FILE.size > maxSize;
-      console.log(this.FILE.size, this.FILE.type);
-      if (tooLagre) {
-        alert("File too big (> 1MB)");
-        return;
-      } else if (!allowedTypes.includes(this.FILE.type)) {
-        alert("File type is jpg, png, gif");
-        return;
-      }
+      
       this.$http
-        .post(`${BASE_URL}/business/register`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+        .post(`${BASE_URL}/business/register`, {
+          type: this.type,
+          name: this.name,
+          image: this.image,
+          phone: this.phone,
+          manager: this.manager,
+          username: this.username,
+          country: this.country,
+          province: this.province,
+          district: this.district,
+          ward: this.ward,
+          address: this.address,
+          email: this.email,
+          industries: this.industries,
+          password: this.password,
+          password2: this.password2,
         })
         .then((response) => {
           if (response.data == "ok") {

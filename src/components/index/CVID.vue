@@ -1,50 +1,55 @@
 <template>
-  <div class="container">
-    <h3 class="text-primary d-flex justify-content-center pt-4">
+  <div class="container-fluid">
+    <h4 class="text-primary d-flex justify-content-center">
       LÝ LỊCH ỨNG VIÊN (CVIDPRO)
-    </h3>
+    </h4>
     <h5 class="text-primary d-flex justify-content-center mt-2 text-success">
       Số CVID:
       <span class="fst-italic"> CV{{ employee.username.slice(1, 10) }}</span>
     </h5>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
-    <div class="row">
+    <div class="row mb-4">
       <div class="col-md-2 col-4">
-        <img :src="employee.image" style="width: 100%" />
+        <img :src="employee.image" style="width: auto; max-height:200px; max-width: 100%;" />
       </div>
-      <div class="col-md-5 col-8">
-        <p class="m-1">
-          Họ và tên: <span class="fw-bold">{{ employee.name }}</span>
-        </p>
-        <p class="m-1">
-          Ngày sinh:
-          <span class="fw-bold">{{
-            new Date(employee.birthdate).toLocaleDateString("en-US")
-          }}</span>
-        </p>
-        <p class="m-1">
-          Giới tính: <span class="fw-bold">{{ employee.gender }}</span>
-        </p>
-      </div>
-      <div class="col-md-5">
-        <p class="m-1">
-          Số điện thoại: <span class="fw-bold">{{ employee.username }}</span>
-        </p>
-        <p class="m-1">
-          Email: <span class="fw-bold">{{ employee.email }}</span>
-        </p>
-        <p class="m-1">
-          Địa chỉ:
-          <span class="fw-bold">{{
-            employee.address +
-            ", " +
-            employee.ward +
-            ", " +
-            employee.district +
-            ", " +
-            employee.province
-          }}</span>
-        </p>
+      <div class="col-md-10 col-8">
+        <div class="d-flex flex-column">
+          <div class="">
+            <p class="m-1">
+              Họ và tên: <span class="fw-bold">{{ employee.name }}</span>
+            </p>
+            <p class="m-1">
+              Ngày sinh:
+              <span class="fw-bold">{{
+                new Date(employee.birthdate).toLocaleDateString("en-US")
+              }}</span>
+            </p>
+            <p class="m-1">
+              Giới tính: <span class="fw-bold">{{ employee.gender }}</span>
+            </p>
+          </div>
+          <div class="">
+            <p class="m-1">
+              Số điện thoại:
+              <span class="fw-bold">{{ employee.username }}</span>
+            </p>
+            <p class="m-1">
+              Email: <span class="fw-bold">{{ employee.email }}</span>
+            </p>
+            <p class="m-1">
+              Địa chỉ:
+              <span class="fw-bold">{{
+                employee.address +
+                ", " +
+                employee.ward +
+                ", " +
+                employee.district +
+                ", " +
+                employee.province
+              }}</span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     <h4 class="text-primary text-decoration-underline">Nền tảng chuyên môn</h4>
@@ -668,11 +673,24 @@
       </tbody>
     </table>
     <div class="d-grid gap-2 col-6 mx-auto">
-  <button class="btn btn-primary" type="button" @click="count++" :disabled="count==2">{{count==0?'Duyệt lần 1':'Duyệt lần 2'}}</button>
-  <button class="btn btn-danger" type="button" @click="count--" v-if="count==1">{{'Hủy duyệt'}}</button>
-</div>
+      <button
+        class="btn btn-primary"
+        type="button"
+        @click="count++"
+        :disabled="count == 2"
+      >
+        {{ count == 0 ? "Duyệt lần 1" : "Duyệt lần 2" }}
+      </button>
+      <button
+        class="btn btn-danger"
+        type="button"
+        @click="count--"
+        v-if="count == 1"
+      >
+        {{ "Hủy duyệt" }}
+      </button>
+    </div>
   </div>
-  
 </template>
 <script>
 const { BASE_URL } = require("../../utils/config");
