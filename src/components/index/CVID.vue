@@ -5,12 +5,17 @@
     </h4>
     <h5 class="text-primary d-flex justify-content-center mt-2 text-success">
       Số CVID:
-      <span class="fst-italic"> CV{{ employee.username.slice(1, 10) }}</span>
+      <span class="fst-italic">
+        CV{{ employee.username ? employee.username.slice(1, 10) : "" }}</span
+      >
     </h5>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row mb-4">
       <div class="col-md-2 col-4">
-        <img :src="employee.image" style="width: auto; max-height:200px; max-width: 100%;" />
+        <img
+          :src="employee.image"
+          style="width: auto; max-height: 200px; max-width: 100%"
+        />
       </div>
       <div class="col-md-10 col-8">
         <div class="d-flex flex-column">
@@ -674,6 +679,34 @@
     </table>
     <div class="d-grid gap-2 col-6 mx-auto">
       <button
+        v-if="employee.approved < 1"
+        class="btn btn-primary float-right m-r-5 m-b-5"
+      >
+        Duyệt lần 1
+      </button>
+      <button
+        v-if="employee.approved == 1"
+        class="btn btn-primary float-right m-r-5 m-b-5"
+        @click="handleBrowse2"
+      >
+        Duyệt lần 2
+      </button>
+      <button
+        class="btn btn-success m-r-5 m-b-5"
+        v-if="employee.approved == 0"
+        @click="notBrowse"
+      >
+        Không duyệt
+      </button>
+      <button
+        class="btn btn-success m-r-5 m-b-5"
+        v-if="employee.approved == 1"
+        @click="cancelBrowse"
+      >
+        Hủy duyệt lần 1
+      </button>
+
+      <button
         class="btn btn-primary"
         type="button"
         @click="count++"
@@ -702,12 +735,58 @@ export default {
       count: 0,
     };
   },
+  methods: {
+    handleBrowse1() {
+      this.$http
+        .get(`${BASE_URL}/employee/browse-cvid1/${this.employee._id}`, {
+          headers: {
+            Authorization: `Basic ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          this.employee.approved = 1;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    },
+    handleBrowse2() {
+      this.$http
+        .get(`${BASE_URL}/employee/browse-cvid2/${this.employee._id}`, {
+          headers: {
+            Authorization: `Basic ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          this.employee.approved = 2;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    },
+    cancelBrowse() {
+      this.$http
+        .get(`${BASE_URL}/employee/cancel-browse-cvid/${this.employee._id}`, {
+          headers: {
+            Authorization: `Basic ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          this.employee.approved = 0;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    },
+    notBrowse() {
+      this.employee.approved = -1;
+    },
+  },
   created() {
     this.$http
       .get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
       .then((res) => {
         this.employee = res.data;
-        console.log(this.employee.skillEnglish);
       });
     this.$http.get(`${BASE_URL}/criteria/getall`).then((res) => {
       this.criteria = res.data;
