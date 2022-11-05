@@ -1,14 +1,15 @@
 <template>
   <div class="container-fluid">
-    <h4 class="text-primary d-flex justify-content-center">
+    <h4 class="text-primary d-flex justify-content-center" >
       LÝ LỊCH ỨNG VIÊN (CVIDPRO)
     </h4>
-    <h5 class="text-primary d-flex justify-content-center mt-2 text-success">
+    <h5 class="text-primary d-flex justify-content-center mt-2 text-success" v-if="employee.approved == 2">
       Số CVID:
       <span class="fst-italic">
         CV{{ employee.username ? employee.username.slice(1, 10) : "" }}</span
       >
     </h5>
+    {{noteCV}}
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row mb-4">
       <div class="col-md-2 col-4">
@@ -100,7 +101,7 @@
             </div>
             <div class="col-1">
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" />
+                <input type="checkbox" class="form-check-input" v-model="noteCV" :value="[index1, 0]"/>
               </div>
             </div>
             <div class="col-md-6 mt-n2 mb-2">
@@ -133,7 +134,7 @@
             </div>
             <div class="col-1 mb-2">
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" />
+                <input type="checkbox" class="form-check-input" v-model="noteCV" :value="[index1, 1]"/>
               </div>
             </div>
           </div>
@@ -207,7 +208,7 @@
                     </div>
                     <div class="col-1">
                       <div class="form-check">
-                        <input type="checkbox" class="form-check-input" />
+                        <input type="checkbox" class="form-check-input" v-model="noteCV" :value="[index1, (index2+1)*2]"/>
                       </div>
                     </div>
                     <div class="col">
@@ -222,7 +223,7 @@
                     </div>
                     <div class="col-1">
                       <div class="form-check">
-                        <input type="checkbox" class="form-check-input" />
+                        <input type="checkbox" class="form-check-input" v-model="noteCV" :value="[index1, (index2+1)*2+1]"/>
                       </div>
                     </div>
                     <div class="col-md-6" v-if="element.to != 'Hiện tại'">
