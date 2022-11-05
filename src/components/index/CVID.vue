@@ -9,7 +9,6 @@
         CV{{ employee.username ? employee.username.slice(1, 10) : "" }}</span
       >
     </h5>
-    {{noteCV}}
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row mb-4">
       <div class="col-md-2 col-4">
@@ -101,12 +100,12 @@
             </div>
             <div class="col-1">
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" v-model="noteCV" :value="[index1, 0]"/>
+                <input type="checkbox" class="form-check-input" v-model="noteCV" :value="{company: index1, process: 0}"/>
               </div>
             </div>
             <div class="col-md-6 mt-n2 mb-2">
               <div class="input-group input-group-sm mb-2">
-                <span class="border px-2 py-1 bg-white col fw-bold">{{
+                <span :class="'border px-2 py-1 bg-white col fw-bold'+ (noteCV.find(element => element.company == index1 && element.process == 0)?' border-danger':'')" >{{
                   company.name
                 }}</span>
               </div>
@@ -127,14 +126,14 @@
             <div class="col-11 mb-2">
               <div class="input-group input-group-sm">
                 <span class="input-group-text fw-bold w-100">Địa chỉ</span>
-                <span class="border px-2 py-1 bg-white col fw-bold">{{
+                <span :class="'border px-2 py-1 bg-white col fw-bold'+(noteCV.find(element => element.company == index1 && element.process == 1)?' border-danger':'')">{{
                   company.address
                 }}</span>
               </div>
             </div>
             <div class="col-1 mb-2">
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" v-model="noteCV" :value="[index1, 1]"/>
+                <input type="checkbox" class="form-check-input" v-model="noteCV" :value="{company: index1, process: 1}"/>
               </div>
             </div>
           </div>
@@ -201,14 +200,14 @@
                         <span class="input-group-text w-100 fw-bold"
                           >Công việc đã thực hiện</span
                         >
-                        <span class="border p-2 bg-white col fw-bold">{{
+                        <span :class="'border p-2 bg-white col fw-bold'+(noteCV.find(element => element.company == index1 && element.process == (index2+1)*2)?' border-danger':'')">{{
                           element.work
                         }}</span>
                       </div>
                     </div>
                     <div class="col-1">
                       <div class="form-check">
-                        <input type="checkbox" class="form-check-input" v-model="noteCV" :value="[index1, (index2+1)*2]"/>
+                        <input type="checkbox" class="form-check-input" v-model="noteCV" :value="{company: index1, process: (index2+1)*2}" />
                       </div>
                     </div>
                     <div class="col">
@@ -216,14 +215,14 @@
                         <span class="input-group-text fw-bold w-100"
                           >Địa chỉ</span
                         >
-                        <span class="border p-1 bg-white col fw-bold">{{
+                        <span :class="'border p-1 bg-white col fw-bold'+(noteCV.find(element => element.company == index1 && element.process == (index2+1)*2+1)?' border-danger':'')">{{
                           element.address
                         }}</span>
                       </div>
                     </div>
                     <div class="col-1">
                       <div class="form-check">
-                        <input type="checkbox" class="form-check-input" v-model="noteCV" :value="[index1, (index2+1)*2+1]"/>
+                        <input type="checkbox" class="form-check-input" v-model="noteCV" :value="{company: index1, process: (index2+1)*2+1}"/>
                       </div>
                     </div>
                     <div class="col-md-6" v-if="element.to != 'Hiện tại'">
