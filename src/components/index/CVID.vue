@@ -72,162 +72,183 @@
         </p>
       </div>
     </div>
-    <div class="row justify-content-between">
-      <div class="col-md-6">
-        <h4 class="text-primary mt-2 text-decoration-underline">
-          Kinh nghiệm làm việc
-        </h4>
+    <div v-if="employee.skillWorking && employee.skillWorking.length > 0">
+      <div class="row justify-content-between">
+        <div class="col-md-6">
+          <h4 class="text-primary mt-2 text-decoration-underline">
+            Kinh nghiệm làm việc
+          </h4>
+        </div>
+        <div class="col-md-6 text-md-end mt-2">
+          <span class="badge bg-primary fs-6"
+            >Số năm kinh nghiệm: {{ getExperience }}</span
+          >
+        </div>
       </div>
-      <div class="col-md-6 text-md-end mt-2">
-        <span class="badge bg-primary fs-6"
-          >Số năm kinh nghiệm: {{ getExperience }}</span
-        >
-      </div>
-    </div>
-    <div
-      class="card border-success border-2 mt-3"
-      v-for="(company, index1) in employee.skillWorking"
-      v-if="employee.skillWorking.length > 0"
-    >
-      <div class="card-header border-success border-2">
-        <div class="row">
-          <div class="col-12">
-            <div class="input-group input-group-sm mb-2">
-              <span class="input-group-text w-100 fw-bold"
-                >Nơi làm việc {{ index1 + 1 }}</span
-              >
+      <div
+        class="card border-success border-2 mt-3"
+        v-for="(company, index1) in employee.skillWorking"
+      >
+        <div class="card-header border-success border-2">
+          <div class="row">
+            <div class="col-11">
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text w-100 fw-bold"
+                  >Nơi làm việc {{ index1 + 1 }}</span
+                >
+              </div>
             </div>
-          </div>
-          <div class="col-md-6 mt-n2 mb-2">
-            <div class="input-group input-group-sm mb-2">
-              <span class="border px-2 py-1 bg-white col fw-bold">{{
-                company.name
-              }}</span>
+            <div class="col-1">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" />
+              </div>
             </div>
-          </div>
-          <div class="col-md-6 mt-n2">
-            <div class="input-group input-group-sm mb-2">
-              <span class="input-group-text fw-bold">Từ</span>
-              <span class="border p-1 bg-white col fw-bold">{{
-                company.from
-              }}</span>
-              <span class="input-group-text fw-bold">Đến</span>
-              <span class="border p-1 bg-white col fw-bold">{{
-                company.to
-              }}</span>
+            <div class="col-md-6 mt-n2 mb-2">
+              <div class="input-group input-group-sm mb-2">
+                <span class="border px-2 py-1 bg-white col fw-bold">{{
+                  company.name
+                }}</span>
+              </div>
             </div>
-          </div>
+            <div class="col-md-6 mt-n2">
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text fw-bold">Từ</span>
+                <span class="border p-1 bg-white col fw-bold">{{
+                  company.from
+                }}</span>
+                <span class="input-group-text fw-bold">Đến</span>
+                <span class="border p-1 bg-white col fw-bold">{{
+                  company.to
+                }}</span>
+              </div>
+            </div>
 
-          <div class="col-12 mb-2">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text fw-bold w-100">Địa chỉ</span>
-              <span class="border px-2 py-1 bg-white col fw-bold">{{
-                company.address
-              }}</span>
+            <div class="col-11 mb-2">
+              <div class="input-group input-group-sm">
+                <span class="input-group-text fw-bold w-100">Địa chỉ</span>
+                <span class="border px-2 py-1 bg-white col fw-bold">{{
+                  company.address
+                }}</span>
+              </div>
+            </div>
+            <div class="col-1 mb-2">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card-body text-success px-0">
-        <div class="row">
-          <h6 class="text-primary fw-bold text-center">Quá trình làm việc</h6>
-          <div class="col-12" v-for="(element, index2) in company.process">
-            <div class="card border-success border-start-0 border-end-0">
-              <div class="card-header bg-transparent border-success">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="input-group input-group-sm mb-2">
-                      <span class="input-group-text w-100 fw-bold"
-                        >Chức danh công việc</span
-                      >
+        <div class="card-body text-success px-0">
+          <div class="row">
+            <h6 class="text-primary fw-bold text-center">Quá trình làm việc</h6>
+            <div class="col-12" v-for="(element, index2) in company.process">
+              <div class="card border-success border-start-0 border-end-0">
+                <div class="card-header bg-transparent border-success">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text w-100 fw-bold"
+                          >Chức danh công việc</span
+                        >
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6 mt-n2 mb-2">
-                    <div class="input-group input-group-sm mb-2">
-                      <span class="border px-2 py-1 bg-white col fw-bold">{{
-                        element.title
-                      }}</span>
+                    <div class="col-md-6 mt-n2 mb-2">
+                      <div class="input-group input-group-sm mb-2">
+                        <span class="border px-2 py-1 bg-white col fw-bold">{{
+                          element.title
+                        }}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6 mt-n2">
-                    <div class="input-group input-group-sm">
-                      <span class="input-group-text fw-bold">Từ</span>
-                      <span class="border p-1 bg-white col fw-bold">{{
-                        element.from
-                      }}</span>
-                      <span class="input-group-text fw-bold">Đến</span>
-                      <span class="border p-1 bg-white col fw-bold">{{
-                        element.to
-                      }}</span>
+                    <div class="col-md-6 mt-n2">
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text fw-bold">Từ</span>
+                        <span class="border p-1 bg-white col fw-bold">{{
+                          element.from
+                        }}</span>
+                        <span class="input-group-text fw-bold">Đến</span>
+                        <span class="border p-1 bg-white col fw-bold">{{
+                          element.to
+                        }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="card-body text-success">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="input-group input-group-sm mb-2">
-                      <span class="input-group-text w-100 fw-bold"
-                        >Chức vụ</span
-                      >
-                      <span class="border p-2 bg-white col fw-bold">{{
-                        element.position
-                      }}</span>
+                <div class="card-body text-success">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text w-100 fw-bold"
+                          >Chức vụ</span
+                        >
+                        <span class="border p-2 bg-white col fw-bold">{{
+                          element.position
+                        }}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="input-group input-group-sm mb-2">
-                      <span class="input-group-text w-100 fw-bold"
-                        >Chuyên nghành</span
-                      >
-                      <span class="border p-2 bg-white col fw-bold">{{
-                        element.skill
-                      }}</span>
+                    <div class="col-md-6">
+                      <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text w-100 fw-bold"
+                          >Chuyên nghành</span
+                        >
+                        <span class="border p-2 bg-white col fw-bold">{{
+                          element.skill
+                        }}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="input-group input-group-sm mb-2">
-                      <span class="input-group-text w-100 fw-bold"
-                        >Công việc đã thực hiện</span
-                      >
-                      <span class="border p-2 bg-white col fw-bold">{{
-                        element.work
-                      }}</span>
+                    <div class="col-11">
+                      <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text w-100 fw-bold"
+                          >Công việc đã thực hiện</span
+                        >
+                        <span class="border p-2 bg-white col fw-bold">{{
+                          element.work
+                        }}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="input-group input-group-sm mb-2">
-                      <span class="input-group-text fw-bold w-100"
-                        >Địa chỉ</span
-                      >
-                      <span class="border p-1 bg-white col fw-bold">{{
-                        element.address
-                      }}</span>
+                    <div class="col-1">
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" />
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6" v-if="element.to != 'Hiện tại'">
-                    <div class="input-group input-group-sm mb-2">
-                      <span class="input-group-text fw-bold w-100"
-                        >Kết quả hoàn thành</span
-                      >
-                      <span class="border px-2 py-1 bg-white col fw-bold">{{
-                        element.result
-                      }}</span>
+                    <div class="col">
+                      <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text fw-bold w-100"
+                          >Địa chỉ</span
+                        >
+                        <span class="border p-1 bg-white col fw-bold">{{
+                          element.address
+                        }}</span>
+                      </div>
+                    </div>
+                    <div class="col-1">
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" />
+                      </div>
+                    </div>
+                    <div class="col-md-6" v-if="element.to != 'Hiện tại'">
+                      <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text fw-bold w-100"
+                          >Kết quả hoàn thành</span
+                        >
+                        <span class="border px-2 py-1 bg-white col fw-bold">{{
+                          element.result
+                        }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-12">
-            <div
-              class="input-group input-group-sm px-3 pt-3"
-              v-if="company.to != 'Hiện tại'"
-            >
-              <span class="input-group-text fw-bold">Lý do nghỉ việc</span>
-              <span class="border p-1 bg-white col fw-bold">{{
-                company.leaving
-              }}</span>
+            <div class="col-12">
+              <div
+                class="input-group input-group-sm px-3 pt-3"
+                v-if="company.to != 'Hiện tại'"
+              >
+                <span class="input-group-text fw-bold">Lý do nghỉ việc</span>
+                <span class="border p-1 bg-white col fw-bold">{{
+                  company.leaving
+                }}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -355,191 +376,194 @@
         </div>
       </div>
     </div>
-    <h4
-      class="text-primary mt-2 text-decoration-underline"
-      v-if="employee.shortTraining && employee.shortTraining.length > 0"
-    >
-      Các khoá đào tạo ngắn hạn
-    </h4>
-    <div
-      class="card mb-3"
-      v-for="(ele, index) in employee.shortTraining"
-      v-if="employee.shortTraining.length > 0"
-    >
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text">Từ</label>
-              <span class="border px-2 py-1 bg-white col fw-bold">{{
-                ele.from
-              }}</span>
+    <div v-if="employee.shortTraining && employee.shortTraining.length > 0">
+      <h4 class="text-primary mt-2 text-decoration-underline">
+        Các khoá đào tạo ngắn hạn
+      </h4>
+      <div class="card mb-3" v-for="(ele, index) in employee.shortTraining">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text">Từ</label>
+                <span class="border px-2 py-1 bg-white col fw-bold">{{
+                  ele.from
+                }}</span>
+              </div>
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text">Đến</label>
+                <span class="border px-2 py-1 bg-white col fw-bold">{{
+                  ele.to
+                }}</span>
+              </div>
             </div>
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text">Đến</label>
-              <span class="border px-2 py-1 bg-white col fw-bold">{{
-                ele.to
-              }}</span>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text">Chứng chỉ đại được</label>
-              <span class="border px-2 py-1 bg-white col fw-bold">{{
-                ele.name
-              }}</span>
-            </div>
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text">Đơn vị tổ chức</label>
-              <span class="border px-2 py-1 bg-white col fw-bold">{{
-                ele.place
-              }}</span>
+            <div class="col-md-8">
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text">Chứng chỉ đại được</label>
+                <span class="border px-2 py-1 bg-white col fw-bold">{{
+                  ele.name
+                }}</span>
+              </div>
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text">Đơn vị tổ chức</label>
+                <span class="border px-2 py-1 bg-white col fw-bold">{{
+                  ele.place
+                }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <h4 class="text-primary mt-2 text-decoration-underline">
-      Khả năng ngoại ngữ và vi tính
-    </h4>
-    <table class="table table-bordered border-primary text-center">
-      <thead>
-        <tr>
-          <th colspan="5">
-            <h5 class="text-primary m-1">Khả năng Tiếng Anh</h5>
-          </th>
-        </tr>
-        <tr class="d-flex">
-          <th class="col-2">Kĩ năng</th>
-          <th class="col">Giỏi</th>
-          <th class="col">Tốt</th>
-          <th class="col">Bình thường</th>
-          <th class="col">Cơ bản</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="d-flex">
-          <th class="col-2">Nghe</th>
-          <td class="col" v-for="point in 4">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="employee.skillEnglish.listening"
-              :value="point"
-              disabled
-            />
-          </td>
-        </tr>
-        <tr class="d-flex">
-          <th class="col-2">Nói</th>
-          <td class="col" v-for="point in 4">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="employee.skillEnglish.speaking"
-              :value="point"
-              disabled
-            />
-          </td>
-        </tr>
-        <tr class="d-flex">
-          <th class="col-2">Đọc</th>
-          <td class="col" v-for="point in 4">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="employee.skillEnglish.reading"
-              :value="point"
-              disabled
-            />
-          </td>
-        </tr>
-        <tr class="d-flex">
-          <th class="col-2">Viết</th>
-          <td class="col" v-for="point in 4">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="employee.skillEnglish.writing"
-              :value="point"
-              disabled
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="employee.skillEnglish">
+      <h4 class="text-primary mt-2 text-decoration-underline">
+        Khả năng ngoại ngữ và vi tính
+      </h4>
+      <table class="table table-bordered border-primary text-center">
+        <thead>
+          <tr>
+            <th colspan="5">
+              <h5 class="text-primary m-1">Khả năng Tiếng Anh</h5>
+            </th>
+          </tr>
+          <tr class="d-flex">
+            <th class="col-2">Kĩ năng</th>
+            <th class="col">Giỏi</th>
+            <th class="col">Tốt</th>
+            <th class="col">Bình thường</th>
+            <th class="col">Cơ bản</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="d-flex">
+            <th class="col-2">Nghe</th>
+            <td class="col" v-for="point in 4">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="employee.skillEnglish.listening"
+                :value="point"
+                disabled
+              />
+            </td>
+          </tr>
+          <tr class="d-flex">
+            <th class="col-2">Nói</th>
+            <td class="col" v-for="point in 4">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="employee.skillEnglish.speaking"
+                :value="point"
+                disabled
+              />
+            </td>
+          </tr>
+          <tr class="d-flex">
+            <th class="col-2">Đọc</th>
+            <td class="col" v-for="point in 4">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="employee.skillEnglish.reading"
+                :value="point"
+                disabled
+              />
+            </td>
+          </tr>
+          <tr class="d-flex">
+            <th class="col-2">Viết</th>
+            <td class="col" v-for="point in 4">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="employee.skillEnglish.writing"
+                :value="point"
+                disabled
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table
+        class="table table-bordered border-primary text-center"
+        v-for="skill in employee.skillLanguage"
+        v-if="skill.name != ''"
+      >
+        <thead>
+          <tr>
+            <th colspan="5">
+              <input
+                type="text"
+                class="form-control text-center text-primary h5 fs-5"
+                placeholder="Tên ngoại ngữ"
+                v-model="skill.name"
+              />
+            </th>
+          </tr>
+          <tr>
+            <th scope="col">Kĩ năng</th>
+            <th scope="col">Giỏi</th>
+            <th scope="col">Tốt</th>
+            <th scope="col">Bình thường</th>
+            <th scope="col">Cơ bản</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Nghe</th>
+            <td v-for="point in 4">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="skill.listening"
+                :value="point"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Nói</th>
+            <td v-for="point in 4">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="skill.speaking"
+                :value="point"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Đọc</th>
+            <td v-for="point in 4">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="skill.reading"
+                :value="point"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Viết</th>
+            <td v-for="point in 4">
+              <input
+                class="form-check-input"
+                type="radio"
+                v-model="skill.writing"
+                :value="point"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <table
       class="table table-bordered border-primary text-center"
-      v-for="skill in employee.skillLanguage"
-      v-if="skill.name != ''"
+      v-if="employee.skillComputer"
     >
-      <thead>
-        <tr>
-          <th colspan="5">
-            <input
-              type="text"
-              class="form-control text-center text-primary h5 fs-5"
-              placeholder="Tên ngoại ngữ"
-              v-model="skill.name"
-            />
-          </th>
-        </tr>
-        <tr>
-          <th scope="col">Kĩ năng</th>
-          <th scope="col">Giỏi</th>
-          <th scope="col">Tốt</th>
-          <th scope="col">Bình thường</th>
-          <th scope="col">Cơ bản</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Nghe</th>
-          <td v-for="point in 4">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="skill.listening"
-              :value="point"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">Nói</th>
-          <td v-for="point in 4">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="skill.speaking"
-              :value="point"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">Đọc</th>
-          <td v-for="point in 4">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="skill.reading"
-              :value="point"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">Viết</th>
-          <td v-for="point in 4">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="skill.writing"
-              :value="point"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-bordered border-primary text-center">
       <thead>
         <tr>
           <th colspan="8">
@@ -646,7 +670,7 @@
     </table>
     <table
       class="table table-bordered border-primary text-center"
-      v-if="employee.skillOther.length > 0"
+      v-if="employee.skillOther && employee.skillOther.length > 0"
     >
       <thead>
         <tr>
@@ -677,51 +701,27 @@
         </tr>
       </tbody>
     </table>
-    <div class="d-grid gap-2 col-6 mx-auto">
-      <button
-        v-if="employee.approved < 1"
-        class="btn btn-primary float-right m-r-5 m-b-5"
-      >
-        Duyệt lần 1
-      </button>
-      <button
-        v-if="employee.approved == 1"
-        class="btn btn-primary float-right m-r-5 m-b-5"
-        @click="handleBrowse2"
-      >
-        Duyệt lần 2
-      </button>
-      <button
-        class="btn btn-success m-r-5 m-b-5"
-        v-if="employee.approved == 0"
-        @click="notBrowse"
-      >
-        Không duyệt
-      </button>
-      <button
-        class="btn btn-success m-r-5 m-b-5"
-        v-if="employee.approved == 1"
-        @click="cancelBrowse"
-      >
-        Hủy duyệt lần 1
-      </button>
-
-      <button
-        class="btn btn-primary"
-        type="button"
-        @click="count++"
-        :disabled="count == 2"
-      >
-        {{ count == 0 ? "Duyệt lần 1" : "Duyệt lần 2" }}
-      </button>
-      <button
-        class="btn btn-danger"
-        type="button"
-        @click="count--"
-        v-if="count == 1"
-      >
-        {{ "Hủy duyệt" }}
-      </button>
+    <div class="row g-0">
+      <div class="col-sm-6 col-md-8">
+        <!-- <button class="btn-info btn text-white" v-if="employee.approved == -2">Không duyệt</button> -->
+        <button class="btn-info btn text-white" v-if="employee.approved == 0" @click="notBrowse">
+          Không duyệt
+        </button>
+        <button class="btn-danger btn text-white" v-if="employee.approved == 1" @click="cancelBrowse">
+          Hủy duyệt
+        </button>
+      </div>
+      <div class="col-6 col-md-4">
+        <button v-if="employee.approved == 0" class="btn-primary btn" @click="handleBrowse1">
+          Duyệt lần 1
+        </button>
+        <button v-if="employee.approved == 1" class="btn-primary btn" @click="handleBrowse2">
+          Duyệt lần 2
+        </button>
+        <button v-if="employee.approved == 2" class="btn-success btn disabled">
+          Đã duyệt
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -732,7 +732,8 @@ export default {
     return {
       criteria: "",
       employee: "",
-      count: 0,
+      noteCV: new Array(),
+      token: "",
     };
   },
   methods: {
@@ -740,7 +741,7 @@ export default {
       this.$http
         .get(`${BASE_URL}/employee/browse-cvid1/${this.employee._id}`, {
           headers: {
-            Authorization: `Basic ${localStorage.getItem("token")}`,
+            Authorization: `Basic ${this.token}`,
           },
         })
         .then((response) => {
@@ -754,7 +755,7 @@ export default {
       this.$http
         .get(`${BASE_URL}/employee/browse-cvid2/${this.employee._id}`, {
           headers: {
-            Authorization: `Basic ${localStorage.getItem("token")}`,
+            Authorization: `Basic ${this.token}`,
           },
         })
         .then((response) => {
@@ -768,7 +769,7 @@ export default {
       this.$http
         .get(`${BASE_URL}/employee/cancel-browse-cvid/${this.employee._id}`, {
           headers: {
-            Authorization: `Basic ${localStorage.getItem("token")}`,
+            Authorization: `Basic ${this.token}`,
           },
         })
         .then((response) => {
@@ -779,10 +780,28 @@ export default {
         });
     },
     notBrowse() {
-      this.employee.approved = -1;
+      this.$http
+        .post(
+          `${BASE_URL}/employee/not-browse-cvid/${this.employee._id}`,
+          {
+            noteCV: this.noteCV,
+          },
+          {
+            headers: {
+              Authorization: `Basic ${this.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          this.employee.approved = -1;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
     },
   },
   created() {
+    this.token = decodeURIComponent(this.$route.query.token);
     this.$http
       .get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
       .then((res) => {
