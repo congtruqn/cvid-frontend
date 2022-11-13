@@ -510,6 +510,7 @@ export default {
           image: this.image,
           phone: this.phone,
           manager: this.manager,
+          position: this.position,
           username: this.username,
           type_business: this.type_business,
           majors: this.major,
