@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-expressions -->
 <template>
   <section class="h-100 bg-dark">
     <div class="container py-5 h-100">
@@ -38,7 +39,17 @@
                     </select>
                     <label class="form-label">Loại hình tuyển dụng</label>
                   </div>
+                <!-- Doanh nghiệp -->
                   <div v-if="type == 5">
+                    <div class="mb-4 form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="manager"
+                        required
+                      />
+                      <label class="form-label">Người đại diện</label>
+                    </div>
                     <div class="mb-4 form-floating">
                       <input
                         type="text"
@@ -47,15 +58,6 @@
                         required
                       />
                       <label class="form-label">Số điện thoại</label>
-                    </div>
-                    <div class="mb-4 form-floating">
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="manager"
-                        required
-                      />
-                      <label class="form-label">Họ và tên</label>
                     </div>
 
                     <div class="mb-4 form-floating">
@@ -215,7 +217,7 @@
                     </div>
 
                     <div class="mb-4 form-floating">
-                      <input chín type="text" class="form-control" />
+                      <input type="text" class="form-control" v-model="major"/>
                       <label class="form-label"
                         >Nghành nghề kinh doanhh chính</label
                       >
@@ -232,6 +234,9 @@
                       <label class="form-label">Giấy phép kinh doanh</label>
                     </div>
                   </div>
+
+
+                  
                   <div v-else>
                     <div class="mb-4 form-floating">
                       <input
@@ -382,26 +387,28 @@
   </section>
 </template>
 <script>
-const { BASE_URL } = require("../../utils/config");
+const { BASE_URL } = require('../../utils/config')
 export default {
-  data() {
+  data () {
     return {
-      type: "6",
-      name: "",
-      username: "",
-      phone: "",
-      manager: "",
-      country: "Việt Nam",
-      province: "",
-      district: "",
-      ward: "",
-      address: "",
-      type_business: "",
+      type: '5',
+      name: '',
+      username: '',
+      phone: '',
+      manager: '',
+      position: '',
+      country: 'Việt Nam',
+      province: '',
+      district: '',
+      major: '',
+      ward: '',
+      address: '',
+      type_business: '',
       industry: [],
       image: null,
-      email: "",
-      password: "",
-      password2: "",
+      email: '',
+      password: '',
+      password2: '',
       province_list: [],
       type_businesses: [],
       industries: [],
@@ -409,93 +416,93 @@ export default {
       districts: [],
       wards: [],
       error: []
-    };
+    }
   },
   methods: {
-    getBusiness() {
-      if (this.username == "") {
-        this.name = "";
-        this.province = "";
-        this.district = "";
-        this.ward = "";
-        this.address = "";
-        return;
+    getBusiness () {
+      if (this.username == '') {
+        this.name = ''
+        this.province = ''
+        this.district = ''
+        this.ward = ''
+        this.address = ''
+        return
       }
       this.$http
         .post(`${BASE_URL}/business/getinfo`, {
-          mst: this.username,
+          mst: this.username
         })
         .then((response) => {
-          var htmlObject = document.createElement("div");
-          htmlObject.innerHTML = response.data;
-          htmlObject = htmlObject.getElementsByClassName("search-results");
+          var htmlObject = document.createElement('div')
+          htmlObject.innerHTML = response.data
+          htmlObject = htmlObject.getElementsByClassName('search-results')
           if (htmlObject.length == 0) {
-            this.name = "";
-            this.province = "";
-            this.district = "";
-            this.ward = "";
-            this.address = "";
+            this.name = ''
+            this.province = ''
+            this.district = ''
+            this.ward = ''
+            this.address = ''
           } else {
-            this.name = htmlObject[0].getElementsByTagName("a")[0].innerHTML;
-            var address = htmlObject[0].getElementsByTagName("p")[0].innerHTML;
+            this.name = htmlObject[0].getElementsByTagName('a')[0].innerHTML
+            var address = htmlObject[0].getElementsByTagName('p')[0].innerHTML
             this.username = htmlObject[0]
-              .getElementsByTagName("p")[0]
-              .getElementsByTagName("a")[0].innerHTML;
-            this.address = "";
-            address = address.split("Địa chỉ:")[1].trim().split(", ").reverse();
+              .getElementsByTagName('p')[0]
+              .getElementsByTagName('a')[0].innerHTML
+            this.address = ''
+            address = address.split('Địa chỉ:')[1].trim().split(', ').reverse()
             address.forEach((item, index) => {
-              if (index == 0) this.province = item;
-              else if (index == 1) this.district = item;
-              else if (index == 2) this.ward = item;
-              else this.address = item + " " + this.address;
-            });
+              if (index == 0) this.province = item
+              else if (index == 1) this.district = item
+              else if (index == 2) this.ward = item
+              else this.address = item + ' ' + this.address
+            })
           }
         })
         .catch(function (error) {
-          console.log(error);
-        });
+          console.log(error)
+        })
     },
-    onFileUpload(e) {
-      const image = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(image);
+    onFileUpload (e) {
+      const image = e.target.files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(image)
       reader.onload = async (e) => {
-        this.image = await e.target.result;
-      };
+        this.image = await e.target.result
+      }
     },
-    isValid(){
-        this.error = []
-        this.name==''?this.error.push('Chưa nhập họ và tên!'):null
-        this.username==''?this.error.push('Chưa nhập mã số thuế!'):null
-        this.email==''?this.error.push('Chưa nhập email!'):null
-        this.gender==''?this.error.push('Chưa nhập giới tính!'):null
-        this.province==''?this.error.push('Chưa nhập Tỉnh/Thành phố!'):null
-        this.district==''?this.error.push('Chưa nhập Quận/Huyện!'):null
-        this.ward==''?this.error.push('Chưa nhập Phường/Xã!'):null
-        this.address==''?this.error.push('Chưa nhập địa chỉ!'):null
-        this.professionaltitle==''?this.error.push('Chưa nhập chức danh chuyên môn!'):null
-        // this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
-        // this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
-        this.password==''?this.error.push('Chưa nhập mật khẩu!'):null
-        this.password.length<6?this.error.push('Mật khẩu tối thiểu 6 kí tự!'):null
-        this.password2!=this.password?this.error.push('Mật khẩu nhập lại không khớp!'):null
-        this.image==null?this.error.push('Chưa chọn giấy phép kinh doanh!'):null
-        return this.error.length>0?false:true
+    isValid () {
+      this.error = []
+      this.name == '' ? this.error.push('Chưa nhập họ và tên!') : null
+      this.username == '' ? this.error.push('Chưa nhập mã số thuế!') : null
+      this.email == '' ? this.error.push('Chưa nhập email!') : null
+      this.gender == '' ? this.error.push('Chưa nhập giới tính!') : null
+      this.province == '' ? this.error.push('Chưa nhập Tỉnh/Thành phố!') : null
+      this.district == '' ? this.error.push('Chưa nhập Quận/Huyện!') : null
+      this.ward == '' ? this.error.push('Chưa nhập Phường/Xã!') : null
+      this.address == '' ? this.error.push('Chưa nhập địa chỉ!') : null
+      this.professionaltitle == '' ? this.error.push('Chưa nhập chức danh chuyên môn!') : null
+      // this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
+      // this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
+      this.password == '' ? this.error.push('Chưa nhập mật khẩu!') : null
+      this.password.length < 6 ? this.error.push('Mật khẩu tối thiểu 6 kí tự!') : null
+      this.password2 != this.password ? this.error.push('Mật khẩu nhập lại không khớp!') : null
+      this.image == null ? this.error.push('Chưa chọn giấy phép kinh doanh!') : null
+      return !(this.error.length > 0)
     },
-    handleSubmit(e) {
+    handleSubmit (e) {
       console.log(this.email)
-      e.preventDefault();
-       if (!this.isValid()){
+      e.preventDefault()
+      if (!this.isValid()) {
         Swal.fire({
-              icon: "info",
-              title: "Đăng kí thất bại",
-              text: this.error[0],
-              confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Nhập lại",
-            });
+          icon: 'info',
+          title: 'Đăng kí thất bại',
+          text: this.error[0],
+          confirmButtonColor: 'var(--primary)',
+          confirmButtonText: 'Nhập lại'
+        })
         return
       }
-      
+
       this.$http
         .post(`${BASE_URL}/business/register`, {
           type: this.type,
@@ -504,125 +511,127 @@ export default {
           phone: this.phone,
           manager: this.manager,
           username: this.username,
+          type_business: this.type_business,
+          majors: this.major,
           country: this.country,
           province: this.province,
           district: this.district,
           ward: this.ward,
           address: this.address,
           email: this.email,
-          industries: this.industries,
+          industries: this.industry,
           password: this.password,
-          password2: this.password2,
+          password2: this.password2
         })
         .then((response) => {
-          if (response.data == "ok") {
+          if (response.data == 'ok') {
             Swal.fire({
-              icon: "success",
-              title: "Đăng kí thành công",
-              text: "Bạn có thể đăng nhập ngay bây giờ",
-              confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Đăng nhập",
+              icon: 'success',
+              title: 'Đăng kí thành công',
+              text: 'Bạn có thể đăng nhập ngay bây giờ',
+              confirmButtonColor: 'var(--primary)',
+              confirmButtonText: 'Đăng nhập'
             }).then((result) => {
               if (result.value) {
-                this.$router.push("/business/login");
+                this.$router.push('/business/login')
               }
-            });
+            })
           } else {
             Swal.fire({
-              icon: "info",
-              title: "Đăng kí thất bại",
+              icon: 'info',
+              title: 'Đăng kí thất bại',
               text: `${response.data[0].msg}`,
-              confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Nhập lại",
-            });
+              confirmButtonColor: 'var(--primary)',
+              confirmButtonText: 'Nhập lại'
+            })
           }
         })
         .catch(function (error) {
-          console.error(error.response);
-        });
-    },
+          console.error(error.response)
+        })
+    }
   },
-  created() {
+  created () {
     this.$http
       .get(`${BASE_URL}/province/list`)
       .then((response) => {
-        this.province_list = response.data;
+        this.province_list = response.data
         this.provinces = new Set(
           this.province_list.map((item) => item.province)
-        );
+        )
       })
       .catch(function (error) {
-        console.error(error.response);
-      });
+        console.error(error.response)
+      })
     this.$http
       .get(`${BASE_URL}/industry/getall`)
       .then((response) => {
-        this.industries = response.data;
+        this.industries = response.data
       })
       .catch(function (error) {
-        console.error(error.response);
-      });
+        console.error(error.response)
+      })
     this.$http
       .get(`${BASE_URL}/typebusiness/getall`)
       .then((response) => {
-        this.type_businesses = response.data;
+        this.type_businesses = response.data
       })
       .catch(function (error) {
-        console.error(error.response);
-      });
+        console.error(error.response)
+      })
   },
   watch: {
-    name(newValue) {
-      $("#formName").addClass("was-validated");
+    name (newValue) {
+      $('#formName').addClass('was-validated')
     },
-    username() {
-      $("#formPhone").addClass("was-validated");
+    username () {
+      $('#formPhone').addClass('was-validated')
     },
-    password() {
-      $("#formPassword").addClass("was-validated");
+    password () {
+      $('#formPassword').addClass('was-validated')
     },
-    password2(newValue) {
+    password2 (newValue) {
       if (newValue != this.password || newValue.length < 6) {
-        $("#password2").addClass("is-invalid");
-        $("#password2").removeClass("is-valid");
+        $('#password2').addClass('is-invalid')
+        $('#password2').removeClass('is-valid')
       } else {
-        $("#password2").addClass("is-valid");
-        $("#password2").removeClass("is-invalid");
+        $('#password2').addClass('is-valid')
+        $('#password2').removeClass('is-invalid')
       }
     },
-    country(newValue) {
-      $("#formCountry").addClass("was-validated");
+    country (newValue) {
+      $('#formCountry').addClass('was-validated')
     },
-    province(newValue) {
-      $("#formProvince").addClass("was-validated");
-      if (this.type == 5) return;
-      this.district = "";
+    province (newValue) {
+      $('#formProvince').addClass('was-validated')
+      if (this.type == 5) return
+      this.district = ''
       this.districts = new Set(
         this.province_list
           .filter((item) => item.province == newValue)
           .map((item) => item.district)
-      );
+      )
     },
-    district(newValue) {
-      $("#formDistrict").addClass("was-validated");
-      if (this.type == 5) return;
-      this.ward = "";
+    district (newValue) {
+      $('#formDistrict').addClass('was-validated')
+      if (this.type == 5) return
+      this.ward = ''
       this.wards = new Set(
         this.province_list
           .filter((item) => item.district == newValue)
           .map((item) => item.ward)
-      );
+      )
     },
-    ward() {
-      $("#formWard").addClass("was-validated");
+    ward () {
+      $('#formWard').addClass('was-validated')
     },
-    address() {
-      $("#formAddress").addClass("was-validated");
+    address () {
+      $('#formAddress').addClass('was-validated')
     },
-    FILE() {
-      $("#formFile").addClass("was-validated");
-    },
-    
-  },
-};
+    FILE () {
+      $('#formFile').addClass('was-validated')
+    }
+
+  }
+}
 </script>
