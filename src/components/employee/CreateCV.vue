@@ -13,7 +13,7 @@
         text-success
       "
     >
-      Số CVID: CV{{ employee?employee.username.slice(1, 10):''}}
+      Số CVID: CV{{ employee ? employee.username.slice(1, 10) : "" }}
     </h5>
     <h4 class="text-primary text-decoration-underline">Hồ sơ cá nhân</h4>
     <div class="row">
@@ -47,12 +47,12 @@
           Địa chỉ:
           {{
             employee.address +
-            ", " +
-            employee.ward +
-            ", " +
-            employee.district +
-            ", " +
-            employee.province
+              ", " +
+              employee.ward +
+              ", " +
+              employee.district +
+              ", " +
+              employee.province
           }}
         </p>
       </div>
@@ -107,7 +107,7 @@
                         'en-US',
                         {
                           year: 'numeric',
-                          month: 'short',
+                          month: 'short'
                         }
                       );
                     }
@@ -135,7 +135,7 @@
                         'en-US',
                         {
                           year: 'numeric',
-                          month: 'short',
+                          month: 'short'
                         }
                       );
                     }
@@ -194,7 +194,7 @@
                         'en-US',
                         {
                           year: 'numeric',
-                          month: 'short',
+                          month: 'short'
                         }
                       );
                     }
@@ -222,7 +222,7 @@
                         'en-US',
                         {
                           year: 'numeric',
-                          month: 'short',
+                          month: 'short'
                         }
                       );
                     }
@@ -302,7 +302,7 @@
                             element.from
                           ).toLocaleDateString('en-US', {
                             year: 'numeric',
-                            month: 'short',
+                            month: 'short'
                           });
                         }
                       }
@@ -330,7 +330,7 @@
                             'en-US',
                             {
                               year: 'numeric',
-                              month: 'short',
+                              month: 'short'
                             }
                           );
                         }
@@ -342,7 +342,7 @@
                     class="form-check form-switch m-1"
                     v-if="
                       (element.to == '' || element.to == 'Hiện tại') &&
-                      company.to == 'Hiện tại'
+                        company.to == 'Hiện tại'
                     "
                   >
                     <input
@@ -1009,6 +1009,61 @@
     <p class="text-danger" v-else-if="employee.point != -1">
       CVID của bạn đang chờ duyệt.
     </p>
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-primary d-none"
+      data-bs-toggle="modal"
+      data-bs-target="#sendOTP"
+      id="openModalOTP"
+    >
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="sendOTP"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="sendOTPLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="sendOTPLabel">
+              Xác thực số điện thoại
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Mã xác thực đã được gửi qua {{employee.username}}</p>
+            <input
+              type="number"
+              class="form-control form-control-lg"
+              placeholder=""
+            />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success me-auto" :disabled="timerCount > 0" @click="timerCount=60">{{timerCount>0?'00:'+timerCount:'Gửi lại'}}</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Gửi</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -1018,6 +1073,7 @@ export default {
     return {
       employee: "",
       image: "",
+      timerCount: 0,
       skillWorking: [
         {
           name: "",
@@ -1033,10 +1089,10 @@ export default {
               title: "",
               skill: "",
               address: "",
-              result: "",
-            },
-          ],
-        },
+              result: ""
+            }
+          ]
+        }
       ],
       skillEducation: [
         {
@@ -1047,22 +1103,22 @@ export default {
           skill: "",
           professionaltitle: "",
           point: "",
-          rating: "",
-        },
+          rating: ""
+        }
       ],
       shortTraining: [
         {
           from: "",
           to: "",
           name: "",
-          place: "",
-        },
+          place: ""
+        }
       ],
       skillEnglish: {
         listening: 0,
         reading: 0,
         writing: 0,
-        speaking: 0,
+        speaking: 0
       },
       skillLanguage: [
         {
@@ -1070,32 +1126,32 @@ export default {
           listening: 0,
           reading: 0,
           writing: 0,
-          speaking: 0,
-        },
+          speaking: 0
+        }
       ],
       skillComputer: {
         word: 0,
         excel: 0,
-        other: ["", "", "", ""],
+        other: ["", "", "", ""]
       },
       skillOther: [
         {
           name: "",
-          point: 0,
-        },
+          point: 0
+        }
       ],
       assessment: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       majors: [],
       schools: [],
       jobtitles: [],
-      criteria: "",
+      criteria: ""
     };
   },
   computed: {
     filterSkill() {
       var skills = new Set([]);
-      this.majors.forEach((element) => {
-        element.skills.forEach((skill) => {
+      this.majors.forEach(element => {
+        element.skills.forEach(skill => {
           if (
             skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1 &&
             this.searchSkill != ""
@@ -1105,7 +1161,7 @@ export default {
         });
       });
       return skills;
-    },
+    }
   },
   methods: {
     handleSubmit(e) {
@@ -1115,7 +1171,7 @@ export default {
           title: "Cập nhật thất bại",
           text: "Nhập đủ thông tin kinh nghiệm làm việc",
           confirmButtonColor: "var(--primary)",
-          confirmButtonText: "Nhập lại",
+          confirmButtonText: "Nhập lại"
         });
         return;
       }
@@ -1125,7 +1181,7 @@ export default {
           title: "Cập nhật thất bại",
           text: "Nhập đủ thông tin quá trình học tập",
           confirmButtonColor: "var(--primary)",
-          confirmButtonText: "Nhập lại",
+          confirmButtonText: "Nhập lại"
         });
         return;
       }
@@ -1142,20 +1198,21 @@ export default {
           skillComputer: this.skillComputer,
           skillOther: this.skillOther,
           assessment: this.assessment,
-          image: this.image,
+          image: this.image
         })
-        .then((response) => {
+        .then(response => {
           if (response.data) {
-            Swal.fire({
-              icon: "success",
-              title: "Cập nhật thành công",
-              text: "CVID của bạn sẽ được duyệt trước khi sử dụng để tìm việc",
-              confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Xác nhận",
-            });
+            document.getElementById('openModalOTP').click()
+            // Swal.fire({
+            //   icon: "success",
+            //   title: "Cập nhật thành công",
+            //   text: "CVID của bạn sẽ được duyệt trước khi sử dụng để tìm việc",
+            //   confirmButtonColor: "var(--primary)",
+            //   confirmButtonText: "Xác nhận"
+            // });
           }
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
@@ -1166,7 +1223,7 @@ export default {
       const image = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(image);
-      reader.onload = async (e) => {
+      reader.onload = async e => {
         this.image = await e.target.result;
         document.getElementById("imagePre").src = this.image;
       };
@@ -1186,7 +1243,7 @@ export default {
           icon: "info",
           title: "Quá trình làm việc đã tới thời điểm hiện tại",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         return;
       }
@@ -1203,7 +1260,7 @@ export default {
           icon: "info",
           title: "Nhập đủ thông tin quá trình làm việc trước đó",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         return;
       }
@@ -1214,16 +1271,20 @@ export default {
         title: item.title,
         skill: item.skill,
         address: item.address,
-        result: "",
+        result: ""
       });
     },
     checkSkillWorking() {
       var error = false;
       this.skillWorking.forEach((company, index1) => {
         if (company.name != "") {
-          if (company.from == "") error = true;
+          if (company.from == "") return (error = true);
           else if (company.to == "") error = true;
           else if (company.address == "") error = true;
+          if (index1 !== 0) {
+            if (company.from !== this.skillWorking[index1 - 1].to)
+              return (error = true);
+          }
           company.process.forEach((ele, index2) => {
             if (index2 == 0) {
               if (ele.from != company.from) error = true;
@@ -1244,6 +1305,14 @@ export default {
           this.skillWorking.splice(index1, 1);
         }
       });
+      let lastTime = this.skillWorking[this.skillWorking.length - 1].to;
+      if (lastTime === "Hiện tại") return;
+      if (
+        Date.now() - new Date(lastTime).getTime() <
+        1000 * 60 * 60 * 24 * 60
+      ) {
+        error = true;
+      }
       return error;
     },
     delSkillWorking(index) {
@@ -1257,7 +1326,7 @@ export default {
           icon: "info",
           title: "Thời gian làm việc đã tới thời điểm hiện tại",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         return;
       }
@@ -1273,7 +1342,7 @@ export default {
           icon: "info",
           title: "Nhập đủ thông tin nơi làm việc trước đó",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         return;
       }
@@ -1291,15 +1360,15 @@ export default {
             title: "",
             skill: this.employee.skill,
             address: "",
-            result: "",
-          },
-        ],
+            result: ""
+          }
+        ]
       });
     },
     addBreakTime() {
       this.skillWorking.push({
         from: "",
-        to: "",
+        to: ""
       });
     },
     delSkillEducation(index) {
@@ -1314,7 +1383,7 @@ export default {
         skill: "",
         professionaltitle: "",
         point: "",
-        rating: "",
+        rating: ""
       });
     },
     checkSkillEducation() {
@@ -1339,7 +1408,7 @@ export default {
         from: "",
         to: "",
         name: "",
-        place: "",
+        place: ""
       });
     },
     checkShortTraining() {
@@ -1358,13 +1427,13 @@ export default {
         listening: 0,
         reading: 0,
         writing: 0,
-        speaking: 0,
+        speaking: 0
       });
     },
     addSkillOther() {
       this.skillOther.push({
         name: "",
-        point: 0,
+        point: 0
       });
     },
     checkSkillOther() {
@@ -1378,7 +1447,7 @@ export default {
       }
     },
     filteredSchool(key) {
-      return this.schools.filter((school) => {
+      return this.schools.filter(school => {
         if (
           school.name.toLowerCase().indexOf(key.toLowerCase()) != -1 &&
           key != ""
@@ -1389,16 +1458,16 @@ export default {
     },
     filteredSkill(key, level) {
       let result = new Set();
-      this.majors.forEach((major) => {
+      this.majors.forEach(major => {
         if ((major.level == level || level == "") && key != "") {
           result = new Set([
             ...result,
-            ...major.skills.filter((skill) => {
+            ...major.skills.filter(skill => {
               if (skill.toLowerCase().indexOf(key.toLowerCase()) != -1) {
                 return true;
               }
               return false;
-            }),
+            })
           ]);
         }
       });
@@ -1406,7 +1475,7 @@ export default {
     },
     filteredJobtitle(key) {
       return this.jobtitles
-        .filter((jobtitle) => {
+        .filter(jobtitle => {
           if (
             key != "" &&
             jobtitle.name.toLowerCase().indexOf(key.toLowerCase()) != -1
@@ -1414,14 +1483,14 @@ export default {
             return true;
           }
         })
-        .map((el) => el.name);
+        .map(el => el.name);
     },
     getExperience(skillWorking) {
       var sum = 0;
       if (skillWorking.length > 0) {
-        skillWorking.filter(function (company) {
+        skillWorking.filter(function(company) {
           if (company.process) {
-            company.process.forEach((item) => {
+            company.process.forEach(item => {
               let timeTo =
                 item.to == "Hiện tại"
                   ? new Date().getTime()
@@ -1429,7 +1498,6 @@ export default {
               let timeFrom = new Date(item.from).getTime();
               if (timeTo && timeFrom) {
                 sum += timeTo - timeFrom;
-                console.log(sum);
               }
             });
           }
@@ -1444,16 +1512,16 @@ export default {
         return "Chưa có kinh nghiệm";
       }
       return result;
-    },
+    }
   },
   created() {
     this.$http
       .get(`${BASE_URL}/employee/me`, {
         headers: {
-          Authorization: `Basic ${localStorage.getItem("token")}`,
-        },
+          Authorization: `Basic ${localStorage.getItem("token")}`
+        }
       })
-      .then((res) => {
+      .then(res => {
         let employee = res.data;
         this.image = employee.image;
         document.getElementById("imagePre").src = this.image;
@@ -1481,44 +1549,52 @@ export default {
         if (employee.assessment.length > 0) {
           this.assessment = employee.assessment;
         }
-        this.employee = employee
+        this.employee = employee;
         this.employee.birthdate = employee.birthdate.split("T")[0];
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
-    this.$http.get(`${BASE_URL}/criteria/getall`).then((res) => {
+    this.$http.get(`${BASE_URL}/criteria/getall`).then(res => {
       this.criteria = res.data;
     });
 
     this.$http
       .get(`${BASE_URL}/major/list`)
-      .then((response) => {
+      .then(response => {
         this.majors = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error.response);
       });
 
     this.$http
       .get(`${BASE_URL}/school/getall`)
-      .then((response) => {
+      .then(response => {
         this.schools = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error.response);
       });
 
     this.$http
       .get(`${BASE_URL}/jobtitle/getall`)
-      .then((response) => {
+      .then(response => {
         this.jobtitles = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error.response);
       });
   },
+  watch: {
+    timerCount(value) {
+      if (value > 0) {
+        setTimeout(() => {
+          this.timerCount--;
+        }, 1000);
+      }
+    }
+  }
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

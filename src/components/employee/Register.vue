@@ -147,7 +147,10 @@
                       <label class="form-label">Cấp bậc</label>
                     </div>
                   </div>
-                  <div class="mb-3" v-if="level != 'Phổ thông' && level != 'Sơ cấp'">
+                  <div
+                    class="mb-3"
+                    v-if="level != 'Phổ thông' && level != 'Sơ cấp'"
+                  >
                     <div class="form-floating">
                       <input
                         type="text"
@@ -221,7 +224,10 @@
                       <label class="form-label">Chức danh chuyên môn</label>
                     </div>
                   </div>
-                  <div class="row" v-if="level != 'Phổ thông' && level != 'Sơ cấp'">
+                  <div
+                    class="row"
+                    v-if="level != 'Phổ thông' && level != 'Sơ cấp'"
+                  >
                     <div class="col-md-6 mb-3">
                       <div id="formStartyear" class="form-floating">
                         <input
@@ -260,47 +266,45 @@
                     </div>
                   </div>
                   <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <div id="formPassword" class="form-floating">
-                      <input
-                        type="password"
-                        class="form-control"
-                        v-model="password"
-                        minlength="6"
-                        required
-                        placeholder="Mật khẩu"
-                      />
-                      <label class="form-label">Mật khẩu</label>
+                    <div class="col-md-6 mb-3">
+                      <div id="formPassword" class="form-floating">
+                        <input
+                          type="password"
+                          class="form-control"
+                          v-model="password"
+                          minlength="6"
+                          required
+                          placeholder="Mật khẩu"
+                        />
+                        <label class="form-label">Mật khẩu</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <div id="formPassword2" class="form-floating">
+                        <input
+                          id="password2"
+                          type="password"
+                          class="form-control"
+                          v-model="password2"
+                          minlength="6"
+                          required
+                          placeholder="Mật khẩu"
+                        />
+                        <label class="form-label">Nhập lại mật khẩu</label>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-6 mb-3">
-                    <div id="formPassword2" class="form-floating">
-                      <input
-                        id="password2"
-                        type="password"
-                        class="form-control"
-                        v-model="password2"
-                        minlength="6"
-                        required
-                        placeholder="Mật khẩu"
-                      />
-                      <label class="form-label">Nhập lại mật khẩu</label>
-                    </div>
+                  <div class="d-flex justify-content-end pt-3">
+                    <!-- <button type="button" class="btn btn-light btn-lg">Reset all</button> -->
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-lg ms-2"
+                      @click="handleSubmit"
+                    >
+                      Đăng kí
+                    </button>
                   </div>
                 </div>
-                <div class="d-flex justify-content-end pt-3">
-                  <!-- <button type="button" class="btn btn-light btn-lg">Reset all</button> -->
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-lg ms-2"
-                    @click="handleSubmit"
-                  >
-                    Đăng kí
-                  </button>
-                </div>
-                </div>
-                
-                
               </div>
             </div>
           </div>
@@ -344,7 +348,7 @@ export default {
   },
   computed: {
     filteredSchool() {
-      return this.schools.filter((school) => {
+      return this.schools.filter(school => {
         if (
           school.name
             .toLowerCase()
@@ -357,9 +361,9 @@ export default {
     },
     filteredSkill() {
       let result = [];
-      this.majors.forEach((major) => {
+      this.majors.forEach(major => {
         if (major.level == this.level) {
-          result = major.skills.filter((skill) => {
+          result = major.skills.filter(skill => {
             if (
               skill
                 .toLowerCase()
@@ -373,43 +377,54 @@ export default {
         }
       });
       return result;
-    },
+    }
   },
   methods: {
-    isValid(){
-        this.error = []
-        this.name==''?this.error.push('Chưa nhập họ và tên!'):null
-        this.username==''?this.error.push('Chưa nhập số điện thoại!'):null
-        this.username.length<9?this.error.push('Số điện thoại không hợp lệ!'):null
-        this.email==''?this.error.push('Chưa nhập email!'):null
-        this.birthdate==''?this.error.push('Chưa nhập ngày, tháng, năm sinh!'):null
-        this.gender==''?this.error.push('Chưa nhập giới tính!'):null
-        this.province==''?this.error.push('Chưa nhập Tỉnh/Thành phố!'):null
-        this.district==''?this.error.push('Chưa nhập Quận/Huyện!'):null
-        this.ward==''?this.error.push('Chưa nhập Phường/Xã!'):null
-        this.address==''?this.error.push('Chưa nhập địa chỉ!'):null
-        this.level==''?this.error.push('Chưa nhập cấp bậc!'):null
-        // this.school==''?this.error.push('Chưa nhập trường!'):null
-        this.skill==''?this.error.push('Chưa nhập chuyên nghành!'):null
-        this.professionaltitle==''?this.error.push('Chưa nhập chức danh chuyên môn!'):null
-        // this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
-        // this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
-        this.password==''?this.error.push('Chưa nhập mật khẩu!'):null
-        this.password.length<6?this.error.push('Mật khẩu tối thiểu 6 kí tự!'):null
-        this.password2!=this.password?this.error.push('Mật khẩu nhập lại không khớp!'):null
-        return this.error.length>0?false:true
+    isValid() {
+      this.error = [];
+      this.name == "" ? this.error.push("Chưa nhập họ và tên!") : null;
+      this.name.indexOf(' ') <= 0 ? this.error.push("Nhập đủ họ và tên!") : null;
+      this.username == "" ? this.error.push("Chưa nhập số điện thoại!") : null;
+      this.username.length < 9
+        ? this.error.push("Số điện thoại không hợp lệ!")
+        : null;
+      this.email == "" ? this.error.push("Chưa nhập email!") : null;
+      this.birthdate == ""
+        ? this.error.push("Chưa nhập ngày, tháng, năm sinh!")
+        : null;
+      this.gender == "" ? this.error.push("Chưa nhập giới tính!") : null;
+      this.province == "" ? this.error.push("Chưa nhập Tỉnh/Thành phố!") : null;
+      this.district == "" ? this.error.push("Chưa nhập Quận/Huyện!") : null;
+      this.ward == "" ? this.error.push("Chưa nhập Phường/Xã!") : null;
+      this.address == "" ? this.error.push("Chưa nhập địa chỉ!") : null;
+      this.level == "" ? this.error.push("Chưa nhập cấp bậc!") : null;
+      // this.school==''?this.error.push('Chưa nhập trường!'):null
+      this.skill == "" ? this.error.push("Chưa nhập chuyên nghành!") : null;
+      this.professionaltitle == ""
+        ? this.error.push("Chưa nhập chức danh chuyên môn!")
+        : null;
+      // this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
+      // this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
+      this.password == "" ? this.error.push("Chưa nhập mật khẩu!") : null;
+      this.password.length < 6
+        ? this.error.push("Mật khẩu tối thiểu 6 kí tự!")
+        : null;
+      this.password2 != this.password
+        ? this.error.push("Mật khẩu nhập lại không khớp!")
+        : null;
+      return !(this.error.length > 0);
     },
     handleSubmit(e) {
       e.preventDefault();
-      if (!this.isValid()){
+      if (!this.isValid()) {
         Swal.fire({
-              icon: "info",
-              title: "Đăng kí thất bại",
-              text: this.error[0],
-              confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Nhập lại",
-            });
-        return
+          icon: "info",
+          title: "Đăng kí thất bại",
+          text: this.error[0],
+          confirmButtonColor: "var(--primary)",
+          confirmButtonText: "Nhập lại"
+        });
+        return;
       }
       this.$http
         .post(`${BASE_URL}/employee/register`, {
@@ -430,17 +445,17 @@ export default {
           ward: this.ward,
           address: this.address,
           password: this.password,
-          password2: this.password2,
+          password2: this.password2
         })
-        .then((response) => {
+        .then(response => {
           if (response.data == "ok") {
             Swal.fire({
               icon: "success",
               title: "Đăng kí thành công",
               text: "Xác minh email để kích hoạt tài khoản",
               confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Đăng nhập",
-            }).then((result) => {
+              confirmButtonText: "Đăng nhập"
+            }).then(result => {
               if (result.value) {
                 this.$router.push("login");
               }
@@ -451,41 +466,39 @@ export default {
               title: "Đăng kí thất bại",
               text: `${response.data[0].msg}`,
               confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Nhập lại",
+              confirmButtonText: "Nhập lại"
             });
           }
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.error(error.response);
         });
-    },
+    }
   },
   async created() {
     await this.$http
       .get(`${BASE_URL}/school/getall`)
-      .then((response) => {
+      .then(response => {
         this.schools = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error.response);
       });
     this.$http
       .get(`${BASE_URL}/province/list`)
-      .then((response) => {
+      .then(response => {
         this.province_list = response.data;
-        this.provinces = new Set(
-          this.province_list.map((item) => item.province)
-        );
+        this.provinces = new Set(this.province_list.map(item => item.province));
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error.response);
       });
     this.$http
       .get(`${BASE_URL}/major/list`)
-      .then((response) => {
+      .then(response => {
         this.majors = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error.response);
       });
   },
@@ -538,13 +551,13 @@ export default {
       $("#formPassword").addClass("was-validated");
     },
     password2(newValue) {
-        if (newValue != this.password || newValue.length < 6){
-            $("#password2").addClass("is-invalid");
-            $("#password2").removeClass("is-valid");
-        } else {
-            $("#password2").addClass("is-valid");
-            $("#password2").removeClass("is-invalid");
-        }
+      if (newValue != this.password || newValue.length < 6) {
+        $("#password2").addClass("is-invalid");
+        $("#password2").removeClass("is-valid");
+      } else {
+        $("#password2").addClass("is-valid");
+        $("#password2").removeClass("is-invalid");
+      }
     },
     country(newValue) {
       $("#formCountry").addClass("was-validated");
@@ -554,8 +567,8 @@ export default {
       this.district = "";
       this.districts = new Set(
         this.province_list
-          .filter((item) => item.province == newValue)
-          .map((item) => item.district)
+          .filter(item => item.province == newValue)
+          .map(item => item.district)
       );
     },
     district(newValue) {
@@ -563,8 +576,8 @@ export default {
       this.ward = "";
       this.wards = new Set(
         this.province_list
-          .filter((item) => item.district == newValue)
-          .map((item) => item.ward)
+          .filter(item => item.district == newValue)
+          .map(item => item.ward)
       );
     },
     ward() {
@@ -572,7 +585,7 @@ export default {
     },
     address() {
       $("#formAddress").addClass("was-validated");
-    },
-  },
+    }
+  }
 };
 </script>
