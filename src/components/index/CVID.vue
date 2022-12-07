@@ -1,9 +1,12 @@
 <template>
   <div class="container-fluid">
-    <h4 class="text-primary d-flex justify-content-center" >
+    <h4 class="text-primary d-flex justify-content-center">
       LÝ LỊCH ỨNG VIÊN (CVIDPRO)
     </h4>
-    <h5 class="text-primary d-flex justify-content-center mt-2 text-success" v-if="employee.approved == 2">
+    <h5
+      class="text-primary d-flex justify-content-center mt-2 text-success"
+      v-if="employee.approved == 2"
+    >
       Số CVID:
       <span class="fst-italic">
         CV{{ employee.username ? employee.username.slice(1, 10) : "" }}</span
@@ -45,12 +48,12 @@
               Địa chỉ:
               <span class="fw-bold">{{
                 employee.address +
-                ", " +
-                employee.ward +
-                ", " +
-                employee.district +
-                ", " +
-                employee.province
+                  ", " +
+                  employee.ward +
+                  ", " +
+                  employee.district +
+                  ", " +
+                  employee.province
               }}</span>
             </p>
           </div>
@@ -100,14 +103,28 @@
             </div>
             <div class="col-1">
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" v-model="noteCV" :value="{company: index1, process: 0}"/>
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  v-model="noteCV"
+                  :value="{ company: index1, process: 0 }"
+                />
               </div>
             </div>
             <div class="col-md-6 mt-n2 mb-2">
               <div class="input-group input-group-sm mb-2">
-                <span :class="'border px-2 py-1 bg-white col fw-bold'+ (noteCV.find(element => element.company == index1 && element.process == 0)?' border-danger':'')" >{{
-                  company.name
-                }}</span>
+                <span
+                  :class="
+                    'border px-2 py-1 bg-white col fw-bold' +
+                      (noteCV.find(
+                        element =>
+                          element.company == index1 && element.process == 0
+                      )
+                        ? ' border-danger'
+                        : '')
+                  "
+                  >{{ company.name }}</span
+                >
               </div>
             </div>
             <div class="col-md-6 mt-n2">
@@ -126,14 +143,28 @@
             <div class="col-11 mb-2">
               <div class="input-group input-group-sm">
                 <span class="input-group-text fw-bold w-100">Địa chỉ</span>
-                <span :class="'border px-2 py-1 bg-white col fw-bold'+(noteCV.find(element => element.company == index1 && element.process == 1)?' border-danger':'')">{{
-                  company.address
-                }}</span>
+                <span
+                  :class="
+                    'border px-2 py-1 bg-white col fw-bold' +
+                      (noteCV.find(
+                        element =>
+                          element.company == index1 && element.process == 1
+                      )
+                        ? ' border-danger'
+                        : '')
+                  "
+                  >{{ company.address }}</span
+                >
               </div>
             </div>
             <div class="col-1 mb-2">
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" v-model="noteCV" :value="{company: index1, process: 1}"/>
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  v-model="noteCV"
+                  :value="{ company: index1, process: 1 }"
+                />
               </div>
             </div>
           </div>
@@ -200,14 +231,32 @@
                         <span class="input-group-text w-100 fw-bold"
                           >Công việc đã thực hiện</span
                         >
-                        <span :class="'border p-2 bg-white col fw-bold'+(noteCV.find(element => element.company == index1 && element.process == (index2+1)*2)?' border-danger':'')">{{
-                          element.work
-                        }}</span>
+                        <span
+                          :class="
+                            'border p-2 bg-white col fw-bold' +
+                              (noteCV.find(
+                                element =>
+                                  element.company == index1 &&
+                                  element.process == (index2 + 1) * 2
+                              )
+                                ? ' border-danger'
+                                : '')
+                          "
+                          >{{ element.work }}</span
+                        >
                       </div>
                     </div>
                     <div class="col-1">
                       <div class="form-check">
-                        <input type="checkbox" class="form-check-input" v-model="noteCV" :value="{company: index1, process: (index2+1)*2}" />
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          v-model="noteCV"
+                          :value="{
+                            company: index1,
+                            process: (index2 + 1) * 2
+                          }"
+                        />
                       </div>
                     </div>
                     <div class="col">
@@ -215,14 +264,32 @@
                         <span class="input-group-text fw-bold w-100"
                           >Địa chỉ</span
                         >
-                        <span :class="'border p-1 bg-white col fw-bold'+(noteCV.find(element => element.company == index1 && element.process == (index2+1)*2+1)?' border-danger':'')">{{
-                          element.address
-                        }}</span>
+                        <span
+                          :class="
+                            'border p-1 bg-white col fw-bold' +
+                              (noteCV.find(
+                                element =>
+                                  element.company == index1 &&
+                                  element.process == (index2 + 1) * 2 + 1
+                              )
+                                ? ' border-danger'
+                                : '')
+                          "
+                          >{{ element.address }}</span
+                        >
                       </div>
                     </div>
                     <div class="col-1">
                       <div class="form-check">
-                        <input type="checkbox" class="form-check-input" v-model="noteCV" :value="{company: index1, process: (index2+1)*2+1}"/>
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          v-model="noteCV"
+                          :value="{
+                            company: index1,
+                            process: (index2 + 1) * 2 + 1
+                          }"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6" v-if="element.to != 'Hiện tại'">
@@ -319,14 +386,14 @@
               <span class="border p-1 bg-white col text-center">{{
                 new Date(employee.startyear).toLocaleDateString("en-US", {
                   month: "short",
-                  year: "numeric",
+                  year: "numeric"
                 })
               }}</span>
               <span class="input-group-text">Đến:</span>
               <span class="border p-1 bg-white col text-center">{{
                 new Date(employee.endyear).toLocaleDateString("en-US", {
                   month: "short",
-                  year: "numeric",
+                  year: "numeric"
                 })
               }}</span>
             </div>
@@ -354,14 +421,14 @@
               <span class="border p-1 bg-white col text-center">{{
                 new Date(ele.from).toLocaleDateString("en-US", {
                   month: "short",
-                  year: "numeric",
+                  year: "numeric"
                 })
               }}</span>
               <span class="input-group-text">Đến:</span>
               <span class="border p-1 bg-white col text-center">{{
                 new Date(ele.to).toLocaleDateString("en-US", {
                   month: "short",
-                  year: "numeric",
+                  year: "numeric"
                 })
               }}</span>
             </div>
@@ -704,18 +771,34 @@
     <div class="row g-0">
       <div class="col-sm-6 col-md-8">
         <!-- <button class="btn-info btn text-white" v-if="employee.approved == -2">Không duyệt</button> -->
-        <button class="btn-info btn text-white" v-if="employee.approved == 0" @click="notBrowse">
+        <button
+          class="btn-info btn text-white"
+          v-if="employee.approved == 0"
+          @click="notBrowse"
+        >
           Không duyệt
         </button>
-        <button class="btn-danger btn text-white" v-if="employee.approved == 1" @click="cancelBrowse">
+        <button
+          class="btn-danger btn text-white"
+          v-if="employee.approved == 1"
+          @click="cancelBrowse"
+        >
           Hủy duyệt
         </button>
       </div>
       <div class="col-6 col-md-4">
-        <button v-if="employee.approved == 0" class="btn-primary btn" @click="handleBrowse1">
+        <button
+          v-if="employee.approved == 0"
+          class="btn-primary btn"
+          @click="handleBrowse1"
+        >
           Duyệt lần 1
         </button>
-        <button v-if="employee.approved == 1" class="btn-primary btn" @click="handleBrowse2">
+        <button
+          v-if="employee.approved == 1"
+          class="btn-primary btn"
+          @click="handleBrowse2"
+        >
           Duyệt lần 2
         </button>
         <button v-if="employee.approved == 2" class="btn-success btn disabled">
@@ -733,81 +816,111 @@ export default {
       criteria: "",
       employee: "",
       noteCV: new Array(),
-      token: "",
+      token: ""
     };
   },
   methods: {
     handleBrowse1() {
       this.$http
-        .get(`${BASE_URL}/employee/browse-cvid1/${this.employee._id}`, {
-          headers: {
-            Authorization: `Basic ${this.token}`,
+        .post(
+          `${BASE_URL}/employee/confirm1`,
+          {
+            id: this.employee._id,
+            confirm: {
+              status: 1
+            }
           },
+          {
+            headers: {
+              Authorization: `Basic ${this.token}`
+            }
+          }
+        )
+        .then(response => {
+          // this.employee.confirm1 = {status:};
         })
-        .then((response) => {
-          this.employee.approved = 1;
-        })
-        .catch(function (error) {
+        .catch(function(error) {
           console.error(error.response);
         });
     },
     handleBrowse2() {
       this.$http
-        .get(`${BASE_URL}/employee/browse-cvid2/${this.employee._id}`, {
-          headers: {
-            Authorization: `Basic ${this.token}`,
+        .post(
+          `${BASE_URL}/employee/confirm2`,
+          {
+            id: this.employee._id,
+            confirm: {
+              status: 1
+            }
           },
+          {
+            headers: {
+              Authorization: `Basic ${this.token}`
+            }
+          }
+        )
+        .then(response => {
+          // this.employee.confirm1 = {status:};
         })
-        .then((response) => {
-          this.employee.approved = 2;
-        })
-        .catch(function (error) {
+        .catch(function(error) {
           console.error(error.response);
         });
     },
     cancelBrowse() {
       this.$http
-        .get(`${BASE_URL}/employee/cancel-browse-cvid/${this.employee._id}`, {
-          headers: {
-            Authorization: `Basic ${this.token}`,
+        .post(
+          `${BASE_URL}/employee/confirm1`,
+          {
+            id: this.employee._id,
+            confirm: {
+              status: 0
+            }
           },
+          {
+            headers: {
+              Authorization: `Basic ${this.token}`
+            }
+          }
+        )
+        .then(response => {
+          // this.employee.confirm1 = {status:};
         })
-        .then((response) => {
-          this.employee.approved = 0;
-        })
-        .catch(function (error) {
+        .catch(function(error) {
           console.error(error.response);
         });
     },
     notBrowse() {
       this.$http
         .post(
-          `${BASE_URL}/employee/not-browse-cvid/${this.employee._id}`,
+          `${BASE_URL}/employee/confirm1`,
           {
-            noteCV: this.noteCV,
+            id: this.employee._id,
+            confirm: {
+              status: -1
+            }
           },
           {
             headers: {
-              Authorization: `Basic ${this.token}`,
-            },
+              Authorization: `Basic ${this.token}`
+            }
           }
         )
-        .then((response) => {
-          this.employee.approved = -1;
+        .then(response => {
+          // this.employee.confirm1 = {status:};
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.error(error.response);
         });
-    },
+    }
   },
   created() {
     this.token = decodeURIComponent(this.$route.query.token);
     this.$http
       .get(`${BASE_URL}/employee/cvid/${this.$route.params.id}`)
-      .then((res) => {
+      .then(res => {
         this.employee = res.data;
       });
-    this.$http.get(`${BASE_URL}/criteria/getall`).then((res) => {
+    this.$http.get(`${BASE_URL}/criteria/getall`).then(res => {
       this.criteria = res.data;
     });
   },
@@ -815,9 +928,9 @@ export default {
     getExperience() {
       var sum = 0;
       if (this.employee.skillWorking.length > 0) {
-        this.employee.skillWorking.filter(function (company) {
+        this.employee.skillWorking.filter(function(company) {
           if (company.process) {
-            company.process.forEach((item) => {
+            company.process.forEach(item => {
               let timeTo =
                 item.to == "Hiện tại"
                   ? new Date().getTime()
@@ -839,7 +952,7 @@ export default {
         return "Chưa có kinh nghiệm";
       }
       return result;
-    },
-  },
+    }
+  }
 };
 </script>
