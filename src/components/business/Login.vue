@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       username: "",
-      password: "",
+      password: ""
     };
   },
   methods: {
@@ -63,41 +63,23 @@ export default {
         this.$http
           .post(`${BASE_URL}/business/login`, {
             username: this.username,
-            password: this.password,
+            password: this.password
           })
-          .then((response) => {
-            console.log(response.data.userinfo);
+          .then(response => {
             if (response.data.userinfo) {
+              let user = response.data.userinfo;
               localStorage.setItem("token", response.data.token);
-              if (localStorage.getItem("token") != null) {
-                this.$emit("loggedIn");
-                if (this.$route.params.nextUrl != null) {
-                  this.$router.push(this.$route.params.nextUrl);
-                } else {
-                  var user = response.data.userinfo;
-                  if (user.approved == 2) {
-                    localStorage.setItem("business", JSON.stringify(user));
-                    this.$router.push("/business");
-                  } else {
-                    Swal.fire({
-                      icon: "info",
-                      title: "Đăng nhập thất bại",
-                      text: "Tài khoản của bạn chưa được duyệt",
-                      confirmButtonColor: "var(--primary)",
-                      confirmButtonText: "Nhập lại",
-                    });
-                  }
-                }
-              }
+              localStorage.setItem("business", JSON.stringify(user));
+              this.$router.push("/business");
             }
           })
-          .catch(function (error) {
+          .catch(function(error) {
             Swal.fire({
               icon: "error",
               title: "Đăng nhập thất bại",
               text: error.response.data.massage,
               confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Nhập lại",
+              confirmButtonText: "Nhập lại"
             });
           });
       }
@@ -106,8 +88,8 @@ export default {
       document
         .querySelectorAll(".needs-validation")[0]
         .classList.add("was-validated");
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
