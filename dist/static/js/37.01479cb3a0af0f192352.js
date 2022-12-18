@@ -1,2 +1,0 @@
-webpackJsonp([37],{rTQy:function(e,t,s){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"select_list"},[t("span",{staticClass:"slect_item"},[this._v(this._s(this.item))])])},staticRenderFns:[]},l=s("VU/8")({props:{item:{required:!0}}},i,!1,null,null,null);t.default=l.exports}});
-//# sourceMappingURL=37.01479cb3a0af0f192352.js.map

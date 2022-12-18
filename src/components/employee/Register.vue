@@ -18,7 +18,7 @@
               </div>
               <div class="col-xl-6 needs-validation">
                 <div class="card-body p-md-5 text-black">
-                  <h3 class="mb-5 text-uppercase">Đăng kí tài khoản CVID</h3>
+                  <h3 class="mb-5 text-uppercase">Đăng ký tài khoản CVID</h3>
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <div id="formName" class="form-floating">
@@ -301,7 +301,7 @@
                       class="btn btn-primary btn-lg ms-2"
                       @click="handleSubmit"
                     >
-                      Đăng kí
+                      Đăng ký
                     </button>
                   </div>
                 </div>
@@ -419,7 +419,7 @@ export default {
       if (!this.isValid()) {
         Swal.fire({
           icon: "info",
-          title: "Đăng kí thất bại",
+          title: "Đăng ký thất bại",
           text: this.error[0],
           confirmButtonColor: "var(--primary)",
           confirmButtonText: "Nhập lại"
@@ -451,7 +451,7 @@ export default {
           if (response.data == "ok") {
             Swal.fire({
               icon: "success",
-              title: "Đăng kí thành công",
+              title: "Đăng ký thành công",
               text: "Xác minh email để kích hoạt tài khoản",
               confirmButtonColor: "var(--primary)",
               confirmButtonText: "Đăng nhập"
@@ -463,7 +463,7 @@ export default {
           } else {
             Swal.fire({
               icon: "info",
-              title: "Đăng kí thất bại",
+              title: "Đăng ký thất bại",
               text: `${response.data[0].msg}`,
               confirmButtonColor: "var(--primary)",
               confirmButtonText: "Nhập lại"

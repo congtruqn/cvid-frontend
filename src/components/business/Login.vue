@@ -14,23 +14,23 @@
         </div>
         <div class="col-right">
           <div class="login-form">
-            <h2>DÀNH CHO NHÀ TUYỂN DỤNG</h2>
+            <h2>ĐĂNG NHẬP</h2>
             <form>
               <p>
-                <label>Username<span>*</span></label>
+                <label>Mã số thuế<span>*</span></label>
                 <input
                   type="text"
                   v-model="username"
-                  placeholder="Username"
+                  placeholder="Mã số thuế"
                   required
                 />
               </p>
               <p>
-                <label>Password<span>*</span></label>
+                <label>Mật khẩu<span>*</span></label>
                 <input
                   type="password"
                   v-model="password"
-                  placeholder="Password"
+                  placeholder="Mật khẩu"
                   required
                 />
               </p>

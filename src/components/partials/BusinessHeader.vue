@@ -73,7 +73,6 @@
           </div>
         </div>
         <a href="/business/candidate" class="nav-item nav-link">Ứng viên</a>
-        <a href="/business/login" class="nav-item nav-link">Login</a>
         <a href="" @click="logout" class="nav-item nav-link">Đăng xuất</a>
       </div>
     </div>

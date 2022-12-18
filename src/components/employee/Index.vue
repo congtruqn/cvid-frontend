@@ -498,7 +498,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            Bạn đang tìm việc ở tình thành khác với thông tin đăng kí. Vui lòng
+            Bạn đang tìm việc ở tình thành khác với thông tin đăng ký. Vui lòng
             xác nhận lại một số thông tin sau:
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label"
