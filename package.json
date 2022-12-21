@@ -5,13 +5,14 @@
   "description": "A Vue.js project",
   "author": "",
   "scripts": {
-    "build": "node build/build.js && git add . && git commit -m 'build' && git push",
+    "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "e2e": "node test/e2e/runner.js",
     "start": "npm run dev",
     "test": "npm run unit && npm run e2e",
-    "unit": "jest --config test/unit/jest.conf.js --coverage"
+    "unit": "jest --config test/unit/jest.conf.js --coverage",
+    "push": "node build/build.js && git add . && git commit -m 'build' && git push"
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
