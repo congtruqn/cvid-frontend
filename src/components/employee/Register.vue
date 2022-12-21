@@ -39,6 +39,7 @@
                           type="number"
                           class="form-control"
                           min="99999999"
+                          max="9999999999"
                           v-model="username"
                           required
                           placeholder="Số điện thoại"
@@ -339,28 +340,32 @@ export default {
   },
   methods: {
     isValid() {
-      this.error = [];
-      this.name == '' ? this.error.push('Chưa nhập họ và tên!') : null;
-      this.name.indexOf(' ') <= 0 ? this.error.push('Nhập đủ họ và tên!') : null;
-      this.username == '' ? this.error.push('Chưa nhập số điện thoại!') : null;
-      this.username.length < 9 ? this.error.push('Số điện thoại không hợp lệ!') : null;
-      this.email == '' ? this.error.push('Chưa nhập email!') : null;
-      this.birthdate == '' ? this.error.push('Chưa nhập ngày, tháng, năm sinh!') : null;
-      this.gender == '' ? this.error.push('Chưa nhập giới tính!') : null;
-      this.province == '' ? this.error.push('Chưa nhập Tỉnh/Thành phố!') : null;
-      this.district == '' ? this.error.push('Chưa nhập Quận/Huyện!') : null;
-      this.ward == '' ? this.error.push('Chưa nhập Phường/Xã!') : null;
-      this.address == '' ? this.error.push('Chưa nhập địa chỉ!') : null;
-      this.level == '' ? this.error.push('Chưa nhập cấp bậc!') : null;
-      // this.school==''?this.error.push('Chưa nhập trường!'):null
-      this.skill == '' ? this.error.push('Chưa nhập chuyên nghành!') : null;
-      this.professionaltitle == '' ? this.error.push('Chưa nhập chức danh chuyên môn!') : null;
-      // this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
-      // this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
-      this.password == '' ? this.error.push('Chưa nhập mật khẩu!') : null;
-      this.password.length < 6 ? this.error.push('Mật khẩu tối thiểu 6 kí tự!') : null;
-      this.password2 != this.password ? this.error.push('Mật khẩu nhập lại không khớp!') : null;
-      return !(this.error.length > 0);
+      if (this.username == '') return false
+      if (this.name == '') return false
+      if (this.birthdate == '') return false
+      if (this.gender == '') return false
+      if (this.level == '') return false
+      if (this.email == '') return false
+      if (this.country == '') return false
+      if (this.province == '') return false
+      if (this.district == '') return false
+      if (this.ward == '') return false
+      if (this.address == '') return false
+      if (this.school == '') return false
+      if (this.startyear == '') return false
+      if (this.endyear == '') return false
+      if (this.skill == '') return false
+      if (this.professionaltitle == '') return false
+      if (this.password == '') return false
+      if (this.password2 == '') return false
+      let listError = document.getElementsByClassName('is-invalid')
+      if (listError.length > 0) {
+        return false;
+      }
+      if (this.password != this.password2) {
+        return false;
+      }
+      return true;
     },
     handleSubmit(e) {
       e.preventDefault();
@@ -368,7 +373,7 @@ export default {
         Swal.fire({
           icon: 'info',
           title: 'Đăng ký thất bại',
-          text: this.error[0],
+          text: 'Vui lòng kiểm tra lại thông tin',
           confirmButtonColor: 'var(--primary)',
           confirmButtonText: 'Nhập lại',
         });
