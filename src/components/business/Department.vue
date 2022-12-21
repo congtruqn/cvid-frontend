@@ -1,86 +1,6 @@
 <template>
   <div class="container-fluid">
-    <button
-      v-if="!key"
-      type="button"
-      class="btn btn-primary btn-icon-split ms-4 mt-4"
-      data-bs-toggle="modal"
-      data-bs-target="#addDepartment"
-      @click="
-        department.name = '';
-        department.email = '';
-      "
-    >
-      <i class="fas fa-plus"></i> Thêm phòng ban
-    </button>
-    <div
-      class="modal fade"
-      id="addDepartment"
-      tabindex="-1"
-      aria-labelledby="addDepartmentLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addDepartmentLabel">Thêm phòng ban</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="col-form-label"
-                >Tên phòng ban<span class="text-danger">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Nhập tên phòng ban"
-                v-model="department.name"
-              />
-            </div>
-            <div class="mb-3">
-              <label class="col-form-label"
-                >Email<span class="text-danger"></span
-              ></label>
-              <input
-                type="email"
-                class="form-control"
-                placeholder="Nhập email"
-                v-model="department.email"
-              />
-            </div>
-            <hr />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Đóng
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              @click="addDepartment"
-            >
-              Thêm
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="card m-3 mx-md-4"
-      v-for="department in departments"
-      :key="department._id"
-    >
+    <div class="card m-3 mx-md-4" v-for="department in departments" :key="department._id">
       <div class="card-body">
         <h5 class="card-title">
           {{ department.name }}
@@ -106,44 +26,21 @@
                 <h5 class="modal-title" id="editDepartmentLabel">
                   Sửa thông tin phòng ban
                 </h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <div class="mb-3">
-                  <label class="col-form-label"
-                    >Tên phòng ban<span class="text-danger">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nhập tên phòng ban"
-                    v-model="department.name"
-                  />
+                  <label class="col-form-label">Tên phòng ban<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" placeholder="Nhập tên phòng ban" v-model="department.name" />
                 </div>
                 <div class="mb-3">
-                  <label class="col-form-label"
-                    >Email<span class="text-danger"></span
-                  ></label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Nhập email"
-                    v-model="department.email"
-                  />
+                  <label class="col-form-label">Email<span class="text-danger"></span></label>
+                  <input type="email" class="form-control" placeholder="Nhập email" v-model="department.email" />
                 </div>
                 <hr />
               </div>
               <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Đóng
                 </button>
                 <button
@@ -158,17 +55,10 @@
             </div>
           </div>
         </div>
-        <h5
-          class="card-title text-center text-primary"
-          v-if="!department.position.length"
-        >
+        <h5 class="card-title text-center text-primary" v-if="!department.position.length">
           Chưa có vị trí
         </h5>
-        <div
-          class="card mb-2"
-          v-for="position in department.position"
-          :key="position._id"
-        >
+        <div class="card mb-2" v-for="position in department.position" :key="position._id">
           <div class="card-header">
             {{ position.jobtitle }}
           </div>
@@ -191,16 +81,10 @@
                     <td>Otto</td>
                     <td>@mdo</td>
                     <td>
-                      <button
-                        class="btn btn-sm btn-primary"
-                        title="Đánh giá nhân viên"
-                      >
+                      <button class="btn btn-sm btn-primary" title="Đánh giá nhân viên">
                         <i class="fas fa-book"></i>
                       </button>
-                      <button
-                        class="btn btn-sm btn-danger"
-                        title="Xóa nhân viên"
-                      >
+                      <button class="btn btn-sm btn-danger" title="Xóa nhân viên">
                         <i class="fas fa-trash-alt"></i>
                       </button>
                     </td>
@@ -209,9 +93,7 @@
               </table>
             </div>
 
-            <a href="/business/recruit" class="btn btn-sm btn-primary"
-              >Tuyển dụng</a
-            >
+            <a href="/business/recruit" class="btn btn-sm btn-primary">Tuyển dụng</a>
             <button
               data-bs-toggle="modal"
               data-bs-target="#editPosition"
@@ -220,10 +102,7 @@
             >
               Chỉnh sửa
             </button>
-            <button
-              @click="deletePosition(position._id)"
-              class="btn btn-sm btn-danger"
-            >
+            <button @click="deletePosition(position._id)" class="btn btn-sm btn-danger">
               Xoá
             </button>
           </div>
@@ -248,45 +127,24 @@
       </div>
     </div>
 
-    <div
-      class="modal fade"
-      id="editPosition"
-      tabindex="-1"
-      aria-labelledby="editPosition"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="editPosition" tabindex="-1" aria-labelledby="editPosition" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="editPositionLabel">
               Chỉnh sửa vị trí tuyển dụng
             </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="card-body">
               <form>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Phòng ban <span class="text-danger">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control text-dark bg-white"
-                    v-model="department.name"
-                    disabled
-                  />
+                  <label class="form-label">Phòng ban <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control text-dark bg-white" v-model="department.name" disabled />
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Chức danh công việc
-                    <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Chức danh công việc <span class="text-danger">*</span></label>
                   <input
                     type="text"
                     class="form-control dropdown-toggle text-dark bg-white"
@@ -304,25 +162,15 @@
                     :style="{ maxHeight: '400px' }"
                   >
                     <li class="m-2">
-                      <input
-                        type="text"
-                        v-model="searchJobTitle"
-                        class="form-control"
-                        placeholder="Tìm kiếm"
-                      />
+                      <input type="text" v-model="searchJobTitle" class="form-control" placeholder="Tìm kiếm" />
                     </li>
-                    <li
-                      v-for="item in filteredJobTitle"
-                      @click="position.jobtitle = item"
-                    >
+                    <li v-for="item in filteredJobTitle" @click="position.jobtitle = item">
                       <a class="dropdown-item">{{ item }}</a>
                     </li>
                   </ul>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Chức vụ<span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Chức vụ<span class="text-danger">*</span></label>
                   <select class="form-select" v-model="position.name">
                     <option value="" disabled>Chọn ...</option>
                     <option v-for="item in positions" :value="item.name">
@@ -331,9 +179,7 @@
                   </select>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Cấp bậc ứng viên <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label>
                   <input
                     type="text"
                     class="form-select dropdown-toggle"
@@ -419,10 +265,7 @@
                   </ul>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Chuyên nghành ứng viên
-                    <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Chuyên nghành ứng viên <span class="text-danger">*</span></label>
                   <input
                     type="text"
                     class="form-select dropdown-toggle"
@@ -434,14 +277,8 @@
                     placeholder="Tìm kiếm"
                   />
                   {{ filteredSkill[0] }}
-                  <ul
-                    class="dropdown-menu w-75"
-                    aria-labelledby="dropdownMenuSkill2"
-                  >
-                    <div
-                      class="form-check mx-3"
-                      v-for="(skill, index) in filteredSkill"
-                    >
+                  <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuSkill2">
+                    <div class="form-check mx-3" v-for="(skill, index) in filteredSkill">
                       <input
                         class="form-check-input"
                         type="checkbox"
@@ -461,10 +298,7 @@
                   </ul>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Lĩnh vực kinh doanh
-                    <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Lĩnh vực kinh doanh <span class="text-danger">*</span></label>
                   <select class="form-select" v-model="position.work_industry">
                     <option value="" disabled>Chọn ...</option>
                     <option v-for="item in industries" :value="item.name">
@@ -474,9 +308,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Nơi làm việc <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Nơi làm việc <span class="text-danger">*</span></label>
                   <select class="form-select" v-model="position.work_location">
                     <option value="">Chọn nơi làm việc</option>
                     <option v-for="province in provinces" :value="province">
@@ -486,14 +318,8 @@
                 </div>
 
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Môi trường làm việc
-                    <span class="text-danger">*</span></label
-                  >
-                  <select
-                    class="form-select"
-                    v-model="position.work_environment"
-                  >
+                  <label class="form-label">Môi trường làm việc <span class="text-danger">*</span></label>
+                  <select class="form-select" v-model="position.work_environment">
                     <option value="" disabled>Chọn ...</option>
                     <option v-for="item in environments" :value="item.name">
                       {{ item.name }}
@@ -501,10 +327,7 @@
                   </select>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Yêu cầu kinh nghiệm
-                    <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Yêu cầu kinh nghiệm <span class="text-danger">*</span></label>
                   <input
                     type="number"
                     class="form-control"
@@ -513,20 +336,11 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Số lượng <span class="text-danger">*</span></label
-                  >
-                  <input
-                    type="number"
-                    class="form-control"
-                    v-model="position.amount"
-                    placeholder="Nhập số lượng"
-                  />
+                  <label class="form-label">Số lượng <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng" />
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Mức lương tối thiểu (triệu đồng)</label
-                  >
+                  <label class="form-label">Mức lương tối thiểu (triệu đồng)</label>
                   <input
                     type="number"
                     class="form-control"
@@ -535,9 +349,7 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Mức lương tối đa (triệu đồng)</label
-                  >
+                  <label class="form-label">Mức lương tối đa (triệu đồng)</label>
                   <input
                     type="number"
                     class="form-control"
@@ -547,25 +359,16 @@
                 </div>
                 <div class="form-group mb-3">
                   <label class="form-label">Mô tả công việc</label>
-                  <vue-editor
-                    v-model="position.description"
-                  >
-                  </vue-editor>
+                  <vue-editor v-model="position.description"> </vue-editor>
                 </div>
                 <div class="form-group mb-3">
                   <label class="form-label">Yêu cầu công việc</label>
-                  <textarea
-                    rows="5"
-                    class="form-control"
-                    v-model="position.requirements"
-                  ></textarea>
+                  <textarea rows="5" class="form-control" v-model="position.requirements"></textarea>
                 </div>
                 <h5>Tiêu chí đánh giá</h5>
                 <div class="row align-items-center">
                   <div class="col-9">
-                    <label class="h6"
-                      ><h6>Chọn tiêu chí đánh giá đề xuất</h6></label
-                    >
+                    <label class="h6"><h6>Chọn tiêu chí đánh giá đề xuất</h6></label>
                   </div>
                   <div class="col-3 text-end">
                     <label class="h6"> Điểm </label>
@@ -576,11 +379,7 @@
                     <div class="col-9">
                       <div class="list-group list-group-flush">
                         <label class="list-group-item">
-                          <input
-                            class="form-check-input me-1"
-                            type="checkbox"
-                            :checked="position.criteria[index]"
-                          />
+                          <input class="form-check-input me-1" type="checkbox" :checked="position.criteria[index]" />
                           {{ item.name }}
                           <a
                             data-bs-toggle="collapse"
@@ -612,10 +411,7 @@
                   </div>
                 </div>
                 <h6>Thêm tiêu chí đánh giá</h6>
-                <div
-                  class="form-check"
-                  v-for="(item, index) in position.questions"
-                >
+                <div class="form-check" v-for="(item, index) in position.questions">
                   <div class="row align-items-center">
                     <div class="col-9">
                       <div class="list-group list-group-flush">
@@ -661,10 +457,7 @@
                           class="btn btn-sm btn-danger float-end py-0"
                           @click="
                             () => {
-                              position.questions[index].detail.splice(
-                                index2,
-                                1
-                              );
+                              position.questions[index].detail.splice(index2, 1);
                             }
                           "
                           ><i class="fas fa-x"></i
@@ -672,12 +465,7 @@
                       </li>
                     </ul>
                     <div class="input-group my-2">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Nhập tiêu chí con"
-                        v-model="question"
-                      />
+                      <input type="text" class="form-control" placeholder="Nhập tiêu chí con" v-model="question" />
                       <button
                         class="btn btn-primary"
                         type="button"
@@ -696,12 +484,7 @@
                   </div>
                 </div>
                 <div class="input-group my-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nhập tiêu chí"
-                    v-model="question"
-                  />
+                  <input type="text" class="form-control" placeholder="Nhập tiêu chí" v-model="question" />
                   <button
                     class="btn btn-primary"
                     type="button"
@@ -724,11 +507,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Đóng
             </button>
             <button type="button" class="btn btn-primary" @click="editPosition">
@@ -739,43 +518,24 @@
       </div>
     </div>
 
-    <div
-      class="modal fade"
-      id="addPosition"
-      tabindex="-1"
-      aria-labelledby="addPosition"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="addPosition" tabindex="-1" aria-labelledby="addPosition" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="addPositionLabel">
               Thêm vị trí tuyển dụng
             </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="card-body">
               <form>
                 <div class="form-group mb-3">
                   <label class="form-label">Phòng ban</label>
-                  <input
-                    type="text"
-                    class="form-control bg-white text-dark"
-                    :value="department.name"
-                    disabled
-                  />
+                  <input type="text" class="form-control bg-white text-dark" :value="department.name" disabled />
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Chức danh công việc
-                    <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Chức danh công việc <span class="text-danger">*</span></label>
                   <input
                     type="text"
                     class="form-select dropdown-toggle text-dark"
@@ -803,9 +563,7 @@
                   </ul>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Chức vụ <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Chức vụ <span class="text-danger">*</span></label>
                   <select class="form-select" v-model="position.name">
                     <option value="" disabled>Chọn ...</option>
                     <option v-for="item in positions" :value="item.name">
@@ -814,9 +572,7 @@
                   </select>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Cấp bậc ứng viên <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Cấp bậc ứng viên <span class="text-danger">*</span></label>
                   <input
                     type="text"
                     class="form-select dropdown-toggle"
@@ -902,10 +658,7 @@
                   </ul>
                 </div>
                 <div class="form-group mb-3">
-                  <label class="form-label"
-                    >Chuyên nghành ứng viên
-                    <span class="text-danger">*</span></label
-                  >
+                  <label class="form-label">Chuyên nghành ứng viên <span class="text-danger">*</span></label>
                   <input
                     type="text"
                     class="form-select dropdown-toggle"
@@ -915,14 +668,8 @@
                     aria-expanded="false"
                     v-model="searchSkill"
                   />
-                  <ul
-                    class="dropdown-menu w-75"
-                    aria-labelledby="dropdownMenuSkill"
-                  >
-                    <div
-                      class="form-check mx-3"
-                      v-for="(skill, index) in filteredSkill"
-                    >
+                  <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuSkill">
+                    <div class="form-check mx-3" v-for="(skill, index) in filteredSkill">
                       <input
                         class="form-check-input"
                         type="checkbox"
@@ -952,9 +699,7 @@
                   </select>
                 </div>
                 <div class="form-group mb-3">
-                  <label for=""
-                    >Nơi làm việc <span class="text-danger">*</span></label
-                  >
+                  <label for="">Nơi làm việc <span class="text-danger">*</span></label>
                   <select class="form-select" v-model="position.work_location">
                     <option value="">Chọn địa điểm làm việc</option>
                     <option v-for="province in provinces" :value="province">
@@ -965,10 +710,7 @@
 
                 <div class="form-group mb-3">
                   <label class="form-label">Môi trường làm việc</label>
-                  <select
-                    class="form-select"
-                    v-model="position.work_environment"
-                  >
+                  <select class="form-select" v-model="position.work_environment">
                     <option value="" disabled>Chọn ...</option>
                     <option v-for="item in environments" :value="item.name">
                       {{ item.name }}
@@ -985,15 +727,8 @@
                   />
                 </div>
                 <div class="form-group mb-3">
-                  <label for=""
-                    >Số lượng <span class="text-danger">*</span></label
-                  >
-                  <input
-                    type="number"
-                    class="form-control"
-                    v-model="position.amount"
-                    placeholder="Nhập số lượng"
-                  />
+                  <label for="">Số lượng <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" v-model="position.amount" placeholder="Nhập số lượng" />
                 </div>
                 <div class="form-group mb-3">
                   <label for="">Mức lương tối thiểu (triệu đồng)</label>
@@ -1015,26 +750,16 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="">Mô tả công việc</label>
-                  <vue-editor
-                    v-model="position.description"
-                  >
-                  </vue-editor>
+                  <vue-editor v-model="position.description"> </vue-editor>
                 </div>
                 <div class="form-group mb-3">
                   <label for="">Yêu cầu công việc</label>
-                  <textarea
-                    cols="30"
-                    rows="10"
-                    class="form-control"
-                    v-model="position.requirements"
-                  ></textarea>
+                  <textarea cols="30" rows="10" class="form-control" v-model="position.requirements"></textarea>
                 </div>
                 <h5>Tiêu chí đánh giá</h5>
                 <div class="row align-items-center">
                   <div class="col-9">
-                    <label class="h6"
-                      ><h6>Chọn tiêu chí đánh giá đề xuất</h6></label
-                    >
+                    <label class="h6"><h6>Chọn tiêu chí đánh giá đề xuất</h6></label>
                   </div>
                   <div class="col-3 text-end">
                     <label class="h6"> Điểm </label>
@@ -1045,11 +770,7 @@
                     <div class="col-9">
                       <div class="list-group list-group-flush">
                         <label class="list-group-item">
-                          <input
-                            class="form-check-input me-1"
-                            type="checkbox"
-                            :checked="position.criteria[index]"
-                          />
+                          <input class="form-check-input me-1" type="checkbox" :checked="position.criteria[index]" />
                           {{ item.name }}
                           <a
                             data-bs-toggle="collapse"
@@ -1081,10 +802,7 @@
                   </div>
                 </div>
                 <h6>Thêm tiêu chí đánh giá</h6>
-                <div
-                  class="form-check"
-                  v-for="(item, index) in position.questions"
-                >
+                <div class="form-check" v-for="(item, index) in position.questions">
                   <div class="row align-items-center">
                     <div class="col-9">
                       <div class="list-group list-group-flush">
@@ -1130,10 +848,7 @@
                           class="btn btn-sm btn-danger float-end py-0"
                           @click="
                             () => {
-                              position.questions[index].detail.splice(
-                                index2,
-                                1
-                              );
+                              position.questions[index].detail.splice(index2, 1);
                             }
                           "
                           ><i class="fas fa-x"></i
@@ -1141,12 +856,7 @@
                       </li>
                     </ul>
                     <div class="input-group my-2">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Nhập tiêu chí con"
-                        v-model="question"
-                      />
+                      <input type="text" class="form-control" placeholder="Nhập tiêu chí con" v-model="question" />
                       <button
                         class="btn btn-primary"
                         type="button"
@@ -1165,12 +875,7 @@
                   </div>
                 </div>
                 <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nhập tiêu chí"
-                    v-model="question"
-                  />
+                  <input type="text" class="form-control" placeholder="Nhập tiêu chí" v-model="question" />
                   <button
                     class="btn btn-primary"
                     type="button"
@@ -1193,11 +898,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Đóng
             </button>
             <button type="button" class="btn btn-primary" @click="addPosition">
@@ -1210,45 +911,45 @@
   </div>
 </template>
 <script>
-const { BASE_URL } = require("../../utils/config");
+const { BASE_URL } = require('../../utils/config');
 
 export default {
   data() {
     return {
-      searchSkill: "",
-      searchJobTitle: "",
+      searchSkill: '',
+      searchJobTitle: '',
       business_id: null,
       majors: [],
-      position_id: "",
+      position_id: '',
       jobtitles: [],
       criteria: [],
-      question: "",
+      question: '',
       environments: [],
       industries: [],
       positions: [],
       provinces: [],
       departments: [],
       department: {
-        _id: "",
-        name: "",
-        id: "",
-        email: "",
+        _id: '',
+        name: '',
+        id: '',
+        email: '',
         position: [],
       },
       position: {
-        _id: "",
-        name: "",
-        jobtitle: "",
+        _id: '',
+        name: '',
+        jobtitle: '',
         levels: [],
         skills: [],
-        description: "",
-        work_location: "",
-        work_industry: "",
-        work_environment: "",
+        description: '',
+        work_location: '',
+        work_industry: '',
+        work_environment: '',
         amount: 1,
         min_salary: 0,
         max_salary: 0,
-        requirements: "",
+        requirements: '',
         experience: 0,
         questions: new Array(),
         criteria: new Array(),
@@ -1258,47 +959,14 @@ export default {
     };
   },
   methods: {
-    addDepartment(e) {
-      e.preventDefault();
-      if (this.department.name == "") {
-        Swal.fire({
-          icon: "info",
-          title: "Thông báo",
-          text: "Tên phòng ban không được để trống",
-          confirmButtonText: "OK",
-          confirmButtonColor: "var(--primary)",
-        });
-      } else {
-        this.$http
-          .post(`${BASE_URL}/department/new`, {
-            name: this.department.name,
-            id: this.business_id,
-            email: this.department.email,
-          })
-          .then((res) => {
-            if (res.data)
-              Swal.fire({
-                icon: "success",
-                title: "Thông báo",
-                text: "Thêm phòng ban thành công",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-            this.departments.push(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    },
     editDepartment(department) {
-      if (department.name == "") {
+      if (department.name == '') {
         Swal.fire({
-          icon: "info",
-          title: "Thông báo",
-          text: "Tên phòng ban không được để trống",
-          confirmButtonText: "OK",
-          confirmButtonColor: "var(--primary)",
+          icon: 'info',
+          title: 'Thông báo',
+          text: 'Tên phòng ban không được để trống',
+          confirmButtonText: 'OK',
+          confirmButtonColor: 'var(--primary)',
         });
       } else {
         this.$http
@@ -1307,12 +975,12 @@ export default {
             name: department.name,
             email: department.email,
           })
-          .then((res) => {
+          .then(res => {
             if (res.data)
               Swal.fire({
-                icon: "success",
-                title: "Thông báo",
-                text: "Sửa thông tin thành công",
+                icon: 'success',
+                title: 'Thông báo',
+                text: 'Sửa thông tin thành công',
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -1323,7 +991,7 @@ export default {
             //   }
             // })
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       }
@@ -1333,12 +1001,12 @@ export default {
         .post(`${BASE_URL}/department/delete`, {
           id: id,
         })
-        .then((res) => {
+        .then(res => {
           if (res.data) {
             Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Xoá phòng ban thành công",
+              position: 'top-end',
+              icon: 'success',
+              title: 'Xoá phòng ban thành công',
               showConfirmButton: false,
               timer: 1500,
             });
@@ -1349,7 +1017,7 @@ export default {
             }
           });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -1361,26 +1029,26 @@ export default {
         .post(`${BASE_URL}/department/position/new`, {
           department: newDepartment,
         })
-        .then((res) => {
+        .then(res => {
           Swal.fire({
-            icon: "success",
-            title: "Thông báo",
-            text: "Thêm chức danh thành công",
-            confirmButtonText: "OK",
-            confirmButtonColor: "var(--primary)",
+            icon: 'success',
+            title: 'Thông báo',
+            text: 'Thêm chức danh thành công',
+            confirmButtonText: 'OK',
+            confirmButtonColor: 'var(--primary)',
           });
           window.location.reload();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     openModalEdit(department_id, position_id) {
-      this.departments.filter((department) => {
+      this.departments.filter(department => {
         if (department._id == department_id) {
           this.department.name = department.name;
           this.department._id = department._id;
-          department.position.filter((position) => {
+          department.position.filter(position => {
             if (position._id == position_id) {
               this.position = position;
             }
@@ -1392,19 +1060,19 @@ export default {
       this.department._id = department_id;
       this.department.name = department_name;
       this.position = {
-        _id: "",
-        name: "",
-        jobtitle: "",
+        _id: '',
+        name: '',
+        jobtitle: '',
         levels: [],
         skills: [],
         amount: 1,
-        description: "",
-        work_location: "",
-        work_industry: "",
-        work_environment: "",
+        description: '',
+        work_location: '',
+        work_industry: '',
+        work_environment: '',
         min_salary: 0,
         max_salary: 0,
-        requirements: "",
+        requirements: '',
         experience: 0,
         questions: new Array(),
         criteria: new Array(),
@@ -1419,47 +1087,47 @@ export default {
         .post(`${BASE_URL}/department/position/edit`, {
           department: newDepartment,
         })
-        .then((res) => {
+        .then(res => {
           Swal.fire({
-            icon: "success",
-            title: "Thông báo",
-            text: "Sửa chức danh thành công",
-            confirmButtonText: "OK",
-            confirmButtonColor: "var(--primary)",
+            icon: 'success',
+            title: 'Thông báo',
+            text: 'Sửa chức danh thành công',
+            confirmButtonText: 'OK',
+            confirmButtonColor: 'var(--primary)',
           });
 
           window.location.reload();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     deletePosition(position_id) {
       Swal.fire({
-        title: "Bạn có chắc chắn muốn xóa chức danh này?",
-        text: "Sau khi xóa, bạn sẽ không thể khôi phục lại!",
-        icon: "warning",
+        title: 'Bạn có chắc chắn muốn xóa chức danh này?',
+        text: 'Sau khi xóa, bạn sẽ không thể khôi phục lại!',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "var(--primary)",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Xóa",
-      }).then((result) => {
+        confirmButtonColor: 'var(--primary)',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Xóa',
+      }).then(result => {
         if (result.value) {
           this.$http
             .post(`${BASE_URL}/department/position/delete`, {
               position_id: position_id,
             })
-            .then((res) => {
+            .then(res => {
               Swal.fire({
-                icon: "success",
-                title: "Thông báo",
-                text: "Xóa chức danh thành công",
-                confirmButtonText: "OK",
-                confirmButtonColor: "var(--primary)",
+                icon: 'success',
+                title: 'Thông báo',
+                text: 'Xóa chức danh thành công',
+                confirmButtonText: 'OK',
+                confirmButtonColor: 'var(--primary)',
               });
               window.location.reload();
             })
-            .catch((err) => {
+            .catch(err => {
               console.log(err);
             });
         }
@@ -1469,15 +1137,10 @@ export default {
   computed: {
     filteredSkill() {
       this.skills = new Set([]);
-      this.majors.forEach((element) => {
-        if (
-          this.position.levels.includes(element.level) &&
-          this.searchSkill != ""
-        ) {
-          element.skills.forEach((skill) => {
-            if (
-              skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1
-            ) {
+      this.majors.forEach(element => {
+        if (this.position.levels.includes(element.level) && this.searchSkill != '') {
+          element.skills.forEach(skill => {
+            if (skill.toLowerCase().indexOf(this.searchSkill.toLowerCase()) != -1) {
               this.skills.add(skill);
             }
           });
@@ -1487,17 +1150,15 @@ export default {
     },
     filteredJobTitle() {
       return this.jobtitles
-        .filter((element) => {
+        .filter(element => {
           if (
-            element.name
-              .toLowerCase()
-              .indexOf(this.searchJobTitle.toLowerCase()) != -1 &&
-            this.searchJobTitle != ""
+            element.name.toLowerCase().indexOf(this.searchJobTitle.toLowerCase()) != -1 &&
+            this.searchJobTitle != ''
           ) {
             return true;
           }
         })
-        .map((item) => item.name);
+        .map(item => item.name);
     },
   },
   created() {
@@ -1507,7 +1168,7 @@ export default {
         .post(`${BASE_URL}/department/list/get-by-key`, {
           key: this.key,
         })
-        .then((res) => {
+        .then(res => {
           if (res.data) {
             this.departments = res.data;
             this.business_id = res.data[0].id;
@@ -1519,64 +1180,64 @@ export default {
 
     this.$http
       .get(`${BASE_URL}/position/getall`)
-      .then((response) => {
+      .then(response => {
         this.positions = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
 
     this.$http
       .get(`${BASE_URL}/province/list`)
-      .then((response) => {
-        this.provinces = new Set(response.data.map((item) => item.province));
+      .then(response => {
+        this.provinces = new Set(response.data.map(item => item.province));
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
 
     this.$http
       .get(`${BASE_URL}/major/list`)
-      .then((response) => {
+      .then(response => {
         this.majors = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
 
     this.$http
       .get(`${BASE_URL}/industry/getall`)
-      .then((response) => {
+      .then(response => {
         this.industries = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
 
     this.$http
       .get(`${BASE_URL}/environment/getall`)
-      .then((response) => {
+      .then(response => {
         this.environments = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
 
     this.$http
       .get(`${BASE_URL}/jobtitle/getall`)
-      .then((response) => {
+      .then(response => {
         this.jobtitles = response.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
 
     this.$http
       .get(`${BASE_URL}/criteria/getall`)
-      .then((res) => {
+      .then(res => {
         this.criteria = res.data;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
   },

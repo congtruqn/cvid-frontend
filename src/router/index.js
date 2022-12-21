@@ -215,7 +215,7 @@ let router = new Router({
   ]
 });
 router.beforeEach((to, from, next) => {
-  const CurrentUser = localStorage.getItem("token");
+  const CurrentUser = localStorage.getItem("token") || localStorage.getItem("key");
   const pathBusiness = ["/business/login", "/business/register"];
   if (pathBusiness.includes(to.path) || to.path === "/callback" || CurrentUser) {
     return next();

@@ -23,6 +23,7 @@
                     <div class="col-md-6 mb-3">
                       <div id="formName" class="form-floating">
                         <input
+                          id="inputName"
                           type="text"
                           class="form-control"
                           v-model="name"
@@ -70,11 +71,7 @@
                         <label class="form-label">Giới tính</label>
                       </div>
                     </div>
-                    <div
-                      id="formCountry"
-                      class="mb-3 form-floating"
-                      v-if="false"
-                    >
+                    <div id="formCountry" class="mb-3 form-floating" v-if="false">
                       <select class="form-select" v-model="country" required>
                         <option value="" disabled>Chọn quốc gia</option>
                         <option value="Việt Nam">Việt Nam</option>
@@ -85,10 +82,7 @@
                       <div id="formProvince" class="form-floating">
                         <select class="form-select" v-model="province" required>
                           <option value="" disabled>Chọn tỉnh/thành phố</option>
-                          <option
-                            v-for="province in provinces"
-                            :value="province"
-                          >
+                          <option v-for="province in provinces" :value="province">
                             {{ province }}
                           </option>
                         </select>
@@ -99,10 +93,7 @@
                       <div id="formDistrict" class="form-floating">
                         <select class="form-select" v-model="district" required>
                           <option value="" disabled>Chọn quận/huyện</option>
-                          <option
-                            v-for="district in districts"
-                            :value="district"
-                          >
+                          <option v-for="district in districts" :value="district">
                             {{ district }}
                           </option>
                         </select>
@@ -147,10 +138,7 @@
                       <label class="form-label">Cấp bậc</label>
                     </div>
                   </div>
-                  <div
-                    class="mb-3"
-                    v-if="level != 'Phổ thông' && level != 'Sơ cấp'"
-                  >
+                  <div class="mb-3" v-if="level != 'Phổ thông' && level != 'Sơ cấp'">
                     <div class="form-floating">
                       <input
                         type="text"
@@ -177,9 +165,7 @@
                           <a class="dropdown-item">{{ item.name }}</a>
                         </li>
                       </ul>
-                      <label for="searchSchool" class="form-label"
-                        >Trường</label
-                      >
+                      <label for="searchSchool" class="form-label">Trường</label>
                     </div>
                   </div>
                   <div class="mb-3">
@@ -201,6 +187,7 @@
                       >
                         <li
                           v-for="item in filteredSkill"
+                          :key="item"
                           @click="
                             skill = item;
                             searchSkill = item;
@@ -224,44 +211,23 @@
                       <label class="form-label">Chức danh chuyên môn</label>
                     </div>
                   </div>
-                  <div
-                    class="row"
-                    v-if="level != 'Phổ thông' && level != 'Sơ cấp'"
-                  >
+                  <div class="row" v-if="level != 'Phổ thông' && level != 'Sơ cấp'">
                     <div class="col-md-6 mb-3">
                       <div id="formStartyear" class="form-floating">
-                        <input
-                          type="month"
-                          class="form-control"
-                          v-model="startyear"
-                          placeholder="yyyy-mm"
-                          required
-                        />
+                        <input type="month" class="form-control" v-model="startyear" placeholder="yyyy-mm" required />
                         <label class="form-label">Năm bắt đầu</label>
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <div id="formEndyear" class="form-floating">
-                        <input
-                          type="month"
-                          class="form-control"
-                          v-model="endyear"
-                          required
-                          placeholder="yyyy-mm"
-                        />
+                        <input type="month" class="form-control" v-model="endyear" required placeholder="yyyy-mm" />
                         <label class="form-label">Năm tốt nghiệp</label>
                       </div>
                     </div>
                   </div>
                   <div class="mb-3">
                     <div id="formEmail" class="form-floating">
-                      <input
-                        type="email"
-                        class="form-control"
-                        v-model="email"
-                        required
-                        placeholder="Email"
-                      />
+                      <input type="email" class="form-control" v-model="email" required placeholder="Email" />
                       <label class="form-label">Email</label>
                     </div>
                   </div>
@@ -296,11 +262,7 @@
                   </div>
                   <div class="d-flex justify-content-end pt-3">
                     <!-- <button type="button" class="btn btn-light btn-lg">Reset all</button> -->
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-lg ms-2"
-                      @click="handleSubmit"
-                    >
+                    <button type="button" class="btn btn-primary btn-lg ms-2" @click="handleSubmit">
                       Đăng ký
                     </button>
                   </div>
@@ -314,46 +276,44 @@
   </section>
 </template>
 <script>
-const { BASE_URL } = require("../../utils/config");
+const { BASE_URL } = require('../../utils/config');
 export default {
   data() {
     return {
-      searchSkill: "",
-      searchSchool: "",
-      name: "",
-      username: "",
-      birthdate: "",
-      gender: "",
-      level: "",
-      email: "",
-      country: "",
-      province: "",
-      district: "",
-      ward: "",
-      address: "",
-      school: "",
-      startyear: "",
-      endyear: "",
-      skill: "",
-      professionaltitle: "",
-      password: "",
-      password2: "",
+      searchSkill: '',
+      searchSchool: '',
+      name: '',
+      username: '',
+      birthdate: '',
+      gender: '',
+      level: '',
+      email: '',
+      country: '',
+      province: '',
+      district: '',
+      ward: '',
+      address: '',
+      school: '',
+      startyear: '',
+      endyear: '',
+      skill: '',
+      professionaltitle: '',
+      password: '',
+      password2: '',
       provinces: [],
       districts: [],
       wards: [],
       schools: [],
       majors: [],
-      error: []
+      error: [],
     };
   },
   computed: {
     filteredSchool() {
       return this.schools.filter(school => {
         if (
-          school.name
-            .toLowerCase()
-            .indexOf(this.searchSchool.trim().toLowerCase()) != -1 &&
-          this.searchSchool != ""
+          school.name.toLowerCase().indexOf(this.searchSchool.trim().toLowerCase()) != -1 &&
+          this.searchSchool != ''
         ) {
           return true;
         }
@@ -365,10 +325,8 @@ export default {
         if (major.level == this.level) {
           result = major.skills.filter(skill => {
             if (
-              skill
-                .toLowerCase()
-                .indexOf(this.searchSkill.trim().toLowerCase()) != -1 &&
-              (this.searchSkill != "" || this.level == "Phổ thông")
+              skill.toLowerCase().indexOf(this.searchSkill.trim().toLowerCase()) != -1 &&
+              (this.searchSkill != '' || this.level == 'Phổ thông')
             ) {
               return true;
             }
@@ -377,52 +335,42 @@ export default {
         }
       });
       return result;
-    }
+    },
   },
   methods: {
     isValid() {
       this.error = [];
-      this.name == "" ? this.error.push("Chưa nhập họ và tên!") : null;
-      this.name.indexOf(' ') <= 0 ? this.error.push("Nhập đủ họ và tên!") : null;
-      this.username == "" ? this.error.push("Chưa nhập số điện thoại!") : null;
-      this.username.length < 9
-        ? this.error.push("Số điện thoại không hợp lệ!")
-        : null;
-      this.email == "" ? this.error.push("Chưa nhập email!") : null;
-      this.birthdate == ""
-        ? this.error.push("Chưa nhập ngày, tháng, năm sinh!")
-        : null;
-      this.gender == "" ? this.error.push("Chưa nhập giới tính!") : null;
-      this.province == "" ? this.error.push("Chưa nhập Tỉnh/Thành phố!") : null;
-      this.district == "" ? this.error.push("Chưa nhập Quận/Huyện!") : null;
-      this.ward == "" ? this.error.push("Chưa nhập Phường/Xã!") : null;
-      this.address == "" ? this.error.push("Chưa nhập địa chỉ!") : null;
-      this.level == "" ? this.error.push("Chưa nhập cấp bậc!") : null;
+      this.name == '' ? this.error.push('Chưa nhập họ và tên!') : null;
+      this.name.indexOf(' ') <= 0 ? this.error.push('Nhập đủ họ và tên!') : null;
+      this.username == '' ? this.error.push('Chưa nhập số điện thoại!') : null;
+      this.username.length < 9 ? this.error.push('Số điện thoại không hợp lệ!') : null;
+      this.email == '' ? this.error.push('Chưa nhập email!') : null;
+      this.birthdate == '' ? this.error.push('Chưa nhập ngày, tháng, năm sinh!') : null;
+      this.gender == '' ? this.error.push('Chưa nhập giới tính!') : null;
+      this.province == '' ? this.error.push('Chưa nhập Tỉnh/Thành phố!') : null;
+      this.district == '' ? this.error.push('Chưa nhập Quận/Huyện!') : null;
+      this.ward == '' ? this.error.push('Chưa nhập Phường/Xã!') : null;
+      this.address == '' ? this.error.push('Chưa nhập địa chỉ!') : null;
+      this.level == '' ? this.error.push('Chưa nhập cấp bậc!') : null;
       // this.school==''?this.error.push('Chưa nhập trường!'):null
-      this.skill == "" ? this.error.push("Chưa nhập chuyên nghành!") : null;
-      this.professionaltitle == ""
-        ? this.error.push("Chưa nhập chức danh chuyên môn!")
-        : null;
+      this.skill == '' ? this.error.push('Chưa nhập chuyên nghành!') : null;
+      this.professionaltitle == '' ? this.error.push('Chưa nhập chức danh chuyên môn!') : null;
       // this.startyear==''?this.error.push('Chưa nhập thời gian bắt đầu!'):null
       // this.endyear==''?this.error.push('Chưa nhập thời gian kết thúc!'):null
-      this.password == "" ? this.error.push("Chưa nhập mật khẩu!") : null;
-      this.password.length < 6
-        ? this.error.push("Mật khẩu tối thiểu 6 kí tự!")
-        : null;
-      this.password2 != this.password
-        ? this.error.push("Mật khẩu nhập lại không khớp!")
-        : null;
+      this.password == '' ? this.error.push('Chưa nhập mật khẩu!') : null;
+      this.password.length < 6 ? this.error.push('Mật khẩu tối thiểu 6 kí tự!') : null;
+      this.password2 != this.password ? this.error.push('Mật khẩu nhập lại không khớp!') : null;
       return !(this.error.length > 0);
     },
     handleSubmit(e) {
       e.preventDefault();
       if (!this.isValid()) {
         Swal.fire({
-          icon: "info",
-          title: "Đăng ký thất bại",
+          icon: 'info',
+          title: 'Đăng ký thất bại',
           text: this.error[0],
-          confirmButtonColor: "var(--primary)",
-          confirmButtonText: "Nhập lại"
+          confirmButtonColor: 'var(--primary)',
+          confirmButtonText: 'Nhập lại',
         });
         return;
       }
@@ -445,35 +393,35 @@ export default {
           ward: this.ward,
           address: this.address,
           password: this.password,
-          password2: this.password2
+          password2: this.password2,
         })
         .then(response => {
-          if (response.data == "ok") {
+          if (response.data == 'ok') {
             Swal.fire({
-              icon: "success",
-              title: "Đăng ký thành công",
-              text: "Xác minh email để kích hoạt tài khoản",
-              confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Đăng nhập"
+              icon: 'success',
+              title: 'Đăng ký thành công',
+              text: 'Xác minh email để kích hoạt tài khoản',
+              confirmButtonColor: 'var(--primary)',
+              confirmButtonText: 'Đăng nhập',
             }).then(result => {
               if (result.value) {
-                this.$router.push("login");
+                this.$router.push('login');
               }
             });
           } else {
             Swal.fire({
-              icon: "info",
-              title: "Đăng ký thất bại",
+              icon: 'info',
+              title: 'Đăng ký thất bại',
               text: `${response.data[0].msg}`,
-              confirmButtonColor: "var(--primary)",
-              confirmButtonText: "Nhập lại"
+              confirmButtonColor: 'var(--primary)',
+              confirmButtonText: 'Nhập lại',
             });
           }
         })
         .catch(function(error) {
           console.error(error.response);
         });
-    }
+    },
   },
   async created() {
     await this.$http
@@ -504,88 +452,87 @@ export default {
   },
   watch: {
     name(newValue) {
-      $("#formName").addClass("was-validated");
+      let name = newValue.trim();
+      if (name.includes(' ') && name.length > 1) {
+        $('#inputName').addClass('is-valid');
+        $('#inputName').removeClass('is-invalid');
+      } else {
+        $('#inputName').addClass('is-invalid');
+        $('#inputName').removeClass('is-valid');
+      }
     },
     username() {
-      $("#formPhone").addClass("was-validated");
+      $('#formPhone').addClass('was-validated');
     },
     birthdate() {
-      $("#formBirthdate").addClass("was-validated");
+      $('#formBirthdate').addClass('was-validated');
     },
     gender() {
-      $("#formGender").addClass("was-validated");
+      $('#formGender').addClass('was-validated');
     },
     level() {
-      $("#formLevel").addClass("was-validated");
-      this.skill = "";
+      $('#formLevel').addClass('was-validated');
+      this.skill = '';
     },
     startyear() {
-      $("#formStartyear").addClass("was-validated");
+      $('#formStartyear').addClass('was-validated');
     },
     endyear() {
-      $("#formEndyear").addClass("was-validated");
+      $('#formEndyear').addClass('was-validated');
     },
     professionaltitle() {
-      $("#formProfessionaltitle").addClass("was-validated");
+      $('#formProfessionaltitle').addClass('was-validated');
     },
     email() {
-      $("#formEmail").addClass("was-validated");
+      $('#formEmail').addClass('was-validated');
     },
     searchSkill(newValue) {
-      if (newValue != this.skill || this.skill == "") {
-        $("#dropdownMenuSkill").addClass("is-invalid");
+      if (newValue != this.skill || this.skill == '') {
+        $('#dropdownMenuSkill').addClass('is-invalid');
       } else {
-        $("#dropdownMenuSkill").addClass("is-valid");
-        $("#dropdownMenuSkill").removeClass("is-invalid");
+        $('#dropdownMenuSkill').addClass('is-valid');
+        $('#dropdownMenuSkill').removeClass('is-invalid');
       }
     },
     searchSchool(newValue) {
-      if (newValue != this.school || this.school == "") {
-        $("#dropdownMenuSchool").addClass("is-invalid");
+      if (newValue != this.school || this.school == '') {
+        $('#dropdownMenuSchool').addClass('is-invalid');
       } else {
-        $("#dropdownMenuSchool").addClass("is-valid");
-        $("#dropdownMenuSchool").removeClass("is-invalid");
+        $('#dropdownMenuSchool').addClass('is-valid');
+        $('#dropdownMenuSchool').removeClass('is-invalid');
       }
     },
     password() {
-      $("#formPassword").addClass("was-validated");
+      $('#formPassword').addClass('was-validated');
     },
     password2(newValue) {
       if (newValue != this.password || newValue.length < 6) {
-        $("#password2").addClass("is-invalid");
-        $("#password2").removeClass("is-valid");
+        $('#password2').addClass('is-invalid');
+        $('#password2').removeClass('is-valid');
       } else {
-        $("#password2").addClass("is-valid");
-        $("#password2").removeClass("is-invalid");
+        $('#password2').addClass('is-valid');
+        $('#password2').removeClass('is-invalid');
       }
     },
     country(newValue) {
-      $("#formCountry").addClass("was-validated");
+      $('#formCountry').addClass('was-validated');
     },
     province(newValue) {
-      $("#formProvince").addClass("was-validated");
-      this.district = "";
-      this.districts = new Set(
-        this.province_list
-          .filter(item => item.province == newValue)
-          .map(item => item.district)
-      );
+      $('#formProvince').addClass('was-validated');
+      this.district = '';
+      this.districts = new Set(this.province_list.filter(item => item.province == newValue).map(item => item.district));
     },
     district(newValue) {
-      $("#formDistrict").addClass("was-validated");
-      this.ward = "";
-      this.wards = new Set(
-        this.province_list
-          .filter(item => item.district == newValue)
-          .map(item => item.ward)
-      );
+      $('#formDistrict').addClass('was-validated');
+      this.ward = '';
+      this.wards = new Set(this.province_list.filter(item => item.district == newValue).map(item => item.ward));
     },
     ward() {
-      $("#formWard").addClass("was-validated");
+      $('#formWard').addClass('was-validated');
     },
     address() {
-      $("#formAddress").addClass("was-validated");
-    }
-  }
+      $('#formAddress').addClass('was-validated');
+    },
+  },
 };
 </script>
