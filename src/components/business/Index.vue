@@ -1,7 +1,7 @@
 <template>
   <div class="container pt-4">
     <button
-      v-if="!businessInfo.confirm2 && businessInfo.confirm2.status == 1"
+      v-if="businessInfo.confirm2 && businessInfo.confirm2.status == 1"
       type="button"
       class="btn btn-primary btn-icon-split my-4"
       data-bs-toggle="modal"
@@ -36,27 +36,41 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label class="col-form-label">Người đại diện<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" placeholder="Nhập tên công ty" v-model="businessInfo.name" />
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Nhập người đại diện"
+                  v-model="businessInfo.manager"
+                />
               </div>
               <div class="mb-3">
                 <label class="col-form-label">Số điện thoại<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" placeholder="Nhập mã số thuế" v-model="businessInfo.taxCode" />
-              </div>
-              <div class="mb-3">
-                <label class="col-form-label">Chức vụ<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" placeholder="Nhập địa chỉ" v-model="businessInfo.address" />
-              </div>
-              <div class="mb-3">
-                <label class="col-form-label">Lĩnh vực kinh doanh<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" placeholder="Nhập số điện thoại" v-model="businessInfo.phone" />
               </div>
               <div class="mb-3">
+                <label class="col-form-label">Chức vụ<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="Nhập chức vụ" v-model="businessInfo.majors" />
+              </div>
+              <!-- <div class="mb-3">
+                <label class="col-form-label">Lĩnh vực kinh doanh<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="Nhập lĩnh vực kinh doanh" v-model="businessInfo.phone" />
+              </div> -->
+              <div class="mb-3">
                 <label class="col-form-label">Ngành nghề kinh doanh chính<span class="text-danger">*</span></label>
-                <input type="email" class="form-control" placeholder="Nhập email" v-model="businessInfo.email" />
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Nhập ngành nghề kinh doanh chính"
+                  v-model="businessInfo.majors"
+                />
               </div>
               <div class="mb-3">
                 <label class="col-form-label">Giấy phép kinh doanh<span class="text-danger">*</span></label>
                 <input type="file" class="form-control" placeholder="Nhập email" />
+              </div>
+              <!-- submit button -->
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="button" @click="updateInfo">Cập nhật</button>
               </div>
             </div>
           </div>
@@ -65,8 +79,10 @@
     </div>
     <div
       v-if="
-        (businessInfo.confirm1 && businessInfo.confirm1.status == 0) ||
-          (businessInfo.confirm2 && businessInfo.confirm2.status == 0)
+        businessInfo.confirm1 &&
+          businessInfo.confirm1.status != -1 &&
+          businessInfo.confirm2 &&
+          businessInfo.confirm2.status == 0
       "
     >
       <div class="alert alert-success" role="alert">
@@ -162,6 +178,28 @@ export default {
     },
     openModalEdit(department) {
       this.isModalEdit = true;
+    },
+    updateInfo() {
+      this.$http
+        .put(`${BASE_URL}/business/update`, {
+          id: JSON.parse(localStorage.getItem('business')).username,
+          name: this.businessInfo.name,
+          address: this.businessInfo.address,
+          majors: this.businessInfo.majors,
+        })
+        .then(res => {
+          if (res.data)
+            Swal.fire({
+              icon: 'success',
+              title: 'Thông báo',
+              text: 'Cập nhật thông tin thành công',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
   },
   created() {
