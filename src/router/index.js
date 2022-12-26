@@ -215,23 +215,23 @@ let router = new Router({
   ],
 });
 router.beforeEach((to, from, next) => {
-  if (to.path.includes('/employee')) {
-    const Employee = localStorage.getItem('employee');
-    const pathEmployee = ['/employee/login', '/employee/register'];
-    if (pathEmployee.includes(to.path) || to.path === '/callback' || Employee) {
-      return next();
-    } else {
-      next('/employee/login');
-    }
-  } else if (to.path.includes('/business')) {
-    const Business = localStorage.getItem('business');
-    const pathBusiness = ['/business/login', '/business/register'];
-    if (pathBusiness.includes(to.path) || to.path === '/callback' || Business) {
-      return next();
-    } else {
-      next('/business/login');
-    }
-  }
+  // if (to.path.includes('/employee')) {
+  //   const Employee = localStorage.getItem('employee');
+  //   const pathEmployee = ['/employee/login', '/employee/register'];
+  //   if (pathEmployee.includes(to.path) || to.path === '/callback' || Employee) {
+  //     return next();
+  //   } else {
+  //     next('/employee/login');
+  //   }
+  // } else if (to.path.includes('/business')) {
+  //   const Business = localStorage.getItem('business');
+  //   const pathBusiness = ['/business/login', '/business/register'];
+  //   if (pathBusiness.includes(to.path) || to.path === '/callback' || Business) {
+  //     return next();
+  //   } else {
+  //     next('/business/login');
+  //   }
+  // }
   next();
 });
 export default router;
