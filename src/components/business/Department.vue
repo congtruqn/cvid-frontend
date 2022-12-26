@@ -1164,6 +1164,7 @@ export default {
   created() {
     this.key = this.$route.params.id;
     if (this.key) {
+      localStorage.setItem('key', this.key);
       this.$http
         .post(`${BASE_URL}/department/list/get-by-key`, {
           key: this.key,
