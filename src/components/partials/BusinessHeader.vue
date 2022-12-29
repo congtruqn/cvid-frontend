@@ -1,7 +1,5 @@
 <template>
-  <nav
-    class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0"
-  >
+  <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
     <a
       href="/index.html"
       class="
@@ -15,12 +13,7 @@
     >
       <h1 class="m-0 text-primary">CVIDPro</h1>
     </a>
-    <button
-      type="button"
-      class="navbar-toggler me-4"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarCollapse"
-    >
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -43,9 +36,16 @@
                     </div>
                 </div> -->
         <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-            >Vị trí tuyển dụng</a
-          >
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Quản trị nhân sự</a>
+          <div class="dropdown-menu rounded-0 m-0">
+            <a href="" class="dropdown-item">Phòng ban</a>
+            <a href="" class="dropdown-item">Nhân viên</a>
+            <a href="" class="dropdown-item">Chấm công</a>
+            <a href="" class="dropdown-item">Các module khác</a>
+          </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Chức danh tuyển dụng</a>
           <div class="dropdown-menu rounded-0 m-0">
             <a
               v-for="department in departments"
@@ -57,62 +57,67 @@
           </div>
         </div>
         <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-            >Tuyển dụng</a
-          >
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tuyển dụng</a>
           <div class="dropdown-menu rounded-0 m-0">
             <a
               v-for="department in departments"
               :key="department._id"
               href="/business/recruit"
               class="dropdown-item"
-              @click=setLocal(department.key)
+              @click="setLocal(department.key)"
               >{{ department.name }}
-              </a
-            >
+            </a>
           </div>
         </div>
         <a href="/business/candidate" class="nav-item nav-link">Ứng viên</a>
-        <a href="" @click="logout" class="nav-item nav-link">Đăng xuất</a>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tài khoản</a>
+          <div class="dropdown-menu rounded-0 m-0">
+            <a href="" class="dropdown-item">Thông tin tài khoản</a>
+            <a href="" class="dropdown-item">Đổi mật khẩu</a>
+            <a href="" class="dropdown-item">Đổi email</a>
+            <a href="" class="dropdown-item">Đăng xuất</a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 </template>
 <script>
-const { BASE_URL } = require("../../utils/config");
+const { BASE_URL } = require('../../utils/config');
 export default {
   data() {
     return {
-      business_id: "",
+      business_id: '',
       departments: [],
-      key: "",
+      key: '',
     };
   },
   methods: {
-    setLocal(key){
-        localStorage.setItem('key', key);
+    setLocal(key) {
+      localStorage.setItem('key', key);
     },
     logout() {
-      localStorage.removeItem("business");
-      localStorage.removeItem("token");
-      this.$router.push("/business/login");
+      localStorage.removeItem('business');
+      localStorage.removeItem('token');
+      this.$router.push('/business/login');
     },
   },
   async created() {
     try {
-      this.business_id = JSON.parse(localStorage.getItem("business")).username;
+      this.business_id = JSON.parse(localStorage.getItem('business')).username;
     } catch (err) {
-      this.key = localStorage.getItem("key");
+      this.key = localStorage.getItem('key');
     }
     if (this.business_id) {
       await this.$http
         .post(`${BASE_URL}/department/list/get-by-id`, {
           id: this.business_id,
         })
-        .then((res) => {
+        .then(res => {
           this.departments = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     } else if (this.key) {
@@ -120,12 +125,12 @@ export default {
         .post(`${BASE_URL}/department/list/get-by-key`, {
           key: this.key,
         })
-        .then((res) => {
+        .then(res => {
           if (res.data) {
             this.departments = res.data;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     }
